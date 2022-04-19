@@ -1,9 +1,17 @@
 import React from "react";
-import { ImageBackground, Icon, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import {useState}  from 'react'
+import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
-import {Icons} from 'react-native-vector-icons'
+
+
+
 function LoginScreen() {
+
+  // State Variables
+  const [email, setEmail]=useState('')
+  const [password, setPassword]=useState('')
+
   return (
     
    <View style={{flex:1, backgroundColor:'#fff'}} >
@@ -23,16 +31,33 @@ function LoginScreen() {
         <View style={{padding:20}}>
         <Text style={{color:'#4632A1', fontSize:34}}>Welcome</Text>
         <Text>Don't have an  account?
-        <Text style={{color:'red', fontStyle:'italic '}}>
+        <Text style={{color:'red', fontStyle:'normal'}}>
           {''}
          Register now</Text>
         </Text>
         {/* Form Inputs View */}
           <View style={{marginTop:50}}>
-            
+           <TextInput
+             style={styles.input}
+             placeholder='Enter Email'
+             onChangeText={(val)=> setEmail(val)}
+           />
 
-             <TextInput placeholder="Email"
-      />
+           <TextInput
+             style={styles.input}
+             placeholder='Enter Password'
+             secureTextEntry
+             autoCorrect={false}
+             onChangeText={(val)=> setPassword(val)}
+           />
+          {/*SignIn Button  */}
+          <View style={styles.signin}>
+            <Button title="SignIn" />
+          </View>
+          {/* SignUp Button */}
+          <View style={styles.signup}>
+          <Button title="SignUP" />
+          </View>
             
            
           </View>
@@ -65,16 +90,6 @@ const styles = StyleSheet.create({
   backgroundColor :"#fff"
  },
 
-  buttonContainer:{
- padding:20,
- width:"100%",
-  },
- 
-  logoContainer: {
-    position: "absolute",
-    top: 70,
-    alignItems: "center",
-  },
    tagline:{
     position: "absolute",
     paddingTop:"25%",
@@ -83,6 +98,34 @@ const styles = StyleSheet.create({
     textTransform:"uppercase",
     paddingVertical:20,
     color:'#D9AEA5',
+   },
+   input:{
+   borderBottomColor :'#4632A1',
+   
+   borderBottomWidth:1,
+  //  borderWidth:2,
+  //  borderColor:'#4632A1',
+   padding:6,
+   paddingLeft:20,
+   marginLeft:50,
+   margin:12,
+   width:200,
+
+   },
+   signin:{
+    padding:3,
+    paddingLeft:20,
+    marginLeft:50,
+    margin:12,
+    width:180,
+
+   },
+   signup:{
+    
+    paddingLeft:20,
+    marginLeft:50,
+    margin:4,
+    width:180,
    },
 
 });
