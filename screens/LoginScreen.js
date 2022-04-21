@@ -1,3 +1,4 @@
+
 import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
@@ -6,8 +7,6 @@ import { Colors } from "../components/styles";
 
 
 import SignUp from "./SignUp";
-
-
 
 function LoginScreen() {
 
