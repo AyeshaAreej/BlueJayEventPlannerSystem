@@ -13,6 +13,7 @@ function LoginScreen() {
   // State Variables
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
+  const [signup, setSignup] =useState('false')
 
   return (
     
@@ -58,7 +59,8 @@ function LoginScreen() {
           </View>
           {/* SignUp Button */}
           <View style={styles.signup}>
-          <Button title="SignUP"  onPress={()=> <SignUp/>}/>
+          <Button title="SignUP"  onPress={()=> setSignup('true')}/>
+           {/* {signup ==='true' && <SignUp/>} */}
           </View>
             
            

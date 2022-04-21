@@ -5,8 +5,8 @@ import SignUp from './screens/SignUp';
 
 export default function App() {
   return (
-   //  <LoginScreen/>
-  <SignUp/>
+      <LoginScreen/>
+  // <SignUp/> 
   );
 }
 
