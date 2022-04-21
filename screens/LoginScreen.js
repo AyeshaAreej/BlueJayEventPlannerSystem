@@ -5,6 +5,9 @@ import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
 
 
+import SignUp from "./SignUp";
+
+
 
 function LoginScreen() {
 
@@ -14,7 +17,7 @@ function LoginScreen() {
 
   return (
     
-   <View style={{flex:1, backgroundColor:'#fff'}} >
+   <View style={{flex:1, backgroundColor:'#EFE4B0'}} >
     <ImageBackground  
     
      source={require('../assets/logo1.png')}
@@ -56,7 +59,7 @@ function LoginScreen() {
           </View>
           {/* SignUp Button */}
           <View style={styles.signup}>
-          <Button title="SignUP" />
+          <Button title="SignUP"  onPress={()=> <SignUp/>}/>
           </View>
             
            
@@ -87,7 +90,9 @@ const styles = StyleSheet.create({
   bottomView:{
   flex:1,
   backgroundColor:Colors.primary,
-  backgroundColor :"#fff"
+  backgroundColor :"#fff",
+  borderTopStartRadius:60,
+  borderTopEndRadius:60, 
  },
 
    tagline:{
@@ -100,11 +105,8 @@ const styles = StyleSheet.create({
     color:'#D9AEA5',
    },
    input:{
-   borderBottomColor :'#4632A1',
-   
-   borderBottomWidth:1,
-  //  borderWidth:2,
-  //  borderColor:'#4632A1',
+   borderBottomColor :'#D291BC',
+  borderBottomWidth:1,
    padding:6,
    paddingLeft:20,
    marginLeft:50,
@@ -114,18 +116,18 @@ const styles = StyleSheet.create({
    },
    signin:{
     padding:3,
-    paddingLeft:20,
+    paddingLeft:50,
     marginLeft:50,
-    margin:12,
-    width:180,
+    margin:4,
+    width:143,
 
    },
    signup:{
     
-    paddingLeft:20,
+    paddingLeft:50,
     marginLeft:50,
     margin:4,
-    width:180,
+    width:140,
    },
 
 });
