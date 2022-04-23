@@ -1,10 +1,14 @@
-
 import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
 import { Formik } from 'formik'
+// Social buttons
+import { FacebookSocialButton } from "react-native-social-buttons";
+import {InstagramSocialButton } from "react-native-social-buttons";
+import {GoogleSocialButton } from "react-native-social-buttons";
+
 
 
 import SignUp from "./SignUp";
@@ -18,7 +22,7 @@ function LoginScreen() {
 
   return (
     
-   <View  >
+   <View style={{flex:1}} >
    <View style={styles.topView}>
    <ImageBackground
    style={styles.logo}
@@ -71,16 +75,24 @@ function LoginScreen() {
         </>
       )}
     </Formik>
+
+
      </View>
 
      <View>
-        <Text style={{marginLeft:165, marginTop:80,}}>OR</Text>
-      </View>
+        <Text style={{marginLeft:165, marginTop:80}}>OR</Text>
 
-      {/* Social buttons */}
-      <View>
-        <Text>helo</Text>
+          {/* Social buttons */}
+    
+      <View style={styles.sbcontainer} >
+      <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:50,backgroundColor:'#fff' }} logoStyle={{marginLeft:40,backgroundColor:'#4267B2' }} textStyle={{color:'white'}}/>
+      <InstagramSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:40}} textStyle={{color:'white'}} />
+      <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:40}}textStyle={{color:'white'}} />
+     
       </View>
+      <Text style={{marginLeft:80}}>Don't Have an Account?  <Text style={{fontWeight: "bold"}}> SignUp</Text> </Text>
+    </View>
+    
  </View>
   );
 }
@@ -93,8 +105,7 @@ const styles = StyleSheet.create({
     paddingLeft:8,
     width:360,
     height:220,
-    //  borderTopStartRadius:60,
-    //  borderTopEndRadius:60, 
+    
    },
 
  logo: {
@@ -119,10 +130,9 @@ const styles = StyleSheet.create({
     flex: 1,
     // flexDirection: 'row',
     // justifyContent: 'space-between',
-    padding:10,
+    padding:5,
     borderRadius: 100,
-    // margin:60,
-
+  
   },
    button:{
     backgroundColor: 'purple',
@@ -133,6 +143,15 @@ const styles = StyleSheet.create({
     
 
    },
+   sbcontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:10,
+    borderRadius: 100,
+    margin:60,
+
+  },
    
 
 });
