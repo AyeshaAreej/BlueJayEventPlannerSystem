@@ -18,7 +18,7 @@ function LoginScreen() {
 
   return (
     
-   <View style={{flex:1}} >
+   <View  >
    <View style={styles.topView}>
    <ImageBackground
    style={styles.logo}
@@ -27,22 +27,22 @@ function LoginScreen() {
     </ImageBackground>
      <Text style={{color:'white', fontSize:25,fontWeight:'bold'}}>Sign In</Text>
     
-   </View>
+ </View>
 
       {/* Form Inputs View */}
-      <View style={{marginTop:50}}>
+   <View style={{marginTop:50}}>
           <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={values => console.log(values)}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleSubmit, values }) => (
         <>
            <TextInput
              style={styles.input}
              name="email"
              placeholder='Enter Email'
              onChangeText={handleChange('email')}
-            onBlur={handleBlur('email')}
+            // onBlur={handleBlur('email')}
             value={values.email}
             keyboardType="email-address"
            />
@@ -52,34 +52,36 @@ function LoginScreen() {
              name="password"
             placeholder="Enter Password"
              onChangeText={handleChange('password')}
-            onBlur={handleBlur('password')}
+            // onBlur={handleBlur('password')}
             value={values.password}
             secureTextEntry
       
            />
+           <Text style={{marginLeft:120}}>Forgot Password?</Text>
             {/*SignIn Button  */}
-          <View style={styles.signin}>
-            <Button  onPress={handleSubmit} title="SignIn" />
+          <View style={styles.container}>
+          <View style={styles.button}>
+           <Button  onPress={handleSubmit} 
+           title="SignIn"
+           color='#9370DB'
+           /> 
+          </View>
           </View>
        
         </>
       )}
     </Formik>
-      
-         
-          {/* SignUp Button */}
-          <View style={styles.signup}>
-          <Button title="SignUP"  onPress={()=> setSignup('true')}/>
-           {/* {signup ==='true' && <SignUp/>} */}
-          </View>
-            
-           
-          </View>
-  
-    
+     </View>
 
-    
-    </View>
+     <View>
+        <Text style={{marginLeft:165, marginTop:80,}}>OR</Text>
+      </View>
+
+      {/* Social buttons */}
+      <View>
+        <Text>helo</Text>
+      </View>
+ </View>
   );
 }
 
@@ -112,21 +114,26 @@ const styles = StyleSheet.create({
    width:200,
 
    },
-   signin:{
-    padding:3,
-    paddingLeft:50,
-    marginLeft:50,
-    margin:4,
-    width:143,
+
+   container: {
+    flex: 1,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    padding:10,
+    borderRadius: 100,
+    // margin:60,
+
+  },
+   button:{
+    backgroundColor: 'purple',
+    width: '50%',
+    height: 35,
+    marginLeft:86,
+    marginTop:30,
+    
 
    },
-   signup:{
-    
-    paddingLeft:50,
-    marginLeft:50,
-    margin:4,
-    width:140,
-   },
+   
 
 });
 
