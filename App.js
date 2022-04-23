@@ -6,9 +6,9 @@ import WelcomeScreen from './screens/WelcomeScreen';
 
 export default function App() {
   return (
-      //  <LoginScreen/>
+     <LoginScreen/>
      //<SignUp/>
-     <WelcomeScreen/>
+    //  <WelcomeScreen/>
    
 
   );
