@@ -1,10 +1,14 @@
-
 import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
 import { Formik } from 'formik'
+// Social buttons
+import { FacebookSocialButton } from "react-native-social-buttons";
+import {InstagramSocialButton } from "react-native-social-buttons";
+import {GoogleSocialButton } from "react-native-social-buttons";
+
 
 
 import SignUp from "./SignUp";
@@ -18,41 +22,31 @@ function LoginScreen() {
 
   return (
     
-   <View style={{flex:1, backgroundColor:'#EFE4B0'}} >
-    <ImageBackground  
+   <View style={{flex:1}} >
+   <View style={styles.topView}>
+   <ImageBackground
+   style={styles.logo}
+     source={require('../assets/logo2.png')}
+     resizeMode="cover" >
+    </ImageBackground>
+     <Text style={{color:'white', fontSize:25,fontWeight:'bold'}}>Sign In</Text>
     
-     source={require('../assets/logo1.png')}
-     resizeMode="cover" style={styles.image } >
-         <Text style={styles.tagline}>
-         Blue Jay Event Planners
-         </Text>
-         
-     </ImageBackground>
+ </View>
 
-      {/*Bottom    view */}
-     <View style={styles.bottomView}>
-      {/* Welcome View */}
-        <View style={{padding:20}}>
-        <Text style={{color:'#4632A1', fontSize:34}}>Welcome</Text>
-        <Text>Don't have an  account?
-        <Text style={{color:'red', fontStyle:'normal'}}>
-          {''}
-         Register now</Text>
-        </Text>
-        {/* Form Inputs View */}
-          <View style={{marginTop:50}}>
+      {/* Form Inputs View */}
+   <View style={{marginTop:50}}>
           <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={values => console.log(values)}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleSubmit, values }) => (
         <>
            <TextInput
              style={styles.input}
              name="email"
              placeholder='Enter Email'
              onChangeText={handleChange('email')}
-            onBlur={handleBlur('email')}
+            // onBlur={handleBlur('email')}
             value={values.email}
             keyboardType="email-address"
            />
@@ -62,94 +56,103 @@ function LoginScreen() {
              name="password"
             placeholder="Enter Password"
              onChangeText={handleChange('password')}
-            onBlur={handleBlur('password')}
+            // onBlur={handleBlur('password')}
             value={values.password}
             secureTextEntry
       
            />
+           <Text style={{marginLeft:120}}>Forgot Password?</Text>
             {/*SignIn Button  */}
-          <View style={styles.signin}>
-            <Button  onPress={handleSubmit} title="SignIn" />
+          <View style={styles.container}>
+          <View style={styles.button}>
+           <Button  onPress={handleSubmit} 
+           title="SignIn"
+           color='#9370DB'
+           /> 
+          </View>
           </View>
        
         </>
       )}
     </Formik>
-      
-         
-          {/* SignUp Button */}
-          <View style={styles.signup}>
-          <Button title="SignUP"  onPress={()=> setSignup('true')}/>
-           {/* {signup ==='true' && <SignUp/>} */}
-          </View>
-            
-           
-          </View>
-        </View>
+
+
+     </View>
+
+     <View>
+        <Text style={{marginLeft:165, marginTop:80}}>OR</Text>
+
+          {/* Social buttons */}
+    
+      <View style={styles.sbcontainer} >
+      <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:50,backgroundColor:'#fff' }} logoStyle={{marginLeft:40,backgroundColor:'#4267B2' }} textStyle={{color:'white'}}/>
+      <InstagramSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:40}} textStyle={{color:'white'}} />
+      <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:40}}textStyle={{color:'white'}} />
+     
+      </View>
+      <Text style={{marginLeft:80}}>Don't Have an Account?  <Text style={{fontWeight: "bold"}}> SignUp</Text> </Text>
     </View>
-   
-    </View>
+    
+ </View>
   );
 }
 
 const styles = StyleSheet.create({
   
-  image: {
-    alignItems:"center",
-    backgroundColor:"#EFE4B0",
-    justifyContent:"center",
-     height: '50%',     
-    paddingTop: Platform.OS==='android' ? StatusBar.CurrentHeight :0,
-    borderBottomStartRadius:60,
-    borderBottomEndRadius:60, 
-  },
- brandView :{
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
- },
-  bottomView:{
-  flex:1,
-  backgroundColor:Colors.primary,
-  backgroundColor :"#fff",
-  borderTopStartRadius:60,
-  borderTopEndRadius:60, 
- },
-
-   tagline:{
-    position: "absolute",
-    paddingTop:"25%",
-    fontSize:23,
-    fontWeight:"bold",
-    textTransform:"uppercase",
-    paddingVertical:20,
-    color:'#D9AEA5',
+  topView:{
+    backgroundColor :"#9370DB",
+    paddingTop:"18%",
+    paddingLeft:8,
+    width:360,
+    height:220,
+    
    },
+
+ logo: {
+  width: 200,
+  height: 110,
+  marginLeft:70,
+ 
+
+},
+   
    input:{
-   borderBottomColor :'#D291BC',
-  borderBottomWidth:1,
-   padding:6,
-   paddingLeft:20,
-   marginLeft:50,
-   margin:12,
+   borderBottomColor :'#9370DB',
+   borderBottomWidth:1,
+   padding:8,
+   marginLeft:80,
+   margin:20,
    width:200,
 
    },
-   signin:{
-    padding:3,
-    paddingLeft:50,
-    marginLeft:50,
-    margin:4,
-    width:143,
+
+   container: {
+    flex: 1,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    padding:5,
+    borderRadius: 100,
+  
+  },
+   button:{
+    backgroundColor: 'purple',
+    width: '50%',
+    height: 35,
+    marginLeft:86,
+    marginTop:30,
+    
 
    },
-   signup:{
-    
-    paddingLeft:50,
-    marginLeft:50,
-    margin:4,
-    width:140,
-   },
+   sbcontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:10,
+    borderRadius: 100,
+    margin:60,
+
+  },
+   
 
 });
 

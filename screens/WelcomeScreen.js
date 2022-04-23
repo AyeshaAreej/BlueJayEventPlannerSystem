@@ -8,7 +8,7 @@ import { Formik } from 'formik'
 import LoginScreen from "./LoginScreen";
 import SignUp from "./SignUp";
 
-function WelcomeScreen() {
+function WelcomeScreen({navigation}) {
 
 
   return (
@@ -34,13 +34,13 @@ function WelcomeScreen() {
     
     <View style={styles.container}>
       <View style={styles.button}>
-      <Button title="SignIn"
+      <Button onPress={()=>navigation.navigate('LoginScreen')} title="SignIn"
         color='purple'
       /> 
       </View>
      
       <View style={styles.button} >
-      <Button title="SignUp"
+      <Button onPress={()=>navigation.navigate('SignUp')} title="SignUp"
         color='purple'
         
       />
