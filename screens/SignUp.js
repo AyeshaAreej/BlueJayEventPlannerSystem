@@ -2,14 +2,14 @@ import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
-import { symbolicateLogLazy } from "react-native/Libraries/LogBox/Data/LogBoxData";
+import { useFormik } from 'formik';
 import { Colors } from "../components/styles";
+
 
 
 
 function SignUp() {
 
- 
   return (
     
    <View style={{flex:1, backgroundColor:'#B5DDC2'}} >
@@ -18,18 +18,20 @@ function SignUp() {
         <Text style={ styles.tagline}>Create Account</Text>
      {/* Form  */}
      <View style={{paddingTop:50, }}> 
-         <TextInput placeholder="Enter Name" style={styles.input}/>
-         <TextInput placeholder="Enter Email" style={styles.input}/>
-         <TextInput placeholder="Enter Password"   secureTextEntry style={styles.input} />
-         <TextInput placeholder="Enter Phone Number" style={styles.input}/>
-         <TextInput placeholder="Enter City" style={styles.input}/>
+
+     
+         <TextInput placeholder="Enter Name" name="name" style={styles.input}/>
+         <TextInput placeholder="Enter Email" name="email" style={styles.input}/>
+         <TextInput placeholder="Enter Password" name="password" secureTextEntry style={styles.input} />
+         <TextInput placeholder="Enter Phone Number" name="phoneNumber" style={styles.input}/>
+         <TextInput placeholder="Enter City" name="city" style={styles.input}/>
          <View style={styles.button}>
           <Button title="Login"
           color="#841584"
-          touchSoundDisabled='true'
-  />
-         </View>
-         
+          touchSoundDisabled='true' /> 
+          </View>
+
+    
      </View>
       </View>
      
