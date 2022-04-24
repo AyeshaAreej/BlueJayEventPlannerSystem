@@ -64,6 +64,7 @@ const HomeScreen=()=>{
 const Card=({hotel,index})=>{
 return(
     <View style={{...style.card}}>
+      <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
     <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
         ${hotel.price}
@@ -93,6 +94,32 @@ return(
 )
 };
 
+const TopHotelCard = ({hotel}) => {
+  return (
+    <View style={style.topHotelCard}>
+    <View  style={{
+            position: 'absolute',
+            top: 5,
+            right: 5,
+            zIndex: 1,
+            flexDirection: 'row',
+          }} >
+    <Icon name="star" size={15} color={COLORS.orange} />
+          <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 15}}>
+            5.0
+          </Text>
+    </View>
+   <Image style={style.topHotelCardImage} source={hotel.image}/>
+    <View style={{paddingVertical:5, paddingHorizontal:10}}> 
+     <Text style={{fontSize: 10, fontWeight: 'bold'}}t> {hotel.name}</Text>
+     <Text style={{fontSize: 9, fontWeight: 'bold', color: COLORS.grey}}>
+            {hotel.location}
+          </Text>
+    </View>
+    </View>
+  );
+};
+
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
         <View style={style.header}>
@@ -117,7 +144,9 @@ return(
          </View>
          <CategoryList/>
          <View>
-         <FlatList
+         <Animated.FlatList
+        //  card animation remaining
+          // onScroll={Animated.event([{nativeEvent:{contentOffset:{x:scrollX}}},], {useNativeDriver:true}, )}
           data={hotels}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -130,6 +159,18 @@ return(
           renderItem={({item}) => <Card hotel={item} />}
         />
         </View>
+
+           {/* Bottom View */}
+
+           <View style={{flexDirection:"row",justifyContent:"space-between", marginHorizontal:20}}>
+            <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Top Companies</Text>
+            <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Show all</Text>
+           </View>
+           <FlatList 
+            data={hotels}
+            horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft:20, marginBottom:30,marginTop:20}}
+             renderItem={({item})=><TopHotelCard hotel={item}/>}
+           />
         </ScrollView>
      </SafeAreaView>
    
@@ -201,7 +242,7 @@ const style = StyleSheet.create({
       width: '100%',
     },
     cardOverLay: {
-      height: 280,
+      height: 250,
       backgroundColor: COLORS.white,
       position: 'absolute',
       zIndex: 100,
@@ -209,7 +250,7 @@ const style = StyleSheet.create({
       borderRadius: 15,
     },
     topHotelCard: {
-      height: 120,
+      height: 130,
       width: 120,
       backgroundColor: COLORS.white,
       elevation: 15,

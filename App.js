@@ -9,8 +9,8 @@ export default function App() {
   return (
     //  <LoginScreen/>
     //  <SignUp/>
-    //  <WelcomeScreen/>
-     <HomeScreen/>
+      // <WelcomeScreen/>
+      <HomeScreen/>
    
   );
 }
