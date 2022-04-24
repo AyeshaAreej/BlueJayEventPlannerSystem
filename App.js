@@ -3,12 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import SignUp from './screens/SignUp';
 import WelcomeScreen from './screens/WelcomeScreen';
+import HomeScreen from './screens/HomeScreen';
 
 export default function App() {
   return (
     //  <LoginScreen/>
-     <SignUp/>
+    //  <SignUp/>
     //  <WelcomeScreen/>
+     <HomeScreen/>
    
   );
 }
