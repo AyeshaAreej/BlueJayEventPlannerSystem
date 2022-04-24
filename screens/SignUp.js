@@ -1,14 +1,16 @@
 import React from "react";
+import { Alert } from "react-native-web";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import { useFormik } from 'formik';
 import { Colors } from "../components/styles";
+import HomeScreen from "./HomeScreen";
 
 
 
 
-function SignUp() {
+function SignUp({navigation}) {
 
   return (
     
@@ -26,7 +28,12 @@ function SignUp() {
          <TextInput placeholder="Enter Phone Number" name="phoneNumber" style={styles.input}/>
          <TextInput placeholder="Enter City" name="city" style={styles.input}/>
          <View style={styles.button}>
-          <Button title="Login"
+          <Button title="Sign Up"
+          onPress={()=>{
+           // Alert.alert('Account Created');
+            navigation.navigate('HomeScreen')
+          
+          }}
           color="#841584"
           touchSoundDisabled='true' /> 
           </View>

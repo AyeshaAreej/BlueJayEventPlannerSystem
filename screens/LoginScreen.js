@@ -4,6 +4,7 @@ import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, Vi
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
 import { Formik } from 'formik'
+import HomeScreen from "./HomeScreen";
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
@@ -13,7 +14,7 @@ import {GoogleSocialButton } from "react-native-social-buttons";
 
 import SignUp from "./SignUp";
 
-function LoginScreen() {
+function LoginScreen({navigation}) {
 
   // State Variables
   const [email, setEmail]=useState('')
@@ -37,7 +38,11 @@ function LoginScreen() {
    <View style={{marginTop:50}}>
           <Formik
       initialValues={{ email: '', password: '' }}
-      onSubmit={values => console.log(values)}
+      onSubmit={
+        (values) => {
+          navigation.navigate('HomeScreen')
+          console.log(values)}
+    }
     >
       {({ handleChange, handleSubmit, values }) => (
         <>

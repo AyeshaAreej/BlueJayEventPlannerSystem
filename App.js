@@ -1,28 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import LoginScreen from './screens/LoginScreen';
-import SignUp from './screens/SignUp';
-import WelcomeScreen from './screens/WelcomeScreen';
+import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import AuthStack from './AuthStack';
+import AppStack from './AppStack'
+
+
+const Drawer = createDrawerNavigator();
 
 
 export default function App() {
 
-  const Stack = createNativeStackNavigator();  
+ return (
+<>
 
-  return (
     <NavigationContainer>
-            <Stack.Navigator initialRouteName='WelcomeScreen'>
-              <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}/>
-              <Stack.Screen name='LoginScreen' component={LoginScreen}/>
-              <Stack.Screen name='SignUp' component={SignUp}/>
-            </Stack.Navigator>
+          {/* <AuthStack/> */}
+          <AppStack/>
     </NavigationContainer>
-   
-  
-  );
-}
+
+</>
+ );
+ }
 
 const styles = StyleSheet.create({
   container: {
