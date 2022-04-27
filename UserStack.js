@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const Drawer = createDrawerNavigator();
 
 
-const AppStack = () => {
+const UserStack = () => {
   return (
     <Drawer.Navigator 
     drawerContent={props=><CustomDrawer {...props} /> } 
@@ -122,4 +122,4 @@ const AppStack = () => {
 
 
 
-export default AppStack
+export default UserStack

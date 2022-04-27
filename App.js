@@ -4,7 +4,9 @@ import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AuthStack from './AuthStack';
-import AppStack from './AppStack'
+import UserStack from './UserStack';
+import CompanyStack from './CompanyStack';
+import VendorStack from './VendorStack';
 
 
 const Drawer = createDrawerNavigator();
@@ -17,7 +19,9 @@ export default function App() {
 
     <NavigationContainer>
           {/* <AuthStack/> */}
-          <AppStack/>
+          <UserStack/>
+          {/* <CompanyStack/> */}
+          {/* <VendorStack/> */}
     </NavigationContainer>
 
 </>
