@@ -17,13 +17,13 @@ export default function App() {
  return (
 <>
 
-    <NavigationContainer>
+    <NavigationContainer>   
           {/* <AuthStack/> */}
           <UserStack/>
           {/* <CompanyStack/> */}
           {/* <VendorStack/> */}
     </NavigationContainer>
-
+  
 </>
  );
  }

@@ -23,11 +23,11 @@ function LoginScreen({navigation}) {
 
   return (
     
-   <View style={{flex:1}} >
+   <View style={{flex:1, backgroundColor:'#fff'}} >
    <View style={styles.topView}>
    <ImageBackground
    style={styles.logo}
-     source={require('../assets/logo2.png')}
+     source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
      <Text style={{color:'white', fontSize:25,fontWeight:'bold'}}>Sign In</Text>
@@ -66,7 +66,7 @@ function LoginScreen({navigation}) {
             secureTextEntry
       
            />
-           <Text style={{marginLeft:120}}>Forgot Password?</Text>
+           <Text style={{marginLeft:150}}>Forgot Password?</Text>
             {/*SignIn Button  */}
           <View style={styles.container}>
           <View style={styles.button}>
@@ -85,17 +85,18 @@ function LoginScreen({navigation}) {
      </View>
 
      <View>
-        <Text style={{marginLeft:165, marginTop:80}}>OR</Text>
+        <Text style={{marginLeft:210, marginTop:80,fontWeight: "bold"}}>OR</Text>
 
           {/* Social buttons */}
     
-      <View style={styles.sbcontainer} >
-      <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:50,backgroundColor:'#fff' }} logoStyle={{marginLeft:40,backgroundColor:'#4267B2' }} textStyle={{color:'white'}}/>
-      <InstagramSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:40}} textStyle={{color:'white'}} />
-      <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:40}}textStyle={{color:'white'}} />
-     
-      </View>
-      <Text style={{marginLeft:80}}>Don't Have an Account?  <Text style={{fontWeight: "bold"}}> SignUp</Text> </Text>
+          <View style={styles.sbcontainer} >
+              
+              <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:50,backgroundColor:'#fff' }} logoStyle={{marginLeft:120,backgroundColor:'#4267B2' }} textStyle={{color:'#fff'}}/>
+              <InstagramSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:80}} textStyle={{color:'#fff'}} />
+              <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:10}}textStyle={{color:'#fff'}} />
+              </View>
+  
+              <Text style={{marginLeft:100}}>Already Have an Account?  <Text style={{fontWeight: "bold"}}> SignIn</Text> </Text>
     </View>
     
  </View>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor :"#9370DB",
     paddingTop:"18%",
     paddingLeft:8,
-    width:360,
+    width:410,
     height:220,
     
    },
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
  logo: {
   width: 200,
   height: 110,
-  marginLeft:70,
+  marginLeft:100,
  
 
 },
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
    borderBottomColor :'#9370DB',
    borderBottomWidth:1,
    padding:8,
-   marginLeft:80,
+   marginLeft:110,
    margin:20,
    width:200,
 
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple',
     width: '50%',
     height: 35,
-    marginLeft:86,
+    marginLeft:110,
     marginTop:30,
     
 
@@ -154,7 +155,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding:10,
     borderRadius: 100,
-    margin:60,
+    margin:20,
+    marginBottom: 60
 
   },
    

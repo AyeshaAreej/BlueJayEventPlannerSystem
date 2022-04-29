@@ -12,7 +12,7 @@ function WelcomeScreen({navigation}) {
 
 
   return (
-<View>
+<View style={{backgroundColor:"#fff"}}>
 <View style={styles.logoContainer} >
     <ImageBackground  
      style={styles.logo}
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     top:150,
+    backgroundColor:"#fff",
     alignItems: "center",
     justifyContent:"center",
     
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   backgroundColor :"#9370DB",
   paddingTop:"18%",
   paddingLeft:8,
-  width:360,
+  width:410,
   height:415,
   borderTopStartRadius:60,
   borderTopEndRadius:60, 
@@ -98,9 +99,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding:40,
+    padding:30,
     borderRadius: 100,
-    margin:15,
+    margin:12,
 
   },
   button: {
