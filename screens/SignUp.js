@@ -94,6 +94,7 @@ function SignUp({navigation}) {
             {/*SignUn Button  */}
           <View style={styles.container}>
           <View style={styles.button}>
+
            <Button
            onPress={()=>navigation.navigate('HomeScreen')}
            title="SignUp"
@@ -110,6 +111,7 @@ function SignUp({navigation}) {
      </View>
 
      <View>
+
             <Text style={{marginLeft:210, marginTop:80,fontWeight: "bold"}}>OR</Text>
 
               {/* Social buttons */}
@@ -130,7 +132,6 @@ function SignUp({navigation}) {
 }
 
 const styles = StyleSheet.create({
-
 
   topView:{
     backgroundColor :"#9370DB",

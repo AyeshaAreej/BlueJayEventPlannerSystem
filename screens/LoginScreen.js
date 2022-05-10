@@ -97,6 +97,7 @@ function LoginScreen({navigation}) {
               </View>
   
               <Text style={{marginLeft:100}}>Already Have an Account?  <Text style={{fontWeight: "bold"}}> SignIn</Text> </Text>
+
     </View>
     
  </View>
@@ -118,8 +119,6 @@ const styles = StyleSheet.create({
   width: 200,
   height: 110,
   marginLeft:100,
- 
-
 },
    
    input:{
