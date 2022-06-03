@@ -25,7 +25,7 @@ const HomeScreen=()=>{
    const categories = ['All', 'Popular', 'Top Rated', 'Low Price', 'High Price'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [activeCardIndex, setActiveCardIndex] = React.useState(0);
-    const scrollX=React.useRef(new Animated.Value(0)).current;
+    // const scrollX=React.useRef(new Animated.Value(0)).current;
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
  
@@ -163,8 +163,8 @@ const TopHotelCard = ({hotel}) => {
            {/* Bottom View */}
 
            <View style={{flexDirection:"row",justifyContent:"space-between", marginHorizontal:20}}>
-            <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Top Companies</Text>
-            <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Show all</Text>
+            <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Available Companies</Text>
+            {/* <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Show all</Text> */}
            </View>
            <FlatList 
             data={hotels}
