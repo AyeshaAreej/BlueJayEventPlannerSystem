@@ -10,6 +10,7 @@ import {
     View,
     Image,
     Animated,
+    Button,
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -21,7 +22,7 @@ import hotels from '../components/companies';
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.8;
 
-const HomeScreen=()=>{
+const HomeScreen=({navigation})=>{
    const categories = ['All', 'Popular', 'Top Rated', 'Low Price', 'High Price'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [activeCardIndex, setActiveCardIndex] = React.useState(0);
@@ -79,15 +80,31 @@ return(
             </View>
              <Icon name="bookmark-outline" size={30}/>
           </View>
-          <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
+          <View  style={{flexDirection:"row", marginTop:7, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
+            
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.gray}/>
               </View>
-              <Text style={{fontSize:10} }>300 Views</Text>
+              {/* Button view */}
+              {/* <View style={{ paddingBottom:5}}>
+              <Button 
+               title="View Details"
+              
+           />  </View> */}
+             
+           <View style={{ paddingBottom:22 }}>
+          <Button
+              onPress={()=>navigation.navigate('Profile')}
+            title="View Details"
+            color='#9370DB'>
+           
+          </Button>
+        </View>
+
           </View>
          </View>        
     </View>
@@ -123,9 +140,8 @@ const TopHotelCard = ({hotel}) => {
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
         <View style={style.header}>
-            <View style={{paddingBottom:15}}>
-             <Text style={{fontSize:25, fontWeight:'bold'}}>
-               Search a Company </Text> 
+            <View >
+             <Text style={{fontSize:25, fontWeight:'bold'}}>  Search a Company </Text> 
                <View style={{flexDirection:'row'}}>
                    <Text style={{fontSize:25, fontWeight:'bold'}} >in  </Text>
                    <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
@@ -133,9 +149,10 @@ const TopHotelCard = ({hotel}) => {
             </View>
             <Icon name="account-outline"  size={38} color={COLORS.grey}/>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={true}>
          <View style={style.searchInputContainer}>
         
+      {/* database query to search */}
          <Searchbar 
           placeholder="Search"
           onChangeText={onChangeSearch}
@@ -145,11 +162,11 @@ const TopHotelCard = ({hotel}) => {
          <CategoryList/>
          <View>
          <Animated.FlatList
-        //  card animation remaining
-          // onScroll={Animated.event([{nativeEvent:{contentOffset:{x:scrollX}}},], {useNativeDriver:true}, )}
+        
           data={hotels}
           horizontal
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           contentContainerStyle={{
             paddingLeft: 20,
             marginTop: 20,
@@ -162,15 +179,17 @@ const TopHotelCard = ({hotel}) => {
 
            {/* Bottom View */}
 
-           <View style={{flexDirection:"row",justifyContent:"space-between", marginHorizontal:20}}>
+           <View style={{flexDirection:"column" ,justifyContent:"space-around", marginHorizontal:20, margBottom:3}}>
             <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Available Companies</Text>
-            {/* <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Show all</Text> */}
+          
            </View>
-           <FlatList 
+           {/* <FlatList 
+           
             data={hotels}
-            horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft:20, marginBottom:30,marginTop:20}}
+           vertical 
+            contentContainerStyle={{flexDirection:"column",justifyContent:"space-between",paddingBottom:20, marginBottom:30,marginTop:20}}
              renderItem={({item})=><TopHotelCard hotel={item}/>}
-           />
+           /> */}
         </ScrollView>
      </SafeAreaView>
    
@@ -200,7 +219,7 @@ const style = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginHorizontal: 20,
-      marginTop: 30,
+      marginTop: 10,
     },
     categoryListText: {
       fontSize: 14,
