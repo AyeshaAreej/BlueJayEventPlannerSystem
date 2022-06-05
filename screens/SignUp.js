@@ -3,6 +3,7 @@ import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
+import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { Formik } from 'formik'
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
@@ -70,8 +71,7 @@ function SignUp({navigation}) {
             // onBlur={handleBlur('password')}
             value={values.password}
             secureTextEntry
-      
-           />
+          />
             <TextInput
              style={styles.input}
              name="phoneNumber"
