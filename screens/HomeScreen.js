@@ -1,23 +1,10 @@
 import React from 'react';
-import {
-    Dimensions,
-    FlatList,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    Image,
-    Animated,
-    Button,
-} from 'react-native';
+import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { TouchableOpacity } from 'react-native-web';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
+import CompanyDetails from './CompanyDetails';
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.8;
@@ -26,36 +13,42 @@ const HomeScreen=({navigation})=>{
    const categories = ['All', 'Popular', 'Top Rated', 'Low Price', 'High Price'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [activeCardIndex, setActiveCardIndex] = React.useState(0);
-    // const scrollX=React.useRef(new Animated.Value(0)).current;
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
- 
-     const CategoryList=()=> {
-          return (
+
+
+    
+    const CategoryList = ({navigation}) => {
+      return (
         <View style={style.categoryListContainer}>
           {categories.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              activeOpacity={0.8}
+              onPress={() => setSelectedCategoryIndex(index)}>
               <View>
-           <Text
-            onPress={()=> setSelectedCategoryIndex(index)}
-           key={index}
-            style={{...style.categoryListText ,
-           color: selectedCategoryIndex == index
-                      ? COLORS.primary
-                      : COLORS.grey,
-                
-           }}>
-           {item} </Text>
-           {setActiveCardIndex==index && (
-           <View  style={{
-                    height: 6,
-                    width: 30,
-                    backgroundColor: COLORS.primary,
-                    marginTop: 2,
-                  }}/>  
-           )}
-          
-           </View>
-        
+                <Text
+                  style={{
+                    ...style.categoryListText,
+                    color:
+                      selectedCategoryIndex == index
+                        ? COLORS.primary
+                        : COLORS.grey,
+                  }}>
+                  {item}
+                </Text>
+                {selectedCategoryIndex == index && (
+                  <View
+                    style={{
+                      height: 3,
+                      width: 30,
+                      backgroundColor: COLORS.primary,
+                      marginTop: 2,
+                    }}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
           ))}
         </View>
       );
@@ -64,6 +57,7 @@ const HomeScreen=({navigation})=>{
 
 const Card=({hotel,index})=>{
 return(
+   
     <View style={{...style.card}}>
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
@@ -80,47 +74,38 @@ return(
             </View>
              <Icon name="bookmark-outline" size={30}/>
           </View>
-          <View  style={{flexDirection:"row", marginTop:7, justifyContent:'space-between'}}>
+          <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-            
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.gray}/>
               </View>
-              {/* Button view */}
-              {/* <View style={{ paddingBottom:5}}>
-              <Button 
-               title="View Details"
-              
-           />  </View> */}
-             
-           <View style={{ paddingBottom:22 }}>
-          <Button
-              onPress={()=>navigation.navigate('Profile')}
-            title="View Details"
-            color='#9370DB'>
-           
-          </Button>
-        </View>
+              <Button
+              // onPress={()=>navigation.navigate('CompanyDetails')}
+              // onPress={()=><CompanyDetails/>}
+
+              title="View Details"
+              color='#9370DB'
+               />
 
           </View>
          </View>        
     </View>
+    
+    
+    
+
 )
 };
 
 const TopHotelCard = ({hotel}) => {
   return (
     <View style={style.topHotelCard}>
-    <View  style={{
-            position: 'absolute',
-            top: 5,
-            right: 5,
-            zIndex: 1,
-            flexDirection: 'row',
-          }} >
+     <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"
+      />
+    <View  style={style.topHotelCardView} >
     <Icon name="star" size={15} color={COLORS.orange} />
           <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 15}}>
             5.0
@@ -134,14 +119,16 @@ const TopHotelCard = ({hotel}) => {
           </Text>
     </View>
     </View>
+    
   );
 };
 
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
         <View style={style.header}>
-            <View >
-             <Text style={{fontSize:25, fontWeight:'bold'}}>  Search a Company </Text> 
+            <View style={{paddingBottom:15}}>
+             <Text style={{fontSize:25, fontWeight:'bold'}}>
+               Search a Company </Text> 
                <View style={{flexDirection:'row'}}>
                    <Text style={{fontSize:25, fontWeight:'bold'}} >in  </Text>
                    <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
@@ -149,10 +136,9 @@ const TopHotelCard = ({hotel}) => {
             </View>
             <Icon name="account-outline"  size={38} color={COLORS.grey}/>
         </View>
-        <ScrollView showsVerticalScrollIndicator={true}>
+        <ScrollView showsVerticalScrollIndicator={false}>
          <View style={style.searchInputContainer}>
         
-      {/* database query to search */}
          <Searchbar 
           placeholder="Search"
           onChangeText={onChangeSearch}
@@ -162,11 +148,9 @@ const TopHotelCard = ({hotel}) => {
          <CategoryList/>
          <View>
          <Animated.FlatList
-        
           data={hotels}
           horizontal
           showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={true}
           contentContainerStyle={{
             paddingLeft: 20,
             marginTop: 20,
@@ -179,17 +163,15 @@ const TopHotelCard = ({hotel}) => {
 
            {/* Bottom View */}
 
-           <View style={{flexDirection:"column" ,justifyContent:"space-around", marginHorizontal:20, margBottom:3}}>
+           <View style={{flexDirection:"row",justifyContent:"space-between", marginHorizontal:20}}>
             <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Available Companies</Text>
           
            </View>
-           {/* <FlatList 
-           
+           <FlatList 
             data={hotels}
-           vertical 
-            contentContainerStyle={{flexDirection:"column",justifyContent:"space-between",paddingBottom:20, marginBottom:30,marginTop:20}}
+            horizontal showsHorizontalScrollIndicator={true} contentContainerStyle={{paddingLeft:20, marginBottom:30,marginTop:20}}
              renderItem={({item})=><TopHotelCard hotel={item}/>}
-           /> */}
+           />
         </ScrollView>
      </SafeAreaView>
    
@@ -207,7 +189,6 @@ const style = StyleSheet.create({
     searchInputContainer: {
       height: 50,
       backgroundColor: COLORS.light,
-    //   marginTop: 15,
       margin:20,
       borderTopLeftRadius: 30,
       borderBottomLeftRadius: 30,
@@ -219,7 +200,7 @@ const style = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginHorizontal: 20,
-      marginTop: 10,
+      marginTop: 30,
     },
     categoryListText: {
       fontSize: 14,
@@ -275,6 +256,13 @@ const style = StyleSheet.create({
       elevation: 15,
       marginHorizontal: 10,
       borderRadius: 10,
+    },
+    topHotelCardView:{
+      position: 'absolute',
+      top: 5,
+      right: 5,
+      zIndex: 1,
+      flexDirection: 'row',
     },
     topHotelCardImage: {
       height: 80,

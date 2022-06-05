@@ -96,7 +96,7 @@ function LoginScreen({navigation}) {
               <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:10}}textStyle={{color:'#fff'}} />
               </View>
   
-              <Text style={{marginLeft:100}}>Already Have an Account?  <Text style={{fontWeight: "bold"}}> SignIn</Text> </Text>
+             
 
     </View>
     
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor :"#9370DB",
     paddingTop:"18%",
     paddingLeft:8,
-    width:410,
+    width:'100%',
     height:220,
     
    },
@@ -133,8 +133,6 @@ const styles = StyleSheet.create({
 
    container: {
     flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
     padding:5,
     borderRadius: 100,
   

@@ -27,7 +27,7 @@ function WelcomeScreen({navigation}) {
    <View style={styles.bottomView}>
     <Text style={{color:'white', fontSize:30, padding:10, fontWeight:'bold'}}>Welcome</Text>
     <Text style={{padding:7,color:'white'}}>
-    The Blue Jay Event Planners Application Company aims to get you in touch with event organization companies to book online services such as catering, music photography and what not!.
+    The Blue Jay Event Planners Application Company aims to get people in touch with event organization companies and companies with vendors to book and execute event by providing various services online such as catering, music photography and what not!.
     </Text>
 
 
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   
   },
   logoContainer: {
-    top:150,
+    top:130,
     backgroundColor:"#fff",
     alignItems: "center",
     justifyContent:"center",
@@ -76,9 +76,10 @@ const styles = StyleSheet.create({
  },
   bottomView:{
   backgroundColor :"#9370DB",
-  paddingTop:"18%",
+  paddingTop:"8%",
   paddingLeft:8,
-  width:410,
+  paddingBottom:15,
+  width:'100%',
   height:415,
   borderTopStartRadius:60,
   borderTopEndRadius:60, 

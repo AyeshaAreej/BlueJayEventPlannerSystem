@@ -7,6 +7,9 @@ import AuthStack from './AuthStack';
 import UserStack from './UserStack';
 import CompanyStack from './CompanyStack';
 import VendorStack from './VendorStack';
+import CompanyDetails from './screens/CompanyDetails';
+import BookingForm from './screens/BookingForm';
+
 
 
 const Drawer = createDrawerNavigator();
@@ -17,12 +20,15 @@ export default function App() {
  return (
 <>
 
-    <NavigationContainer>   
-          {/* <AuthStack/> */}
+<BookingForm/>
+{/* <CompanyDetails/> */}
+    {/* <NavigationContainer>   
+   
+        <AuthStack/>
           <UserStack/>
-          {/* <CompanyStack/> */}
-          {/* <VendorStack/> */}
-    </NavigationContainer>
+          <CompanyStack/>
+          <VendorStack/> 
+    </NavigationContainer> */}
   
 </>
  );
