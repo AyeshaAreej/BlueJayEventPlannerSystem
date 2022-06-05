@@ -34,7 +34,7 @@ function BookingForm() {
 
     {/* Form */}
     <Formik
-     initialValues={{uname:'', email: '',city:'', phonenumber:'',eventtype:'',numofguests:'',venuetype:'',services:'',availablebudget:'',  }}
+     initialValues={{uname:'', email: '',city:'', phonenumber:'',eventtype:'',date:'',numofguests:'',venuetype:'',services:'',availablebudget:'',  }}
     onSubmit={values => console.log(values)}
  >
     {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -85,7 +85,16 @@ function BookingForm() {
             // onBlur={handleBlur('email')}
             value={values.eventtype}
            
-           />  
+           /> 
+              <TextInput
+             style={styles.input}
+             name="date"
+             placeholder='Date '
+             onChangeText={handleChange('date')}
+            // onBlur={handleBlur('email')}
+            value={values.date}
+           
+           /> 
         
           <TextInput
              style={styles.input}
@@ -129,6 +138,8 @@ function BookingForm() {
            
            />
 
+        
+
 
 
             </View>
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
    borderBottomColor :colors.primary,
    borderBottomWidth:4,
    paddingTop:12,
-   width:200,
+   width:250,
    fontSize:18,
 
    },
