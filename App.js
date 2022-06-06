@@ -9,6 +9,8 @@ import CompanyStack from './CompanyStack';
 import VendorStack from './VendorStack';
 import CompanyDetails from './screens/CompanyDetails';
 import BookingForm from './screens/BookingForm';
+import SignUp from './screens/SignUp';
+import LoginScreen from './screens/LoginScreen';
 
 
 
@@ -20,15 +22,17 @@ export default function App() {
  return (
 <>
 
-<BookingForm/>
-{/* <CompanyDetails/> */}
-    {/* <NavigationContainer>   
+{/* <LoginScreen/> */}
+{/* <BookingForm/> */}
+<SignUp/>
+{/* <CompanyDetails/>   */}
+     {/* <NavigationContainer>    */}
    
-        <AuthStack/>
-          <UserStack/>
-          <CompanyStack/>
-          <VendorStack/> 
-    </NavigationContainer> */}
+      {/* <AuthStack/> */}
+          {/* <UserStack/> */}
+          {/* <CompanyStack/> 
+          <VendorStack/>  */}
+    {/* </NavigationContainer>  */}
   
 </>
  );

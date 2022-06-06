@@ -2,13 +2,14 @@ import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
-import { Colors } from "../components/styles";
+import colors from "../components/colors";
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { Formik } from 'formik'
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
+import { Center } from "native-base";
 
 
 
@@ -43,7 +44,7 @@ function SignUp({navigation}) {
               }}
            >
       {({ handleChange, handleSubmit, values }) => (
-        <>
+        <View style={{ alignItems:"center",justifyContent:'center' }}>
            <TextInput
              style={styles.input}
              name="uname"
@@ -51,7 +52,7 @@ function SignUp({navigation}) {
              onChangeText={handleChange('uname')}
             // onBlur={handleBlur('email')}
             value={values.uname}
-            // keyboardType="email-address"
+           
            />
               <TextInput
              style={styles.input}
@@ -71,6 +72,8 @@ function SignUp({navigation}) {
             // onBlur={handleBlur('password')}
             value={values.password}
             secureTextEntry
+            
+
           />
             <TextInput
              style={styles.input}
@@ -92,7 +95,7 @@ function SignUp({navigation}) {
            />
          
             {/*SignUn Button  */}
-          <View style={styles.container}>
+          {/* <View style={styles.container}> */}
           <View style={styles.button}>
 
            <Button
@@ -100,10 +103,12 @@ function SignUp({navigation}) {
            title="SignUp"
            color='#9370DB'
            /> 
+
+           
           </View>
-          </View>
+          {/* </View> */}
        
-        </>
+        </View>
       )}
     </Formik>
 
@@ -112,7 +117,7 @@ function SignUp({navigation}) {
 
      <View>
 
-            <Text style={{marginLeft:210, marginTop:80,fontWeight: "bold"}}>OR</Text>
+            {/* <Text style={{paddingLeft:100,fontWeight: "bold"}}>OR</Text> */}
 
               {/* Social buttons */}
         
@@ -152,30 +157,28 @@ const styles = StyleSheet.create({
    
    input:{
    borderBottomColor :'#9370DB',
-   borderBottomWidth:1,
-   padding:3,
-   marginLeft:110,
-   margin:6,
+   borderBottomWidth:4,
    width:200,
+   fontSize:18,
+   paddingBottom:10,
 
    },
-
+// button styling
    container: {
     flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    padding:5,
-    borderRadius: 100,
+    paddingTop:'15%',
+   
+   
   
   },
    button:{
-    backgroundColor: 'purple',
-    width: '50%',
-    height: 35,
-    marginLeft:110,
-    marginTop:30,
-    
+    backgroundColor:colors.primary,
+    // width: '50%',
+     marginTop:30,
+    justifyContent:'center',
+    alignItems:'center',
 
+  
    },
    sbcontainer: {
     flex: 1,

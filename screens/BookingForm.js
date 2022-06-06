@@ -4,7 +4,7 @@ import colors from '../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { Colors } from "../components/styles";
 import { FloatingLabelInput } from 'react-native-floating-label-input';
-import { CheckBox } from 'react-native-elements';
+
 
 
 import { Formik,useFormik } from 'formik';
@@ -20,7 +20,7 @@ function BookingForm() {
   
   
   return (
-    <ScrollView style={{flex:1,backgroundColor:'#fff'}}>
+    <ScrollView style={{flex:1,backgroundColor:colors.white}}>
         <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"   />
        <View style={styles.topView}>
         <ImageBackground
@@ -35,7 +35,7 @@ function BookingForm() {
     {/* Form */}
     <Formik
      initialValues={{uname:'', email: '',city:'', phonenumber:'',eventtype:'',date:'',numofguests:'',venuetype:'',services:'',availablebudget:'',  }}
-    onSubmit={values => console.log(values)}
+     onSubmit={values => console.log(values)} 
  >
     {({ handleChange, handleBlur, handleSubmit, values }) => (
        <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
    },
    container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
