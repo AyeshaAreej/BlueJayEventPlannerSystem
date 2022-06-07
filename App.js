@@ -24,15 +24,15 @@ export default function App() {
 
 {/* <LoginScreen/> */}
 {/* <BookingForm/> */}
-<SignUp/>
+{/* <SignUp/> */}
 {/* <CompanyDetails/>   */}
-     {/* <NavigationContainer>    */}
+     <NavigationContainer>   
    
-      {/* <AuthStack/> */}
+      <AuthStack/>
           {/* <UserStack/> */}
           {/* <CompanyStack/> 
           <VendorStack/>  */}
-    {/* </NavigationContainer>  */}
+    </NavigationContainer> 
   
 </>
  );

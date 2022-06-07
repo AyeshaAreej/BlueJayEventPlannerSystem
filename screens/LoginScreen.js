@@ -3,8 +3,8 @@ import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
-import { Formik } from 'formik'
-import * as yup from 'yup'
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import HomeScreen from "./HomeScreen";
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
