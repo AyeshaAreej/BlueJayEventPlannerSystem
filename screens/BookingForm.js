@@ -2,6 +2,7 @@ import React from 'react'
 import {useState}  from 'react'
 import colors from '../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import CheckBox from 'expo-checkbox';
 import { Colors } from "../components/styles";
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import * as yup from 'yup';
