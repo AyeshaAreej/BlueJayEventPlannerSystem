@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import HomeScreen from './screens/HomeScreen';
+import VendorHome from './screens/VendorHome';
 import CompanyVendorProfile from './screens/CompanyVendorProfile';
 import MyOrders from './screens/MyOrders';
 import Location from './screens/Location';
@@ -27,7 +27,7 @@ const VendorStack = () => {
       drawerInactiveTintColor:'#333'
     }}
     useLegacyImplementation>
-          <Drawer.Screen name='Home' component={HomeScreen} 
+          <Drawer.Screen name='Home' component={VendorHome} 
             options={{
               drawerIcon:({focused,size})=>(
                 <Icon
