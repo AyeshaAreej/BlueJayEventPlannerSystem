@@ -5,9 +5,11 @@ import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
 import CompanyDetails from './CompanyDetails';
+
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.2;
@@ -18,6 +20,7 @@ const VendorHome=({navigation})=>{
     const [activeCardIndex, setActiveCardIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
+  
 
 
     
@@ -69,7 +72,7 @@ const VendorHome=({navigation})=>{
     };
 // Card
 
-const Card=({hotel,index,navigation})=>{
+const Card=({hotel,index})=>{
 return(
    
     <View style={{...style.card}}>
@@ -138,6 +141,7 @@ return(
           value={searchQuery}
         />
          </View>
+         
          <CategoryList/>
          <View>
          <Animated.FlatList
@@ -149,7 +153,7 @@ return(
             alignItems:'center',
             
           }}
-          renderItem={({item}) => <Card hotel={item} />}
+          renderItem={({item}) => <Card hotel={item}  />}
         />
         </View>
 

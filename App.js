@@ -6,11 +6,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import AuthStack from './AuthStack';
 import UserStack from './UserStack';
 import CompanyStack from './CompanyStack';
+import AdminStack from './screens/admin/AdminStack';
 import VendorStack from './VendorStack';
 import CompanyDetails from './screens/CompanyDetails';
 import BookingForm from './screens/BookingForm';
 import SignUp from './screens/SignUp';
 import LoginScreen from './screens/LoginScreen';
+import  VendorBookingForm from './screens/VendorBookingForm';
 
 
 
@@ -26,12 +28,14 @@ export default function App() {
 {/* <BookingForm/> */}
 {/* <SignUp/> */}
 {/* <CompanyDetails/>   */}
+
+{/* <VendorBookingForm/> */}
      <NavigationContainer>   
-   
+          <AdminStack/>
           {/* <AuthStack/> */}
           {/* <UserStack/> */}
           {/* <CompanyStack/>  */}
-          <VendorStack/>  
+          {/* <VendorStack/>   */}
     </NavigationContainer> 
   
 </>

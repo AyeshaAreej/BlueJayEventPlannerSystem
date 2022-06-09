@@ -5,9 +5,22 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
 import CompanyDetails from './CompanyDetails';
-
+import { useNavigation } from '@react-navigation/native';
+import colors from '../components/colors';
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.8;
+
+
+function GoToButton({ screenName }) {
+  const navigation = useNavigation();
+
+  return (
+    <Button
+      title="View Details"
+      onPress={() => navigation.navigate(screenName)}
+    />
+  );
+}
 
 const HomeScreen=({navigation})=>{
    const categories = ['All', 'Popular', 'Top Rated', 'Low Price', 'High Price'];
@@ -82,13 +95,14 @@ return(
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.gray}/>
               </View>
-              <Button
+              <GoToButton screenName="CompanyDetails" />
+              {/* <Button
               // onPress={()=>navigation.navigate('CompanyDetails')}
               // onPress={()=><CompanyDetails/>}
 
               title="View Details"
               color='#9370DB'
-               />
+               /> */}
 
           </View>
          </View>        

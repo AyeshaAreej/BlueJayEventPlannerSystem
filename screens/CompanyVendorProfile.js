@@ -161,7 +161,7 @@ const CompanyVendorProfile = () => {
             {/*Save Button  */}
         
           <View style={styles.button}>
-           <Button  onPress={handleSubmit} 
+           <Button  onPress={handleSubmit}
            title="Save"
            color={colors.primary}
            /> 

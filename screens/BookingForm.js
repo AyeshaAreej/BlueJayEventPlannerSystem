@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import { Formik} from 'formik';
 
 
-function BookingForm() {
+function BookingForm({  navigation}) {
 
    const [phonenum, setPhonenum] = useState(0);
   const [show, setShow] = useState(false);
