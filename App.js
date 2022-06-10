@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AuthStack from './AuthStack';
 import UserStack from './UserStack';
+import COLORS from './components/colors';
 import CompanyStack from './CompanyStack';
 import AdminStack from './screens/admin/AdminStack';
 import VendorStack from './VendorStack';
@@ -28,7 +29,7 @@ export default function App() {
 {/* <BookingForm/> */}
 {/* <SignUp/> */}
 {/* <CompanyDetails/>   */}
-
+{/* <Card hotel={hotels}/> */}
 {/* <VendorBookingForm/> */}
      <NavigationContainer>   
           <AdminStack/>

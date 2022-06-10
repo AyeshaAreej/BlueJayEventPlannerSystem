@@ -178,7 +178,7 @@ const TopHotelCard = ({hotel}) => {
            {/* Bottom View */}
 
            <View style={{flexDirection:"row",justifyContent:"space-between", marginHorizontal:20}}>
-            <Text style={{fontWeight:"bold", color:COLORS.grey}}t>Available Companies</Text>
+            <Text style={{fontWeight:"bold", color:COLORS.grey}}>Available Companies</Text>
           
            </View>
            <FlatList 
