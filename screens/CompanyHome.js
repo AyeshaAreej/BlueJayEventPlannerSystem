@@ -14,7 +14,7 @@ import CompanyDetails from './CompanyDetails';
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.2;
 
-const VendorHome=({navigation})=>{
+const CompanyHome=({navigation})=>{
    const categories = ['Food', 'Music', 'Decorations', 'Venue', 'Photography'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [activeCardIndex, setActiveCardIndex] = React.useState(0);
@@ -72,7 +72,7 @@ const VendorHome=({navigation})=>{
     };
 // Card
 
-const Card=({hotel,index})=>{
+const Card=({hotel,index,navigation})=>{
 return(
    
     <View style={{...style.card}}>
@@ -100,12 +100,10 @@ return(
                  <Icon name="star" size={15} color={COLORS.gray}/>
               </View>
               <Button
-            
-               onPress={()=>navigation.navigate('CompanyDetails')}
-
-              title="View Details"
-              color='#9370DB'
-               />
+           onPress={()=>navigation.navigate('CompanyDetails')}
+           title="ViewDetails"
+           color='#9370DB'
+           /> 
 
           </View>
          </View>        
@@ -243,4 +241,4 @@ const style = StyleSheet.create({
    
   });
 
-export default VendorHome;
+export default CompanyHome;

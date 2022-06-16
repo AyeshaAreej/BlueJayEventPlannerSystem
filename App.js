@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,7 +12,7 @@ import CompanyDetails from './screens/CompanyDetails';
 import BookingForm from './screens/BookingForm';
 import SignUp from './screens/SignUp';
 import LoginScreen from './screens/LoginScreen';
-import  VendorBookingForm from './screens/VendorBookingForm';
+import VendorBookingForm from './screens/company/VendorBookingForm';
 
 
 
@@ -30,14 +29,15 @@ export default function App() {
 {/* <SignUp/> */}
 {/* <CompanyDetails/>   */}
 {/* <Card hotel={hotels}/> */}
-{/* <VendorBookingForm/> */}
-     <NavigationContainer>   
-          <AdminStack/>
+<VendorBookingForm/>
+     {/* <NavigationContainer>    */}
+
+          {/* <AdminStack/> */}
           {/* <AuthStack/> */}
           {/* <UserStack/> */}
           {/* <CompanyStack/>  */}
           {/* <VendorStack/>   */}
-    </NavigationContainer> 
+    {/* </NavigationContainer>  */}
   
 </>
  );

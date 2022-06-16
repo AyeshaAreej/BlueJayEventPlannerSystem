@@ -6,7 +6,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
 import CompanyDetails from './screens/CompanyDetails';
 import BookingForm from './screens/BookingForm';
-import VendorBookingForm from './screens/VendorBookingForm';
+import VendorBookingForm from './screens/company/VendorBookingForm';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
