@@ -1,18 +1,19 @@
 import React from 'react'
 import {useState}  from 'react'
+//import DatePicker from 'react-native-date-picker';
+// import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
-import CheckBox from 'expo-checkbox';
-import { FloatingLabelInput } from 'react-native-floating-label-input';
 import * as yup from 'yup';
 import { Formik} from 'formik';
 
 
 function VendorBookingForm({  navigation}) {
 
-   const [phonenum, setPhonenum] = useState(0);
-  const [show, setShow] = useState(false);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+ 
+   const [date, setDate] = useState(new Date());
+   const [open, setOpen] = useState(false);
 
  
   
@@ -32,7 +33,7 @@ function VendorBookingForm({  navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{companyname:'', email: '',location:'', phoneNumber:'',date:'',availablebudget:'', }}
+     initialValues={{companyname:'', email: '',location:'', phoneNumber:'',date:'',availablebudget:'', specifications:'',}}
      onSubmit={values => console.log(values)} 
      validationSchema={yup.object().shape({
             companyname: yup
@@ -56,6 +57,9 @@ function VendorBookingForm({  navigation}) {
             availablebudget: yup
             .number()
             .required('Budget is required.'),
+           specifications: yup
+             .string()
+            .required('Specifications are required.'),    
           })}
  >
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
@@ -88,17 +92,7 @@ function VendorBookingForm({  navigation}) {
             }  
            
 
-            <TextInput
-             style={styles.input}
-             name="location"
-             placeholder="Enter Location"
-             onChangeText={handleChange('location')}
-             onBlur={()=>setFieldTouched('location')}
-             value={values.location}
-           />
-           {touched.location && errors.location &&
-              <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.location}</Text>
-            }
+          
             <TextInput
              style={styles.input}
              name="phoneNumber"
@@ -112,7 +106,17 @@ function VendorBookingForm({  navigation}) {
             {touched.phoneNumber && errors.phoneNumber &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
             }
-             
+            <TextInput
+             style={styles.input}
+             name="location"
+             placeholder="Event Location"
+             onChangeText={handleChange('location')}
+             onBlur={()=>setFieldTouched('location')}
+             value={values.location}
+           />
+           {touched.location && errors.location &&
+              <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.location}</Text>
+            }
             
               <TextInput
              style={styles.input}
@@ -142,16 +146,47 @@ function VendorBookingForm({  navigation}) {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availablebudget}</Text>
             }
             
-              {/* Venue */}
+            <TextInput
+             style={styles.input}
+             name="specifications"
+             placeholder="Enter Specifications"
+            multiline={true}
+             onChangeText={handleChange('specifications')}
+             onBlur={()=>setFieldTouched('specifications')}
+            value={values.specifications}
+            />
+            {touched.specifications && errors.specifications &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.specifications}</Text>
+            }
+             {/* <DatePicker  date={date} onDateChange={setDate}  /> */}
           
-          
+             <View style={styles.button}>
+  <Button title="Pick Date" onPress={() => setOpen(true)} />
+      <DateTimePicker
+        modal
+        mode='datetime'
+        open={open}
+        date={date}
+        value={new Date()}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+      
+      
+</View>
+                  
       <View style={styles.button}>
        <Button onPress={handleSubmit} title="Submit" color='#9370DB' />
        </View>
       </View>
      )}
   </Formik>
-  {/* In the end the expected total amount will be calcultaed according to services selected and will be displayed to user and data will be send to company via message or email */}
+   
     </ScrollView>
   )
 }
