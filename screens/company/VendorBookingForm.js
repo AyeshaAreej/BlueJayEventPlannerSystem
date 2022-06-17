@@ -1,7 +1,5 @@
 import React from 'react'
 import {useState}  from 'react'
-//import DatePicker from 'react-native-date-picker';
-// import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
@@ -14,10 +12,20 @@ function VendorBookingForm({  navigation}) {
  
    const [date, setDate] = useState(new Date());
    const [open, setOpen] = useState(false);
+   const [isPickerShow, setIsPickerShow] = useState(false);
 
- 
   
-  
+   const showPicker = () => {
+    setIsPickerShow(true);
+  };
+   const onChange = (event, value) => {
+    setDate(value);
+    
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
+    }
+  };
+// console.log(date);
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
         <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"   />
@@ -46,9 +54,9 @@ function VendorBookingForm({  navigation}) {
             location: yup
              .string()
             .required('Location is required.'),    
-            date:yup
-            .date()
-            .required('Date of event is required'),
+          //   date:yup
+          //   .string()
+          //  .required('Date of event is required'),
             phoneNumber: yup
             .number()
              .min(11, 'min 11 digits are required')
@@ -118,19 +126,8 @@ function VendorBookingForm({  navigation}) {
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.location}</Text>
             }
             
-              <TextInput
-             style={styles.input}
-             name="date"
-             placeholder='Date '
-             onChangeText={handleChange('date')}
-             onBlur={()=>setFieldTouched('date')}
-            value={values.date}
-           
-           /> 
-            {touched.date && errors.date &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.date}</Text>
-            }
-        
+              
+         
         
             
             <TextInput
@@ -158,27 +155,47 @@ function VendorBookingForm({  navigation}) {
             {touched.specifications && errors.specifications &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.specifications}</Text>
             }
-             {/* <DatePicker  date={date} onDateChange={setDate}  /> */}
-          
-             <View style={styles.button}>
-  <Button title="Pick Date" onPress={() => setOpen(true)} />
-      <DateTimePicker
-        modal
-        mode='datetime'
-        open={open}
-        date={date}
-        value={new Date()}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
-      
-      
-</View>
+       
+
+       {/* Date */}
+   <View style={styles.container}>
+      {/* Display the selected date */}
+      <View style={styles.pickedDateContainer}>
+      <TextInput
+             style={styles.input}
+             name="date"
+             placeholder='Date '
+             onBlur={()=>setFieldTouched('date')}
+             onChangeText={handleChange('date')}
+             value={date.toUTCString()}
+             editable={false}
+           
+           /> 
+            {/* {touched.date && errors.date &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.date}</Text>
+            } */}
+      </View>
+
+      {/* The button that used to trigger the date picker */}
+      {!isPickerShow && (
+        <View style={styles.btnContainer}>
+          <Button title="Pick Date " color={colors.primary} onPress={showPicker} />
+        </View>
+      )}
+
+      {/* The date picker */}
+      {isPickerShow && (
+        <DateTimePicker
+          value={date}
+          mode={'date'}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          // is24Hour={true}
+          onChange={onChange}
+          style={styles.datePicker}
+        />
+      )}
+    </View>
+   
                   
       <View style={styles.button}>
        <Button onPress={handleSubmit} title="Submit" color='#9370DB' />
@@ -186,7 +203,9 @@ function VendorBookingForm({  navigation}) {
       </View>
      )}
   </Formik>
-   
+
+
+ 
     </ScrollView>
   )
 }
@@ -213,8 +232,8 @@ const styles = StyleSheet.create({
    borderBottomColor :colors.primary,
    borderBottomWidth:4,
    paddingTop:12,
-   width:250,
-   fontSize:18,
+   width:270,
+   fontSize:22,
 
    },
 
@@ -222,9 +241,7 @@ const styles = StyleSheet.create({
    button:{
     backgroundColor:colors.primary,
     width: '50%',
-     marginTop:15,
-     
-    
+     marginTop:20,
 
    },
    container: {
@@ -234,13 +251,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
+  pickedDateContainer: {
+    padding: 12,
   },
-  checkbox: {
-    alignSelf: "center",
+  pickedDate: {
+    fontSize: 20,
+    color: colors.grey,
+    fontWeight:'bold'
   },
+  btnContainer: {
+    paddingTop: 12,
+   
+  },
+  // This only works on iOS
+ 
+
+
 
 });
 

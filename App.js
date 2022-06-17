@@ -18,7 +18,6 @@ import VendorBookingForm from './screens/company/VendorBookingForm';
 
 const Drawer = createDrawerNavigator();
 
-
 export default function App() {
 
  return (
