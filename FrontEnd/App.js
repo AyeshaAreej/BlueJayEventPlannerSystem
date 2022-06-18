@@ -13,7 +13,7 @@ import BookingForm from './screens/BookingForm';
 import SignUp from './screens/SignUp';
 import LoginScreen from './screens/LoginScreen';
 import VendorBookingForm from './screens/company/VendorBookingForm';
-
+import Photo from './screens/Photo';
 
 
 const Drawer = createDrawerNavigator();
@@ -29,13 +29,14 @@ export default function App() {
 {/* <CompanyDetails/>   */}
 {/* <Card hotel={hotels}/> */}
 {/* <VendorBookingForm/> */}
+{/* <Photo/> */}
      <NavigationContainer>   
 
           {/* <AdminStack/> */}
           {/* <AuthStack/> */}
           {/* <UserStack/> */}
-          <CompanyStack/> 
-          {/* <VendorStack/>   */}
+          {/* <CompanyStack/>  */}
+          <VendorStack/>  
     </NavigationContainer> 
   
 </>

@@ -1,10 +1,31 @@
-import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar} from 'react-native'
+import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar,Image,Platform} from 'react-native'
 import colors from '../components/colors';
-import React from 'react'
+import React,  { useState, useEffect } from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import * as ImagePicker from 'expo-image-picker';
 
 const CompanyVendorProfile = () => {
+  const [image, setImage] = useState(null);
+
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+
   return (
     <ScrollView  style={{flex:1, backgroundColor:'#fff', }} >
    
@@ -34,8 +55,9 @@ const CompanyVendorProfile = () => {
              .string()
             .required('City is required.'),  
             services : yup
-            .string(),
-            pricerane: yup
+            .string()
+            .required('Service is required.'), 
+            pricerange: yup
             .string()
             .required('Price Range is required.'), 
             address: yup
@@ -52,6 +74,13 @@ const CompanyVendorProfile = () => {
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
+        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        <View style={styles.button}>
+    <Button title="Upload Image" onPress={pickImage} />
+    </View>
+    
+  </View>
         <TextInput
              style={styles.input}
              name="companyname"
@@ -171,7 +200,7 @@ const CompanyVendorProfile = () => {
         </View>
       )}
     </Formik>
-
+    
 
      </View>
 
