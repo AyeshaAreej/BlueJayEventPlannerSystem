@@ -4,14 +4,14 @@
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import COLORS from '../components/colors';
-import hotels from '../components/companies';
+import COLORS from '../../components/colors';
+import hotels from '../../components/companies';
 
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;
 
-const MyOrders=({navigation})=>{
+const AdminOrders=({navigation})=>{
  
   
 // Card
@@ -28,29 +28,35 @@ return(
      </View>
      <View style={{flexDirection:'row'}}>
          <Image source={hotel.image} style={style.cardImage} />
-     
+     <View  style={{flexDirection:'column'}}>
          <Text style={{fontSize:16, marginLeft:20, marginTop:50,marginBottom:20}}>
          Event Type: Wedding{'\n'}{'\n'}Status: Pending{'\n' }{'\n' }Date: 4/july/2022  </Text>
-         
-         </View>
         
-         <View >
-          <View style={{flexDirection:"row", justifyContent:'space-between'}}>
-           <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>Name : {hotel.name}</Text>
-                <Text>Total : Rs.{hotel.price}</Text>
-               
-            </View>
-          </View>
-          <View  style={{flexDirection:"row", justifyContent:'flex-end'}}>
-           {/* <Button
+         <View  style={{flexDirection:"row",paddingBottom:5, justifyContent:'center'}}>
+           <Button
           //  onPress={()=>navigation.navigate('CompanyDetails')}
            title="Accept Order"
            color='#9370DB'
-           />  */}
+           /> 
 
           </View>
-         </View>     
+         </View>
+         </View>
+        
+        
+         
+           <View style={{flexDirection:'row'}}>
+               <Text style={{fontWeight:"bold",fontSize:15}}>Name : {hotel.name} {'\n'}
+                Total : Rs.{hotel.price}</Text>
+               <View style={{paddingLeft:40, borderRadius:12}}>
+                <Button  title="Reject Order"
+           color='#9370DB'/>
+           </View>
+        
+               
+          </View>
+         
+           
         
     </View>
     
@@ -101,7 +107,7 @@ const style = StyleSheet.create({
       
     },
     cardImage: {
-      height: 160,
+      height: 180,
       width: '50%',
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
@@ -134,4 +140,4 @@ const style = StyleSheet.create({
    
   });
 
-export default MyOrders;
+export default AdminOrders;

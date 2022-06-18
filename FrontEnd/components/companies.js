@@ -9,7 +9,7 @@ const hotels = [
     },
     {
       id: '2',
-      name: 'Pearl & Mist',
+      name: '    Pearls & Mist',
       location: 'Lahore',
       price: 200000,
       image: require('../assets/hotel2.jpg'),

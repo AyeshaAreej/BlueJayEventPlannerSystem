@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import HomeScreen from './HomeScreen';
 import VendorProfile from './VendorProfile';
-import MyOrders from '../MyOrders';
+import AdminOrders from './AdminOrders';
 import Location from '../Location';
 import Message from '../Message';
 import HelpCentre from '../HelpCentre';
@@ -50,7 +50,7 @@ const AdminStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='My Orders' component={MyOrders} 
+          <Drawer.Screen name='My Orders' component={AdminOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <Icon

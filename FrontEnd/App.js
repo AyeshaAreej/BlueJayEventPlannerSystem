@@ -32,11 +32,11 @@ export default function App() {
 {/* <Photo/> */}
      <NavigationContainer>   
 
-          {/* <AdminStack/> */}
+          <AdminStack/>
           {/* <AuthStack/> */}
           {/* <UserStack/> */}
           {/* <CompanyStack/>  */}
-          <VendorStack/>  
+          {/* <VendorStack/>   */}
     </NavigationContainer> 
   
 </>

@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import CompanyHome from './screens/CompanyHome';
 import CompanyVendorProfile from './screens/CompanyVendorProfile';
-import MyOrders from './screens/MyOrders';
+import CompanyVendorOrders from './screens/CompanyVendorOrders';
 import Location from './screens/Location';
 import Message from './screens/Message';
 import HelpCentre from './screens/HelpCentre';
@@ -49,7 +49,7 @@ const CompanyStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='My Orders' component={MyOrders} 
+          <Drawer.Screen name='My Orders' component={CompanyVendorOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <Icon
