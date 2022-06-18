@@ -28,15 +28,15 @@ export default function App() {
 {/* <SignUp/> */}
 {/* <CompanyDetails/>   */}
 {/* <Card hotel={hotels}/> */}
-<VendorBookingForm/>
-     {/* <NavigationContainer>    */}
+{/* <VendorBookingForm/> */}
+     <NavigationContainer>   
 
           {/* <AdminStack/> */}
           {/* <AuthStack/> */}
           {/* <UserStack/> */}
-          {/* <CompanyStack/>  */}
+          <CompanyStack/> 
           {/* <VendorStack/>   */}
-    {/* </NavigationContainer>  */}
+    </NavigationContainer> 
   
 </>
  );
