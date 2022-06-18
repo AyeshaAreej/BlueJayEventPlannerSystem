@@ -1,23 +1,23 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import HomeScreen from './screens/HomeScreen';
-import Profile from './screens/Profile';
-import MyOrders from './screens/MyOrders';
-import Location from './screens/Location';
-import Message from './screens/Message';
-import HelpCentre from './screens/HelpCentre';
-import PaymentMethod from './screens/PaymentMethod';
-import Notifications from './screens/Notifications'
+import HomeScreen from './HomeScreen';
+import VendorProfile from './VendorProfile';
+import MyOrders from '../MyOrders';
+import Location from '../Location';
+import Message from '../Message';
+import HelpCentre from '../HelpCentre';
+import PaymentMethod from '../PaymentMethod';
+import Notifications from '../Notifications'
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import CustomDrawer from './components/CustomDrawer';
+ import CustomDrawer from '../../components/CustomDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 const Drawer = createDrawerNavigator();
 
 
-const VendorStack = () => {
+const AdminStack = () => {
   return (
     <Drawer.Navigator 
     drawerContent={props=><CustomDrawer {...props} /> } 
@@ -39,7 +39,7 @@ const VendorStack = () => {
             }}
             
           />
-          <Drawer.Screen name=' Profile' component={Profile}
+          <Drawer.Screen name=' Profile' component={VendorProfile}
               options={{
                 drawerIcon:({focused,size})=>(
                   <Icon
@@ -122,4 +122,4 @@ const VendorStack = () => {
 
 
 
-export default VendorStack
+export default AdminStack

@@ -1,14 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import HomeScreen from './screens/HomeScreen';
-import Profile from './screens/Profile';
+import CompanyHome from './screens/CompanyHome';
+import CompanyVendorProfile from './screens/CompanyVendorProfile';
 import MyOrders from './screens/MyOrders';
 import Location from './screens/Location';
 import Message from './screens/Message';
 import HelpCentre from './screens/HelpCentre';
 import PaymentMethod from './screens/PaymentMethod';
 import Notifications from './screens/Notifications'
-
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import CustomDrawer from './components/CustomDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -27,7 +26,7 @@ const CompanyStack = () => {
       drawerInactiveTintColor:'#333'
     }}
     useLegacyImplementation>
-          <Drawer.Screen name='Home' component={HomeScreen} 
+          <Drawer.Screen name='Home' component={CompanyHome} 
             options={{
               drawerIcon:({focused,size})=>(
                 <Icon
@@ -39,7 +38,7 @@ const CompanyStack = () => {
             }}
             
           />
-          <Drawer.Screen name=' Profile' component={Profile}
+          <Drawer.Screen name=' Profile' component={CompanyVendorProfile}
               options={{
                 drawerIcon:({focused,size})=>(
                   <Icon

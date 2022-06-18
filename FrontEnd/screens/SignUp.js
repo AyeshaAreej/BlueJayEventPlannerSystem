@@ -2,12 +2,15 @@ import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
-import { Colors } from "../components/styles";
-import { Formik } from 'formik'
+import colors from "../components/colors";
+import { FloatingLabelInput } from 'react-native-floating-label-input';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
+
 
 
 
@@ -37,62 +40,102 @@ function SignUp({navigation}) {
           <Formik
              initialValues={{ uname:'', email: '', password: '', phoneNumber:'', city:'' }}
              onSubmit={values => {
+                // navigation.navigate('HomeScreen')
                console.log(values)
-              //  navigation.navigate('HomeScreen')
+              
               }}
+              validationSchema={yup.object().shape({
+            uname: yup
+            .string()
+            .required('Name is required.'),  
+            email: yup
+            .string()
+            .email()
+            .required('Email is required.'), 
+             password: yup
+            .string()
+            .min(5, 'More than 5 characters are needed.')
+            .max(11, 'More than 12 characters are not allowed.')
+            .required(),
+            phoneNumber: yup
+            .number()
+            // .min(11, '11 or 12 digits are required')
+            // .max(12, '11 or 12 digits are required')
+            .required('Phone Number is required.'), 
+            city : yup
+            .string()
+            .required('City is required.'),  
+          })}
+          
            >
-      {({ handleChange, handleSubmit, values }) => (
-        <>
+      {({  handleChange, handleSubmit, values,errors,touched, setFieldTouched}) => (
+        <View style={{ alignItems:"center",justifyContent:'center' }}>
            <TextInput
              style={styles.input}
              name="uname"
              placeholder='Enter User Name'
              onChangeText={handleChange('uname')}
-            // onBlur={handleBlur('email')}
+             onBlur={()=>setFieldTouched('uname')}
             value={values.uname}
-            // keyboardType="email-address"
+           
            />
+           {touched.uname && errors.uname &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.uname}</Text>
+            }
               <TextInput
              style={styles.input}
              name="email"
              placeholder='Enter Email'
              onChangeText={handleChange('email')}
-            // onBlur={handleBlur('email')}
+             onBlur={()=>setFieldTouched('email')}
             value={values.email}
             keyboardType="email-address"
+            
            />
+            {touched.email && errors.email &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.email}</Text>
+            }
 
-           <TextInput
+
+            <TextInput
              style={styles.input}
              name="password"
             placeholder="Enter Password"
              onChangeText={handleChange('password')}
-            // onBlur={handleBlur('password')}
+             onBlur={() => setFieldTouched('password')}
             value={values.password}
-            secureTextEntry
-      
-           />
+            secureTextEntry />
+            {touched.password && errors.password &&
+              <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.password}</Text>
+            }
             <TextInput
              style={styles.input}
              name="phoneNumber"
-            placeholder="Enter Phone Number"
+             placeholder='Enter Phone Number'
              onChangeText={handleChange('phoneNumber')}
-            // onBlur={handleBlur('password')}
+             onBlur={()=>setFieldTouched('phoneNumber')}
             value={values.phoneNumber}
             keyboardType="numeric"
-            />
+            
+           />
+            {touched.phoneNumber && errors.phoneNumber &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
+            }
 
             <TextInput
              style={styles.input}
              name="city"
-            placeholder="Enter City"
+             placeholder="Enter City"
              onChangeText={handleChange('city')}
-            // onBlur={handleBlur('password')}
-            value={values.city}
+             onBlur={()=>setFieldTouched('city')}
+             value={values.city}
            />
+           {touched.city && errors.city &&
+              <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
+            }
          
             {/*SignUn Button  */}
-          <View style={styles.container}>
+          {/* <View style={styles.container}> */}
           <View style={styles.button}>
 
            <Button
@@ -100,10 +143,12 @@ function SignUp({navigation}) {
            title="SignUp"
            color='#9370DB'
            /> 
+
+           
           </View>
-          </View>
+          {/* </View> */}
        
-        </>
+        </View>
       )}
     </Formik>
 
@@ -112,7 +157,7 @@ function SignUp({navigation}) {
 
      <View>
 
-            <Text style={{marginLeft:210, marginTop:80,fontWeight: "bold"}}>OR</Text>
+            {/* <Text style={{paddingLeft:100,fontWeight: "bold"}}>OR</Text> */}
 
               {/* Social buttons */}
         
@@ -152,30 +197,28 @@ const styles = StyleSheet.create({
    
    input:{
    borderBottomColor :'#9370DB',
-   borderBottomWidth:1,
-   padding:3,
-   marginLeft:110,
-   margin:6,
+   borderBottomWidth:4,
    width:200,
+   fontSize:18,
+   paddingBottom:13,
 
    },
-
+// button styling
    container: {
     flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    padding:5,
-    borderRadius: 100,
+    paddingTop:'15%',
+   
+   
   
   },
    button:{
-    backgroundColor: 'purple',
-    width: '50%',
-    height: 35,
-    marginLeft:110,
-    marginTop:30,
-    
+    backgroundColor:colors.primary,
+    // width: '50%',
+     marginTop:30,
+    justifyContent:'center',
+    alignItems:'center',
 
+  
    },
    sbcontainer: {
     flex: 1,

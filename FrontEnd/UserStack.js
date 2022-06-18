@@ -8,7 +8,6 @@ import Message from './screens/Message';
 import HelpCentre from './screens/HelpCentre';
 import PaymentMethod from './screens/PaymentMethod';
 import Notifications from './screens/Notifications'
-
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import CustomDrawer from './components/CustomDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome'
