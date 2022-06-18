@@ -29,7 +29,7 @@ const CompanyVendorProfile = () => {
   return (
     <ScrollView  style={{flex:1, backgroundColor:'#fff', }} >
    
-
+<Text style={{ alignItems:"center",justifyContent:'center', fontSize:40, paddingLeft:'25%',color:colors.primary,}}>Edit Profile</Text>
       {/* Form Inputs View */}
    <View style={{marginTop:50}}>
           <Formik
@@ -74,13 +74,13 @@ const CompanyVendorProfile = () => {
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,borderWidth:4,borderColor:colors.primary}}>
         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-        <View style={styles.button}>
-    <Button title="Upload Image" onPress={pickImage} />
-    </View>
-    
+  
   </View>
+  <View style={styles.button}>
+    <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
+    </View>
         <TextInput
              style={styles.input}
              name="companyname"
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
 
 
    button:{
-    backgroundColor: 'purple',
+    backgroundColor: colors.primary,
     width: '45%',
     height: 35,
      margin:50,
