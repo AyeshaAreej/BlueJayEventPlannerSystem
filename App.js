@@ -18,8 +18,8 @@ export default function App() {
 <>
 
     <NavigationContainer>   
-          {/* <AuthStack/> */}
-          <UserStack/>
+          <AuthStack/>
+          {/* <UserStack/> */}
           {/* <CompanyStack/> */}
           {/* <VendorStack/> */}
     </NavigationContainer>
