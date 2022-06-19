@@ -5,17 +5,10 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import AuthStack from './AuthStack';
 import UserStack from './UserStack';
 import COLORS from './components/colors';
-import CompanyStack from './CompanyStack';
-import AdminStack from './screens/admin/AdminStack';
 import VendorStack from './VendorStack';
-import CompanyDetails from './screens/CompanyDetails';
-import BookingForm from './screens/BookingForm';
 import SignUp from './screens/SignUp';
 import LoginScreen from './screens/LoginScreen';
-import VendorBookingForm from './screens/company/VendorBookingForm';
-import Photo from './screens/Photo';
-
-
+import RoutNavigator from './RoutNavigator';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
@@ -23,21 +16,15 @@ export default function App() {
  return (
 <>
 
-{/* <LoginScreen/> */}
-{/* <BookingForm/> */}
-{/* <SignUp/> */}
-{/* <CompanyDetails/>   */}
-{/* <Card hotel={hotels}/> */}
-{/* <VendorBookingForm/> */}
-{/* <Photo/> */}
-     <NavigationContainer>   
 
-          <AdminStack/>
-          {/* <AuthStack/> */}
-          {/* <UserStack/> */}
-          {/* <CompanyStack/>  */}
+
+
+
+     {/* <NavigationContainer>    */}
+
           {/* <VendorStack/>   */}
-    </NavigationContainer> 
+          <RoutNavigator/>
+    {/* </NavigationContainer>  */}
   
 </>
  );

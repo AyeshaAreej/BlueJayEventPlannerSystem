@@ -1,20 +1,16 @@
-
-// Navigation remaining
-
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
-import CompanyDetails from './CompanyDetails';
+import { useNavigation } from '@react-navigation/native';
 
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.2;
 
-const CompanyHome=({navigation})=>{
+const CompanyHome=()=>{
    const categories = ['Food', 'Music', 'Decorations', 'Venue', 'Photography'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [activeCardIndex, setActiveCardIndex] = React.useState(0);
@@ -64,7 +60,7 @@ const CompanyHome=({navigation})=>{
           ))}
       
 
-
+       
 
 
         </View>
@@ -72,9 +68,15 @@ const CompanyHome=({navigation})=>{
     };
 // Card
 
-const Card=({hotel,index,navigation})=>{
+const Card=({hotel,index,})=>{
+  const navigation = useNavigation();
+
+  function handleClick(){
+    console.log("Card clicked")
+    navigation.navigate('CompanyDetails')
+  }
 return(
-   
+  <TouchableOpacity onPress={handleClick}>
     <View style={{...style.card}}>
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
@@ -100,7 +102,7 @@ return(
                  <Icon name="star" size={15} color={COLORS.gray}/>
               </View>
               <Button
-           onPress={()=>navigation.navigate('CompanyDetails')}
+          
            title="ViewDetails"
            color='#9370DB'
            /> 
@@ -110,7 +112,7 @@ return(
     </View>
     
     
-    
+    </TouchableOpacity>
 
 )
 };
@@ -165,7 +167,7 @@ return(
 
 const style = StyleSheet.create({
     header: {
-      marginTop: 20,
+      marginTop: 3,
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingHorizontal: 18,

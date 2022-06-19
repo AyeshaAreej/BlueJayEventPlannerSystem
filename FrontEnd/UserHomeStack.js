@@ -8,22 +8,22 @@ import CompanyDetails from './screens/CompanyDetails';
 import BookingForm from './screens/BookingForm';
 import VendorBookingForm from './screens/company/VendorBookingForm';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import UserStack from './UserStack';
 
 const Stack = createNativeStackNavigator();  
 
 
-const AuthStack = () => {
+const UserHomeStack = () => {
   return (
-    <Stack.Navigator initialRouteName='WelcomeScreen'>
-          <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}/>
-           <Stack.Screen name='LoginScreen' component={LoginScreen}/>
-           <Stack.Screen name='SignUp' component={SignUp}/>
-          
+    <Stack.Navigator initialRouteName='UserStack'>
+          <Stack.Screen name='UserStack' component={UserStack}/>
+           <Stack.Screen name='HomeScreen' component={HomeScreen}/>
+           <Stack.Screen name='CompanyDetails' component={CompanyDetails}/>
+           <Stack.Screen name='BookingForm' component={BookingForm}/>
          </Stack.Navigator> 
   )
 }
 
 
 
-export default AuthStack
+export default UserHomeStack

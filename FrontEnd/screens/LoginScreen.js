@@ -1,11 +1,14 @@
 import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
+
 import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import HomeScreen from "./HomeScreen";
+import SignUp from "./SignUp";
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
@@ -13,7 +16,6 @@ import {GoogleSocialButton } from "react-native-social-buttons";
 
 
 
-import SignUp from "./SignUp";
 
 function LoginScreen({navigation}) {
 
@@ -22,6 +24,29 @@ function LoginScreen({navigation}) {
   const [password, setPassword]=useState('')
   const [signup, setSignup] =useState('false')
 
+  function handleLogin(values){
+
+    const role='vendor'
+    if(role=='user'){
+      navigation.navigate(User_Home)
+    }
+    else if (role=='company'){
+      navigation.navigate(Company_Home)
+    }
+    else if (role=='admin'){
+      navigation.navigate(Admin_Home)
+     
+    }
+
+    else if(role=='vendor'){
+     navigation.navigate(Vendor_Home)
+    }
+    else{
+      console.log('no role')
+    }
+    
+   
+  }
   return (
     
    <View style={{flex:1, backgroundColor:'#fff'}} >
@@ -40,9 +65,7 @@ function LoginScreen({navigation}) {
           <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={
-        (values) => {
-          navigation.navigate('HomeScreen')
-          console.log(values)}}
+        (values) => {handleLogin(values)}}
           validationSchema={yup.object().shape({
             email: yup
             .string()

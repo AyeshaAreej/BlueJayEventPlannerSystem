@@ -10,8 +10,17 @@ import {
 import COLORS from '../components/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import image from '../assets/hotel1.jpg';
-
+import { useNavigation } from '@react-navigation/native';
  function CompanyDetails() {
+
+
+  const navigation = useNavigation();
+
+  function handleClick(){
+    console.log("Card clicked")
+    navigation.navigate('BookingForm')
+  }
+
   return (
     <ScrollView
     showsVerticalScrollIndicator={false}  
@@ -27,9 +36,9 @@ import image from '../assets/hotel1.jpg';
             name="arrow-back-ios"
             size={30}
             color={COLORS.white}
-            // onPress={navigation.goBack}
+            onPress={navigation.goBack}
           />
-          {/* <Icon name="bookmark-border" size={28} color={COLORS.white} /> */}
+        
         </View>
       </ImageBackground>
       <View>
@@ -111,7 +120,7 @@ import image from '../assets/hotel1.jpg';
         </View>
         <View style={style.btn}>
           <Text 
-          //onPress
+         onPress={handleClick}
           style={{color: COLORS.white, fontSize: 18, fontWeight: 'bold'}}>
             Book Now
           </Text>

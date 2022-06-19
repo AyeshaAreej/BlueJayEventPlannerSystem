@@ -1,15 +1,15 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import CompanyHome from './screens/CompanyHome';
-import CompanyVendorProfile from './screens/CompanyVendorProfile';
-import CompanyVendorOrders from './screens/CompanyVendorOrders';
-import Location from './screens/Location';
-import Message from './screens/Message';
-import HelpCentre from './screens/HelpCentre';
-import PaymentMethod from './screens/PaymentMethod';
-import Notifications from './screens/Notifications'
+import CompanyHome from '../CompanyHome';
+import CompanyVendorProfile from '../CompanyVendorProfile';
+import CompanyVendorOrders from '../CompanyVendorOrders';
+import Location from '../Location';
+import Message from '../Message';
+import HelpCentre from '../HelpCentre';
+import PaymentMethod from '../PaymentMethod';
+import Notifications from '../Notifications'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import CustomDrawer from './components/CustomDrawer';
+import CustomDrawer from '../../components/CustomDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 

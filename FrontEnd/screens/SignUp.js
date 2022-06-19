@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
+import { User_Home } from "../constants";
 
 
 
@@ -139,7 +140,7 @@ function SignUp({navigation}) {
           <View style={styles.button}>
 
            <Button
-           onPress={()=>navigation.navigate('HomeScreen')}
+           onPress={()=>navigation.navigate(User_Home)}
            title="SignUp"
            color='#9370DB'
            /> 
