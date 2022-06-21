@@ -15,14 +15,7 @@ export default function App() {
 
  return (
 <>
-
-
-
-
-
      {/* <NavigationContainer>    */}
-
-          {/* <VendorStack/>   */}
           <RoutNavigator/>
     {/* </NavigationContainer>  */}
   

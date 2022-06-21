@@ -13,6 +13,8 @@ import SignUp from "./SignUp";
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
+import COLORS from "../components/colors";
+
 
 
 
@@ -26,7 +28,7 @@ function LoginScreen({navigation}) {
 
   function handleLogin(values){
 
-    const role='vendor'
+    const role='user'
     if(role=='user'){
       navigation.navigate(User_Home)
     }
@@ -61,7 +63,7 @@ function LoginScreen({navigation}) {
  </View>
 
       {/* Form Inputs View */}
-   <View style={{marginTop:50}}>
+   <View style={styles.center}>
           <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={
@@ -105,12 +107,12 @@ function LoginScreen({navigation}) {
             value={values.password}
             secureTextEntry />
             {touched.password && errors.password &&
-              <Text style={{ marginLeft:75,fontSize: 18, color: 'red' }}>{errors.password}</Text>
+              <Text style={{ marginLeft:10,fontSize: 18, color: 'red' }}>{errors.password}</Text>
             }
 
-           <Text style={{marginLeft:140, marginTop:10}}>Forgot Password?</Text>
+           <Text style={styles.center}>Forgot Password?</Text>
             {/*SignIn Button  */}
-          <View style={styles.container}>
+          <View style={styles.center}>
           <View style={styles.button}>
            <Button  onPress={handleSubmit} 
            title="SignIn"
@@ -126,16 +128,17 @@ function LoginScreen({navigation}) {
 
      </View>
 
-     <View>
-        <Text style={{marginLeft:210, marginTop:80,fontWeight: "bold"}}>OR</Text>
+     <View style={styles.center}>
+        <Text style={{fontWeight: "bold"}}>OR</Text>
 
           {/* Social buttons */}
     
-          <View style={styles.sbcontainer} >
+          
               
-              <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:50,backgroundColor:'#fff' }} logoStyle={{marginLeft:120,backgroundColor:'#4267B2' }} textStyle={{color:'#fff'}}/>
-              <InstagramSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:80}} textStyle={{color:'#fff'}} />
-              <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:10}}textStyle={{color:'#fff'}} />
+    
+              <View  style={styles.rightTag}>
+              <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
+              <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
               </View>
   
              
@@ -166,39 +169,33 @@ const styles = StyleSheet.create({
    input:{
    borderBottomColor :'#9370DB',
    borderBottomWidth:1,
-   padding:8,
-   marginLeft:110,
-   margin:20,
-   width:200,
+   padding:14,
+   width:260,
+   fontSize:20,
 
    },
 
-   container: {
-    flex: 1,
-    padding:5,
-    borderRadius: 100,
-  
-  },
    button:{
     backgroundColor: 'purple',
-    width: '50%',
+    width: '90%',
     height: 35,
-    marginLeft:110,
-    marginTop:30,
+    borderRadius:20,
+    
     
 
    },
-   sbcontainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:10,
-    borderRadius: 100,
-    margin:20,
-    marginBottom: 60
+   
+center:{
+  paddingTop:34,justifyContent:'center',
+   alignItems:'center',
+},
+  rightTag:{
+    marginTop: 20,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
 
   },
-   
 
 });
 
