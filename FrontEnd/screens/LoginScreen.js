@@ -7,11 +7,8 @@ import { StatusBar } from "react-native-web";
 import { Colors } from "../components/styles";
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import HomeScreen from "./HomeScreen";
-import SignUp from "./SignUp";
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
-import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import COLORS from "../components/colors";
 
@@ -28,7 +25,7 @@ function LoginScreen({navigation}) {
 
   function handleLogin(values){
 
-    const role='user'
+    const role='company'
     if(role=='user'){
       navigation.navigate(User_Home)
     }
@@ -95,7 +92,7 @@ function LoginScreen({navigation}) {
             
            />
             {touched.email && errors.email &&
-              <Text style={{ marginLeft:135,fontSize: 18, color: 'red'}}>{errors.email}</Text>
+              <Text style={{ marginLeft:10,fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
 
            <TextInput
@@ -186,11 +183,11 @@ const styles = StyleSheet.create({
    },
    
 center:{
-  paddingTop:34,justifyContent:'center',
+  paddingTop:25,justifyContent:'center',
    alignItems:'center',
 },
   rightTag:{
-    marginTop: 20,
+    marginTop: 10,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',

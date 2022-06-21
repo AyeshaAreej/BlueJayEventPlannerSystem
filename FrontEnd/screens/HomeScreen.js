@@ -1,12 +1,13 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import DateTimePicker from '@react-native-community/datetimepicker';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
-import CompanyDetails from './CompanyDetails';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../components/colors';
+
 const {width}= Dimensions.get('screen');
 const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
@@ -14,9 +15,24 @@ const HomeScreen=()=>{
 
    const categories = ['All', 'Popular', 'Top Rated', 'Low Price', 'High Price'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    const [activeCardIndex, setActiveCardIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
+
+    //Date
+   const [date, setDate] = useState(new Date());
+   const [isPickerShow, setIsPickerShow] = useState(false);
+
+   console.log(date);
+   const showPicker = () => {
+    setIsPickerShow(true);
+  };
+   const onChange = (event, value) => {
+    setDate(value);
+    
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
+    }
+  };
 
 
     
@@ -159,7 +175,25 @@ return(
                    <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
                </View>
             </View>
-            <Icon name="account-outline"  size={38} color={COLORS.grey}/>
+         
+         {/* The button that used to trigger the date picker */}
+      {/* {!isPickerShow && ( */}
+        <View style={style.btnContainer}>
+        <Icon name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
+        </View>
+      {/* )} */}
+
+      {/* The date picker */}
+      {isPickerShow && (
+        <DateTimePicker
+          value={date}
+          mode={'date'}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          // is24Hour={true}
+          onChange={onChange}
+          style={style.datePicker}
+        />
+      )}
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
          <View style={style.searchInputContainer}>
@@ -283,6 +317,19 @@ const style = StyleSheet.create({
       borderRadius: 15,
       backgroundColor: COLORS.white,
       flexDirection:'column',
+    },
+    
+    pickedDateContainer: {
+      padding: 12,
+    },
+    pickedDate: {
+      fontSize: 20,
+      color: colors.grey,
+      fontWeight:'bold'
+    },
+    btnContainer: {
+      paddingTop: 12,
+     
     },
   });
 

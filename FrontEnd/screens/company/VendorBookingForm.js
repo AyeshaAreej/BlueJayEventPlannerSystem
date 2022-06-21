@@ -11,7 +11,6 @@ function VendorBookingForm({  navigation}) {
 
  
    const [date, setDate] = useState(new Date());
-   const [open, setOpen] = useState(false);
    const [isPickerShow, setIsPickerShow] = useState(false);
 
   
