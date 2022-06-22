@@ -1,6 +1,4 @@
 
-// Navigation remaining
-
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -35,8 +33,8 @@ return(
          <View  style={{flexDirection:"row",paddingBottom:5, justifyContent:'center'}}>
            <Button
           //  onPress={()=>navigation.navigate('CompanyDetails')}
-           title="Accept Order"
-           color='#9370DB'
+           title="Accept"
+           color={COLORS.primary}
            /> 
 
           </View>
@@ -48,9 +46,9 @@ return(
            <View style={{flexDirection:'row'}}>
                <Text style={{fontWeight:"bold",fontSize:15}}>Name : {hotel.name} {'\n'}
                 Total : Rs.{hotel.price}</Text>
-               <View style={{paddingLeft:40, borderRadius:12}}>
-                <Button  title="Reject Order"
-           color='#9370DB'/>
+               <View style={{paddingLeft:62, borderRadius:12}}>
+                <Button  title="Reject"
+             color={COLORS.primary}/>
            </View>
         
                

@@ -142,7 +142,7 @@ function SignUp({navigation}) {
            <Button
            onPress={()=>navigation.navigate(User_Home)}
            title="SignUp"
-           color='#9370DB'
+           color={colors.primary}
            /> 
 
            
@@ -169,7 +169,7 @@ function SignUp({navigation}) {
             <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:10}}textStyle={{color:'#fff'}} />
             </View>
 
-            <Text style={{marginLeft:100}}>Already Have an Account?  <Text style={{fontWeight: "bold"}}> SignIn</Text> </Text>
+            <Text style={{marginLeft:100,fontSize:15,}}>Already Have an Account?  <Text style={{fontWeight: "bold"}}> SignIn</Text> </Text>
 
             </View>
         
@@ -180,7 +180,7 @@ function SignUp({navigation}) {
 const styles = StyleSheet.create({
 
   topView:{
-    backgroundColor :"#9370DB",
+    backgroundColor :colors.primary,
     paddingTop:"18%",
     paddingLeft:8,
     width:410,

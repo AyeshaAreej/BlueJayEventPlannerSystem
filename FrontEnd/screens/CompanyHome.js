@@ -117,12 +117,7 @@ return(
                  <Icon name="star" size={15} color={COLORS.orange}/>
                  <Icon name="star" size={15} color={COLORS.gray}/>
               </View>
-              <Button
-          
-           title="ViewDetails"
-           color='#9370DB'
-           /> 
-
+            
           </View>
          </View>        
     </View>

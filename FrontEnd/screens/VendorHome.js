@@ -109,7 +109,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   headerImage: {
-    height: 300,
+    height: 280,
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
     overflow: 'hidden',

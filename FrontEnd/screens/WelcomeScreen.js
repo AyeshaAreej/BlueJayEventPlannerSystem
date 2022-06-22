@@ -3,7 +3,7 @@ import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
-import { Colors } from "../components/styles";
+import COLORS from "../components/colors";
 import { Formik } from 'formik'
 import LoginScreen from "./LoginScreen";
 import SignUp from "./SignUp";
@@ -23,10 +23,10 @@ function WelcomeScreen({navigation}) {
 </View>
 
 {/* Bottom View */}
-  <View style={{paddingTop:250}}>
+  <View style={{paddingTop:180}}>
    <View style={styles.bottomView}>
     <Text style={{color:'white', fontSize:30, padding:10, fontWeight:'bold'}}>Welcome</Text>
-    <Text style={{padding:7,color:'white'}}>
+    <Text style={{padding:7,color:'white', fontSize:19,}}>
     The Blue Jay Event Planners Application Company aims to get people in touch with event organization companies and companies with vendors to book and execute event by providing various services online such as catering, music photography and what not!.
     </Text>
 
@@ -35,13 +35,13 @@ function WelcomeScreen({navigation}) {
     <View style={styles.container}>
       <View style={styles.button}>
       <Button onPress={()=>navigation.navigate('LoginScreen')} title="SignIn"
-        color='purple'
+        color='#9370DB'
       /> 
       </View>
      
       <View style={styles.button} >
       <Button onPress={()=>navigation.navigate('SignUp')} title="SignUp"
-        color='purple'
+        color='#9370DB'
         
       />
       </View>
@@ -57,12 +57,12 @@ function WelcomeScreen({navigation}) {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 220,
-    height: 130,
+    width: 250,
+    height: 150,
   
   },
   logoContainer: {
-    top:130,
+    top:110,
     backgroundColor:"#fff",
     alignItems: "center",
     justifyContent:"center",
@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
   alignItems: "center",
  },
   bottomView:{
-  backgroundColor :"#9370DB",
-  paddingTop:"8%",
+  backgroundColor : COLORS.primary,
+  paddingTop:"6%",
   paddingLeft:8,
   paddingBottom:15,
   width:'100%',
-  height:415,
+  height:450,
   borderTopStartRadius:60,
   borderTopEndRadius:60, 
  },
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
    tagline:{
     position: "absolute",
     paddingTop:"50%",
-    fontSize:20,
+    fontSize:25,
 
      fontWeight:"bold",
     textTransform:"uppercase",
-    color:'purple',
+    color:COLORS.primary,
    },
  
    
@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding:30,
+    padding:25,
     borderRadius: 100,
     margin:12,
 
   },
   button: {
-    backgroundColor: 'purple',
+    backgroundColor: '#9370DB',
     width: '45%',
     height: 40,
   }

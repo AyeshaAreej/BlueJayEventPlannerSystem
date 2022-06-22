@@ -39,8 +39,7 @@ const CompanyVendorProfile = () => {
       initialValues={{companyname:'', email: '', phoneNumber: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
       onSubmit={
         (values) => {
-          navigation.navigate('HomeScreen')
-          console.log(values)}}
+        console.log(values, image)}}
           validationSchema={yup.object().shape({
             companyname: yup
             .string()
@@ -150,7 +149,7 @@ const CompanyVendorProfile = () => {
             }
 
             <View style={styles.inputContainer} >
-        <Icon name="servicestack"  size={38} style={styles.icon}/>
+        <Icon name="application-settings"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="services"
@@ -178,7 +177,7 @@ const CompanyVendorProfile = () => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.pricerange}</Text>
             }
             <View style={styles.inputContainer} >
-            <Icon name="city"  size={38} style={styles.icon}/>
+            <Icon name="home"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="address"
