@@ -1,24 +1,30 @@
 import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar} from 'react-native'
 import colors from '../components/colors';
-import React from 'react'
+import React,{useState} from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Profile = () => {
+
+const {edit, setEdit}=useState('false');
+
+
+
+
   return (
     <View style={{flex:1, backgroundColor:'#fff', justifyContent:'center',
     alignItems:'center'}} >
    
 
       {/* Form Inputs View */}
-   <View style={{marginTop:50}}>
+   <View style={{marginTop:20, }}>
           <Formik
       initialValues={{uname:'', email: '', phoneNumber: '',city:'', }}
       onSubmit={
         (values) => {
-          navigation.navigate('HomeScreen')
-          console.log(values)}}
+         console.log(values)
+          }}
           validationSchema={yup.object().shape({
             uname: yup
             .string()
@@ -44,19 +50,25 @@ const Profile = () => {
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <>
+
+        <View style={styles.inputContainer} >
+        <Icon name="account"  size={38} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="uname"
              placeholder='User Name'
              onChangeText={handleChange('uname')}
+            
              onBlur={()=>setFieldTouched('uname')}
             value={values.uname}
            
            />
-            
+           </View>
            {touched.uname && errors.uname &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.uname}</Text>
             }
+            <View style={styles.inputContainer} >
+        <Icon name="email"  size={38} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -66,11 +78,12 @@ const Profile = () => {
             value={values.email}
             keyboardType="email-address"
             
-           />
+           /></View>
             {touched.email && errors.email &&
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
-
+            <View style={styles.inputContainer} >
+        <Icon name="phone"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phoneNumber"
@@ -80,10 +93,12 @@ const Profile = () => {
             value={values.phoneNumber}
             keyboardType="numeric"
             
-           />
+           /></View>
             {touched.phoneNumber && errors.phoneNumber &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
             }
+            <View style={styles.inputContainer} >
+        <Icon name="city"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -91,7 +106,7 @@ const Profile = () => {
              onChangeText={handleChange('city')}
              onBlur={()=>setFieldTouched('city')}
              value={values.city}
-           />
+           /></View>
            
            {touched.city && errors.city &&
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
@@ -102,8 +117,8 @@ const Profile = () => {
           <View style={styles.container}>
           <View style={styles.button}>
            <Button  onPress={handleSubmit} 
-           title="Save"
-           color='#9370DB'
+           title="Edit"
+           color='purple'
            /> 
           </View>
           </View>
@@ -125,12 +140,15 @@ const styles = StyleSheet.create({
   
 
    input:{
-   borderColor :'#9370DB',
-   margin:12,
-   padding:25,
-   width:230,
+   borderColor :colors.white,
+   margin:6,
+   padding:22,
+   width:280,
    fontSize:20,
    borderWidth:2,
+   elevation:20,
+   borderRadius:15,
+   backgroundColor:'white'
    
 
    },
@@ -146,12 +164,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple',
     width: '55%',
     height: 35,
-     margin:50,
-   
-   
+     margin:75,
+ },
+ icon:{
+ color:colors.primary,
+ margin:20,
 
-   },
- 
+ },
+ inputContainer:{
+  flexDirection:'row',
+  color:colors.white, 
+  // borderWidth:5,
+  // borderRadius:20,
+  // borderColor:'purple'
+ },
    
 
 });

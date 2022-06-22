@@ -2,15 +2,17 @@ import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar,Image,P
 import colors from '../components/colors';
 import React,  { useState, useEffect } from 'react'
 import { Formik } from 'formik';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
+import COLORS from '../components/colors';
 
 const CompanyVendorProfile = () => {
   const [image, setImage] = useState(null);
 
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
+   // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -27,9 +29,10 @@ const CompanyVendorProfile = () => {
 
 
   return (
-    <ScrollView  style={{flex:1, backgroundColor:'#fff', }} >
+    <ScrollView  style={{flex:1, backgroundColor:'#fff', }} contentContainerStyle={{justifyContent:'center',
+    alignItems:'center'}} >
    
-<Text style={{ alignItems:"center",justifyContent:'center', fontSize:40, paddingLeft:'25%',color:colors.primary,}}>Edit Profile</Text>
+
       {/* Form Inputs View */}
    <View style={{marginTop:50}}>
           <Formik
@@ -73,14 +76,20 @@ const CompanyVendorProfile = () => {
     
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
-        <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,borderWidth:4,borderColor:colors.primary}}>
+        <View >
+
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
   
   </View>
   <View style={styles.button}>
     <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
     </View>
+
+
+
+    <View style={styles.inputContainer} >
+        <Icon name="account"  size={38} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="companyname"
@@ -90,11 +99,13 @@ const CompanyVendorProfile = () => {
             value={values.companyname}
            
            />
-            
+            </View>
            {touched.companyname && errors.companyname &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.companyname}</Text>
             }
        
+            <View style={styles.inputContainer} >
+        <Icon name="email"  size={38} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -104,11 +115,12 @@ const CompanyVendorProfile = () => {
             value={values.email}
             keyboardType="email-address"
             
-           />
+           /></View>
             {touched.email && errors.email &&
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
-
+            <View style={styles.inputContainer} >
+          <Icon name="phone"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phoneNumber"
@@ -118,10 +130,13 @@ const CompanyVendorProfile = () => {
             value={values.phoneNumber}
             keyboardType="numeric"
             
-           />
+           /></View>
             {touched.phoneNumber && errors.phoneNumber &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
             }
+
+            <View style={styles.inputContainer} >
+          <Icon name="city"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -129,10 +144,13 @@ const CompanyVendorProfile = () => {
              onChangeText={handleChange('city')}
              onBlur={()=>setFieldTouched('city')}
              value={values.city}
-           />
+           /></View>
            {touched.city && errors.city &&
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
             }
+
+            <View style={styles.inputContainer} >
+        <Icon name="servicestack"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="services"
@@ -141,11 +159,13 @@ const CompanyVendorProfile = () => {
              onBlur={()=>setFieldTouched('services')}
              value={values.services}
            
-           />
+           /></View>
            {touched.services && errors.services &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.services}</Text>
             }
-
+            
+            <View style={styles.inputContainer} >
+            <Icon name="currency-usd"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="pricerange"
@@ -153,12 +173,12 @@ const CompanyVendorProfile = () => {
              onChangeText={handleChange('pricerange')}
              onBlur={()=>setFieldTouched('pricerange')}
             value={values.pricerange}
-            
-            
-           />
+           /></View>
             {touched.pricerange && errors.pricerange &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.pricerange}</Text>
             }
+            <View style={styles.inputContainer} >
+            <Icon name="city"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="address"
@@ -167,11 +187,13 @@ const CompanyVendorProfile = () => {
              onBlur={()=>setFieldTouched('address')}
             value={values.address}
             
-            
-           />
+           /></View>
             {touched.address && errors.address &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.address}</Text>
             }
+            
+            <View style={styles.inputContainer} >
+            <Icon name="clock"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="availabilitytime"
@@ -181,7 +203,7 @@ const CompanyVendorProfile = () => {
             value={values.availabilitytime}
             
             
-           />
+           /></View>
             {touched.availabilitytime && errors.availabilitytime &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availabilitytime}</Text>
             }
@@ -196,8 +218,8 @@ const CompanyVendorProfile = () => {
            /> 
           </View>
        
-       
-        </View>
+       </View>
+    
       )}
     </Formik>
     
@@ -214,12 +236,15 @@ const styles = StyleSheet.create({
   
 
    input:{
-   borderColor :'#9370DB',
-   margin:12,
-   padding:25,
-   width:'99%',
-   fontSize:22,
-   borderWidth:2,
+    borderColor :colors.white,
+    margin:6,
+    padding:22,
+    width:280,
+    fontSize:20,
+    borderWidth:2,
+    elevation:20,
+    borderRadius:15,
+    backgroundColor:'white'
    
 
    },
@@ -229,11 +254,25 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     width: '45%',
     height: 35,
-     margin:50,
-   
+    // margin:60,
+   marginTop:20,
+   marginBottom:20,
+    marginLeft:'30%',
    
 
    },
+   icon:{
+    color:colors.primary,
+    margin:20,
+   
+    },
+    inputContainer:{
+     flexDirection:'row',
+     color:colors.white, 
+     // borderWidth:5,
+     // borderRadius:20,
+     // borderColor:'purple'
+    },
  
    
 

@@ -7,6 +7,7 @@ import { Colors } from "../components/styles";
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import * as yup from 'yup';
 import { Formik} from 'formik';
+import COLORS from '../components/colors';
 
 
 function BookingForm({  navigation}) {
@@ -20,7 +21,7 @@ function BookingForm({  navigation}) {
   
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
-        <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"   />
+        <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}   />
        <View style={styles.topView}>
         <ImageBackground
          style={styles.logo}
@@ -209,7 +210,7 @@ function BookingForm({  navigation}) {
 
             </View>
       <View style={styles.button}>
-       <Button onPress={handleSubmit} title="Submit" color='#9370DB' />
+       <Button onPress={handleSubmit} title="Submit" color={COLORS.primary} />
        </View>
       </View>
      )}

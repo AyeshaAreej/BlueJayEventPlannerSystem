@@ -4,13 +4,12 @@ import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, Vi
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
 
 import { StatusBar } from "react-native-web";
-import { Colors } from "../components/styles";
+import COLORS, { colors } from "../components/colors";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
-import COLORS from "../components/colors";
 
 
 
@@ -25,7 +24,7 @@ function LoginScreen({navigation}) {
 
   function handleLogin(values){
 
-    const role='company'
+    const role='user'
     if(role=='user'){
       navigation.navigate(User_Home)
     }
@@ -113,7 +112,7 @@ function LoginScreen({navigation}) {
           <View style={styles.button}>
            <Button  onPress={handleSubmit} 
            title="SignIn"
-           color='#9370DB'
+           color='purple'
            /> 
           </View>
           </View>
@@ -149,7 +148,7 @@ function LoginScreen({navigation}) {
 const styles = StyleSheet.create({
   
   topView:{
-    backgroundColor :"#9370DB",
+    backgroundColor :COLORS.primary,
     paddingTop:"18%",
     paddingLeft:8,
     width:'100%',

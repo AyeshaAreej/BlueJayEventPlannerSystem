@@ -5,6 +5,7 @@ import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import * as yup from 'yup';
 import { Formik} from 'formik';
+import COLORS from '../../components/colors';
 
 
 function VendorBookingForm({  navigation}) {
@@ -197,7 +198,7 @@ function VendorBookingForm({  navigation}) {
    
                   
       <View style={styles.button}>
-       <Button onPress={handleSubmit} title="Submit" color='#9370DB' />
+       <Button onPress={handleSubmit} title="Submit" color={COLORS.primary} />
        </View>
       </View>
      )}
