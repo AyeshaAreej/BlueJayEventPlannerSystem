@@ -17,6 +17,7 @@ const ValidateToken = async (req, res, next) => {
                         // }else{
                         //     console.log(myuser.email)
                         // }})
+            req.user = user
             next()
         }else{
             return res.json({
