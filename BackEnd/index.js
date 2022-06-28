@@ -1,11 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
-const homeRouter = require('./routes/homeRouter')
 const userRouter = require('./routes/userRouter')
-const CompanyRouter = require('./routes/companyRouter')
+const companyRouter = require('./routes/companyRouter')
 const db = require('./config/mongoose')
 const Company = require('./models/companySchema')
+const middleware = require('./middlewares/index')
+
+const User = require('./models/userSchema')
+
 
 require('dotenv').config();
 
@@ -14,9 +17,24 @@ const app = express()
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname,'assets')))
-app.use(homeRouter)
-app.use(userRouter)
-app.use(CompanyRouter)
+
+app.get('/',middleware.ValidateToken,async (req,res)=>{
+
+    //role add token and if else
+    //req.user.role = ?
+//     await User.findById(req.user.id,(err,user)=>{
+//         if(err){
+//             return res.json({status:'error', error: 'cant find user' })
+//         }
+      
+//       return res.json({ status:'ok', data: user})
+//    })
+    
+}
+)
+//routes
+app.use('/users', userRouter)
+app.use('/company', companyRouter)
 
 app.listen(process.env.PORT,(err)=>{
     if(err){

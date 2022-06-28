@@ -7,17 +7,8 @@ const ValidateToken = async (req, res, next) => {
 
         const user = jwt.verify(token,process.env.SECRET)
         if (user){
-                        
-                        // User.findById(user.id,(err,myuser)=>{
-                        // if(err){
-                        //     return res.json({
-                        //         status:'error',
-                        //         error: 'cant find user'
-                        //     })
-                        // }else{
-                        //     console.log(myuser.email)
-                        // }})
             req.user = user
+            console.log(user.role)
             next()
         }else{
             return res.json({

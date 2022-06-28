@@ -1,42 +1,8 @@
 const Company = require('../models/companySchema')
+const Order = require('../models/orderSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-
-
-//UE(splash screen)
-const UE = async(req,res)=>{
-
-    const {token}= req.body
-    
-        const user = jwt.verify(token,process.env.SECRET)
-        if(user){
-            return res.json({
-                status:'ok',
-                data: user
-            })
-        }else{
-            return res.json({
-                        status:'error',
-                        error: 'Log In again'
-                    })
-        }
-
-    // if(req.body.token== '')
-    // {
-    //     return res.json({
-    //         status:'error',
-    //         error: 'Log In again'
-    //     })
-    // }else{
-    //     const user = jwt.verify(token,process.env.SECRET)
-    //     return res.json({
-    //         status:'ok',
-    //         data: user
-    //     })
-    // }
-
-}
 
 //sign up
 const SignUp = async (req,res)=>{
@@ -60,9 +26,9 @@ const SignUp = async (req,res)=>{
             price_range: req.body.price_range,
             address: req.body.address,
             available_hours:req.body.available_hours,
-            rating:null,
-            //rating:req.body.rating,
-            orders: null
+            rating: [],
+            booked_dates: [],
+            orders: []
         },
         (err,company)=>{
             if(err){
@@ -99,6 +65,61 @@ const logIn = async (req,res)=>{
 
 }
 
+//show profile
+const showProfile = async (req,res)=>{
+    Company.findById(req.user.id,(err,company)=>{
+        if(err){
+            return res.json({status:'error', error: 'cant find company' })
+        }
+      
+      return res.json({ status:'ok', data: company})
+   })
+}
+
+//my orders
+const myOrders = async (req,res)=>{
+
+    Company.findOne({_id: req.user.id},{orders:1,_id:0},async (err,orders)=>{
+
+            try {
+                    const my_orders =  orders.orders.map(async(o_id)=>{
+                        const order = await Order.findById(o_id)
+                        return order
+                    })
+                    
+                    Promise.all(my_orders).then((my_orders)=>{
+                        res.json({status:"ok",data : my_orders})
+                    })
+                    
+            } catch (error) {
+                
+                    return res.json({status:"Error",error})
+            }      
+})
+
+}
 
 
-module.exports = {UE,SignUp,logIn}
+//approve order
+const approveOrder = async (req,res)=>{
+
+        try {
+                        await Order.updateOne({_id : req.body.o_id},{$set:{status:"Approved"}})
+
+                        Order.findById(req.body.o_id,(err,approved_order)=>{
+                            if(err){
+                                res.json({status:"error",err})
+                            }
+                        console.log(approved_order)
+                        res.json({status:"ok",data : approved_order})
+                        })
+                
+        }catch (error) {
+
+            console.log(error)
+        }
+}
+
+
+
+module.exports = {SignUp,logIn,showProfile,myOrders,approveOrder}

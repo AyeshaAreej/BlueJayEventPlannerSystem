@@ -1,27 +1,33 @@
 const express = require('express')
 const userController = require('../controllers/userController')
-const middleware = require('../middlewares/')
+const middleware = require('../middlewares/index')
 
 const route = express.Router()
 
-
-route.get('/UE',middleware.ValidateToken ,userController.UE)
-route.post('/signUp', userController.SignUp)
+route.post('/signUp', userController.signUp)
 route.get('/logIn',userController.logIn)
 
-//1-Home Screen
+//-Home Screen
 route.get('/searchCompany',middleware.ValidateToken ,userController.searchCompany)
+route.get('/searchByDate',middleware.ValidateToken ,userController.searchByDate)
 route.get('/allCompanies',middleware.ValidateToken ,userController.allCompanies)
 route.get('/topRated',middleware.ValidateToken ,userController.topRated)
 route.get('/lowPrice',middleware.ValidateToken ,userController.lowPrice)
 route.get('/highPrice',middleware.ValidateToken ,userController.highPrice)
+route.post('/createOrder',middleware.ValidateToken ,userController.createOrder)
 
-//2-profile
+
+
+//-profile
 route.get('/showProfile',middleware.ValidateToken ,userController.showProfile)
+route.patch('/editProfile',middleware.ValidateToken ,userController.editProfile)
+route.patch('/changePassword',middleware.ValidateToken ,userController.changePassword)
 
 
-//3-Signout
-route.get('/signOut',middleware.ValidateToken ,userController.signOut)
+//My orders
+route.get('/myOrders',middleware.ValidateToken ,userController.myOrders)
+route.get('/orderDetails',middleware.ValidateToken ,userController.orderDetails)
+
 
 
 
