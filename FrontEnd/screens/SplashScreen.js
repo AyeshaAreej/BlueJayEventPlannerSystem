@@ -1,22 +1,26 @@
 import React from "react";
-import {useState}  from 'react'
-import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import {useState,useEffect}  from 'react'
+import { ImageBackground, Button, TextInput, Platform,Alert,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home, Auth_Stack } from "../constants";
-
+import WelcomeScreen from "./WelcomeScreen";
 import { StatusBar } from "react-native-web";
 import COLORS from "../components/colors";
-import { Formik } from 'formik';
-import * as yup from 'yup';
-// Social buttons
-import { FacebookSocialButton } from "react-native-social-buttons";
-import {GoogleSocialButton } from "react-native-social-buttons";
-
 
 
 
 
 function SplashScreen({navigation}) {
 
+
+useEffect(()=>{
+ setTimeout(()=>{
+  console.log('alert');
+
+  // const result=await fetch()
+
+ navigation.navigate(Company_Home)
+ },5000);
+},[]);
 
 
   return (
