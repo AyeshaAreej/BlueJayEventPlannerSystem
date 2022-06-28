@@ -26,6 +26,7 @@ const SignUp = async (req,res)=>{
             price_range: req.body.price_range,
             address: req.body.address,
             available_hours:req.body.available_hours,
+            role: 'company',
             rating: [],
             booked_dates: [],
             orders: []

@@ -6,16 +6,6 @@ const jwt = require('jsonwebtoken')
 const { off } = require('../models/userSchema')
 
 
-//UE(splash screen)
-const UE = (req,res)=>{
-
-               return res.json({
-                status:'ok',
-                data: req.user
-            })
-
-}
-
 
 //SignUp
 const signUp = async (req,res)=>{
