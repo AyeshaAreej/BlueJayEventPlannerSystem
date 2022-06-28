@@ -22,18 +22,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    role:{
+        type: String
+    },
     orders:[
-        {
-            order:{
-                type: String,
-                required: true
-            }
-        }
+        {type: mongoose.Schema.Types.ObjectId, ref:'Order'}
     ]
     
-},
-{
-    collection:'user_info'
 });
 
 const  User = mongoose.model('User', userSchema)

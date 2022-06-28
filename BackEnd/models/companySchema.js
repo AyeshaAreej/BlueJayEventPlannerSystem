@@ -41,17 +41,11 @@ const companySchema = new mongoose.Schema({
     },
     rating:[Number],
 
-    orders:[
-        {
-            order:{
-                type: String,
-                required: true
-            }
-        }
+    booked_dates:[Number],
+    
+    orders:[ 
+        {  type: mongoose.Schema.Types.ObjectId, ref:'Order' }
     ]
-},
-{
-    collection:'company_info'
 });
 
 const  Company = mongoose.model('Company', companySchema)
