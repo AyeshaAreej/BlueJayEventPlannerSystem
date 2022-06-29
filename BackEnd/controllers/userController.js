@@ -50,7 +50,9 @@ const logIn = async(req,res)=>{
     const user = await User.findOne({email}).lean()
 
     if(!user){
+        
         return res.json({status:"error", error : 'Invalid username/password'})
+        
     }
 
     if(await bcrypt.compare(password,user.password)){
@@ -60,7 +62,6 @@ const logIn = async(req,res)=>{
         },
         process.env.SECRET
         )
-
         return res.json({status:"ok", data : token })
     }
 

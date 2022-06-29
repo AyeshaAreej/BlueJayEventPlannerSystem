@@ -5,7 +5,7 @@ const middleware = require('../middlewares/index')
 const route = express.Router()
 
 route.post('/signUp', userController.signUp)
-route.get('/logIn',userController.logIn)
+route.post('/logIn',userController.logIn)
 
 //-Home Screen
 route.get('/searchCompany',middleware.ValidateToken ,userController.searchCompany)

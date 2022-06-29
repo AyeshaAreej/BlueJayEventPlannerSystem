@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 
-
+import {IP, PORT} from"@env"
 
 
 
@@ -24,24 +24,57 @@ function LoginScreen({navigation}) {
 
   function handleLogin(values){
 
+    
+
     const role='user'
+
     if(role=='user'){
-      navigation.navigate(User_Home)
+
+          fetch(`http://${IP}:${PORT}/users/logIn`,{
+            method: "post",
+            body: JSON.stringify(values),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }   
+      }).then(res=>res.json()).then(result=>{
+        console.log(result)
+        if(result.status === 'ok')
+           {
+               console.log("Token" , result.data)
+               localStorage.setItem('token',result.data)
+               navigation.navigate(User_Home)
+           }
+           else{
+            console.log(result.error)
+           }
+
+      }).catch(err=>console.log(err.message))
+
+
+      
+
     }
+
     else if (role=='company'){
-      navigation.navigate(Company_Home)
+      //navigation.navigate(Company_Home)
     }
+
     else if (role=='admin'){
-      navigation.navigate(Admin_Home)
+      //navigation.navigate(Admin_Home)
      
     }
 
     else if(role=='vendor'){
-     navigation.navigate(Vendor_Home)
+     //navigation.navigate(Vendor_Home)
     }
+
     else{
       console.log('no role')
     }
+
+    
+
     
    
   }
@@ -64,8 +97,10 @@ function LoginScreen({navigation}) {
       initialValues={{ email: '', password: '' }}
       onSubmit={
         (values) => {
-          console.log(values)
+          //console.log(values)
           handleLogin(values)}}
+
+
           validationSchema={yup.object().shape({
             email: yup
             .string()

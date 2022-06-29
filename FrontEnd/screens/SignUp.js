@@ -10,7 +10,8 @@ import * as yup from 'yup';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
-import { User_Home } from "../constants";
+import { User_Home, } from "../constants";
+import LoginScreen from './LoginScreen'
 import {IP, PORT} from"@env"
 
 
@@ -32,8 +33,6 @@ function SignUp({navigation}) {
 
    function handleLogin(values){
 
-      console.log(values)
-
       fetch(`http://${IP}:${PORT}/users/signUp`,{
         method: "post",
         body: JSON.stringify(values),
@@ -42,7 +41,9 @@ function SignUp({navigation}) {
             "Content-Type": "application/json"
         }   
       
-   }).then(res=>res.json()).then(result=>console.log(result)).catch(err=>console.log(err.message))
+   }).then(res=>res.json()).then(result=>{console.log(result)
+    navigation.navigate(LoginScreen)
+  }).catch(err=>console.log(err.message))
   
  
   }
@@ -167,7 +168,7 @@ function SignUp({navigation}) {
           <View style={styles.button}>
 
            <Button
-          //  onPress={()=>navigation.navigate(User_Home)}
+           //onPress={()=>navigation.navigate(User_Home)}
            onPress={handleSubmit}
            title="SignUp"
            color={colors.primary}
