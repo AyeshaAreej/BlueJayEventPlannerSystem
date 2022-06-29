@@ -7,11 +7,18 @@ const db = require('./config/mongoose')
 const middleware = require('./middlewares/index')
 const User = require('./models/userSchema')
 const Company = require("./models/companySchema")
+const cors = require("cors")
 
 require('dotenv').config();
+const corsOptions = {
+    origin:"*",
+    credentials:"true",
+    optionSuccessStatus:200
+}
 
 const app = express()
 
+app.use(cors(corsOptions))
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname,'assets')))
@@ -53,7 +60,7 @@ app.use('/company', companyRouter)
 
 
 
-app.listen(process.env.PORT,(err)=>{
+app.listen(process.env.PORT,process.env.IP,(err)=>{
     if(err){
         console.log('error on port')
     }else{

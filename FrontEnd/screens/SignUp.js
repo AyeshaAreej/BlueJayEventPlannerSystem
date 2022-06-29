@@ -1,5 +1,5 @@
 import React from "react";
-import {useState}  from 'react'
+import {useState, useEffect}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import colors from "../components/colors";
@@ -11,6 +11,7 @@ import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import { User_Home } from "../constants";
+import {IP, PORT} from"@env"
 
 
 
@@ -19,9 +20,33 @@ import { User_Home } from "../constants";
 function SignUp({navigation}) {
 
   // State Variables
+  const [username, setUsername]=useState('')
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
+  const [phone_no, setPhone_no]=useState('')
+  const [city, setCity]=useState('')
   const [signup, setSignup] =useState('false')
+
+
+  
+
+   function handleLogin(values){
+
+      console.log(values)
+
+      fetch(`http://${IP}:${PORT}/users/signUp`,{
+        method: "post",
+        body: JSON.stringify(values),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }   
+      
+   }).then(res=>res.json()).then(result=>console.log(result)).catch(err=>console.log(err.message))
+  
+ 
+  }
+
 
   return (
     
@@ -39,14 +64,16 @@ function SignUp({navigation}) {
       {/* Form Inputs View */}
    <View style={{marginTop:20}}>
           <Formik
-             initialValues={{ uname:'', email: '', password: '', phoneNumber:'', city:'' }}
-             onSubmit={values => {
-                // navigation.navigate('HomeScreen')
-               console.log(values)
-              
-              }}
+             initialValues={{ username:'', email: '', password: '', phone_no:'', city:'' }}
+             onSubmit={
+              (values) => {
+             //console.log(values)
+             handleLogin(values)
+             }}
+            
+
               validationSchema={yup.object().shape({
-            uname: yup
+            username: yup
             .string()
             .required('Name is required.'),  
             email: yup
@@ -58,7 +85,7 @@ function SignUp({navigation}) {
             .min(5, 'More than 5 characters are needed.')
             .max(11, 'More than 12 characters are not allowed.')
             .required(),
-            phoneNumber: yup
+            phone_no: yup
             .number()
             // .min(11, '11 or 12 digits are required')
             // .max(12, '11 or 12 digits are required')
@@ -73,15 +100,15 @@ function SignUp({navigation}) {
         <View style={{ alignItems:"center",justifyContent:'center' }}>
            <TextInput
              style={styles.input}
-             name="uname"
+             name="username"
              placeholder='Enter User Name'
-             onChangeText={handleChange('uname')}
-             onBlur={()=>setFieldTouched('uname')}
-            value={values.uname}
+             onChangeText={handleChange('username')}
+             onBlur={()=>setFieldTouched('username')}
+            value={values.username}
            
            />
-           {touched.uname && errors.uname &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.uname}</Text>
+           {touched.username && errors.username &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
             }
               <TextInput
              style={styles.input}
@@ -111,16 +138,16 @@ function SignUp({navigation}) {
             }
             <TextInput
              style={styles.input}
-             name="phoneNumber"
+             name="phone_no"
              placeholder='Enter Phone Number'
-             onChangeText={handleChange('phoneNumber')}
-             onBlur={()=>setFieldTouched('phoneNumber')}
-            value={values.phoneNumber}
+             onChangeText={handleChange('phone_no')}
+             onBlur={()=>setFieldTouched('phone_no')}
+            value={values.phone_no}
             keyboardType="numeric"
             
            />
-            {touched.phoneNumber && errors.phoneNumber &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
+            {touched.phone_no && errors.phone_no &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
 
             <TextInput
@@ -140,7 +167,8 @@ function SignUp({navigation}) {
           <View style={styles.button}>
 
            <Button
-           onPress={()=>navigation.navigate(User_Home)}
+          //  onPress={()=>navigation.navigate(User_Home)}
+           onPress={handleSubmit}
            title="SignUp"
            color={colors.primary}
            /> 
