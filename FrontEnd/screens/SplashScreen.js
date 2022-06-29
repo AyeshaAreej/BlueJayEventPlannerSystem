@@ -18,8 +18,8 @@ useEffect(()=>{
 
   // const result=await fetch()
 
-
- navigation.navigate(User_Home)
+//  navigation.navigate(Company_Home)
+navigation.navigate(WelcomeScreen)
  },5000);
 },[]);
 

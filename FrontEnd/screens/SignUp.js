@@ -11,6 +11,7 @@ import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import { User_Home } from "../constants";
+import {IP, PORT} from"@env"
 
 
 
@@ -29,41 +30,20 @@ function SignUp({navigation}) {
 
   
 
-  async function handleLogin(values){
+   function handleLogin(values){
 
-     //console.log(values.username)
-    //  const username = values.username
-    //  const email = values.email
-    //  const password = values.password
-    //  const city = values.city
-    //  const phone_no = values.phone_no
+      console.log(values)
 
-    const result = await fetch('/users/signUp',{
-      method:'POST',
-      headers:{
-        'content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        username,
-        email,
-        password,
-        city,
-        phone_no
-
-        // "username" : "aemun",
-        // "email" : "aii@gmail.com",
-        // "password": "aemun",
-        // "city":"sukkur",
-        // "phone_no":"877676"
-
-      })
-      }).then((res)=>{res.json()
-        console.log('done')
-      })
-
-      // console.log(result)
-
-      // navigation.navigate('LoginScreen')
+      fetch(`http://${IP}:${PORT}/users/signUp`,{
+        method: "post",
+        body: JSON.stringify(values),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }   
+      
+   }).then(res=>res.json()).then(result=>console.log(result)).catch(err=>console.log(err.message))
+  
  
   }
 

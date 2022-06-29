@@ -12,6 +12,7 @@ const signUp = async (req,res)=>{
 
 const {password : orignalPassword} = req.body
 
+console.log("backend")
 if(orignalPassword.length<5){
     return res.json({
         status:'error',
