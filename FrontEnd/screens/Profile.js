@@ -20,23 +20,23 @@ const {edit, setEdit}=useState('false');
       {/* Form Inputs View */}
    <View style={{marginTop:20, }}>
           <Formik
-      initialValues={{uname:'', email: '', phoneNumber: '',city:'', }}
+      initialValues={{username:'', email: '', phone_no: '',city:'', }}
       onSubmit={
         (values) => {
          console.log(values)
           }}
           validationSchema={yup.object().shape({
-            uname: yup
+            username: yup
             .string()
             .required('Name is required.'),  
             email: yup
             .string()
             .email()
             .required('Email is required.'),  
-            uname: yup
+            username: yup
             .string()
             .required('Name is required.'),  
-            phoneNumber: yup
+            phone_no: yup
             .number()
             .min(11, 'min 11 digits are required')
             .required('Phone Number is required.'), 
@@ -55,17 +55,17 @@ const {edit, setEdit}=useState('false');
         <Icon name="account"  size={38} style={styles.icon}/>
         <TextInput
              style={styles.input}
-             name="uname"
+             name="username"
              placeholder='User Name'
-             onChangeText={handleChange('uname')}
+             onChangeText={handleChange('username')}
             
-             onBlur={()=>setFieldTouched('uname')}
-            value={values.uname}
+             onBlur={()=>setFieldTouched('username')}
+            value={values.username}
            
            />
            </View>
-           {touched.uname && errors.uname &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.uname}</Text>
+           {touched.username && errors.username &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
             }
             <View style={styles.inputContainer} >
         <Icon name="email"  size={38} style={styles.icon}/>
@@ -86,16 +86,16 @@ const {edit, setEdit}=useState('false');
         <Icon name="phone"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
-             name="phoneNumber"
+             name="phone_no"
              placeholder='Phone Number'
-             onChangeText={handleChange('phoneNumber')}
-             onBlur={()=>setFieldTouched('phoneNumber')}
-            value={values.phoneNumber}
+             onChangeText={handleChange('phone_no')}
+             onBlur={()=>setFieldTouched('phone_no')}
+            value={values.phone_no}
             keyboardType="numeric"
             
            /></View>
-            {touched.phoneNumber && errors.phoneNumber &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
+            {touched.phone_no && errors.phone_no &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
             <View style={styles.inputContainer} >
         <Icon name="city"  size={38} style={styles.icon}/>

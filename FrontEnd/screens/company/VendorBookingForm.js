@@ -41,7 +41,7 @@ function VendorBookingForm({  navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{companyname:'', email: '',location:'', phoneNumber:'',date:'',availablebudget:'', specifications:'',}}
+     initialValues={{companyname:'', email: '',location:'', phone_no:'',date:'',availablebudget:'', specifications:'',}}
      onSubmit={values => console.log(values)} 
      validationSchema={yup.object().shape({
             companyname: yup
@@ -57,7 +57,7 @@ function VendorBookingForm({  navigation}) {
           //   date:yup
           //   .string()
           //  .required('Date of event is required'),
-            phoneNumber: yup
+            phone_no: yup
             .number()
              .min(11, 'min 11 digits are required')
             //  .max(12, 'max 12 digits are required')
@@ -78,7 +78,7 @@ function VendorBookingForm({  navigation}) {
              placeholder='Enter Company Name'
              onChangeText={handleChange('companyname')}
              onBlur={()=>setFieldTouched('companyname')}
-            value={values.uname}
+            value={values.username}
            
            />
            {touched.companyname && errors.companyname &&
@@ -103,16 +103,16 @@ function VendorBookingForm({  navigation}) {
           
             <TextInput
              style={styles.input}
-             name="phoneNumber"
+             name="phone_no"
              placeholder='Enter Phone Number'
-             onChangeText={handleChange('phoneNumber')}
-             onBlur={()=>setFieldTouched('phoneNumber')}
-            value={values.phoneNumber}
+             onChangeText={handleChange('phone_no')}
+             onBlur={()=>setFieldTouched('phone_no')}
+            value={values.phone_no}
             keyboardType="numeric"
             
            />
-            {touched.phoneNumber && errors.phoneNumber &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
+            {touched.phone_no && errors.phone_no &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
             <TextInput
              style={styles.input}

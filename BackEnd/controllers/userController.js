@@ -34,7 +34,7 @@ await User.create({
             console.log('error in signup')
             return res.json({status: 'error',error: 'error in signup'})
         }
-       //console.log(user)
+       console.log("data inserted sucessfully")
        return res.json({status: 'ok'})
     })
 }

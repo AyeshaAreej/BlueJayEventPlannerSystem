@@ -63,7 +63,9 @@ function LoginScreen({navigation}) {
           <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={
-        (values) => {handleLogin(values)}}
+        (values) => {
+          console.log(values)
+          handleLogin(values)}}
           validationSchema={yup.object().shape({
             email: yup
             .string()

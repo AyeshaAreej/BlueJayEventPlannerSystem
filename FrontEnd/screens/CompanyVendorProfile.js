@@ -36,7 +36,7 @@ const CompanyVendorProfile = () => {
       {/* Form Inputs View */}
    <View style={{marginTop:50}}>
           <Formik
-      initialValues={{companyname:'', email: '', phoneNumber: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
+      initialValues={{companyname:'', email: '', phone_no: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
       onSubmit={
         (values) => {
         console.log(values, image)}}
@@ -48,7 +48,7 @@ const CompanyVendorProfile = () => {
             .string()
             .email()
             .required('Email is required.'),  
-            phoneNumber: yup
+            phone_no: yup
             .number()
             .min(11, 'min 11 digits are required')
             // .max(11, 'max 11 digits are required')
@@ -122,16 +122,16 @@ const CompanyVendorProfile = () => {
           <Icon name="phone"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
-             name="phoneNumber"
+             name="phone_no"
              placeholder='Phone Number'
-             onChangeText={handleChange('phoneNumber')}
-             onBlur={()=>setFieldTouched('phoneNumber')}
-            value={values.phoneNumber}
+             onChangeText={handleChange('phone_no')}
+             onBlur={()=>setFieldTouched('phone_no')}
+            value={values.phone_no}
             keyboardType="numeric"
             
            /></View>
-            {touched.phoneNumber && errors.phoneNumber &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phoneNumber}</Text>
+            {touched.phone_no && errors.phone_no &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
 
             <View style={styles.inputContainer} >
