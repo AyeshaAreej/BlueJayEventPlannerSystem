@@ -12,7 +12,6 @@ const signUp = async (req,res)=>{
 
 const {password : orignalPassword} = req.body
 
-console.log("backend")
 if(orignalPassword.length<5){
     return res.json({
         status:'error',
@@ -35,7 +34,7 @@ await User.create({
             console.log('error in signup')
             return res.json({status: 'error',error: 'error in signup'})
         }
-       console.log("data inserted sucessfully")
+       
        return res.json({status: 'ok'})
     })
 }
@@ -51,21 +50,22 @@ const logIn = async(req,res)=>{
 
     if(!user){
         
-        return res.json({status:"error", error : 'Invalid username/password'})
+        return res.json({status:"error", error : 'Invalid1 username/password'})
         
     }
 
     if(await bcrypt.compare(password,user.password)){
 
         const token = await jwt.sign({
-            id : user._id, role: user.role
+            id : user._id, 
+            role: user.role
         },
         process.env.SECRET
         )
         return res.json({status:"ok", data : token })
     }
 
-    return res.json({status:"error", error : 'Invalid username/password'})
+    return res.json({status:"error", error : 'Invalid2 username/password'})
 
 }
 
@@ -73,12 +73,13 @@ const logIn = async(req,res)=>{
 
 //search company
 const searchCompany = async (req,res)=>{
-    //get user from token
-    //console.log(req.user)
+    
+    console.log('inside search company')
 
     //case sensitive
-    const search_text = req.body.search_text
-    await Company.find({"company_name" : {$regex : search_text}},(err,companies)=>{
+    const {search_text,city} = req.body
+    
+     Company.find({"company_name" : {$regex : search_text}, "city": city},(err,companies)=>{
         if(err){
             console.log('error in search company')
             return res.json({status: 'error',error: 'error in search company'})
@@ -93,6 +94,35 @@ const searchCompany = async (req,res)=>{
 // search by date
 const searchByDate = async (req,res)=>{
 
+    const {city} = req.body
+
+    Company.find({city: city}, (err,companies)=>{
+        if(companies){
+            
+            const result = []
+                     for(i of companies){ //getting whole objects
+                                    var count = 0
+
+                                    for (date of i.booked_dates){ //getting dates from array
+                                        if(date == req.body.date)
+                                        {
+                                            count+=1
+                                        }
+                                    }
+
+                                    if(count<=3){
+                                      result.push(i)
+                                    }
+
+                    }
+
+                       
+                return res.json({status: 'ok',data:result})
+        
+        
+        }
+        return res.json({status: 'error',error: 'error in search company by dates'})
+    })
 
 }
 
@@ -100,18 +130,17 @@ const searchByDate = async (req,res)=>{
 //all companies of a city
 const allCompanies = async (req,res)=>{
     //get user from token
-    //console.log(req.user)
+    //console.log(req.body.city)
 
     const city = req.body.city
-    await Company.find({city},(err,companies)=>{
+     Company.find({city},(err,companies)=>{
         if(err){
             console.log('error in all companies')
             return res.json({status: 'error',error: 'error in all companies'})
         }
+        console.log(companies)
         return res.json({status:'ok', data: companies})
     })
-
-   
 }
 
 
@@ -119,7 +148,7 @@ const allCompanies = async (req,res)=>{
 const topRated = async (req,res)=>{
    
     const city = req.body.city
-    await Company.find({city},(err,companies)=>{
+     Company.find({city},(err,companies)=>{
         if(err){
             console.log('error in top rated companies')
             return res.json({status: 'error',error: 'error in top rated companies'})
@@ -132,7 +161,7 @@ const topRated = async (req,res)=>{
 //low price 
 const lowPrice = async (req,res)=>{
     const city = req.body.city
-    await Company.find({city},(err,companies)=>{
+     Company.find({city},(err,companies)=>{
         if(err){
             console.log('error in low Price')
             return res.json({status: 'error',error: 'error in low Price'})
@@ -146,7 +175,7 @@ const lowPrice = async (req,res)=>{
 // high price
 const highPrice = async (req,res)=>{
     const city = req.body.city
-    await Company.find({city},(err,companies)=>{
+     Company.find({city},(err,companies)=>{
         if(err){
             console.log('error in high Price')
             return res.json({status: 'error',error: 'error in high Price'})
@@ -329,7 +358,30 @@ const orderDetails = async (req,res)=>{
 }
 
 
+const rateCompany = async (req,res)=>{
+    //console.log(req.body)
+    const {c_id, order_rating} = req.body
+    const company = await Company.findByIdAndUpdate(c_id, {$push: { rating_list : order_rating } })
+
+    var sum = 0;
+    const list = company.rating_list
+    for(i of list){
+        sum +=i
+    }
+    const avg = sum/list.length
+    
+    Company.findByIdAndUpdate(company._id,{$set:{rating:avg}},{
+        new:true
+    },(err,company)=>{
+        if(err){
+            return res.json({status:"error",err})
+        }
+        return res.json({status:"ok",company})
+    })
+    
+}
+
 
 
 module.exports = {signUp,logIn,searchCompany,searchByDate,allCompanies,topRated,lowPrice,highPrice,
-                  createOrder,showProfile,editProfile,changePassword,myOrders,orderDetails}
+                  createOrder,showProfile,editProfile,changePassword,myOrders,orderDetails,rateCompany}

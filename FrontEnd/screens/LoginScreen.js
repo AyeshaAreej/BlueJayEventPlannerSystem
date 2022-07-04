@@ -1,6 +1,6 @@
 import React from "react";
 import {useState}  from 'react'
-import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text, AsyncStorage } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
 
 import { StatusBar } from "react-native-web";
@@ -10,8 +10,9 @@ import * as yup from 'yup';
 // Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
+import * as SecureStore from 'expo-secure-store';
 
-import {IP, PORT} from"@env"
+import {PORT} from"@env"
 
 
 
@@ -22,59 +23,93 @@ function LoginScreen({navigation}) {
   const [password, setPassword]=useState('')
   const [signup, setSignup] =useState('false')
 
-  function handleLogin(values){
+  async function handleLogin(values){
 
-    
+    const role='customer'
 
-    const role='user'
-
-    if(role=='user'){
-
-          fetch(`http://${IP}:${PORT}/users/logIn`,{
-            method: "post",
-            body: JSON.stringify(values),
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json"
-            }   
-      }).then(res=>res.json()).then(result=>{
-        console.log(result)
-        if(result.status === 'ok')
-           {
-               console.log("Token" , result.data)
-               localStorage.setItem('token',result.data)
-               navigation.navigate(User_Home)
-           }
-           else{
-            console.log(result.error)
-           }
-
-      }).catch(err=>console.log(err.message))
-
-
+    if(role=='customer'){
       
+           fetch(`http://10.0.2.2:${PORT}/users/logIn`,{
+                    method: "post",
+                    body: JSON.stringify(values),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json"
+                    }   
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
 
+                if(result.status === 'ok')
+                      {
+                          
+                          SecureStore.setItemAsync('token',result.data)
+                          navigation.navigate(User_Home)
+                      }
+                      else{
+                        console.log(result.error)
+                      }
+
+              }).catch(err=>console.log(err.message))
+
+             // console.log('login')
     }
 
     else if (role=='company'){
-      //navigation.navigate(Company_Home)
-    }
+      
+                    fetch(`http://10.0.2.2:${PORT}/company/logIn`,{
+                      method: "post",
+                      body: JSON.stringify(values),
+                      headers: {
+                          Accept: "application/json, text/plain, */*",
+                          "Content-Type": "application/json"
+                      }   
+                    
+                }).then(res=>res.json()).then(result=>{
+                  console.log(result)
 
-    else if (role=='admin'){
-      //navigation.navigate(Admin_Home)
-     
+                  if(result.status === 'ok')
+                        {
+                            
+                            SecureStore.setItemAsync('token',result.data);
+                            navigation.navigate(Company_Home)
+                        }
+                        else{
+                          console.log(result.error)
+                        }
+
+                }).catch(err=>console.log(err.message))
     }
 
     else if(role=='vendor'){
-     //navigation.navigate(Vendor_Home)
+                  //     fetch(`http://10.0.2.2:${PORT}/vendor/logIn`,{
+                  //       method: "post",
+                  //       body: JSON.stringify(values),
+                  //       headers: {
+                  //           Accept: "application/json, text/plain, */*",
+                  //           "Content-Type": "application/json"
+                  //       }   
+                      
+                  // }).then(res=>res.json()).then(result=>{
+                  //   console.log(result)
+
+                  //   if(result.status === 'ok')
+                  //         {
+                              
+                  //             SecureStore.setItemAsync('token',result.data);
+                  //             navigation.navigate(Vendor_Home)
+                  //         }
+                  //         else{
+                  //           console.log(result.error)
+                  //         }
+
+                  // }).catch(err=>console.log(err.message))
+
     }
 
     else{
       console.log('no role')
     }
-
-    
-
     
    
   }

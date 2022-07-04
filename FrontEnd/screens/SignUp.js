@@ -6,13 +6,12 @@ import colors from "../components/colors";
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-// Social buttons
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import { User_Home, } from "../constants";
 import LoginScreen from './LoginScreen'
-import {IP, PORT} from"@env"
+import {PORT} from"@env"
 
 
 
@@ -33,16 +32,28 @@ function SignUp({navigation}) {
 
    function handleLogin(values){
 
-      fetch(`http://${IP}:${PORT}/users/signUp`,{
+    //console.log(values)
+
+      fetch(`http://10.0.2.2:${PORT}/users/signUp`,{
         method: "post",
         body: JSON.stringify(values),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
         }   
+        
       
    }).then(res=>res.json()).then(result=>{console.log(result)
-    navigation.navigate(LoginScreen)
+    if(result.status == 'ok')
+    {
+      navigation.navigate(LoginScreen)
+    }
+    else{
+      //refresh this form and show error
+    }
+    
+
+   
   }).catch(err=>console.log(err.message))
   
  
@@ -212,7 +223,7 @@ const styles = StyleSheet.create({
     backgroundColor :colors.primary,
     paddingTop:"18%",
     paddingLeft:8,
-    width:410,
+    width:"100%",
     height:220,
     
    },

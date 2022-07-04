@@ -25,13 +25,15 @@ app.use(express.static(path.resolve(__dirname,'assets')))
 
 app.get('/',middleware.ValidateToken,async (req,res)=>{
 
+    
     //role add token and if else
     const role = req.user.role
-
+    //console.log(role)
+    
     switch(role){
 
         case 'customer':
-            await User.findById(req.user.id,(err,user)=>{
+             User.findById(req.user.id,(err,user)=>{
                 if(err){
                     return res.json({status:'error', error: 'cant find user' })
                 }
@@ -40,14 +42,24 @@ app.get('/',middleware.ValidateToken,async (req,res)=>{
             break;
 
         case 'company':
-            await Company.findById(req.user.id,(err,user)=>{
+             Company.findById(req.user.id,(err,user)=>{
                 if(err){
                     return res.json({status:'error', error: 'cant find user' })
                 }
               return res.json({ status:'ok', data: user})
             })
             break;
-        break;
+
+        // case 'vendor':
+        //         Vendor.findById(req.user.id,(err,user)=>{
+        //            if(err){
+        //                return res.json({status:'error', error: 'cant find user' })
+        //            }
+        //          return res.json({ status:'ok', data: user})
+        //     })
+        //     break;
+        
+  
     }
 }
 )
@@ -60,7 +72,7 @@ app.use('/company', companyRouter)
 
 
 
-app.listen(process.env.PORT,process.env.IP,(err)=>{
+app.listen(process.env.PORT,(err)=>{
     if(err){
         console.log('error on port')
     }else{

@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken')
 
 const ValidateToken = async (req, res, next) => {
 
-    const {token} = req.body;
+    const {token} = req.headers;
 
         const user = jwt.verify(token,process.env.SECRET)
         if (user){
             req.user = user
-            console.log(user.role)
+            console.log(user)
             next()
         }else{
             return res.json({

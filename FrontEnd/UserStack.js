@@ -104,7 +104,7 @@ const UserStack = () => {
                     ),
                   }}
           />
-          <Drawer.Screen name='  Help Centre' component={HelpCentre}
+          <Drawer.Screen name=' Customer Help Centre' component={HelpCentre}
                   options={{
                     drawerIcon:({focused,size})=>(
                       <Icon

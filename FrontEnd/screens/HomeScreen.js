@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -7,13 +7,79 @@ import COLORS from '../components/colors';
 import hotels from '../components/companies';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../components/colors';
+import * as SecureStore from 'expo-secure-store';
+import {PORT} from"@env"
 
 const {width}= Dimensions.get('screen');
 const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
 const HomeScreen=()=>{
 
-   const categories = ['All', 'Popular', 'Top Rated', 'Low Price', 'High Price'];
+
+  useEffect(()=>{
+    //   SecureStore.getItemAsync('token').then(token=>{
+
+    //   console.log('all companies',token)
+
+    //   const values = {city : 'quetta'}
+      
+    //   fetch(`http://10.0.2.2:${PORT}/users/allCompanies`,{
+    //                 method: "post",
+    //                 body: JSON.stringify(values),
+    //                 headers: {
+    //                     Accept: "application/json, text/plain, */*",
+    //                     "Content-Type": "application/json",
+    //                     token
+    //                 }   
+                  
+    //           }).then(res=>res.json()).then(result=>{
+    //             console.log(result)
+
+    //             if(result.data == '')
+    //                   {
+    //                     console.log('No companies found')
+    //                   }
+
+    //           }).catch(err=>console.log('catch',err.message))
+    // })
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('all companies',token)
+
+      const values = {city : 'quetta'}
+      
+      fetch(`http://10.0.2.2:${PORT}/users/allCompanies`,{
+                    method: "post",
+                    body: JSON.stringify(values),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }   
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.data == '')
+                      {
+                        console.log('No companies found')
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    })
+
+
+    
+
+   
+
+    
+
+
+   },[]);
+
+   const categories = ['All', 'Popular', 'Low Price', 'High Price'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
@@ -22,7 +88,7 @@ const HomeScreen=()=>{
    const [date, setDate] = useState(new Date());
    const [isPickerShow, setIsPickerShow] = useState(false);
 
-   console.log(date);
+  //  console.log(date);
    const showPicker = () => {
     setIsPickerShow(true);
   };
@@ -81,6 +147,7 @@ const Card=({hotel,index})=>{
     console.log("Card clicked")
     navigation.navigate('CompanyDetails')
   }
+  
 return(
    
   <TouchableOpacity onPress={handleClick}>
@@ -334,3 +401,6 @@ const style = StyleSheet.create({
   });
 
 export default HomeScreen;
+
+
+

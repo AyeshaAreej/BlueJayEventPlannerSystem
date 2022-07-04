@@ -104,7 +104,7 @@ const VendorStack = () => {
                     ),
                   }}
           />
-          <Drawer.Screen name='  Help Centre' component={HelpCentre}
+          <Drawer.Screen name=' Vendor Help Centre' component={HelpCentre}
                   options={{
                     drawerIcon:({focused,size})=>(
                       <Icon

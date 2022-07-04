@@ -42,7 +42,9 @@ const companySchema = new mongoose.Schema({
     role:{
         type: String
     },
-    rating:[Number],
+    rating_list:[Number],
+
+    rating:{ type: Number},
 
     booked_dates:[Number],
     

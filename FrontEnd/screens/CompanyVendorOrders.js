@@ -29,27 +29,33 @@ return(
      <View  style={{flexDirection:'column'}}>
          <Text style={{fontSize:16, marginLeft:20, marginTop:50,marginBottom:20}}>
          Event Type: Wedding{'\n'}{'\n'}Status: Pending{'\n' }{'\n' }Date: 4/july/2022  </Text>
-        
-         <View  style={{flexDirection:"row",paddingBottom:5, justifyContent:'center'}}>
-           <Button
-          //  onPress={()=>navigation.navigate('CompanyDetails')}
-           title="Accept"
-           color={COLORS.primary}
-           /> 
+      
 
-          </View>
          </View>
          </View>
         
+         <View style={{flexDirection:'row'}}>
+         <Text style={{fontWeight:"bold",fontSize:15,paddingLeft:10,paddingTop:10}}>Name : {hotel.name}</Text>
+         <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:110}}>Pending</Text>
+         </View>
         
          
            <View style={{flexDirection:'row'}}>
-               <Text style={{fontWeight:"bold",fontSize:15}}>Name : {hotel.name} {'\n'}
-                Total : Rs.{hotel.price}</Text>
-               <View style={{paddingLeft:62, borderRadius:12}}>
+               
+               <Text style={{fontWeight:"bold",fontSize:15,paddingLeft:10,paddingTop:5}}>Total : Rs.{hotel.price}</Text>
+
+                <View  style={{flexDirection:"row", justifyContent:'center',paddingLeft:100}}>
+                <Button
+                //  onPress={()=>navigation.navigate('CompanyDetails')}
+                title="Accept"
+                color={COLORS.primary}
+                /> 
+                </View>
+
+               <View style={{paddingLeft:10, borderRadius:12}}>
                 <Button  title="Reject"
-             color={COLORS.primary}/>
-           </View>
+                color={COLORS.primary}/>
+              </View>
         
                
           </View>

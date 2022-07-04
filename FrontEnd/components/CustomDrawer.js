@@ -3,13 +3,15 @@ import React from 'react'
 import { DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer'
 import { DrawerActions } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import WelcomeScreen from '../screens/WelcomeScreen'
+import * as SecureStore from 'expo-secure-store';
 
 
 const CustomDrawer = (props) => {
   return (
       <View style={{flex:1}}>
 
-                <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor:'black'}}>
+                <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: 'purple'}}>
                 
                             <ImageBackground source={require('../assets/bg.jpg')} style={{padding:20}}>
                                 <Image source={require('../assets/profile.jpg')} 
@@ -23,7 +25,7 @@ const CustomDrawer = (props) => {
 
                 </DrawerContentScrollView>
 
-                <View style={{padding:20, borderTopWidth:1, borderTopColor:'#ccc' }}>
+                <View style={{paddingTop:8,padding :20, height:110, borderTopWidth:1, borderTopColor:'#ccc' }}>
 
                     <TouchableOpacity onPress={()=>{}} style={{paddingVertical:15}}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -32,7 +34,11 @@ const CustomDrawer = (props) => {
                     </View>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity onPress={()=>{}} style={{paddingVertical:15}}>
+                    <TouchableOpacity onPress={()=>{
+                                                    SecureStore.setItemAsync('token',' ')
+                                                    props.navigation.navigate(WelcomeScreen)
+                                              }} 
+                    style={{paddingVertical:15}}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                          <Icon name='sign-out' size={22} color='grey'/>
                           <Text>    Sign out</Text> 

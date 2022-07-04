@@ -27,7 +27,8 @@ const SignUp = async (req,res)=>{
             address: req.body.address,
             available_hours:req.body.available_hours,
             role: 'company',
-            rating: [],
+            rating_list:[],
+            rating: 0,
             booked_dates: [],
             orders: []
         },
@@ -54,7 +55,7 @@ const logIn = async (req,res)=>{
     if(await bcrypt.compare(password,company.password)){
 
         const token = jwt.sign({
-            id : company._id, company_name: company.company_name
+            id : company._id, role: company.role
         },
         process.env.SECRET
         )

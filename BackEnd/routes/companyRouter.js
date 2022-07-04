@@ -6,7 +6,7 @@ const route = express.Router()
 
 
 route.post('/signUp', companyController.SignUp)
-route.get('/logIn',companyController.logIn)
+route.post('/logIn',companyController.logIn)
 
 
 //-profile

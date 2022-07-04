@@ -6,7 +6,8 @@ import WelcomeScreen from "./WelcomeScreen";
 import { StatusBar } from "react-native-web";
 import COLORS from "../components/colors";
 
-
+import * as SecureStore from 'expo-secure-store';
+import {PORT} from"@env"
 
 
 function SplashScreen({navigation}) {
@@ -14,13 +15,44 @@ function SplashScreen({navigation}) {
 
 useEffect(()=>{
  setTimeout(()=>{
-  console.log('alert');
 
-  // const result=await fetch()
+  SecureStore.getItemAsync('token').then(token=>{
 
-//  navigation.navigate(Company_Home)
-navigation.navigate(WelcomeScreen)
- },5000);
+    if(token == ' '){
+      console.log("No token")
+      navigation.navigate(WelcomeScreen)
+    }else{
+    console.log('splash screen',token)
+    
+    fetch(`http://10.0.2.2:${PORT}/`,{
+                  method: "get",
+                  headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      token
+                  }   
+                
+            }).then(res=>res.json()).then(result=>{
+              console.log(result)
+
+              if(result.data.role == 'customer')
+                    {
+                      navigation.navigate(User_Home)
+                    }
+              else if(result.data.role == 'company')
+                    {
+                      navigation.navigate(Company_Home)
+                    }
+              if(result.data.role == 'vendor')
+                    {
+                      navigation.navigate(Vendor_Home)
+                    }
+
+            }).catch(err=>console.log('catch',err.message))
+     }  
+  })
+  
+ },1000);
 },[]);
 
 

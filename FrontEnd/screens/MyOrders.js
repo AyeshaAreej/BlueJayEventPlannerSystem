@@ -20,37 +20,34 @@ const Card=({hotel,index,navigation})=>{
 return(
    
     <View style={{...style.card}}>
-    <View style={style.priceTag}>
-    <View style={{color:COLORS.white, }}>
-     <Icon name="delete-outline" size={30} color={ COLORS.white}/>
-    </View>
- 
-     </View>
-     <View style={{flexDirection:'row'}}>
-         <Image source={hotel.image} style={style.cardImage} />
-     
-         <Text style={{fontSize:16, marginLeft:20, marginTop:50,marginBottom:20}}>
-         Event Type: Wedding{'\n'}{'\n'}Status: Pending{'\n' }{'\n' }Date: 4/july/2022  </Text>
-         
-         </View>
-        
-         <View >
-          <View style={{flexDirection:"row", justifyContent:'space-between'}}>
-           <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>Name : {hotel.name}</Text>
-                <Text>Total : Rs.{hotel.price}</Text>
-               
-            </View>
+      
+          <View style={style.priceTag}>
+                  <View style={{color:COLORS.white, }}>
+                  <Icon name="delete-outline" size={30} color={ COLORS.white}/>
+                  </View>
           </View>
-          <View  style={{flexDirection:"row", justifyContent:'flex-end'}}>
-           {/* <Button
-          //  onPress={()=>navigation.navigate('CompanyDetails')}
-           title="Accept Order"
-           color='#9370DB'
-           />  */}
 
+          <View style={{flexDirection:'row'}}>
+                  <Image source={hotel.image} style={style.cardImage} />
+              
+                  <Text style={{fontSize:16, marginLeft:20, marginTop:50,marginBottom:20}}>
+                  Event Type: Wedding{'\n'}{'\n'}No of guests: 500{'\n' }{'\n' }Date: 4/july/2022  </Text>
           </View>
-         </View>     
+
+    
+          <View style={{flexDirection:"row"}}>
+                  
+                    <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15,paddingTop:10}}>Name : {hotel.name}</Text>
+                     
+                    <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}>Pending</Text>
+          
+          </View>   
+
+           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
+                  
+           <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15}}>Total : Rs.{hotel.price}</Text>
+                   
+          </View>      
         
     </View>
     

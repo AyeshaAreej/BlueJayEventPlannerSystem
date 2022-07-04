@@ -166,7 +166,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   headerImage: {
-    height: 400,
+    height: 350,
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
     overflow: 'hidden',

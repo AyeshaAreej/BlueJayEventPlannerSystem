@@ -72,7 +72,7 @@ function BookingForm({  navigation}) {
  >
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
        <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
-       <TextInput
+       {/* <TextInput
              style={styles.input}
              name="username"
              placeholder='Enter User Name'
@@ -123,7 +123,7 @@ function BookingForm({  navigation}) {
            />
             {touched.phone_no && errors.phone_no &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
-            }
+            } */}
             <TextInput
              style={styles.input}
              name="eventtype"
@@ -136,7 +136,7 @@ function BookingForm({  navigation}) {
             {touched.eventtype && errors.eventtype &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.eventtype}</Text>
             }
-              <TextInput
+              {/* <TextInput
              style={styles.input}
              name="date"
              placeholder='Date '
@@ -147,7 +147,7 @@ function BookingForm({  navigation}) {
            /> 
             {touched.date && errors.date &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.date}</Text>
-            }
+            } */}
         
           <TextInput
              style={styles.input}
@@ -177,8 +177,9 @@ function BookingForm({  navigation}) {
             
               {/* Venue */}
           
-            <View style={{borderWidth:3, padding:12, marginTop:5,borderRadius:20,borderColor:colors.primary}}>
+            <View style={{borderWidth:3, padding:12, marginTop:20,marginBottom:10, borderRadius:20,borderColor:colors.primary}}>
             <Text  style={{color:colors.grey,fontSize:20}}>Venue (Optional)</Text>
+
             <TextInput
              style={styles.input}
              name="venuetype"
@@ -191,6 +192,7 @@ function BookingForm({  navigation}) {
            {touched.venuetype && errors.venuetype &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.venuetype}</Text>
             }
+
            <TextInput
              style={styles.input}
              name="services"
@@ -203,9 +205,6 @@ function BookingForm({  navigation}) {
            {touched.services && errors.services &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.services}</Text>
             }
-
-        
-
 
 
             </View>
@@ -224,7 +223,7 @@ const styles = StyleSheet.create({
 
   topView:{
   
-    paddingTop:"4%",
+    paddingTop:"2%",
     paddingLeft:"25%",
     width:410,
     height:170,
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
    input:{
    borderBottomColor :colors.primary,
    borderBottomWidth:4,
-   paddingTop:12,
+   paddingTop:15,
    width:250,
    fontSize:18,
 
