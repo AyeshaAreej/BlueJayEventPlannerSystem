@@ -2,7 +2,7 @@ import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text, AsyncStorage } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
-
+import { RadioButton } from 'react-native-paper';
 import { StatusBar } from "react-native-web";
 import COLORS, { colors } from "../components/colors";
 import { Formik } from 'formik';
@@ -22,7 +22,9 @@ function LoginScreen({navigation}) {
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
   const [signup, setSignup] =useState('false')
+  const [checked, setChecked] = React.useState('User');
 
+  console.log(checked)
   async function handleLogin(values){
 
     const role='customer'
@@ -114,8 +116,8 @@ function LoginScreen({navigation}) {
    
   }
   return (
-    
    <View style={{flex:1, backgroundColor:'#fff'}} >
+     {/* <StatusBar barStyle="light-content"  translucent backgroundColor="#fff"/> */}
    <View style={styles.topView}>
    <ImageBackground
    style={styles.logo}
@@ -177,6 +179,52 @@ function LoginScreen({navigation}) {
             {touched.password && errors.password &&
               <Text style={{ marginLeft:10,fontSize: 18, color: 'red' }}>{errors.password}</Text>
             }
+            {/* Radio Button */}
+ 
+            <View style={{flexDirection:'row'}}>
+            <View style={styles.rightTag}>
+       <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>User</Text>
+         <View style={styles.leftTag}>
+          <RadioButton
+        value="User"
+        status={ checked === 'User' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('User')}
+        uncheckedColor={COLORS.primary}
+        color={COLORS.primary}
+      />
+       </View>
+       </View>
+    
+     
+     <View style={styles.rightTag}>
+       <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
+         <View style={styles.leftTag}>
+          <RadioButton
+        value="Company"
+        status={ checked === 'Company' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('Comapny')}
+        uncheckedColor={COLORS.primary}
+        color={COLORS.primary}
+      />
+       </View>
+       </View>
+     
+
+      <View style={styles.rightTag}>
+      <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Vendor</Text>
+         <View style={styles.leftTag}>
+          <RadioButton
+        value="Vendor"
+        status={ checked === 'Vendor' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('Vendor')}
+        uncheckedColor={COLORS.primary}
+        color={COLORS.primary}
+      />
+       </View>
+       </View>
+     
+</View>     
+    
 
            <Text style={styles.center}>Forgot Password?</Text>
             {/*SignIn Button  */}
@@ -201,17 +249,11 @@ function LoginScreen({navigation}) {
 
           {/* Social buttons */}
     
-          
-              
-    
-              <View  style={styles.rightTag}>
+         <View  style={styles.socialbTag}>
               <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
               <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
               </View>
-  
-             
-
-    </View>
+       </View>
     
  </View>
   );
@@ -262,13 +304,31 @@ center:{
   paddingTop:25,justifyContent:'center',
    alignItems:'center',
 },
-  rightTag:{
+  socialbTag:{
     marginTop: 10,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
 
   },
+  radioButton:{
+    uncheckedColor:COLORS.primary,
+    color:COLORS.primary,
+  },
+  rightTag:{
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    
+
+  },
+leftTag:{
+ 
+  color: COLORS.grey,
+  marginLeft: 5,
+  paddingBottom:5,
+}, 
 
 });
 
