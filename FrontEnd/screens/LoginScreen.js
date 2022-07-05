@@ -179,6 +179,7 @@ function LoginScreen({navigation}) {
             {touched.password && errors.password &&
               <Text style={{ marginLeft:10,fontSize: 18, color: 'red' }}>{errors.password}</Text>
             }
+            <Text style={styles.center}>Forgot Password?</Text>
             {/* Radio Button */}
  
             <View style={{flexDirection:'row'}}>
@@ -194,15 +195,13 @@ function LoginScreen({navigation}) {
       />
        </View>
        </View>
-    
-     
-     <View style={styles.rightTag}>
-       <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
+       <View style={styles.rightTag}>
+      <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
          <View style={styles.leftTag}>
           <RadioButton
         value="Company"
         status={ checked === 'Company' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('Comapny')}
+        onPress={() => setChecked('Company')}
         uncheckedColor={COLORS.primary}
         color={COLORS.primary}
       />
@@ -225,8 +224,6 @@ function LoginScreen({navigation}) {
      
 </View>     
     
-
-           <Text style={styles.center}>Forgot Password?</Text>
             {/*SignIn Button  */}
           <View style={styles.center}>
           <View style={styles.button}>
@@ -245,9 +242,8 @@ function LoginScreen({navigation}) {
      </View>
 
      <View style={styles.center}>
-        <Text style={{fontWeight: "bold"}}>OR</Text>
-
-          {/* Social buttons */}
+      
+    {/* Social buttons */}
     
          <View  style={styles.socialbTag}>
               <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
@@ -282,7 +278,6 @@ const styles = StyleSheet.create({
     padding:22,
     width:280,
     fontSize:20,
-    fontWeight:'bold',
     borderWidth:2,
     elevation:20,
     borderRadius:15,
@@ -305,7 +300,7 @@ center:{
    alignItems:'center',
 },
   socialbTag:{
-    marginTop: 10,
+    // marginTop: ,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
