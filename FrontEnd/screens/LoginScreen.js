@@ -2,7 +2,7 @@ import React from "react";
 import {useState}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text, AsyncStorage } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
-
+import { RadioButton } from 'react-native-paper';
 import { StatusBar } from "react-native-web";
 import COLORS, { colors } from "../components/colors";
 import { Formik } from 'formik';
@@ -22,7 +22,9 @@ function LoginScreen({navigation}) {
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
   const [signup, setSignup] =useState('false')
+  const [checked, setChecked] = React.useState('User');
 
+  console.log(checked)
   async function handleLogin(values){
 
     const role='customer'
@@ -114,15 +116,15 @@ function LoginScreen({navigation}) {
    
   }
   return (
-    
    <View style={{flex:1, backgroundColor:'#fff'}} >
+     {/* <StatusBar barStyle="light-content"  translucent backgroundColor="#fff"/> */}
    <View style={styles.topView}>
    <ImageBackground
    style={styles.logo}
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
-     <Text style={{color:'white', fontSize:25,fontWeight:'bold'}}>Sign In</Text>
+     <Text style={{color:'white',marginLeft:150, fontSize:25,fontWeight:'bold'}}>Sign In</Text>
     
  </View>
 
@@ -177,8 +179,51 @@ function LoginScreen({navigation}) {
             {touched.password && errors.password &&
               <Text style={{ marginLeft:10,fontSize: 18, color: 'red' }}>{errors.password}</Text>
             }
+            <Text style={styles.center}>Forgot Password?</Text>
+            {/* Radio Button */}
+ 
+            <View style={{flexDirection:'row'}}>
+            <View style={styles.rightTag}>
+       <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>User</Text>
+         <View style={styles.leftTag}>
+          <RadioButton
+        value="User"
+        status={ checked === 'User' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('User')}
+        uncheckedColor={COLORS.primary}
+        color={COLORS.primary}
+      />
+       </View>
+       </View>
+       <View style={styles.rightTag}>
+      <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
+         <View style={styles.leftTag}>
+          <RadioButton
+        value="Company"
+        status={ checked === 'Company' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('Company')}
+        uncheckedColor={COLORS.primary}
+        color={COLORS.primary}
+      />
+       </View>
+       </View>
+     
 
-           <Text style={styles.center}>Forgot Password?</Text>
+      <View style={styles.rightTag}>
+      <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Vendor</Text>
+         <View style={styles.leftTag}>
+          <RadioButton
+        value="Vendor"
+        status={ checked === 'Vendor' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('Vendor')}
+        uncheckedColor={COLORS.primary}
+        color={COLORS.primary}
+      />
+       </View>
+       </View>
+     
+</View>     
+    
             {/*SignIn Button  */}
           <View style={styles.center}>
           <View style={styles.button}>
@@ -197,21 +242,14 @@ function LoginScreen({navigation}) {
      </View>
 
      <View style={styles.center}>
-        <Text style={{fontWeight: "bold"}}>OR</Text>
-
-          {/* Social buttons */}
+      
+    {/* Social buttons */}
     
-          
-              
-    
-              <View  style={styles.rightTag}>
+         <View  style={styles.socialbTag}>
               <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
               <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
               </View>
-  
-             
-
-    </View>
+       </View>
     
  </View>
   );
@@ -231,15 +269,19 @@ const styles = StyleSheet.create({
  logo: {
   width: 200,
   height: 110,
-  marginLeft:100,
+  marginLeft:90,
 },
    
    input:{
-   borderBottomColor :'#9370DB',
-   borderBottomWidth:1,
-   padding:14,
-   width:260,
-   fontSize:20,
+    borderColor :COLORS.white,
+    margin:6,
+    padding:22,
+    width:280,
+    fontSize:20,
+    borderWidth:2,
+    elevation:20,
+    borderRadius:15,
+    backgroundColor:'white'
 
    },
 
@@ -257,13 +299,31 @@ center:{
   paddingTop:25,justifyContent:'center',
    alignItems:'center',
 },
-  rightTag:{
-    marginTop: 10,
+  socialbTag:{
+    // marginTop: ,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
 
   },
+  radioButton:{
+    uncheckedColor:COLORS.primary,
+    color:COLORS.primary,
+  },
+  rightTag:{
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    
+
+  },
+leftTag:{
+ 
+  color: COLORS.grey,
+  marginLeft: 5,
+  paddingBottom:5,
+}, 
 
 });
 
