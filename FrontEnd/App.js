@@ -5,14 +5,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import RoutNavigator from './RoutNavigator';
 const Drawer = createDrawerNavigator();
 import SplashScreen from './screens/SplashScreen';
+import LoginScreen from './screens/LoginScreen';
 export default function App() {
 
  return (
 <>
 {/* <SplashScreen/> */}
      {/* <NavigationContainer>    */}
-          <RoutNavigator/>
+          {/* <RoutNavigator/> */}
     {/* </NavigationContainer>  */}
+    <LoginScreen/>
   
 </>
  );
