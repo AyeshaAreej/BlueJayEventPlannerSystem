@@ -8,17 +8,22 @@ import {
   View,
 } from 'react-native';
 import COLORS from '../components/colors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import image from '../assets/hotel1.jpg';
 import { useNavigation } from '@react-navigation/native';
- function CompanyDetails() {
+ function CompanyDetails({route}) {
 
 
   const navigation = useNavigation();
 
+  const {hotel} = route.params
+  // console.log("hotel",hotel)
+
+  
   function handleClick(){
     console.log("Card clicked")
-    navigation.navigate('BookingForm')
+    navigation.navigate('BookingForm',{hotel})
   }
 
   return (
@@ -32,9 +37,9 @@ import { useNavigation } from '@react-navigation/native';
       />
        <ImageBackground style={style.headerImage} source={image}>
         <View style={style.header}>
-          <Icon
-            name="arrow-back-ios"
-            size={30}
+          <MaterialCommunityIcons
+            name="keyboard-return"
+            size={60}
             color={COLORS.white}
             onPress={navigation.goBack}
           />
@@ -43,10 +48,10 @@ import { useNavigation } from '@react-navigation/native';
       </ImageBackground>
       <View>
       <View style={style.iconContainer}>
-          <Icon name="place" color={COLORS.white} size={20} />
+          <FontAwesome name="map-marker" color={COLORS.white} size={20} />
         </View>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Silver Company</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{hotel.company_name}</Text>
           <Text
             style={{
               fontSize: 15,
@@ -54,7 +59,7 @@ import { useNavigation } from '@react-navigation/native';
               color: COLORS.grey,
               marginTop: 5,
             }}>
-           Green street, Islamabad
+           {hotel.address}
           </Text>
           <View
             style={{
@@ -64,26 +69,26 @@ import { useNavigation } from '@react-navigation/native';
             }}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flexDirection: 'row'}}>
-                <Icon name="star" size={20} color={COLORS.orange} />
-                <Icon name="star" size={20} color={COLORS.orange} />
-                <Icon name="star" size={20} color={COLORS.orange} />
-                <Icon name="star" size={20} color={COLORS.orange} />
-                <Icon name="star" size={20} color={COLORS.grey} />
+                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
+                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
+                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
+                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
+                <MaterialCommunityIcons name="star" size={20} color={COLORS.grey} />
               </View>
-              <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 5}}>
-                4.0
+              <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 9}}>
+                {hotel.rating}
               </Text>
             </View>
             
           </View>
           <View style={{marginTop: 20}}>
           <Text
-            style={{ fontSize: 18,  fontWeight: '500',   color: COLORS.dark,
-              marginTop: 5,  }}> Services We Provide 
+            style={{ fontSize: 18,  fontWeight: 'bold',   color: COLORS.dark,
+              marginTop: 5,  }}>Services We Provide 
           </Text>
             <Text style={{lineHeight: 20, color: COLORS.grey}}>
-             Caterers, Venue with Decorations(Outdoor & Indoor), Music, Photography, Videographers
-            </Text>
+             {hotel.services}
+             </Text>
           </View>
         </View>
         <View
@@ -102,20 +107,12 @@ import { useNavigation } from '@react-navigation/native';
               style={{
                 fontSize: 16,
                 fontWeight: 'bold',
-                color: COLORS.grey,
+                color: COLORS.black,
                 marginLeft: 5,
               }}>
-              Above $500000 
+              $ {hotel.price_range} 
             </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 'bold',
-                color: COLORS.grey,
-                marginLeft: 5,
-              }}>
-              
-            </Text>
+           
           </View>
         </View>
         <View style={style.btn}>

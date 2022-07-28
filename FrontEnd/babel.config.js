@@ -6,7 +6,7 @@ module.exports = function(api) {
     "plugins": [
       ["module:react-native-dotenv", {
         "envName": "APP_ENV",
-        "moduleName": "@env",
+        "moduleName": "react-native-dotenv",
         "path": ".env",
         "blocklist": null,
         "allowlist": null,
@@ -19,3 +19,5 @@ module.exports = function(api) {
     ]
   };
 };
+
+module.exports = { presets: ['module:metro-react-native-babel-preset'], plugins: ['react-native-reanimated/plugin'],};

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../../components/colors';
 import hotels from '../../components/companies';
 
@@ -22,7 +22,7 @@ return(
     <View style={{...style.card}}>
     <View style={style.priceTag}>
     <View style={{color:COLORS.white, }}>
-     <Icon name="delete-outline" size={30} color={ COLORS.white}/>
+     <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white}/>
     </View>
  
      </View>

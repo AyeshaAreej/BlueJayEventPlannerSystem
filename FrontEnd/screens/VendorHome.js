@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import COLORS from '../components/colors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import image from '../assets/hotel1.jpg';
 import hotels from '../components/companies';
 
@@ -25,13 +25,13 @@ function VendorHome({navigation}) {
       <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"/>
        <ImageBackground style={style.headerImage} source={image}>
         <View style={style.header}>
-          <Icon name="arrow-back-ios" size={30}color={COLORS.white} onPress={navigation.goBack} />
+          <MaterialCommunityIcons name="arrow-back-ios" size={30}color={COLORS.white} onPress={navigation.goBack} />
         </View>
       </ImageBackground>
 
       <View>
       <View style={style.iconContainer}>
-          <Icon name="place" color={COLORS.white} size={20} />
+          <MaterialCommunityIcons name="place" color={COLORS.white} size={20} />
       </View>
 
         <View style={{marginTop: 20, paddingHorizontal: 20}}>

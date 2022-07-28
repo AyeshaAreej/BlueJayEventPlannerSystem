@@ -3,7 +3,6 @@ const Company = require('../models/companySchema')
 const Order = require('../models/orderSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { off } = require('../models/userSchema')
 
 
 
@@ -50,7 +49,7 @@ const logIn = async(req,res)=>{
 
     if(!user){
         
-        return res.json({status:"error", error : 'Invalid1 username/password'})
+        return res.json({status:"error", error : 'Invalid username/password'})
         
     }
 
@@ -65,7 +64,7 @@ const logIn = async(req,res)=>{
         return res.json({status:"ok", data : token })
     }
 
-    return res.json({status:"error", error : 'Invalid2 username/password'})
+    return res.json({status:"error", error : 'Invalid username/password'})
 
 }
 
@@ -212,17 +211,28 @@ const createOrder = async (req,res)=>{
                             }
 
                                 User.findOneAndUpdate ({_id: user._id},{ $push: { orders: order._id } },(err,user)=>{
-                                    if (err)
+                                    if (user)
                                     {
+                                        console.log("good")
+                                       
+                                    }else{
                                         console.log(err)
+                                        console.log("error in user order id")
                                     }
+                                    
+                                  
                                 })
 
                                 Company.findOneAndUpdate ({_id: c_id},{ $push: { orders: order._id, booked_dates: order.date }},(err,user)=>{
-                                    if (err)
+                                    if (user)
                                     {
+                                        console.log("best")
+                                        
+                                    }else{
                                         console.log(err)
+                                        console.log("error in company book dates")
                                     }
+                                    
                                 })
 
                             return res.json({status: 'ok'})

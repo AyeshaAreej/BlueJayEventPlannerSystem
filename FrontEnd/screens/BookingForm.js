@@ -1,24 +1,66 @@
 import React from 'react'
-import {useState}  from 'react'
 import colors from '../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
-import CheckBox from 'expo-checkbox';
-import { Colors } from "../components/styles";
-import { FloatingLabelInput } from 'react-native-floating-label-input';
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../components/colors';
+import * as SecureStore from 'expo-secure-store';
+import HomeScreen from './HomeScreen';
 
 
-function BookingForm({  navigation}) {
+function BookingForm({ route, navigation}) {
 
-   const [phonenum, setPhonenum] = useState(0);
-  const [show, setShow] = useState(false);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
+  const {hotel} = route.params
+  console.log("hotel",hotel)
+  const c_id = hotel._id
+  
+  function handleOrder(values){
+
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('create order',token)
+
+      const value = {
+        c_id,
+        date: 10082022,
+        event_type:values.event_type,
+        no_of_guests: values.no_of_guests,
+        available_budget: values.available_budget,
+        venue: values.venue,
+        required_services: values.required_services
+      }
+      console.log("value",value)
+      
+      fetch(`http://10.0.2.2:5000/users/createOrder`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.status == 'ok')
+                     {
+                      alert('order confirmed')
+                      navigation.navigate(HomeScreen)
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+
+
+
+      
  
-  
-  
+  }
+
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
         <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}   />
@@ -34,145 +76,73 @@ function BookingForm({  navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{username:'', email: '',city:'', phone_no:'',eventtype:'',date:'',availablebudget:'', numofguests:'',venuetype:'',services:'',availablebudget:'',  }}
-     onSubmit={values => console.log(values)} 
+     initialValues={{event_type:'', no_of_guests:'',available_budget:'',venue:'',required_services:'' }}
+     onSubmit={values => {
+      // console.log(values)
+      handleOrder(values)
+
+    }} 
      validationSchema={yup.object().shape({
-            username: yup
-            .string()
-            .required('Name is required.'),  
-            email: yup
-            .string()
-            .email()
-            .required('Email is required.'), 
-            city : yup
-             .string()
-            .required('City is required.'),  
-           eventtype : yup
+             
+            event_type : yup
             .string()
             .required('Event Type is required.'),  
-            date:yup
-            .date()
-            .required('Date of event is required'),
-            phone_no: yup
-            .number()
-             .min(11, 'min 11 digits are required')
-            //  .max(12, 'max 12 digits are required')
-            .required('Phone Number is required.'), 
-            numofguests: yup
+           
+            no_of_guests: yup
             .number()
             .required('Number of guests is required.'), 
-            availablebudget: yup
+
+            available_budget: yup
             .number()
             .required('Budget is required.'), 
-            venuetype: yup
+
+            venue: yup
             .string(),
-            services : yup
+
+            required_services : yup
             .string(),
           })}
  >
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
        <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
-       {/* <TextInput
-             style={styles.input}
-             name="username"
-             placeholder='Enter User Name'
-             onChangeText={handleChange('username')}
-             onBlur={()=>setFieldTouched('username')}
-            value={values.username}
-           
-           />
-           {touched.username && errors.username &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
-            }
-
+       
             <TextInput
              style={styles.input}
-             name="email"
-             placeholder='Enter Email'
-             onChangeText={handleChange('email')}
-             onBlur={()=>setFieldTouched('email')}
-            value={values.email}
-            keyboardType="email-address"
-            
-           />
-            {touched.email && errors.email &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.email}</Text>
-            }  
-           
-
-            <TextInput
-             style={styles.input}
-             name="city"
-             placeholder="Enter City"
-             onChangeText={handleChange('city')}
-             onBlur={()=>setFieldTouched('city')}
-             value={values.city}
-           />
-           {touched.city && errors.city &&
-              <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
-            }
-            <TextInput
-             style={styles.input}
-             name="phone_no"
-             placeholder='Enter Phone Number'
-             onChangeText={handleChange('phone_no')}
-             onBlur={()=>setFieldTouched('phone_no')}
-            value={values.phone_no}
-            keyboardType="numeric"
-            
-           />
-            {touched.phone_no && errors.phone_no &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
-            } */}
-            <TextInput
-             style={styles.input}
-             name="eventtype"
+             name="event_type"
              placeholder='Event Type'
-             onChangeText={handleChange('eventtype')}
-             onBlur={()=>setFieldTouched('eventtype')}
-            value={values.eventtype}
+             onChangeText={handleChange('event_type')}
+             onBlur={()=>setFieldTouched('event_type')}
+            value={values.event_type}
            
            /> 
-            {touched.eventtype && errors.eventtype &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.eventtype}</Text>
+            {touched.event_type && errors.event_type &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.event_type}</Text>
             }
-              {/* <TextInput
-             style={styles.input}
-             name="date"
-             placeholder='Date '
-             onChangeText={handleChange('date')}
-             onBlur={()=>setFieldTouched('date')}
-            value={values.date}
-           
-           /> 
-            {touched.date && errors.date &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.date}</Text>
-            } */}
-        
+              
           <TextInput
              style={styles.input}
-             name="numofguests"
+             name="no_of_guests"
             placeholder="Number of Guests"
-             onChangeText={handleChange('numofguests')}
-             onBlur={()=>setFieldTouched('numofguests')}
+             onChangeText={handleChange('no_of_guests')}
+             onBlur={()=>setFieldTouched('no_of_guests')}
             value={values.numberofguests}
             keyboardType="numeric"
             />
-             {touched.numofguests && errors.numofguests &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.numofguests}</Text>
+             {touched.no_of_guests && errors.no_of_guests &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.no_of_guests}</Text>
             }
             
             <TextInput
              style={styles.input}
-             name="availablebudget"
+             name="available_budget"
             placeholder="Available Budget"
-             onChangeText={handleChange('availablebudget')}
-             onBlur={()=>setFieldTouched('availablebudget')}
-            value={values.availablebudget}
+             onChangeText={handleChange('available_budget')}
+             onBlur={()=>setFieldTouched('available_budget')}
+            value={values.available_budget}
             keyboardType="numeric"
             />
-            {touched.availablebudget && errors.availablebudget &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availablebudget}</Text>
+            {touched.available_budget && errors.available_budget &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
               {/* Venue */}
@@ -182,28 +152,28 @@ function BookingForm({  navigation}) {
 
             <TextInput
              style={styles.input}
-             name="venuetype"
+             name="venue"
              placeholder='Indoor or Outdoor '
-             onChangeText={handleChange('venuetype')}
-             onBlur={()=>setFieldTouched('venuetype')}
-            value={values.venuetype}
+             onChangeText={handleChange('venue')}
+             onBlur={()=>setFieldTouched('venue')}
+            value={values.venue}
            
            />
-           {touched.venuetype && errors.venuetype &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.venuetype}</Text>
+           {touched.venue && errors.venue &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.venue}</Text>
             }
 
            <TextInput
              style={styles.input}
-             name="services"
+             name="required_services"
              placeholder='Services '
-             onChangeText={handleChange('services')}
-             onBlur={()=>setFieldTouched('services')}
-             value={values.services}
+             onChangeText={handleChange('required_services')}
+             onBlur={()=>setFieldTouched('required_services')}
+             value={values.required_services}
            
            />
-           {touched.services && errors.services &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.services}</Text>
+           {touched.required_services && errors.required_services &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.required_services}</Text>
             }
 
 
@@ -214,7 +184,7 @@ function BookingForm({  navigation}) {
       </View>
      )}
   </Formik>
-  {/* In the end the expected total amount will be calcultaed according to services selected and will be displayed to user and data will be send to company via message or email */}
+  {/* In the end the expected total amount will be calcultaed according to required_services selected and will be displayed to user and data will be send to company via message or email */}
     </ScrollView>
   )
 }

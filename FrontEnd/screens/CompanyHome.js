@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
 import { useNavigation } from '@react-navigation/native';
@@ -107,15 +107,15 @@ return(
                <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.name}</Text>
                 <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.location}</Text> 
             </View>
-             <Icon name="bookmark-outline" size={30}/>
+             <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
           <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.gray}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.gray}/>
               </View>
             
           </View>
@@ -144,7 +144,7 @@ return(
             {/* The button that used to trigger the date picker */}
       {/* {!isPickerShow && ( */}
         <View style={style.btnContainer}>
-        <Icon name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
+        <MaterialCommunityIcons name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
         </View>
       {/* )} */}
 

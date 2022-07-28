@@ -1,47 +1,24 @@
 import React,{useState,useEffect} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
-import {PORT} from"@env"
+// import {PORT} from"@env"
 
 const {width}= Dimensions.get('screen');
 const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
 const HomeScreen=()=>{
 
+  
+  const [companies, setCompanies] = React.useState([]);
 
   useEffect(()=>{
-    //   SecureStore.getItemAsync('token').then(token=>{
-
-    //   console.log('all companies',token)
-
-    //   const values = {city : 'quetta'}
-      
-    //   fetch(`http://10.0.2.2:${PORT}/users/allCompanies`,{
-    //                 method: "post",
-    //                 body: JSON.stringify(values),
-    //                 headers: {
-    //                     Accept: "application/json, text/plain, */*",
-    //                     "Content-Type": "application/json",
-    //                     token
-    //                 }   
-                  
-    //           }).then(res=>res.json()).then(result=>{
-    //             console.log(result)
-
-    //             if(result.data == '')
-    //                   {
-    //                     console.log('No companies found')
-    //                   }
-
-    //           }).catch(err=>console.log('catch',err.message))
-    // })
 
     SecureStore.getItemAsync('token').then(token=>{
 
@@ -49,32 +26,28 @@ const HomeScreen=()=>{
 
       const values = {city : 'quetta'}
       
-      fetch(`http://10.0.2.2:${PORT}/users/allCompanies`,{
+      fetch(`http://10.0.2.2:5000/users/allCompanies`,{
                     method: "post",
                     body: JSON.stringify(values),
                     headers: {
                         Accept: "application/json, text/plain, */*",
                         "Content-Type": "application/json",
                         token
-                    }   
+                    }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
+                console.log(result.data)
 
                 if(result.data == '')
                       {
                         console.log('No companies found')
+                      }else{
+                        setCompanies(result.data)
+                        //console.log("result",companies)
                       }
 
               }).catch(err=>console.log('catch',err.message))
-    })
-
-
-    
-
-   
-
-    
+    })    
 
 
    },[]);
@@ -142,10 +115,10 @@ const HomeScreen=()=>{
 const Card=({hotel,index})=>{
 
   const navigation = useNavigation();
-
+  
   function handleClick(){
     console.log("Card clicked")
-    navigation.navigate('CompanyDetails')
+    navigation.navigate('CompanyDetails',{hotel})
   }
   
 return(
@@ -155,25 +128,26 @@ return(
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
     <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
-        ${hotel.price}
+        ${hotel.price_range}
     </Text>
      </View>
-         <Image source={hotel.image} style={style.cardImage} />
+        
+         <Image source={require('../assets/hotel1.jpg')} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.location}</Text> 
+               <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.company_name}</Text>
+                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.address}</Text> 
             </View>
-             <Icon name="bookmark-outline" size={30}/>
+             <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
           <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.gray}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.gray}/>
               </View>
              
           </View>
@@ -201,25 +175,25 @@ return(
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
     <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
-        ${hotel.price}
+        ${hotel.price_range}
     </Text>
      </View>
-         <Image source={hotel.image} style={style.cardImage} />
+         <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.location}</Text> 
+               <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.company_name}</Text>
+                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.address}</Text> 
             </View>
-             <Icon name="bookmark-outline" size={30}/>
+             <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
           <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.orange}/>
-                 <Icon name="star" size={15} color={COLORS.gray}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={COLORS.gray}/>
               </View>
              
 
@@ -246,7 +220,7 @@ return(
          {/* The button that used to trigger the date picker */}
       {/* {!isPickerShow && ( */}
         <View style={style.btnContainer}>
-        <Icon name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
+        <MaterialCommunityIcons name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
         </View>
       {/* )} */}
 
@@ -274,7 +248,7 @@ return(
          <CategoryList/>
          <View>
          <Animated.FlatList
-          data={hotels}
+          data={companies}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
@@ -294,7 +268,7 @@ return(
           
            </View>
            <FlatList 
-            data={hotels}
+            data={companies}
             showsVerticalScrollIndicator={true} contentContainerStyle={{justifyContent:'center',alignItems:'center',}}
              renderItem={({item})=><BottomCard hotel={item}/>}
            />

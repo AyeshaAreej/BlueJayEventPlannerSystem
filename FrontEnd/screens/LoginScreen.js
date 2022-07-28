@@ -12,7 +12,7 @@ import { FacebookSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import * as SecureStore from 'expo-secure-store';
 
-import {PORT} from"@env"
+// import {PORT} from"@env"
 
 
 
@@ -29,7 +29,7 @@ function LoginScreen({navigation}) {
 
     if(role=='customer'){
       
-           fetch(`http://10.0.2.2:${PORT}/users/logIn`,{
+           fetch(`http://10.0.2.2:5000/users/logIn`,{
                     method: "post",
                     body: JSON.stringify(values),
                     headers: {
@@ -57,7 +57,7 @@ function LoginScreen({navigation}) {
 
     else if (role=='company'){
       
-                    fetch(`http://10.0.2.2:${PORT}/company/logIn`,{
+                    fetch(`http://10.0.2.2:5000/company/logIn`,{
                       method: "post",
                       body: JSON.stringify(values),
                       headers: {
@@ -82,7 +82,7 @@ function LoginScreen({navigation}) {
     }
 
     else if(role=='vendor'){
-                  //     fetch(`http://10.0.2.2:${PORT}/vendor/logIn`,{
+                  //     fetch(`http://10.0.2.2:5000/vendor/logIn`,{
                   //       method: "post",
                   //       body: JSON.stringify(values),
                   //       headers: {

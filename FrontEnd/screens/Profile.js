@@ -3,7 +3,7 @@ import colors from '../components/colors';
 import React,{useState} from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Profile = () => {
 
@@ -52,7 +52,7 @@ const {edit, setEdit}=useState('false');
         <>
 
         <View style={styles.inputContainer} >
-        <Icon name="account"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="account"  size={38} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="username"
@@ -68,7 +68,7 @@ const {edit, setEdit}=useState('false');
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
             }
             <View style={styles.inputContainer} >
-        <Icon name="email"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="email"  size={38} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -83,7 +83,7 @@ const {edit, setEdit}=useState('false');
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
             <View style={styles.inputContainer} >
-        <Icon name="phone"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="phone"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phone_no"
@@ -98,7 +98,7 @@ const {edit, setEdit}=useState('false');
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
             <View style={styles.inputContainer} >
-        <Icon name="city"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"

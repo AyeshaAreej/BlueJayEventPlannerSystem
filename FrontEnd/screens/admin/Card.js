@@ -1,6 +1,5 @@
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import hotels from '../../components/companies';
 import CompanyDetails from '../CompanyDetails';
 import { withNavigation } from 'react-navigation';

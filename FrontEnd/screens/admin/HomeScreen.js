@@ -1,6 +1,6 @@
 import React from 'react'
 import {ImageBackground, Dimensions, FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../../components/colors';
 import Card from './Card';
 import hotels from './companies';
@@ -23,7 +23,7 @@ function HomeScreen({navigation}) {
               Welcome to </Text> 
                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                    <Text style={{fontSize:30, fontWeight:'bold',color:colors.white}} >Admin Panel </Text>
-                   <Icon name="account-outline"  size={60} color={colors.white}/>
+                   <MaterialCommunityIcons name="account-outline"  size={60} color={colors.white}/>
                </View>
           
         </View>

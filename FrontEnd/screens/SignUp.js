@@ -11,7 +11,7 @@ import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import { User_Home, } from "../constants";
 import LoginScreen from './LoginScreen'
-import {PORT} from"@env"
+// import {PORT} from"@env"
 
 
 
@@ -19,22 +19,11 @@ import {PORT} from"@env"
 
 function SignUp({navigation}) {
 
-  // State Variables
-  const [username, setUsername]=useState('')
-  const [email, setEmail]=useState('')
-  const [password, setPassword]=useState('')
-  const [phone_no, setPhone_no]=useState('')
-  const [city, setCity]=useState('')
-  const [signup, setSignup] =useState('false')
-
-
-  
-
    function handleLogin(values){
 
-    //console.log(values)
+    console.log(values)
 
-      fetch(`http://10.0.2.2:${PORT}/users/signUp`,{
+      fetch(`http://10.0.2.2:5000/users/signUp`,{
         method: "post",
         body: JSON.stringify(values),
         headers: {

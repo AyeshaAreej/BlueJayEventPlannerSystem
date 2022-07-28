@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar,Image,P
 import colors from '../components/colors';
 import React,  { useState, useEffect } from 'react'
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 import COLORS from '../components/colors';
@@ -88,7 +88,7 @@ const CompanyVendorProfile = () => {
 
 
     <View style={styles.inputContainer} >
-        <Icon name="account"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="account"  size={38} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="companyname"
@@ -104,7 +104,7 @@ const CompanyVendorProfile = () => {
             }
        
             <View style={styles.inputContainer} >
-        <Icon name="email"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="email"  size={38} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -119,7 +119,7 @@ const CompanyVendorProfile = () => {
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
             <View style={styles.inputContainer} >
-          <Icon name="phone"  size={38} style={styles.icon}/>
+          <MaterialCommunityIcons name="phone"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phone_no"
@@ -135,7 +135,7 @@ const CompanyVendorProfile = () => {
             }
 
             <View style={styles.inputContainer} >
-          <Icon name="city"  size={38} style={styles.icon}/>
+          <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -149,7 +149,7 @@ const CompanyVendorProfile = () => {
             }
 
             <View style={styles.inputContainer} >
-        <Icon name="application-settings"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="application-settings"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="services"
@@ -164,7 +164,7 @@ const CompanyVendorProfile = () => {
             }
             
             <View style={styles.inputContainer} >
-            <Icon name="currency-usd"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="currency-usd"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="pricerange"
@@ -177,7 +177,7 @@ const CompanyVendorProfile = () => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.pricerange}</Text>
             }
             <View style={styles.inputContainer} >
-            <Icon name="home"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="home"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="address"
@@ -192,7 +192,7 @@ const CompanyVendorProfile = () => {
             }
             
             <View style={styles.inputContainer} >
-            <Icon name="clock"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="clock"  size={38} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="availabilitytime"
