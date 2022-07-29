@@ -18,16 +18,12 @@ import * as SecureStore from 'expo-secure-store';
 
 function LoginScreen({navigation}) {
 
-  // State Variables
-  const [email, setEmail]=useState('')
-  const [password, setPassword]=useState('')
-  const [signup, setSignup] =useState('false')
-  const [checked, setChecked] = React.useState('User');
+  const [checked, setChecked] = React.useState('customer');
 
   console.log(checked)
   async function handleLogin(values){
 
-    const role='customer'
+    const role= checked
 
     if(role=='customer'){
       
@@ -50,6 +46,7 @@ function LoginScreen({navigation}) {
                       }
                       else{
                         console.log(result.error)
+                        alert('Invalid username or password')
                       }
 
               }).catch(err=>console.log(err.message))
@@ -78,34 +75,36 @@ function LoginScreen({navigation}) {
                         }
                         else{
                           console.log(result.error)
+                          alert('Invalid username or password')
                         }
 
                 }).catch(err=>console.log(err.message))
     }
 
     else if(role=='vendor'){
-                  //     fetch(`http://10.0.2.2:5000/vendor/logIn`,{
-                  //       method: "post",
-                  //       body: JSON.stringify(values),
-                  //       headers: {
-                  //           Accept: "application/json, text/plain, */*",
-                  //           "Content-Type": "application/json"
-                  //       }   
+                      fetch(`http://10.0.2.2:5000/vendor/logIn`,{
+                        method: "post",
+                        body: JSON.stringify(values),
+                        headers: {
+                            Accept: "application/json, text/plain, */*",
+                            "Content-Type": "application/json"
+                        }   
                       
-                  // }).then(res=>res.json()).then(result=>{
-                  //   console.log(result)
+                  }).then(res=>res.json()).then(result=>{
+                    console.log(result)
 
-                  //   if(result.status === 'ok')
-                  //         {
+                    if(result.status === 'ok')
+                          {
                               
-                  //             SecureStore.setItemAsync('token',result.data);
-                  //             navigation.navigate(Vendor_Home)
-                  //         }
-                  //         else{
-                  //           console.log(result.error)
-                  //         }
+                              SecureStore.setItemAsync('token',result.data);
+                              navigation.navigate(Vendor_Home)
+                          }
+                          else{
+                            console.log(result.error)
+                            alert('Invalid username or password')
+                          }
 
-                  // }).catch(err=>console.log(err.message))
+                  }).catch(err=>console.log(err.message))
 
     }
 
@@ -183,44 +182,52 @@ function LoginScreen({navigation}) {
             {/* Radio Button */}
  
             <View style={{flexDirection:'row'}}>
-            <View style={styles.rightTag}>
-       <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>User</Text>
-         <View style={styles.leftTag}>
-          <RadioButton
-        value="User"
-        status={ checked === 'User' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('User')}
-        uncheckedColor={COLORS.primary}
-        color={COLORS.primary}
-      />
-       </View>
-       </View>
-       <View style={styles.rightTag}>
-      <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
-         <View style={styles.leftTag}>
-          <RadioButton
-        value="Company"
-        status={ checked === 'Company' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('Company')}
-        uncheckedColor={COLORS.primary}
-        color={COLORS.primary}
-      />
-       </View>
-       </View>
+
+                  <View style={styles.rightTag}>
+                        
+                        <View style={styles.leftTag}>
+                            <RadioButton
+                              value="customer"
+                              status={ checked === 'customer' ? 'checked' : 'unchecked' }
+                              onPress={() => setChecked('customer')}
+                              uncheckedColor={COLORS.primary}
+                              color={COLORS.primary}
+                            />
+                        </View>
+                        <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Customer</Text>
+
+                  </View>
+
+                  <View style={styles.rightTag}>
+                        
+                        <View style={styles.leftTag}>
+                            <RadioButton
+                              value="company"
+                              status={ checked === 'company' ? 'checked' : 'unchecked' }
+                              onPress={() => setChecked('company')}
+                              uncheckedColor={COLORS.primary}
+                              color={COLORS.primary}
+                            />
+                        </View>
+                        <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
+                        
+                  </View>
      
 
-      <View style={styles.rightTag}>
-      <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Vendor</Text>
-         <View style={styles.leftTag}>
-          <RadioButton
-        value="Vendor"
-        status={ checked === 'Vendor' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('Vendor')}
-        uncheckedColor={COLORS.primary}
-        color={COLORS.primary}
-      />
-       </View>
-       </View>
+                  <View style={styles.rightTag}>
+                        
+                        <View style={styles.leftTag}>
+                            <RadioButton
+                              value="vendor"
+                              status={ checked === 'vendor' ? 'checked' : 'unchecked' }
+                              onPress={() => setChecked('vendor')}
+                              uncheckedColor={COLORS.primary}
+                              color={COLORS.primary}
+                            />
+                        </View>
+                        <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Vendor</Text>
+
+                  </View>
      
 </View>     
     
@@ -259,8 +266,8 @@ const styles = StyleSheet.create({
   
   topView:{
     backgroundColor :COLORS.primary,
-    paddingTop:"18%",
-    paddingLeft:8,
+    paddingTop:"11%",
+    paddingLeft:30,
     width:'100%',
     height:220,
     

@@ -5,6 +5,14 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    company_name:{
+        type: String,
+        required: true
+    },
+    company_pic:{
+        type: String,
+        required: true
+    },
     email:{
         type: String,
         required: true
@@ -39,8 +47,7 @@ const orderSchema = new mongoose.Schema({
         default: 'No'
     },
     required_services:{
-        type: String,
-        required: true
+        type: String
     },
     status: {
         type: String,

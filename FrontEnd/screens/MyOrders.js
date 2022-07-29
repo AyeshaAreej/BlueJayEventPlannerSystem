@@ -6,6 +6,7 @@ import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   I
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
+import * as SecureStore from 'expo-secure-store';
 
 
 const {width}= Dimensions.get('screen');
@@ -17,6 +18,8 @@ const MyOrders=({navigation})=>{
 // Card
 
 const Card=({hotel,index,navigation})=>{
+
+  
 return(
    
     <View style={{...style.card}}>
