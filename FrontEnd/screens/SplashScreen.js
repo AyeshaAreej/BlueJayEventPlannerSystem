@@ -7,7 +7,7 @@ import { StatusBar } from "react-native-web";
 import COLORS from "../components/colors";
 
 import * as SecureStore from 'expo-secure-store';
-import {PORT} from"@env"
+// import {PORT} from"@env"
 
 
 function SplashScreen({navigation}) {
@@ -17,19 +17,19 @@ useEffect(()=>{
  setTimeout(()=>{
 
   SecureStore.getItemAsync('token').then(token=>{
-
-    if(token == ' '){
+   token=null
+    if(token == null){
       console.log("No token")
       navigation.navigate(WelcomeScreen)
     }else{
     console.log('splash screen',token)
     
-    fetch(`http://10.0.2.2:${PORT}/`,{
+    fetch(`http://10.0.2.2:5000/`,{
                   method: "get",
                   headers: {
                       Accept: "application/json, text/plain, */*",
                       "Content-Type": "application/json",
-                      token
+                      // token
                   }   
                 
             }).then(res=>res.json()).then(result=>{

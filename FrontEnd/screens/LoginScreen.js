@@ -123,7 +123,7 @@ function LoginScreen({navigation}) {
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
-     <Text style={{color:'white',marginLeft:150, fontSize:25,fontWeight:'bold'}}>Sign In</Text>
+     <Text style={{color:'white',marginLeft:130, fontSize:25,fontWeight:'bold'}}>Sign In</Text>
     
  </View>
 
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
  logo: {
   width: 200,
   height: 110,
-  marginLeft:90,
+  marginLeft:70,
 },
    
    input:{
