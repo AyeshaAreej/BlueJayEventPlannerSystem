@@ -5,11 +5,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
-
-const Profile = ({navigation}) => {
-
-
+const EditProfile = ({navigate}) => {
 
 
   return (
@@ -23,9 +19,8 @@ const Profile = ({navigation}) => {
       initialValues={{username:'', email: '', phone_no: '',city:'', }}
       onSubmit={
         (values) => {
-        //  console.log(values)
-       
-         navigation.navigate('EditProfile')}}
+         console.log(values)
+          }}
           validationSchema={yup.object().shape({
             username: yup
             .string()
@@ -118,11 +113,9 @@ const Profile = ({navigation}) => {
           <View style={styles.container}>
           <View style={styles.button}>
            <Button  onPress={handleSubmit} 
-           title="Edit"
+           title="Update"
            color='purple'
            /> 
-
-          
           </View>
           </View>
        
@@ -184,4 +177,4 @@ const styles = StyleSheet.create({
    
 
 });
-export default Profile;
+export default EditProfile;

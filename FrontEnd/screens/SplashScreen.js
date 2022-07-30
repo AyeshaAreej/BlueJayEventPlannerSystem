@@ -29,11 +29,11 @@ useEffect(()=>{
                   headers: {
                       Accept: "application/json, text/plain, */*",
                       "Content-Type": "application/json",
-                      // token
+                      token
                   }   
                 
             }).then(res=>res.json()).then(result=>{
-              console.log(result)
+              console.log('inside splash fetch',result)
 
               if(result.data.role == 'customer')
                     {

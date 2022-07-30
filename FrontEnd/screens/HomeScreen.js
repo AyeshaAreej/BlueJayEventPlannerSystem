@@ -7,6 +7,7 @@ import COLORS from '../components/colors';
 import hotels from '../components/companies';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../components/colors';
+import DropDownPicker from 'react-native-dropdown-picker';
 import * as SecureStore from 'expo-secure-store';
 // import {PORT} from"@env"
 
@@ -245,6 +246,7 @@ return(
           value={searchQuery}
         />
          </View>
+         
          <CategoryList/>
          <View>
          <Animated.FlatList

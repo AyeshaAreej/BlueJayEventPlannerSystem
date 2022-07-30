@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 import COLORS from '../components/colors';
 
-const CompanyVendorProfile = ({navigation}) => {
+const EditCompanyVendorProfile = ({navigation}) => {
   const [image, setImage] = useState(null);
 
 
@@ -39,9 +39,7 @@ const CompanyVendorProfile = ({navigation}) => {
       initialValues={{companyname:'', email: '', phone_no: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
       onSubmit={
         (values) => {
-        // console.log(values, image)
-        navigation.navigate('EditCompanyVendorProfile')
-        }}
+        console.log(values, image)}}
           validationSchema={yup.object().shape({
             companyname: yup
             .string()
@@ -214,7 +212,7 @@ const CompanyVendorProfile = ({navigation}) => {
         
           <View style={styles.button}>
            <Button  onPress={handleSubmit}
-           title="Edit"
+           title="Update"
            color={colors.primary}
            /> 
           </View>
@@ -278,4 +276,4 @@ const styles = StyleSheet.create({
    
 
 });
-export default CompanyVendorProfile;
+export default EditCompanyVendorProfile;

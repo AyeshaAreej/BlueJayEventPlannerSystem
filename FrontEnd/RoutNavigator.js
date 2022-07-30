@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'; 
-import { Auth_Stack, Company_Booking,Admin_Company, User_Home,Company_Home, Vendor_Booking,Admin_Home, Vendor_Home } from './constants';
+import { Auth_Stack, Company_Booking,Admin_Company, User_Home,EditProfile,EditCompanyVendorProfile, Company_Home, Vendor_Booking,Admin_Home, Vendor_Home } from './constants';
 import AuthStack from './AuthStack';
 import UserHomeStack from './UserHomeStack';
 import CompanyHomeStack from './CompanyHomeStack';
@@ -31,6 +31,11 @@ function RoutNavigator(){
                 component={UserHomeStack}
                 options={{headerShown:false}}
              />
+                <MainStack.Screen
+                name={EditProfile}
+                component={UserHomeStack}
+                options={{headerShown:false}}
+             />
 
              <MainStack.Screen
                 name={Company_Home}
@@ -40,6 +45,11 @@ function RoutNavigator(){
 
                <MainStack.Screen
                 name={Vendor_Booking}
+                component={CompanyHomeStack}
+                options={{headerShown:false}}
+             />
+              <MainStack.Screen
+                name={EditCompanyVendorProfile}
                 component={CompanyHomeStack}
                 options={{headerShown:false}}
              />

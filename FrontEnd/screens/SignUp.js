@@ -21,7 +21,7 @@ function SignUp({navigation}) {
 
    function handleLogin(values){
 
-    console.log(values)
+    // console.log(values)
 
       fetch(`http://10.0.2.2:5000/users/signUp`,{
         method: "post",

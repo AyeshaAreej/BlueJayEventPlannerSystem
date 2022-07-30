@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, View, ScrollView,Button } from 'react-nati
 import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
+import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../components/colors';
 
 export default function Location() {
@@ -57,6 +58,7 @@ export default function Location() {
         
           <View style={styles.button}>
            <Button  onPress={()=>{
+              handleSubmit
               setEdit(true)
               }}
            title="Edit"
@@ -72,7 +74,7 @@ export default function Location() {
 
      </View>
 
-  
+    
     
  </ScrollView>
   );
