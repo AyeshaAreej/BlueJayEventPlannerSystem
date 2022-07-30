@@ -36,14 +36,14 @@ function LoginScreen({navigation}) {
                     }   
                   
               }).then(res=>res.json()).then(result=>{
-                console.log('login fetch',result)
+                console.log(result)
 
                 if(result.status === 'ok')
                       {
                           
                           SecureStore.setItemAsync('token',result.data)
-                          // navigation.navigate(User_Home)
-                          navigation.navigate(Company_Home)
+                          navigation.navigate(User_Home)
+                          // navigation.navigate(Vendor_Home)
                       }
                       else{
                         console.log(result.error)
@@ -66,7 +66,7 @@ function LoginScreen({navigation}) {
                       }   
                     
                 }).then(res=>res.json()).then(result=>{
-                  console.log('inside login fetch fail',result)
+                  console.log(result)
 
                   if(result.status === 'ok')
                         {

@@ -25,14 +25,14 @@ function VendorHome({navigation}) {
       <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"/>
        <ImageBackground style={style.headerImage} source={image}>
         <View style={style.header}>
-          <MaterialCommunityIcons name="arrow-back-ios" size={30}color={COLORS.white} onPress={navigation.goBack} />
+          <MaterialCommunityIcons name="arrow-left" size={30}color={COLORS.white} onPress={navigation.goBack} />
         </View>
       </ImageBackground>
 
       <View>
-      <View style={style.iconContainer}>
-          <MaterialCommunityIcons name="place" color={COLORS.white} size={20} />
-      </View>
+      {/* <View style={style.iconContainer}> */}
+          {/* <MaterialCommunityIcons name="location-enter" color={COLORS.white} size={20} /> */}
+      {/* </View> */}
 
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
         <View style={style.rightTag}>
@@ -124,7 +124,7 @@ const style = StyleSheet.create({
 leftTag:{
   fontSize: 16,
   fontWeight: 'bold',
-  color: COLORS.grey,
+  color: COLORS.dark,
   marginLeft: 5,
   paddingBottom:5,
 }, 

@@ -14,13 +14,25 @@ import * as SecureStore from 'expo-secure-store';
 const {width}= Dimensions.get('screen');
 const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
+
+
 const HomeScreen=()=>{
 
   
   const [companies, setCompanies] = React.useState([]);
 
+  const categories = ['All', 'Popular', 'Low Price', 'High Price'];
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const onChangeSearch = query => setSearchQuery(query);
+  //Date
+  const [date, setDate] = useState(new Date());
+  const [isPickerShow, setIsPickerShow] = useState(false);
+
+
   useEffect(()=>{
 
+    showPicker()
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('all companies',token)
@@ -53,21 +65,15 @@ const HomeScreen=()=>{
 
    },[]);
 
-   const categories = ['All', 'Popular', 'Low Price', 'High Price'];
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const onChangeSearch = query => setSearchQuery(query);
-
-    //Date
-   const [date, setDate] = useState(new Date());
-   const [isPickerShow, setIsPickerShow] = useState(false);
-
+ 
+  
   //  console.log(date);
    const showPicker = () => {
     setIsPickerShow(true);
   };
    const onChange = (event, value) => {
     setDate(value);
+    console.log(value);
     
     if (Platform.OS === 'android') {
       setIsPickerShow(false);
@@ -211,7 +217,7 @@ return(
         <View style={style.header}>
             <View style={{paddingBottom:15}}>
              <Text style={{fontSize:25, fontWeight:'bold'}}>
-               Search a Company </Text> 
+               Select a Company </Text> 
                <View style={{flexDirection:'row'}}>
                    <Text style={{fontSize:25, fontWeight:'bold'}} >in  </Text>
                    <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
@@ -221,7 +227,7 @@ return(
          {/* The button that used to trigger the date picker */}
       {/* {!isPickerShow && ( */}
         <View style={style.btnContainer}>
-        <MaterialCommunityIcons name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
+        <MaterialCommunityIcons name="calendar-month"  size={38} color={COLORS.primary} onPress={showPicker}/>
         </View>
       {/* )} */}
 
