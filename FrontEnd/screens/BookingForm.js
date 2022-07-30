@@ -11,9 +11,12 @@ import HomeScreen from './HomeScreen';
 function BookingForm({ route, navigation}) {
 
 
-  const {hotel} = route.params
-  console.log("hotel",hotel)
-  const c_id = hotel._id
+  const company = route.params.company
+  const myDate = route.params.myDate
+  //console.log("company",company)
+  console.log("myDate",myDate)
+
+  const c_id = company._id
   
   function handleOrder(values){
 
@@ -24,7 +27,7 @@ function BookingForm({ route, navigation}) {
 
       const value = {
         c_id,
-        date: 10082022,
+        date: myDate,
         event_type:values.event_type,
         no_of_guests: values.no_of_guests,
         available_budget: values.available_budget,

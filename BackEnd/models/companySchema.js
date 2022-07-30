@@ -42,11 +42,14 @@ const companySchema = new mongoose.Schema({
     role:{
         type: String
     },
+    image:{
+        type: String
+    },
     rating_list:[Number],
 
     rating:{ type: Number},
 
-    booked_dates:[Number],
+    booked_dates:[String],
     
     orders:[ 
         {  type: mongoose.Schema.Types.ObjectId, ref:'Order' }

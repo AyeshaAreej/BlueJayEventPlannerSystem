@@ -4,7 +4,6 @@ import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import COLORS from '../components/colors';
-import hotels from '../components/companies';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
@@ -24,11 +23,9 @@ const HomeScreen=()=>{
 
       console.log('all companies',token)
 
-      const values = {city : 'quetta'}
       
       fetch(`http://10.0.2.2:5000/users/allCompanies`,{
-                    method: "post",
-                    body: JSON.stringify(values),
+                    method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
                         "Content-Type": "application/json",
@@ -36,41 +33,116 @@ const HomeScreen=()=>{
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result.data)
+                //console.log(result.data)
 
-                if(result.data == '')
-                      {
-                        console.log('No companies found')
-                      }else{
-                        setCompanies(result.data)
-                        //console.log("result",companies)
-                      }
+               
 
+                if( result.status == 'ok'){
+
+                        if(result.data == ''){
+                            console.log('No companies found')
+                            alert('No companies found')
+                        }else{
+                          setCompanies(result.data)
+                          //console.log("result",companies)
+                        }
+
+                }else{
+                  console.log(result.status)
+                }
+
+
+
+                      
               }).catch(err=>console.log('catch',err.message))
     })    
 
 
    },[]);
 
-   const categories = ['All', 'Popular', 'Low Price', 'High Price'];
+   const categories = ['All', 'Popular', 'Low Price', 'High Price', 'Favorites'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
 
     //Date
    const [date, setDate] = useState(new Date());
+   const [myDate, setMyDate] = useState(" ");
    const [isPickerShow, setIsPickerShow] = useState(false);
 
   //  console.log(date);
    const showPicker = () => {
     setIsPickerShow(true);
   };
-   const onChange = (event, value) => {
-    setDate(value);
+
+
+
+   const onChange =  (event, value) => {
+
+              setIsPickerShow(false);
+              setDate(value)
+              //console.log('date',date)
+
+              const year = value.getFullYear()
+              const  month = value.getMonth()+1; 
+              const  day= value.getDate();
+
+              const  dateString = `${day}-${month}-${year}`;
+            
+              setMyDate(myDate=>{
+                myDate=dateString
+                //console.log('inside',myDate)
+                next(myDate)
+                return myDate
+              })
+            
+   }
+
+
+
+   const next = async (myDate)=>{
+
     
-    if (Platform.OS === 'android') {
-      setIsPickerShow(false);
-    }
+SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('search by date',token)
+     
+      const value = {date: myDate}
+      fetch(`http://10.0.2.2:5000/users/searchByDate`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(async(result)=>{
+                //console.log(result)
+
+                if( result.status == 'ok'){
+
+                        if(result.data == ''){
+                            console.log('No companies found')
+                            alert('No companies found')
+                        }else{
+                          await setCompanies(result.data)
+                          //console.log("result",companies)
+                        }
+
+                }else{
+                  console.log(result.status)
+                }
+
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+
+
+
+
+
   };
 
 
@@ -112,13 +184,13 @@ const HomeScreen=()=>{
     };
 // Card
 
-const Card=({hotel,index})=>{
+const Card=({company,index})=>{
 
   const navigation = useNavigation();
   
   function handleClick(){
     console.log("Card clicked")
-    navigation.navigate('CompanyDetails',{hotel})
+    navigation.navigate('CompanyDetails',{company,myDate})
   }
   
 return(
@@ -128,7 +200,7 @@ return(
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
     <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
-        ${hotel.price_range}
+        ${company.price_range}
     </Text>
      </View>
         
@@ -136,8 +208,8 @@ return(
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.company_name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.address}</Text> 
+               <Text style={{fontWeight:"bold",fontSize:17}}>{company.company_name}</Text>
+                <Text style={{color:COLORS.grey,fontSize:12}}>{company.address}</Text> 
             </View>
              <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
@@ -160,13 +232,13 @@ return(
 
 // Bottom Card
 
-const BottomCard=({hotel,index})=>{
+const BottomCard=({company,index})=>{
 
   const navigation = useNavigation();
 
   function handleClick(){
     console.log("Card clicked")
-    navigation.navigate('CompanyDetails')
+    navigation.navigate('CompanyDetails',{company,myDate})
   }
 return(
    
@@ -175,15 +247,15 @@ return(
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
     <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
-        ${hotel.price_range}
+        ${company.price_range}
     </Text>
      </View>
          <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.company_name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.address}</Text> 
+               <Text style={{fontWeight:"bold",fontSize:17}}>{company.company_name}</Text>
+                <Text style={{color:COLORS.grey,fontSize:12}}>{company.address}</Text> 
             </View>
              <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
@@ -218,11 +290,11 @@ return(
             </View>
          
          {/* The button that used to trigger the date picker */}
-      {/* {!isPickerShow && ( */}
+     
         <View style={style.btnContainer}>
         <MaterialCommunityIcons name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
         </View>
-      {/* )} */}
+     
 
       {/* The date picker */}
       {isPickerShow && (
@@ -257,20 +329,24 @@ return(
             paddingBottom: 20,
             
           }}
-          renderItem={({item}) => <Card hotel={item} />}
+          renderItem={({item}) => <Card company={item} />}
         />
         </View>
 
            {/* Bottom View */}
 
            <View style={{flexDirection:"row",justifyContent:"space-between", }}>
-            <Text style={{fontWeight:"bold", color:COLORS.grey}}>Available Companies</Text>
+            <Text style={{fontWeight:"bold", color:COLORS.black,paddingTop:15,paddingBottom:15}}>Available Companies</Text>
           
            </View>
            <FlatList 
             data={companies}
-            showsVerticalScrollIndicator={true} contentContainerStyle={{justifyContent:'center',alignItems:'center',}}
-             renderItem={({item})=><BottomCard hotel={item}/>}
+            showsVerticalScrollIndicator={true} 
+            contentContainerStyle={{
+              justifyContent:'center',
+              alignItems:'center'
+            }}
+             renderItem={({item})=><BottomCard company={item}/>}
            />
         </ScrollView>
      </SafeAreaView>

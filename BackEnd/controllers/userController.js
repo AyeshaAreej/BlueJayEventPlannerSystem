@@ -93,9 +93,10 @@ const searchCompany = async (req,res)=>{
 // search by date
 const searchByDate = async (req,res)=>{
 
-    const {city} = req.body
-
-    Company.find({city: city}, (err,companies)=>{
+    const user = await User.findById({_id: req.user.id})
+    console.log(user.city)
+    console.log(req.body)
+    Company.find({city: user.city}, (err,companies)=>{
         if(companies){
             
             const result = []
@@ -103,13 +104,14 @@ const searchByDate = async (req,res)=>{
                                     var count = 0
 
                                     for (date of i.booked_dates){ //getting dates from array
-                                        if(date == req.body.date)
+                                        if(date === req.body.date)
                                         {
                                             count+=1
                                         }
                                     }
 
-                                    if(count<=3){
+                                    console.log(count)
+                                    if(count<=2){ //3 allowed
                                       result.push(i)
                                     }
 
@@ -131,8 +133,9 @@ const allCompanies = async (req,res)=>{
     //get user from token
     //console.log(req.body.city)
 
-    const city = req.body.city
-     Company.find({city},(err,companies)=>{
+    const user = await User.findById({_id: req.user.id})
+    console.log(user.city)
+     Company.find({city: user.city},(err,companies)=>{
         if(err){
             console.log('error in all companies')
             return res.json({status: 'error',error: 'error in all companies'})
@@ -188,13 +191,20 @@ const createOrder = async (req,res)=>{
     
     const c_id = req.body.c_id
      
-    User.findById(req.user.id,(err,user)=>{
+    User.findById(req.user.id,async (err,user)=>{
         if(err){
                   return res.json({status:'error',error: 'cant find user'})
                 }
         else{
+
+                  const company = await Company.findById({_id: c_id})
+
                   Order.create({
-                            client_name: user.username, 
+                            customer_id: user._id,
+                            customer_name: user.username, 
+                            company_id: company._id,
+                            company_name: company.company_name,
+                            company_pic: company.image,
                             email: user.email, 
                             city: user.city,
                             phone_no: user.phone_no,
@@ -207,7 +217,7 @@ const createOrder = async (req,res)=>{
                         },(err,order)=>{
                             if(err){
                                 console.log('error in order creation')
-                                return res.json({status: 'error',error: 'error in order creation'})
+                                return res.json({status: 'error',error: err})
                             }
 
                                 User.findOneAndUpdate ({_id: user._id},{ $push: { orders: order._id } },(err,user)=>{

@@ -16,10 +16,10 @@ const Stack = createNativeStackNavigator();
 const UserHomeStack = () => {
   return (
     <Stack.Navigator initialRouteName='UserStack'>
-          <Stack.Screen name='UserStack' component={UserStack}/>
-           <Stack.Screen name='HomeScreen' component={HomeScreen}/>
-           <Stack.Screen name='CompanyDetails' component={CompanyDetails}/>
-           <Stack.Screen name='BookingForm' component={BookingForm}/>
+          <Stack.Screen name='UserStack' component={UserStack} options={{headerShown:false}}/>
+           <Stack.Screen name='HomeScreen' component={HomeScreen} options={{headerShown:false}}/>
+           <Stack.Screen name='CompanyDetails' component={CompanyDetails} options={{headerShown:false}}/>
+           <Stack.Screen name='BookingForm' component={BookingForm} options={{headerShown:false}}/>
          </Stack.Navigator> 
   )
 }

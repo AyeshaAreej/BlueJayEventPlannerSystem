@@ -1,8 +1,16 @@
 const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
-    client_name :{
+    customer_id :{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    customer_name :{
         type: String,
+        required: true
+    },
+    company_id:{
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     company_name:{
@@ -31,7 +39,7 @@ const orderSchema = new mongoose.Schema({
     },
     date:{
         //type: Date,
-        type: Number,
+        type: String,
         required: true
     },
     no_of_guests:{
@@ -51,7 +59,7 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: 'pending'
+        default: 'Pending'
     }
 
 });

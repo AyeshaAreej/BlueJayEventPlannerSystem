@@ -12,18 +12,23 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import image from '../assets/hotel1.jpg';
 import { useNavigation } from '@react-navigation/native';
+
+
  function CompanyDetails({route}) {
 
 
+ 
   const navigation = useNavigation();
 
-  const {hotel} = route.params
-  // console.log("hotel",hotel)
+  const company = route.params.company
+  const myDate = route.params.myDate
+  // console.log("company",company)
+  console.log("myDate",myDate)
 
   
   function handleClick(){
     console.log("Card clicked")
-    navigation.navigate('BookingForm',{hotel})
+    navigation.navigate('BookingForm',{company,myDate})
   }
 
   return (
@@ -51,7 +56,7 @@ import { useNavigation } from '@react-navigation/native';
           <FontAwesome name="map-marker" color={COLORS.white} size={20} />
         </View>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{hotel.company_name}</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{company.company_name}</Text>
           <Text
             style={{
               fontSize: 15,
@@ -59,7 +64,7 @@ import { useNavigation } from '@react-navigation/native';
               color: COLORS.grey,
               marginTop: 5,
             }}>
-           {hotel.address}
+           {company.address}
           </Text>
           <View
             style={{
@@ -76,7 +81,7 @@ import { useNavigation } from '@react-navigation/native';
                 <MaterialCommunityIcons name="star" size={20} color={COLORS.grey} />
               </View>
               <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 9}}>
-                {hotel.rating}
+                {company.rating}
               </Text>
             </View>
             
@@ -87,7 +92,7 @@ import { useNavigation } from '@react-navigation/native';
               marginTop: 5,  }}>Services We Provide 
           </Text>
             <Text style={{lineHeight: 20, color: COLORS.grey}}>
-             {hotel.services}
+             {company.services}
              </Text>
           </View>
         </View>
@@ -110,7 +115,7 @@ import { useNavigation } from '@react-navigation/native';
                 color: COLORS.black,
                 marginLeft: 5,
               }}>
-              $ {hotel.price_range} 
+              $ {company.price_range} 
             </Text>
            
           </View>

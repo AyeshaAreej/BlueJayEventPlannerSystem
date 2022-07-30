@@ -2,10 +2,10 @@
 // Navigation remaining
 
 import React from 'react';
+import {useState,useEffect} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
-import hotels from '../components/companies';
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -14,10 +14,48 @@ const cardWidth=width/1.1;
 
 const MyOrders=({navigation})=>{
  
+
+  const [myOrders, setMyOrders] = React.useState([]);
+
+  useEffect(()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('My orders',token)
+
+      fetch(`http://10.0.2.2:5000/users/myOrders`,{
+                    method: "get",
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+
+                        if(result.data == ''){
+                            console.log('No companies found')
+                            alert('No companies found')
+                        }else{
+                          setMyOrders(result.data)
+                          console.log("result",myOrders)
+                        }
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+
+   },[]);
   
 // Card
 
-const Card=({hotel,index,navigation})=>{
+const Card=({order,navigation})=>{
 
   
 return(
@@ -31,24 +69,29 @@ return(
           </View>
 
           <View style={{flexDirection:'row'}}>
-                  <Image source={hotel.image} style={style.cardImage} />
+                  <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
               
-                  <Text style={{fontSize:16, marginLeft:20, marginTop:50,marginBottom:20}}>
-                  Event Type: Wedding{'\n'}{'\n'}No of guests: 500{'\n' }{'\n' }Date: 4/july/2022  </Text>
+                  <Text style={{ marginLeft:20, marginTop:50,marginBottom:20}}>
+
+                  <Text style={{fontSize:16,fontWeight:"bold"}}>Event Type:</Text> <Text style={{fontSize:16}}>{order.event_type}</Text>{'\n'}{'\n'}
+                  <Text style={{fontSize:16,fontWeight:"bold"}}>No of guests:</Text> <Text style={{fontSize:16}}>{order.no_of_guests}</Text>{'\n'}{'\n'}
+                  <Text style={{fontSize:16,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:16}}>{order.date}</Text>
+                  
+                  </Text>
           </View>
 
     
           <View style={{flexDirection:"row"}}>
                   
-                    <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15,paddingTop:10}}>Name : {hotel.name}</Text>
+                    <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15,paddingTop:10}}>Name : {order.company_name}</Text>
                      
-                    <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}>Pending</Text>
+                    <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}>{order.status}</Text>
           
           </View>   
 
            <View style={{flexDirection:"row", justifyContent:'space-between'}}>
                   
-           <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15}}>Total : Rs.{hotel.price}</Text>
+           <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15}}>Total : Rs.{order.available_budget}</Text>
                    
           </View>      
         
@@ -69,7 +112,7 @@ return(
     
          <View>
          <Animated.FlatList
-          data={hotels}
+          data={myOrders}
           vertical
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -77,7 +120,7 @@ return(
             alignItems:'center',
             
           }}
-          renderItem={({item}) => <Card hotel={item}  />}
+          renderItem={({item}) => <Card order={item}  />}
         />
         </View>
 
