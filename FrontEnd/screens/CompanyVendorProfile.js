@@ -1,32 +1,14 @@
-import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar,Image,Platform} from 'react-native'
+import { StyleSheet, Text, View,TextInput,TouchableOpacity , ScrollView ,Button, StatusBar,Image,Platform} from 'react-native'
 import colors from '../components/colors';
 import React,  { useState, useEffect } from 'react'
 import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
-import COLORS from '../components/colors';
+
 
 const CompanyVendorProfile = ({navigation}) => {
-  const [image, setImage] = useState(null);
-
-
-  const pickImage = async () => {
-   // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
+ 
 
   return (
     <ScrollView  style={{flex:1, backgroundColor:'#fff', }} contentContainerStyle={{justifyContent:'center',
@@ -34,7 +16,7 @@ const CompanyVendorProfile = ({navigation}) => {
    
 
       {/* Form Inputs View */}
-   <View style={{marginTop:50}}>
+   <View style={{marginTop:4}}>
           <Formik
       initialValues={{companyname:'', email: '', phone_no: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
       onSubmit={
@@ -79,18 +61,17 @@ const CompanyVendorProfile = ({navigation}) => {
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View >
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-  
-  </View>
-  <View style={styles.button}>
-    <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
+    <View style={styles.buttonContainer}>
+     <Image source={require('.././assets/profile.jpg')} style={styles.profileImage} />
     </View>
+   
+
+
 
 
 
     <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="account"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="account"  size={34} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="companyname"
@@ -106,7 +87,7 @@ const CompanyVendorProfile = ({navigation}) => {
             }
        
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="email"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="email"  size={34} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -121,7 +102,7 @@ const CompanyVendorProfile = ({navigation}) => {
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
             <View style={styles.inputContainer} >
-          <MaterialCommunityIcons name="phone"  size={38} style={styles.icon}/>
+          <MaterialCommunityIcons name="phone"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phone_no"
@@ -137,7 +118,7 @@ const CompanyVendorProfile = ({navigation}) => {
             }
 
             <View style={styles.inputContainer} >
-          <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
+          <MaterialCommunityIcons name="city"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -151,7 +132,7 @@ const CompanyVendorProfile = ({navigation}) => {
             }
 
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="application-settings"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="application-settings"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="services"
@@ -166,7 +147,7 @@ const CompanyVendorProfile = ({navigation}) => {
             }
             
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="currency-usd"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="currency-usd"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="pricerange"
@@ -179,7 +160,7 @@ const CompanyVendorProfile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.pricerange}</Text>
             }
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="home"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="home"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="address"
@@ -194,7 +175,7 @@ const CompanyVendorProfile = ({navigation}) => {
             }
             
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="clock"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="clock"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="availabilitytime"
@@ -209,15 +190,29 @@ const CompanyVendorProfile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availabilitytime}</Text>
             }
            
-          
-            {/*Save Button  */}
+
+
+           {/* Change Password Button */}
+           <View style={styles.buttonContainer}> 
+           <TouchableOpacity style={styles.editPassword}
+             onPress={()=> navigation.navigate('ChangePassword') } >
+       
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}> Change Password </Text>
+            <MaterialCommunityIcons name="playlist-edit"  size={34} style={styles.passwordIcon}/> 
         
-          <View style={styles.button}>
-           <Button  onPress={handleSubmit}
-           title="Edit"
-           color={colors.primary}
-           /> 
-          </View>
+        </TouchableOpacity>
+        </View>
+           
+        
+          
+            {/*Edit Button  */}
+        
+            <View style={styles.buttonContainer}> 
+           <TouchableOpacity  style={styles.editButton}
+            onPress={handleSubmit}>
+             <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}>Edit Profile</Text>
+           </TouchableOpacity> 
+            </View>
        
        </View>
     
@@ -239,15 +234,12 @@ const styles = StyleSheet.create({
    input:{
     borderColor :colors.white,
     margin:6,
-    padding:22,
+    padding:8,
     width:280,
     fontSize:20,
-    borderWidth:2,
-    elevation:20,
+    elevation:30,
     borderRadius:15,
     backgroundColor:'white'
-   
-
    },
 
 
@@ -255,7 +247,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     width: '40%',
     height: 35,
-    // margin:60,
    marginTop:20,
    marginBottom:20,
     marginLeft:'30%',
@@ -264,18 +255,53 @@ const styles = StyleSheet.create({
    },
    icon:{
     color:colors.primary,
-    margin:20,
+    margin:10,
    
     },
     inputContainer:{
      flexDirection:'row',
      color:colors.white, 
-     // borderWidth:5,
-     // borderRadius:20,
-     // borderColor:'purple'
     },
+    passwordIcon:{
+      color:colors.white,
+      margin:10,
+     },
+    
+    editPassword: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop:10,
+      width:280,
+      borderColor :colors.primary,
+      borderWidth:2,
+      elevation:20,
+      borderRadius:15,
+      backgroundColor:colors.primary
+      },
+    profileImage:{
  
-   
+      height: 180,
+      width: '50%',
+      borderRadius: 20,
+  
+   },
+ buttonContainer:{
+    justifyContent:'center',
+    alignItems:'center',
+
+},
+editButton:{
+  justifyContent:'center',
+  alignItems:'center',
+  marginTop:4,
+  marginBottom:4,
+  width:280,
+  borderColor :colors.primary,
+  borderWidth:2,
+  elevation:20,
+  borderRadius:15,
+  backgroundColor:colors.primary,
+},
 
 });
 export default CompanyVendorProfile;

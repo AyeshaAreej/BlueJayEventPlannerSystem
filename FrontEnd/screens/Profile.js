@@ -1,34 +1,16 @@
-import { StyleSheet, Text, View,TextInput, ScrollView ,Button,Image,StatusBar} from 'react-native'
+import { StyleSheet, Text, View,TextInput,TouchableOpacity, ScrollView ,Button,Image,StatusBar, InputAccessoryView} from 'react-native'
 import colors from '../components/colors';
 import React,{useState} from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
 const Profile = ({navigation}) => {
 
-  const [image, setImage] = useState(null);
-  const [hide,setHide]=useState(false);
+  
 
-  const pickImage = async () => {
-    setHide(true)
-   // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
 
 
 
@@ -38,7 +20,7 @@ const Profile = ({navigation}) => {
    
 
       {/* Form Inputs View */}
-   <View style={{marginTop:50, }}>
+   <View style={{marginTop:10 }}>
           <Formik
       initialValues={{username:'', email: '', phone_no: '',city:'', }}
       onSubmit={
@@ -71,16 +53,14 @@ const Profile = ({navigation}) => {
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View>
+        <View style={styles.buttonContainer}>
+        <Image source={require('.././assets/profile.jpg')} style={styles.profileImage} />
+        </View>
+     
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-       </View>
-
-       <View style={styles.buttonI}>
-    <Button hide="false" title="Upload Image" onPress={pickImage} color={colors.primary}/>
-    </View>
+       
         <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="account"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="account"  size={30} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="username"
@@ -96,7 +76,7 @@ const Profile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
             }
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="email"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="email"  size={30} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -111,7 +91,7 @@ const Profile = ({navigation}) => {
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="phone"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="phone"  size={30} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phone_no"
@@ -126,7 +106,7 @@ const Profile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="city"  size={30} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -139,23 +119,27 @@ const Profile = ({navigation}) => {
            {touched.city && errors.city &&
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
             }
-            <View style={styles.password}>
-            <MaterialCommunityIcons name="playlist-edit"  size={38} style={styles.icon}/>
-            {/* <Text>Edit Password</Text> */}
+        
+            <View style={styles.buttonContainer}> 
+            <TouchableOpacity style={styles.editPassword}
+             onPress={()=> navigation.navigate('ChangePassword') } >
+       
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}> Change Password </Text>
+            <MaterialCommunityIcons name="playlist-edit"  size={34} style={styles.passwordIcon}/> 
+            </TouchableOpacity>
             </View>
+
+           
            
           
             {/*Save Button  */}
-          <View style={styles.container}>
-          <View style={styles.button}>
-           <Button  onPress={handleSubmit} 
-           title="Edit"
-           color='purple'
-           /> 
-
-          
-          </View>
-          </View>
+         
+           <View style={styles.buttonContainer}> 
+           <TouchableOpacity  style={styles.editButton}
+            onPress={handleSubmit}>
+             <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}>Edit</Text>
+           </TouchableOpacity> 
+            </View>
        
         </View>
       )}
@@ -174,12 +158,11 @@ const styles = StyleSheet.create({
   
 
    input:{
-   borderColor :colors.white,
    margin:6,
-   padding:22,
+   padding:8,
    width:280,
    fontSize:20,
-   borderWidth:2,
+   borderColor :colors.white,
    elevation:20,
    borderRadius:15,
    backgroundColor:'white'
@@ -203,15 +186,12 @@ password:{
     justifyContent:'center',
     alignItems:'center',
     padding:35
-
-   
-  
   },
    button:{
-    backgroundColor: 'purple',
+    backgroundColor:colors.primary,
     width: '35%',
     height: 35,
-    //  margin:55,
+
   
  },
  buttonI:{
@@ -228,12 +208,50 @@ password:{
  margin:20,
 
  },
+ passwordIcon:{
+  color:colors.white,
+  margin:10,
+ },
+
+editPassword: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop:10,
+  width:280,
+  borderColor :colors.primary,
+  borderWidth:2,
+  elevation:20,
+  borderRadius:15,
+  backgroundColor:colors.primary
+  },
+  editButton:{
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:10,
+    width:280,
+    borderColor :colors.primary,
+    borderWidth:2,
+    elevation:20,
+    borderRadius:15,
+    backgroundColor:colors.primary,
+  },
+  buttonContainer:{
+      justifyContent:'center',
+      alignItems:'center',
+ 
+  },
  inputContainer:{
   flexDirection:'row',
   color:colors.white, 
 
  },
-   
+ profileImage:{
+ 
+    height: 180,
+    width: '50%',
+    borderRadius: 20,
+
+ },
 
 });
 export default Profile;

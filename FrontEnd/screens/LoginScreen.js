@@ -42,8 +42,8 @@ function LoginScreen({navigation}) {
                       {
                           
                           SecureStore.setItemAsync('token',result.data)
-                          navigation.navigate(User_Home)
-                          // navigation.navigate(Vendor_Home)
+                          // navigation.navigate(User_Home)
+                          navigation.navigate(Vendor_Home)
                       }
                       else{
                         console.log(result.error)
@@ -146,7 +146,7 @@ function LoginScreen({navigation}) {
           password: yup
             .string()
             .min(5, 'More than 5 characters are needed.')
-            .max(11, 'More than 12 characters are allowed.')
+            .max(11, 'Less than 12 characters are allowed.')
             .required(),
           })}
 
@@ -171,7 +171,7 @@ function LoginScreen({navigation}) {
            <TextInput
              style={styles.input}
              name="password"
-            placeholder="Enter Password"
+             placeholder="Enter Password"
              onChangeText={handleChange('password')}
              onBlur={() => setFieldTouched('password')}
             value={values.password}

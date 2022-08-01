@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
-import COLORS from '../components/colors';
+
 
 const EditCompanyVendorProfile = ({navigation}) => {
   const [image, setImage] = useState(null);
@@ -82,13 +82,13 @@ const EditCompanyVendorProfile = ({navigation}) => {
   
   </View>
   <View style={styles.button}>
-    <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
+    <Button title="Change Image" onPress={pickImage} color={colors.primary}/>
     </View>
 
 
 
     <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="account"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="account"  size={34} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="companyname"
@@ -104,7 +104,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
             }
        
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="email"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="email"  size={34} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -119,7 +119,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
             <View style={styles.inputContainer} >
-          <MaterialCommunityIcons name="phone"  size={38} style={styles.icon}/>
+          <MaterialCommunityIcons name="phone"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phone_no"
@@ -135,7 +135,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
             }
 
             <View style={styles.inputContainer} >
-          <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
+          <MaterialCommunityIcons name="city"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -149,7 +149,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
             }
 
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="application-settings"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="application-settings"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="services"
@@ -164,7 +164,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
             }
             
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="currency-usd"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="currency-usd"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="pricerange"
@@ -177,7 +177,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.pricerange}</Text>
             }
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="home"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="home"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="address"
@@ -192,7 +192,7 @@ const EditCompanyVendorProfile = ({navigation}) => {
             }
             
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="clock"  size={38} style={styles.icon}/>
+            <MaterialCommunityIcons name="clock"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="availabilitytime"
@@ -235,16 +235,16 @@ const styles = StyleSheet.create({
   
 
    input:{
-    borderColor :colors.white,
+  
+  borderColor :colors.white,
     margin:6,
-    padding:22,
+    padding:5,
     width:280,
     fontSize:20,
-    borderWidth:2,
-    elevation:20,
+    elevation:30,
     borderRadius:15,
     backgroundColor:'white'
-   
+
 
    },
 

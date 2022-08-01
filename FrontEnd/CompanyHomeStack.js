@@ -5,6 +5,7 @@ import CompanyHome from './screens/CompanyHome';
 import VendorBookingForm from './screens/company/VendorBookingForm';
 import CompanyStack from './screens/company/CompanyStack';
 import EditCompanyVendorProfile from './screens/EditCompanyVendorProfile';
+import ChangePassword from './screens/ChangePassword';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();  
@@ -18,7 +19,8 @@ const CompanyHomeStack = () => {
            <Stack.Screen name='CompanyDetails' component={CompanyDetails}/>
            <Stack.Screen name='BookingForm' component={VendorBookingForm}/>
            <Stack.Screen name='EditCompanyVendorProfile' component={EditCompanyVendorProfile}/>
-         </Stack.Navigator> 
+           <Stack.Screen name="ChangePassword" component={ChangePassword} />
+          </Stack.Navigator> 
   )
 }
 

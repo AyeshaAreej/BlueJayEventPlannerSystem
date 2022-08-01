@@ -16,7 +16,7 @@ const CompanyVendorOrders=({navigation})=>{
 const Card=({hotel,index,navigation})=>{
 return(
    
-    <View style={{...style.card}}>
+      <View style={{...style.card}}>
     <View style={style.priceTag}>
     <View style={{color:COLORS.white, }}>
      <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white}/>

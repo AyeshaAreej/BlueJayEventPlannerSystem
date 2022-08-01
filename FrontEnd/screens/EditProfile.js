@@ -1,11 +1,31 @@
-import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar} from 'react-native'
+import { StyleSheet, Text, View,TextInput, Image,ScrollView ,Button, StatusBar} from 'react-native'
 import colors from '../components/colors';
 import React,{useState} from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const EditProfile = ({navigate}) => {
+
+  const [image, setImage] = useState(null);
+
+
+  const pickImage = async () => {
+   // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
 
   return (
@@ -45,10 +65,19 @@ const EditProfile = ({navigate}) => {
     
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
-        <>
+        <View>
+
+        <View style={styles.imageContainer}>
+        {image && <Image source={{ uri: image }} style={styles.profileImage}  />}
+        
+         
+        </View>
+        <View style={styles.button}>
+         <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
+         </View>
 
         <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="account"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="account"  size={34} style={styles.icon}/>
         <TextInput
              style={styles.input}
              name="username"
@@ -64,7 +93,7 @@ const EditProfile = ({navigate}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
             }
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="email"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="email"  size={34} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -79,7 +108,7 @@ const EditProfile = ({navigate}) => {
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="phone"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="phone"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="phone_no"
@@ -94,7 +123,7 @@ const EditProfile = ({navigate}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
             <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
+        <MaterialCommunityIcons name="city"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
              name="city"
@@ -111,7 +140,7 @@ const EditProfile = ({navigate}) => {
           
             {/*Save Button  */}
           <View style={styles.container}>
-          <View style={styles.button}>
+          <View style={styles.updateButton}>
            <Button  onPress={handleSubmit} 
            title="Update"
            color='purple'
@@ -119,7 +148,7 @@ const EditProfile = ({navigate}) => {
           </View>
           </View>
        
-        </>
+        </View>
       )}
     </Formik>
 
@@ -138,7 +167,7 @@ const styles = StyleSheet.create({
    input:{
    borderColor :colors.white,
    margin:6,
-   padding:22,
+   padding:8,
    width:280,
    fontSize:20,
    borderWidth:2,
@@ -151,17 +180,29 @@ const styles = StyleSheet.create({
 
    container: {
     flex: 1,
-    // padding:5,
-    borderRadius: 100,
+    justifyContent:'center',
+    alignItems:'center',
    
   
   },
    button:{
-    backgroundColor: 'purple',
-    width: '55%',
+
+    backgroundColor: colors.primary,
+    width: '40%',
     height: 35,
-     margin:75,
+    margin:5,
+    marginLeft:'29%',
+     
  },
+ updateButton:{
+
+  backgroundColor: colors.primary,
+  width: '40%',
+  height: 38,
+  margin:5,
+
+   
+},
  icon:{
  color:colors.primary,
  margin:20,
@@ -170,11 +211,22 @@ const styles = StyleSheet.create({
  inputContainer:{
   flexDirection:'row',
   color:colors.white, 
-  // borderWidth:5,
-  // borderRadius:20,
-  // borderColor:'purple'
+  
  },
-   
+ profileImage:{
+ 
+  height: '100%',
+  width: '50%',
+  borderRadius: 20,
+
+},
+  imageContainer:{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+ 
+ 
+  }, 
 
 });
 export default EditProfile;
