@@ -19,6 +19,7 @@ const MyOrders=({navigation})=>{
 
   useEffect(()=>{
 
+    console.log("1",myOrders)
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('My orders',token)
@@ -32,7 +33,7 @@ const MyOrders=({navigation})=>{
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
+                //console.log(result)
 
                 if( result.status == 'ok'){
 
@@ -41,7 +42,7 @@ const MyOrders=({navigation})=>{
                             alert('No companies found')
                         }else{
                           setMyOrders(result.data)
-                          console.log("result",myOrders)
+                          
                         }
                 }else{
                   console.log(result.status)

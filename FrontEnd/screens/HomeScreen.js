@@ -7,35 +7,68 @@ import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
-// import {PORT} from"@env"
+
 
 const {width}= Dimensions.get('screen');
 const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
-const HomeScreen=()=>{
+
+
+
+const HomeScreen=({route})=>{
 
   
-  const [companies, setCompanies] = React.useState([]);
 
   useEffect(()=>{
 
+
+    if(myDate===' ' && route.params.params === undefined){
+      showPicker()
+      
+    }
+    
+
+   },[]);
+
+    const categories = ['All', 'Popular', 'Low Price', 'High Price', 'Favorites'];
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [companies, setCompanies] = React.useState([]);
+    //Date
+    const [date, setDate] = useState(new Date());
+    const [myDate, setMyDate] = useState(" ");
+    const [isPickerShow, setIsPickerShow] = useState(false);
+ 
+
+   console.log(route.params.params)
+   const onChangeSearch = (query) => {
+    setSearchQuery(query)}
+    ;
+
+   
+  //  console.log(date);
+   const showPicker = () => {
+    setIsPickerShow(true);
+  };
+
+  const fetchSearch = ()=>{
+    console.log('search pressed')
     SecureStore.getItemAsync('token').then(token=>{
 
-      console.log('all companies',token)
-
-      
-      fetch(`http://10.0.2.2:5000/users/allCompanies`,{
-                    method: "get",
+      console.log('search by name',token)
+     
+      const value = {date: myDate, search_text: searchQuery}
+      fetch(`http://10.0.2.2:5000/users/searchCompany`,{
+                    method: "post",
+                    body: JSON.stringify(value),
                     headers: {
                         Accept: "application/json, text/plain, */*",
                         "Content-Type": "application/json",
                         token
                     }
                   
-              }).then(res=>res.json()).then(result=>{
-                //console.log(result.data)
-
-               
+              }).then(res=>res.json()).then(async(result)=>{
+                //console.log(result)
 
                 if( result.status == 'ok'){
 
@@ -43,7 +76,7 @@ const HomeScreen=()=>{
                             console.log('No companies found')
                             alert('No companies found')
                         }else{
-                          setCompanies(result.data)
+                          await setCompanies(result.data)
                           //console.log("result",companies)
                         }
 
@@ -52,29 +85,10 @@ const HomeScreen=()=>{
                 }
 
 
-
-                      
               }).catch(err=>console.log('catch',err.message))
     })    
 
-
-   },[]);
-
-   const categories = ['All', 'Popular', 'Low Price', 'High Price', 'Favorites'];
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const onChangeSearch = query => setSearchQuery(query);
-
-    //Date
-   const [date, setDate] = useState(new Date());
-   const [myDate, setMyDate] = useState(" ");
-   const [isPickerShow, setIsPickerShow] = useState(false);
-
-  //  console.log(date);
-   const showPicker = () => {
-    setIsPickerShow(true);
-  };
-
+  }
 
 
    const onChange =  (event, value) => {
@@ -102,8 +116,7 @@ const HomeScreen=()=>{
 
    const next = async (myDate)=>{
 
-    
-SecureStore.getItemAsync('token').then(token=>{
+    SecureStore.getItemAsync('token').then(token=>{
 
       console.log('search by date',token)
      
@@ -138,12 +151,136 @@ SecureStore.getItemAsync('token').then(token=>{
               }).catch(err=>console.log('catch',err.message))
     })    
 
-
-
-
-
-
+    setMyDate(myDate)
   };
+
+
+  const fetchCompany=(item)=>{
+    // console.log(item)
+                if(item=='All'){
+                  next(myDate)
+                }
+                else if(item=='Popular'){
+                  
+                  SecureStore.getItemAsync('token').then(token=>{
+
+                    console.log('poppular',token)
+                   
+                    const value = {date: myDate}
+                    fetch(`http://10.0.2.2:5000/users/topRated`,{
+                                  method: "post",
+                                  body: JSON.stringify(value),
+                                  headers: {
+                                      Accept: "application/json, text/plain, */*",
+                                      "Content-Type": "application/json",
+                                      token
+                                  }
+                                
+                            }).then(res=>res.json()).then(async(result)=>{
+                              console.log(result)
+              
+                              if( result.status == 'ok'){
+              
+                                      if(result.data == ''){
+                                          console.log('No companies found')
+                                          alert('No companies found')
+                                      }else{
+                                        await setCompanies(result.data)
+                                        //console.log("result",companies)
+                                      }
+              
+                              }else{
+                                console.log(result.status)
+                              }
+              
+              
+                            }).catch(err=>console.log('catch',err.message))
+                  })    
+              
+              
+            }else if(item=='Low Price'){
+                  
+              SecureStore.getItemAsync('token').then(token=>{
+
+                console.log('Low Price',token)
+               
+                const value = {date: myDate}
+                fetch(`http://10.0.2.2:5000/users/lowPrice`,{
+                              method: "post",
+                              body: JSON.stringify(value),
+                              headers: {
+                                  Accept: "application/json, text/plain, */*",
+                                  "Content-Type": "application/json",
+                                  token
+                              }
+                            
+                        }).then(res=>res.json()).then(async(result)=>{
+                          console.log(result)
+          
+                          if( result.status == 'ok'){
+          
+                                  if(result.data == ''){
+                                      console.log('No companies found')
+                                      alert('No companies found')
+                                  }else{
+                                    await setCompanies(result.data)
+                                    //console.log("result",companies)
+                                  }
+          
+                          }else{
+                            console.log(result.status)
+                          }
+          
+          
+                        }).catch(err=>console.log('catch',err.message))
+              })    
+          
+
+        }else if(item=='High Price'){
+                  
+          SecureStore.getItemAsync('token').then(token=>{
+
+            console.log('High Price',token)
+           
+            const value = {date: myDate}
+            fetch(`http://10.0.2.2:5000/users/highPrice`,{
+                          method: "post",
+                          body: JSON.stringify(value),
+                          headers: {
+                              Accept: "application/json, text/plain, */*",
+                              "Content-Type": "application/json",
+                              token
+                          }
+                        
+                    }).then(res=>res.json()).then(async(result)=>{
+                      console.log(result)
+      
+                      if( result.status == 'ok'){
+      
+                              if(result.data == ''){
+                                  console.log('No companies found')
+                                  alert('No companies found')
+                              }else{
+                                await setCompanies(result.data)
+                                //console.log("result",companies)
+                              }
+      
+                      }else{
+                        console.log(result.status)
+                      }
+      
+      
+                    }).catch(err=>console.log('catch',err.message))
+          })  
+          
+          
+        }else if(item=='Favorites'){
+                  
+            //remaining
+        }
+
+                
+  }
 
 
     
@@ -154,7 +291,10 @@ SecureStore.getItemAsync('token').then(token=>{
             <TouchableOpacity
               key={index}
               activeOpacity={0.8}
-              onPress={() => setSelectedCategoryIndex(index)}>
+              onPress={() => {
+                setSelectedCategoryIndex(index)
+                fetchCompany(item)
+              }}>
               <View>
                 <Text
                   style={{
@@ -182,59 +322,13 @@ SecureStore.getItemAsync('token').then(token=>{
         </View>
       );
     };
+
+
 // Card
 
 const Card=({company,index})=>{
 
   const navigation = useNavigation();
-  
-  function handleClick(){
-    console.log("Card clicked")
-    navigation.navigate('CompanyDetails',{company,myDate})
-  }
-  
-return(
-   
-  <TouchableOpacity onPress={handleClick}>
-    <View style={{...style.card}}>
-      <View style={{...style.cardOverLay, opacity:0}}/>
-    <View style={style.priceTag}>
-    <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
-        ${company.price_range}
-    </Text>
-     </View>
-        
-         <Image source={require('../assets/hotel1.jpg')} style={style.cardImage} />
-         <View style={style.cardDetails}>
-          <View style={{flexDirection:"row", justifyContent:'space-between'}}>
-           <View>
-               <Text style={{fontWeight:"bold",fontSize:17}}>{company.company_name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{company.address}</Text> 
-            </View>
-             <MaterialCommunityIcons name="bookmark-outline" size={30}/>
-          </View>
-          <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
-             <View  style={{flexDirection:"row"}}>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.gray}/>
-              </View>
-             
-          </View>
-         </View>        
-    </View>
-  </TouchableOpacity>
-
-)
-};
-
-// Bottom Card
-
-const BottomCard=({company,index})=>{
-
-  const navigation = useNavigation();
 
   function handleClick(){
     console.log("Card clicked")
@@ -243,7 +337,7 @@ const BottomCard=({company,index})=>{
 return(
    
   <TouchableOpacity onPress={handleClick}>
-    <View style={{...style.bottomCard}}>
+    <View style={{...style.Card}}>
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
     <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
@@ -280,75 +374,79 @@ return(
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
         <View style={style.header}>
-            <View style={{paddingBottom:15}}>
-             <Text style={{fontSize:25, fontWeight:'bold'}}>
-               Search a Company </Text> 
-               <View style={{flexDirection:'row'}}>
-                   <Text style={{fontSize:25, fontWeight:'bold'}} >in  </Text>
-                   <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
-               </View>
-            </View>
-         
-         {/* The button that used to trigger the date picker */}
-     
-        <View style={style.btnContainer}>
-        <MaterialCommunityIcons name="calendar"  size={38} color={COLORS.primary} onPress={showPicker}/>
-        </View>
-     
 
-      {/* The date picker */}
-      {isPickerShow && (
-        <DateTimePicker
-          value={date}
-          mode={'date'}
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          // is24Hour={true}
-          onChange={onChange}
-          style={style.datePicker}
-        />
-      )}
+                    <View style={{paddingBottom:15}}>
+
+                            <View style={{flexDirection:'row'}}>
+                                  <Text style={{fontSize:25, fontWeight:'bold'}}> Search a Company </Text> 
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:60,paddingTop:5}}> Pick a date </Text>
+       
+                            </View>
+
+                            <View style={{flexDirection:'row'}}>
+
+                                      <Text style={{fontSize:25, fontWeight:'bold'}} > in  </Text>
+                                      <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
+
+
+
+
+                                      {/* The button that used to trigger the date picker */}
+                                      <View style={style.btnContainer}>
+                                            <MaterialCommunityIcons name="calendar"  size={45} color={COLORS.primary} onPress={showPicker}/>
+                                      </View>
+                                      
+                                        {/* The date picker */}
+                                      {isPickerShow && (
+                                        <DateTimePicker
+                                          value={date}
+                                          mode={'date'}
+                                          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                                          // is24Hour={true}
+                                          onChange={onChange}
+                                          style={style.datePicker}
+                                        />
+                                      )}
+                            </View>
+
+                            <View style={{flexDirection:'row'}}>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5}}> Selected Date :</Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5,color: COLORS.primary}}> {myDate}</Text>
+      
+                            </View>
+                    
+
+                    </View>
+   
         </View>
+
+
         <ScrollView showsVerticalScrollIndicator={false}>
-         <View style={style.searchInputContainer}>
-        
-         <Searchbar 
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-         </View>
-         <CategoryList/>
-         <View>
-         <Animated.FlatList
-          data={companies}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingLeft: 20,
-            marginTop: 20,
-            paddingBottom: 20,
-            
-          }}
-          renderItem={({item}) => <Card company={item} />}
-        />
-        </View>
 
-           {/* Bottom View */}
+                    <View style={style.searchInputContainer}>
+                            <Searchbar 
+                               placeholder="Search"
+                               onChangeText={onChangeSearch}
+                               onIconPress = {fetchSearch}
+                               onSubmitEditing = {fetchSearch}
+                               value={searchQuery}
+                            />
+                    </View>
+         
+                <CategoryList/>
+              
+                <FlatList 
+                  data={companies}
+                  showsVerticalScrollIndicator={true} 
+                  contentContainerStyle={{
+                    justifyContent:'center',
+                    alignItems:'center'
+                  }}
+                  renderItem={({item})=><Card company={item}/>}
+                />
 
-           <View style={{flexDirection:"row",justifyContent:"space-between", }}>
-            <Text style={{fontWeight:"bold", color:COLORS.black,paddingTop:15,paddingBottom:15}}>Available Companies</Text>
-          
-           </View>
-           <FlatList 
-            data={companies}
-            showsVerticalScrollIndicator={true} 
-            contentContainerStyle={{
-              justifyContent:'center',
-              alignItems:'center'
-            }}
-             renderItem={({item})=><BottomCard company={item}/>}
-           />
         </ScrollView>
+
      </SafeAreaView>
    
  )
@@ -363,34 +461,26 @@ const style = StyleSheet.create({
       paddingTop:24,
     },
     searchInputContainer: {
-      height: 50,
+      height: 30,
       backgroundColor: COLORS.light,
-      margin:20,
-      borderTopLeftRadius: 30,
-      borderBottomLeftRadius: 30,
+      marginTop:5,
+      marginLeft:20,
       flexDirection: 'row',
       alignItems: 'center',
-      width:'80%',
+      width:'90%',
     },
     categoryListContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginHorizontal: 20,
-      marginTop: 30,
+      marginTop: 20,
+      paddingBottom:20
     },
     categoryListText: {
       fontSize: 14,
       fontWeight: 'bold',
     },
-    card: {
-      height: 250,
-      width: tcardWidth,
-      elevation: 15,
-      marginRight: 20,
-      borderRadius: 15,
-      backgroundColor: COLORS.white,
-      flexDirection:'column',
-    },
+    
     cardImage: {
       height: 180,
       width: '100%',
@@ -426,7 +516,7 @@ const style = StyleSheet.create({
       width: tcardWidth,
       borderRadius: 15,
     },
-    bottomCard: {
+    Card: {
       height: 250,
       width: bcardWidth,
       elevation: 15,
@@ -436,16 +526,15 @@ const style = StyleSheet.create({
       flexDirection:'column',
     },
     
-    pickedDateContainer: {
-      padding: 12,
-    },
     pickedDate: {
       fontSize: 20,
       color: colors.grey,
       fontWeight:'bold'
     },
     btnContainer: {
-      paddingTop: 12,
+      // paddingTop: 12,
+      paddingRight:0,
+      paddingHorizontal:"43%"
      
     },
   });

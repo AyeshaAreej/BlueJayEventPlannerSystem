@@ -5,16 +5,21 @@ import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
+import { useNavigation } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
 
+function BookingForm({ route}) {
 
-function BookingForm({ route, navigation}) {
 
+  
+  const [bool, setBool] = React.useState(false);
+  const navigation = useNavigation();
 
   const company = route.params.company
   const myDate = route.params.myDate
   //console.log("company",company)
   console.log("myDate",myDate)
+
 
   const c_id = company._id
   
@@ -51,7 +56,7 @@ function BookingForm({ route, navigation}) {
                 if(result.status == 'ok')
                      {
                       alert('order confirmed')
-                      navigation.navigate(HomeScreen)
+                      navigation.navigate("UserStack")
                       }
 
               }).catch(err=>console.log('catch',err.message))
@@ -76,6 +81,14 @@ function BookingForm({ route, navigation}) {
       </View>
      <Text style={{color:colors.primary, fontSize:28,fontWeight:'bold',paddingLeft:'30%'}}>Booking Form</Text>
     
+
+
+     <View style={{flexDirection:'row'}}>
+                <Text style={{fontSize:20, fontWeight:'bold',paddingTop:15,paddingLeft:95}}> Selected Date :</Text>
+                <Text style={{fontSize:20, fontWeight:'bold',paddingTop:15,color: COLORS.primary}}> {myDate}</Text>
+      
+    </View>
+
 
     {/* Form */}
     <Formik

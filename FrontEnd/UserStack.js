@@ -16,7 +16,9 @@ import { FontAwesome } from '@expo/vector-icons';
 const Drawer = createDrawerNavigator();
 
 
-const UserStack = () => {
+const UserStack = ({route,navigation}) => {
+  //console.log('params', route.params);
+
   return (
     <Drawer.Navigator 
     drawerContent={props=><CustomDrawer {...props} /> } 
@@ -26,13 +28,14 @@ const UserStack = () => {
       drawerInactiveTintColor:'#333'
     }}
     useLegacyImplementation>
-          <Drawer.Screen name='Home' component={HomeScreen} 
+          <Drawer.Screen name='Home' initialParams={{ params: route.params }} component={HomeScreen} 
             options={{
               drawerIcon:({focused,size})=>(
                 <FontAwesome
                 name='home'
                 size={size}
                 color={focused? 'white' : 'purple'}
+                
                 />
               ),
             }}

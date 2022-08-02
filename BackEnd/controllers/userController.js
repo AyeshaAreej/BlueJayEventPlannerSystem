@@ -73,17 +73,40 @@ const logIn = async(req,res)=>{
 //search company
 const searchCompany = async (req,res)=>{
     
-    console.log('inside search company')
-
-    //case sensitive
-    const {search_text,city} = req.body
     
-     Company.find({"company_name" : {$regex : search_text}, "city": city},(err,companies)=>{
-        if(err){
-            console.log('error in search company')
-            return res.json({status: 'error',error: 'error in search company'})
+    //case sensitive
+    const {search_text} = req.body
+    const user = await User.findById({_id: req.user.id})
+
+    console.log(user.city)
+    
+     Company.find({"company_name" : {$regex : search_text }, "city": user.city},(err,companies)=>{
+        if(companies){
+            
+            const result = []
+                     for(i of companies){ //getting whole objects
+                                    var count = 0
+
+                                    for (date of i.booked_dates){ //getting dates from array
+                                        if(date === req.body.date)
+                                        {
+                                            count+=1
+                                        }
+                                    }
+
+                                    console.log(count)
+                                    if(count<=2){ //3 allowed
+                                      result.push(i)
+                                    }
+
+                    }
+
+                       
+                return res.json({status: 'ok',data:result})
+        
+        
         }
-        return res.json({status:'ok', data: companies})
+        return res.json({status: 'error',error: 'error in search company by name'})
     })
 
    
@@ -130,60 +153,135 @@ const searchByDate = async (req,res)=>{
 
 //all companies of a city
 const allCompanies = async (req,res)=>{
-    //get user from token
-    //console.log(req.body.city)
-
+   
     const user = await User.findById({_id: req.user.id})
     console.log(user.city)
      Company.find({city: user.city},(err,companies)=>{
-        if(err){
-            console.log('error in all companies')
-            return res.json({status: 'error',error: 'error in all companies'})
+        if(companies){
+            
+            const result = []
+                     for(i of companies){ //getting whole objects
+                                    var count = 0
+
+                                    for (date of i.booked_dates){ //getting dates from array
+                                        if(date === req.body.date)
+                                        {
+                                            count+=1
+                                        }
+                                    }
+
+                                    console.log(count)
+                                    if(count<=2){ //3 allowed
+                                      result.push(i)
+                                    }
+
+                    }                       
+                return res.json({status: 'ok',data:result})
         }
-        console.log(companies)
-        return res.json({status:'ok', data: companies})
+        return res.json({status: 'error',error: 'error in search company by dates'})
     })
 }
 
 
 //top rated
 const topRated = async (req,res)=>{
-   
-    const city = req.body.city
-     Company.find({city},(err,companies)=>{
-        if(err){
-            console.log('error in top rated companies')
-            return res.json({status: 'error',error: 'error in top rated companies'})
+   console.log(req.body.date)
+    const user = await User.findById({_id: req.user.id})
+    console.log(user.city)
+     Company.find({city: user.city},(err,companies)=>{
+        if(companies){
+            
+            const result = []
+                     for(i of companies){ //getting whole objects
+                                    var count = 0
+
+                                    for (date of i.booked_dates){ //getting dates from array
+                                        if(date === req.body.date)
+                                        {
+                                            count+=1
+                                        }
+                                    }
+
+                                    //console.log(count)
+                                    if(count<=2){ //3 allowed
+                                      result.push(i)
+                                    }
+
+                    }                       
+                return res.json({status: 'ok',data:result})
         }
-        return res.json({status:'ok', data: companies})
+        return res.json({status: 'error',error: 'error in search company by rating'})
+
     }).sort({rating:-1})
 
 }
 
 //low price 
 const lowPrice = async (req,res)=>{
-    const city = req.body.city
-     Company.find({city},(err,companies)=>{
-        if(err){
-            console.log('error in low Price')
-            return res.json({status: 'error',error: 'error in low Price'})
-        }
-        return res.json({status:'ok', data: companies})
-    }).sort({price_range:1})
+   
+   console.log(req.body.date)
+   const user = await User.findById({_id: req.user.id})
+   console.log(user.city)
+    Company.find({city: user.city},(err,companies)=>{
+       if(companies){
+           
+           const result = []
+                    for(i of companies){ //getting whole objects
+                                   var count = 0
+
+                                   for (date of i.booked_dates){ //getting dates from array
+                                       if(date === req.body.date)
+                                       {
+                                           count+=1
+                                       }
+                                   }
+
+                                   //console.log(count)
+                                   if(count<=2){ //3 allowed
+                                     result.push(i)
+                                   }
+
+                   }                       
+               return res.json({status: 'ok',data:result})
+       }
+       return res.json({status: 'error',error: 'error in search company by low price'})
+
+   }).sort({price_range:1})
 
 }
 
 
 // high price
 const highPrice = async (req,res)=>{
-    const city = req.body.city
-     Company.find({city},(err,companies)=>{
-        if(err){
-            console.log('error in high Price')
-            return res.json({status: 'error',error: 'error in high Price'})
-        }
-        return res.json({status:'ok', data: companies})
-    }).sort({price_range:-1})
+    
+   console.log(req.body.date)
+   const user = await User.findById({_id: req.user.id})
+   console.log(user.city)
+    Company.find({city: user.city},(err,companies)=>{
+       if(companies){
+           
+           const result = []
+                    for(i of companies){ //getting whole objects
+                                   var count = 0
+
+                                   for (date of i.booked_dates){ //getting dates from array
+                                       if(date === req.body.date)
+                                       {
+                                           count+=1
+                                       }
+                                   }
+
+                                   //console.log(count)
+                                   if(count<=2){ //3 allowed
+                                     result.push(i)
+                                   }
+
+                   }                       
+               return res.json({status: 'ok',data:result})
+       }
+       return res.json({status: 'error',error: 'error in search company by low price'})
+
+   }).sort({price_range:-1})
 }
 
 //create order
@@ -268,7 +366,7 @@ const showProfile = async (req,res)=>{
 
 
 //edit profile
-const editProfile =  (req,res)=>{
+const updateProfile =  (req,res)=>{
 
 
     User.findByIdAndUpdate(req.user.id,{
@@ -350,6 +448,7 @@ const myOrders = async (req,res)=>{
                 try {
                         const my_orders =  orders.orders.map(async (o_id)=>{
                             const order = await Order.findById(o_id)
+                            
                             return order
                         })
                         
@@ -404,4 +503,4 @@ const rateCompany = async (req,res)=>{
 
 
 module.exports = {signUp,logIn,searchCompany,searchByDate,allCompanies,topRated,lowPrice,highPrice,
-                  createOrder,showProfile,editProfile,changePassword,myOrders,orderDetails,rateCompany}
+                  createOrder,showProfile,updateProfile,changePassword,myOrders,orderDetails,rateCompany}

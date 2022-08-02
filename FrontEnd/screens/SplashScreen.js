@@ -7,7 +7,6 @@ import { StatusBar } from "react-native-web";
 import COLORS from "../components/colors";
 
 import * as SecureStore from 'expo-secure-store';
-import {PORT} from"@env"
 
 
 function SplashScreen({navigation}) {
@@ -18,13 +17,14 @@ useEffect(()=>{
 
   SecureStore.getItemAsync('token').then(token=>{
 
-    if(token == ' '){
+    if(token == ' ' || token == null){
       console.log("No token")
-      navigation.navigate(WelcomeScreen)
+      navigation.navigate('WelcomeScreen')
     }else{
     console.log('splash screen',token)
     
-    fetch(`http://10.0.2.2:${PORT}/`,{
+    
+    fetch(`http://10.0.2.2:5000/`,{
                   method: "get",
                   headers: {
                       Accept: "application/json, text/plain, */*",
@@ -38,6 +38,7 @@ useEffect(()=>{
               if(result.data.role == 'customer')
                     {
                       navigation.navigate(User_Home)
+                     
                     }
               else if(result.data.role == 'company')
                     {
@@ -67,12 +68,6 @@ useEffect(()=>{
     </ImageBackground>
     <Text style={styles.tagline}>Event Booking, Planning & Execution</Text>
 
-    
-    {/* <Button
-           onPress={()=>navigation.navigate(Auth_Stack)}
-           title="SignUp"
-           color={COLORS.primary}
-           />  */}
 
     
  </View>
@@ -87,13 +82,12 @@ const styles = StyleSheet.create({
     width:'100%',
     height:'100%',
     justifyContent:'center',
- 
-
     
    },
    tagline:{
     position: "absolute",
     paddingTop:"40%",
+    paddingLeft:"5%",
    margin:31,
     fontSize:20,
     fontWeight:"bold",
@@ -102,8 +96,8 @@ const styles = StyleSheet.create({
    },
  logo: {
   width: 220,
-  height: 120,
-  marginLeft:'22%',
+  height: 180,
+  marginLeft:'25%',
 },
 
  

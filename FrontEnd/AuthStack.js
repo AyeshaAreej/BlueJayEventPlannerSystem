@@ -14,10 +14,10 @@ const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName='SplashScreen'>
-     <Stack.Screen name='SplashScreen' component={SplashScreen}/>
-          <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}/>
-           <Stack.Screen name='LoginScreen' component={LoginScreen}/>
-           <Stack.Screen name='SignUp' component={SignUp}/>
+     <Stack.Screen name='SplashScreen' component={SplashScreen} options={{headerShown:false}}/>
+          <Stack.Screen name='WelcomeScreen' component={WelcomeScreen} options={{headerShown:false}}/>
+           <Stack.Screen name='LoginScreen' component={LoginScreen} options={{headerShown:false}}/>
+           <Stack.Screen name='SignUp' component={SignUp} options={{headerShown:false}}/>
           
          </Stack.Navigator> 
   )
