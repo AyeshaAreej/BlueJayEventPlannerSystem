@@ -5,6 +5,11 @@ import CompanyDetails from './screens/CompanyDetails';
 import BookingForm from './screens/BookingForm';
 import EditProfile from  './screens/EditProfile';
 import ChangePassword from './screens/ChangePassword';
+import MyAccount from './screens/help/MyAccount';
+import SafetyConcerns from './screens/help/SafetyConcerns';
+import PaymentsandRefunds from './screens/help/PaymentsandRefunds';
+import ForgotPassword from './screens/help/ForgotPassword';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserStack from './UserStack';
 
@@ -20,6 +25,10 @@ const UserHomeStack = () => {
            <Stack.Screen name='BookingForm' component={BookingForm}/>
            <Stack.Screen name="EditProfile" component={EditProfile}/>
            <Stack.Screen name="ChangePassword" component={ChangePassword} />
+           <Stack.Screen name="MyAccount" component={MyAccount} />
+           <Stack.Screen name="SafetyConcerns" component={SafetyConcerns} />
+           <Stack.Screen name="PaymentsandRefunds" component={PaymentsandRefunds} />
+           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
          </Stack.Navigator> 
   )
 }

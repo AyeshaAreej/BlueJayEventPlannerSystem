@@ -1,6 +1,6 @@
 import React from "react";
 import {useState}  from 'react'
-import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text, AsyncStorage } from "react-native";
+import { ImageBackground, Button, TextInput, TouchableOpacity, StyleSheet, View,Text, AsyncStorage } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
 import { RadioButton } from 'react-native-paper';
 import { StatusBar } from "react-native-web";
@@ -42,8 +42,8 @@ function LoginScreen({navigation}) {
                       {
                           
                           SecureStore.setItemAsync('token',result.data)
-                          // navigation.navigate(User_Home)
-                          navigation.navigate(Vendor_Home)
+                          navigation.navigate(User_Home)
+                          // navigation.navigate(Company_Home)
                       }
                       else{
                         console.log(result.error)
@@ -232,15 +232,15 @@ function LoginScreen({navigation}) {
      
 </View>     
     
-            {/*SignIn Button  */}
-          <View style={styles.center}>
-          <View style={styles.button}>
-           <Button  onPress={handleSubmit} 
-           title="SignIn"
-           color='purple'
-           /> 
-          </View>
-          </View>
+
+      {/* Sign in Button  */}
+            
+      <View style={styles.buttonContainer}> 
+            <TouchableOpacity onPress={handleSubmit}  style={styles.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white   }}> Save </Text>
+            </TouchableOpacity>
+            </View>
+           
        
         </>
       )}
@@ -332,6 +332,23 @@ leftTag:{
   marginLeft: 5,
   paddingBottom:5,
 }, 
+
+buttonContainer:{
+  justifyContent:'center',
+  alignItems:'center',
+
+},
+editButton:{
+justifyContent:'center',
+alignItems:'center',
+marginTop:5,
+width:180,
+borderColor :COLORS.primary,
+borderWidth:4,
+elevation:15,
+borderRadius:15,
+backgroundColor:COLORS.primary,
+},
 
 });
 

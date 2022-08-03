@@ -3,6 +3,7 @@ import React from 'react'
 import CompanyHome from '../CompanyHome';
 import CompanyVendorProfile from '../CompanyVendorProfile';
 import CompanyVendorOrders from '../CompanyVendorOrders';
+import ReceivedOrders from './ReceivedOrders';
 import Location from '../Location';
 import Message from '../Message';
 import HelpCentre from '../HelpCentre';
@@ -49,7 +50,19 @@ const CompanyStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='My Orders' component={CompanyVendorOrders} 
+          <Drawer.Screen name='Received Orders' component={CompanyVendorOrders} 
+              options={{
+                drawerIcon:({focused,size})=>(
+                  <FontAwesome
+                  name='shopping-cart'
+                  size={size}
+                  color={focused? 'white' : 'purple'}
+                  />
+                ),
+              }}
+          />
+
+            <Drawer.Screen name='My Orders' component={ReceivedOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome

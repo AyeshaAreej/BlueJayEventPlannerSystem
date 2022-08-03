@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect}  from 'react'
-import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import { ImageBackground, Button, TextInput,TouchableOpacity,StyleSheet, View, Image, Text } from "react-native";
 import { StatusBar } from "react-native-web";
 import colors from "../components/colors";
 import { FloatingLabelInput } from 'react-native-floating-label-input';
@@ -164,19 +164,13 @@ function SignUp({navigation}) {
             }
          
             {/*SignUn Button  */}
-          {/* <View style={styles.container}> */}
-          <View style={styles.button}>
+            <View style={styles.buttonContainer}> 
+            <TouchableOpacity onPress={handleSubmit}  style={styles.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white   }}> Sign Up </Text>
+            </TouchableOpacity>
+            </View>
 
-           <Button
-           //onPress={()=>navigation.navigate(User_Home)}
-           onPress={handleSubmit}
-           title="SignUp"
-           color={colors.primary}
-           /> 
-
-           
-          </View>
-          {/* </View> */}
+     
        
         </View>
       )}
@@ -187,7 +181,7 @@ function SignUp({navigation}) {
 
      <View>
 
-            {/* <Text style={{paddingLeft:100,fontWeight: "bold"}}>OR</Text> */}
+          
 
               {/* Social buttons */}
         
@@ -226,30 +220,14 @@ const styles = StyleSheet.create({
 },
    
    input:{
-   borderBottomColor :'#9370DB',
+   borderBottomColor :colors.primary,
    borderBottomWidth:4,
    width:200,
    fontSize:18,
    paddingBottom:13,
 
    },
-// button styling
-   container: {
-    flex: 1,
-    paddingTop:'15%',
-   
-   
-  
-  },
-   button:{
-    backgroundColor:colors.primary,
-    // width: '50%',
-     marginTop:30,
-    justifyContent:'center',
-    alignItems:'center',
 
-  
-   },
    sbcontainer: {
     flex: 1,
     flexDirection: 'row',
@@ -260,7 +238,23 @@ const styles = StyleSheet.create({
     marginBottom: 60
 
   },
-   
+  buttonContainer:{
+    justifyContent:'center',
+    alignItems:'center',
+
+},
+editButton:{
+  justifyContent:'center',
+  alignItems:'center',
+  marginTop:25,
+  width:180,
+  borderColor :colors.primary,
+  borderWidth:4,
+  elevation:15,
+  borderRadius:15,
+  backgroundColor:colors.primary,
+},
+
 
 });
 

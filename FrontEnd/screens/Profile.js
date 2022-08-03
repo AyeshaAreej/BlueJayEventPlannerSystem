@@ -66,7 +66,6 @@ const Profile = ({navigation}) => {
              name="username"
              placeholder='User Name'
              onChangeText={handleChange('username')}
-            
              onBlur={()=>setFieldTouched('username')}
             value={values.username}
            

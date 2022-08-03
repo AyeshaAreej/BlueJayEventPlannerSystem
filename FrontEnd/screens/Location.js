@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView,Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView, TouchableOpacity,Button } from 'react-native';
 import { Formik } from 'formik';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../components/colors';
 
 export default function Location() {
  const [city,setCity]=useState('')
- const [edit,setEdit]=useState(false)
+ 
 
  
   return (
     <ScrollView  style={{flex:1, backgroundColor:'#fff', }} contentContainerStyle={{justifyContent:'center',
     alignItems:'center'}} >
+
+
    
 
       {/* Form Inputs View */}
-   <View style={{marginTop:50}}>
+   <View style={{marginTop:20}}>
           <Formik
       initialValues={{city:'',}}
       onSubmit={
@@ -34,11 +37,16 @@ export default function Location() {
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View >
+        <View style={styles.inputContainer} >
+        <Text style={{ fontSize:20, color:colors.dark}}>
+        Changing your Location? Type the name of city here...
+        </Text>
+        </View>
+       
       
             <View style={styles.inputContainer} >
           <MaterialCommunityIcons name="city"  size={38} style={styles.icon}/>
             <TextInput
-             editable={edit}
              style={styles.input}
              name="city"
              placeholder="Enter City"
@@ -56,15 +64,12 @@ export default function Location() {
                 
             {/*Save Button  */}
         
-          <View style={styles.button}>
-           <Button  onPress={()=>{
-              handleSubmit
-              setEdit(true)
-              }}
-           title="Edit"
-           color={colors.primary}
-           /> 
-          </View>
+            <View style={styles.buttonContainer}> 
+            <TouchableOpacity  onPress={()=>{ handleSubmit }} style={styles.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}> Save </Text>
+            </TouchableOpacity>
+            </View>
+
        
        </View>
     
@@ -100,7 +105,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     width: '45%',
     height: 35,
-    // margin:60,
    marginTop:20,
    marginBottom:20,
     marginLeft:'30%',
@@ -113,12 +117,25 @@ const styles = StyleSheet.create({
    
     },
     inputContainer:{
-     flexDirection:'row',
-     color:colors.white, 
-     // borderWidth:5,
-     // borderRadius:20,
-     // borderColor:'purple'
-    },
+      flexDirection:'row',
+      color:colors.white, 
+     },
+    buttonContainer:{
+      justifyContent:'center',
+      alignItems:'center',
+  
+  },
+  editButton:{
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:70,
+    width:280,
+    borderColor :colors.primary,
+    borderWidth:4,
+    elevation:15,
+    borderRadius:15,
+    backgroundColor:colors.primary,
+  },
  
    
 });

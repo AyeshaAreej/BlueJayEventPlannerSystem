@@ -13,6 +13,12 @@ const Admin_Home='adminhome';
 const Admin_Company='admincompany';
 const Vendor_Home='vendorhome';
 const Vendor_Order='vendororder';
-export {Auth_Stack, User_Home,Company_Booking,EditProfile,Change_Pass, Change_CPass , Change_VPass ,EditCompanyProfile,EditVendorProfile,Company_Home,Vendor_Booking,Admin_Home,Admin_Company,Vendor_Home,Vendor_Order};
+// Help Screens
+const MyAccount='updatemyaccount';
+const SecurityConcerns='securityconcerns';
+const ForgotPassword="faqs";
+const Payment_Refunds="pasymentrefunds";
+
+export {MyAccount,SecurityConcerns,ForgotPassword, Payment_Refunds,Auth_Stack, User_Home,Company_Booking,EditProfile,Change_Pass, Change_CPass , Change_VPass ,EditCompanyProfile,EditVendorProfile,Company_Home,Vendor_Booking,Admin_Home,Admin_Company,Vendor_Home,Vendor_Order};
 
 

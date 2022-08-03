@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView,Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView,Button,TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
@@ -48,32 +48,34 @@ export default function ChangePassword() {
         </View>
       
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="playlist-edit"  size={38} style={styles.icon}/> 
+            <MaterialCommunityIcons name="onepassword"  size={38} style={styles.icon}/> 
             
             <TextInput
              style={styles.input}
              name="oldpassword"
-             placeholder="Enter Old Password"
+             placeholder='Enter Current Password'
              onChangeText={handleChange('oldpassword')}
-             onBlur={()=>{
-              setFieldTouched('oldpassword')
-              }}
+             onBlur={()=>setFieldTouched('oldpassword')}
              value={values.oldpassword}
-           /></View>
+             secureTextEntry
+           
+           />
+           </View>
            {touched.oldpassword && errors.oldpassword &&
-              <Text style={{fontSize: 18,marginLeft:70, color: 'red' }}>{errors.oldpassword}</Text>
+              <Text style={{ marginLeft:70,fontSize: 18, color: 'red' }}>{errors.oldpassword}</Text>
             }
 
       
             <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="playlist-edit"  size={38} style={styles.icon}/> 
+            <MaterialCommunityIcons name="onepassword"  size={38} style={styles.icon}/> 
             <TextInput
              style={styles.input}
              name="newpassword"
-             placeholder='Enter Current Password'
+             placeholder='Enter New Password'
              onChangeText={handleChange('newpassword')}
              onBlur={()=>setFieldTouched('newpassword')}
              value={values.newpassword}
+             secureTextEntry
            
            />
             </View>
@@ -84,17 +86,15 @@ export default function ChangePassword() {
        
                      
                 
-            {/*Save Button  */}
+            {/* Button  */}
+            
+           <View style={styles.buttonContainer}> 
+            <TouchableOpacity onPress={()=>{  handleSubmit}} style={styles.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}> Save </Text>
+            </TouchableOpacity>
+            </View>
         
-          <View style={styles.button}>
-           <Button  onPress={()=>{
-              handleSubmit
-              
-              }}
-           title="Edit"
-           color={colors.primary}
-           /> 
-          </View>
+       
        
        </View>
     
@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     width: '45%',
     height: 35,
-    // margin:60,
    marginTop:20,
    marginBottom:20,
     marginLeft:'30%',
@@ -144,10 +143,23 @@ const styles = StyleSheet.create({
     inputContainer:{
      flexDirection:'row',
      color:colors.white, 
-     // borderWidth:5,
-     // borderRadius:20,
-     // borderColor:'purple'
     },
+    buttonContainer:{
+      justifyContent:'center',
+      alignItems:'center',
+  
+  },
+  editButton:{
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:70,
+    width:280,
+    borderColor :colors.primary,
+    borderWidth:4,
+    elevation:15,
+    borderRadius:15,
+    backgroundColor:colors.primary,
+  },
  
    
 });

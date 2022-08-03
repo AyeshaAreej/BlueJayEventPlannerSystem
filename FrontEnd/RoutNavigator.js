@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'; 
-import { Auth_Stack, Company_Booking,Admin_Company, User_Home,EditProfile,EditCompanyProfile,EditVendorProfile,Change_Pass, Change_CPass,Change_VPass, Company_Home, Vendor_Booking,Admin_Home, Vendor_Home } from './constants';
+import { MyAccount ,SecurityConcerns,ForgotPassword,Payment_Refunds, Auth_Stack, Company_Booking,Admin_Company, User_Home,EditProfile,EditCompanyProfile,EditVendorProfile,Change_Pass, Change_CPass,Change_VPass, Company_Home, Vendor_Booking,Admin_Home, Vendor_Home } from './constants';
 import AuthStack from './AuthStack';
 import UserHomeStack from './UserHomeStack';
 import CompanyHomeStack from './CompanyHomeStack';
@@ -90,6 +90,28 @@ function RoutNavigator(){
                 component={VendorHomeStack}
                 options={{headerShown:false}}
              />
+             {/* Help Screens */}
+              <MainStack.Screen
+                name={MyAccount}
+                component={UserHomeStack}
+                options={{headerShown:false}}
+             />
+               <MainStack.Screen
+                name={SecurityConcerns}
+                component={UserHomeStack}
+                options={{headerShown:false}}
+             />
+               <MainStack.Screen
+                name={Payment_Refunds}
+                component={UserHomeStack}
+                options={{headerShown:false}}
+             />
+               <MainStack.Screen
+                name={ForgotPassword}
+                component={UserHomeStack}
+                options={{headerShown:false}}
+             />
+
 
 
 
