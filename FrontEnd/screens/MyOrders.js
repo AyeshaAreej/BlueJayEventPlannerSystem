@@ -1,11 +1,9 @@
-
-// Navigation remaining
-
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
+import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -17,12 +15,17 @@ const MyOrders=({navigation})=>{
   
 // Card
 
-const Card=({hotel,index,navigation})=>{
+const Card=({hotel,index})=>{
 
+  const navigation = useNavigation();
   
+  function handleClick(){
+    // console.log("Card clicked")
+    navigation.navigate('OrderDetails')
+  }
 return(
    
-    <View style={{...style.card}}>
+    <TouchableOpacity style={{...style.card}} onPress={handleClick}>
       
           <View style={style.priceTag}>
                   <View style={{color:COLORS.white, }}>
@@ -52,7 +55,7 @@ return(
                    
           </View>      
         
-    </View>
+    </TouchableOpacity>
     
     
     
@@ -64,7 +67,7 @@ return(
 
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
-      
+            <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
         <ScrollView showsVerticalScrollIndicator={false}>
     
          <View>

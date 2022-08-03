@@ -50,7 +50,7 @@ const CompanyStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='Received Orders' component={CompanyVendorOrders} 
+          <Drawer.Screen name='My Orders' component={CompanyVendorOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome
@@ -62,7 +62,7 @@ const CompanyStack = () => {
               }}
           />
 
-            <Drawer.Screen name='My Orders' component={ReceivedOrders} 
+            <Drawer.Screen name='Received Orders' component={ReceivedOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome

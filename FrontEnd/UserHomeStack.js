@@ -9,6 +9,7 @@ import MyAccount from './screens/help/MyAccount';
 import SafetyConcerns from './screens/help/SafetyConcerns';
 import PaymentsandRefunds from './screens/help/PaymentsandRefunds';
 import ForgotPassword from './screens/help/ForgotPassword';
+import OrderDetails from './screens/OrderDetails';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserStack from './UserStack';
@@ -29,6 +30,7 @@ const UserHomeStack = () => {
            <Stack.Screen name="SafetyConcerns" component={SafetyConcerns} />
            <Stack.Screen name="PaymentsandRefunds" component={PaymentsandRefunds} />
            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+           <Stack.Screen name="OrderDetails" component={OrderDetails} />
          </Stack.Navigator> 
   )
 }

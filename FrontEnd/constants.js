@@ -8,17 +8,45 @@ const Change_CPass="changecompanypass";
 const EditCompanyProfile="editcvprofile";
 const EditVendorProfile="editvendorprofile";
 const Company_Home='companyhome';
+const VCompany_Home='vcompanyhome';
 const Vendor_Booking='vendorbookingform';
 const Admin_Home='adminhome';
 const Admin_Company='admincompany';
 const Vendor_Home='vendorhome';
 const Vendor_Order='vendororder';
-// Help Screens
+// Vendor user order details 
+const UserOrderDetails="UserOrderDetails";
+const VendorOrderDetails="VendorOrderDetails";
+const CompanyOrderDetails="CompanyOrderDetails";
+const CompanyRcvedOdrDetls="CompanyReceivedOrderDetails";
+// Help Screens for user
 const MyAccount='updatemyaccount';
 const SecurityConcerns='securityconcerns';
 const ForgotPassword="faqs";
 const Payment_Refunds="pasymentrefunds";
 
-export {MyAccount,SecurityConcerns,ForgotPassword, Payment_Refunds,Auth_Stack, User_Home,Company_Booking,EditProfile,Change_Pass, Change_CPass , Change_VPass ,EditCompanyProfile,EditVendorProfile,Company_Home,Vendor_Booking,Admin_Home,Admin_Company,Vendor_Home,Vendor_Order};
+// Help Screens for company
+const CMyAccount='cupdatemyaccount';
+const CSecurityConcerns='csecurityconcerns';
+const CForgotPassword="cfaqs";
+const CPayment_Refunds="cpasymentrefunds";
+
+// Help Screens for vendor
+const VMyAccount='vupdatemyaccount';
+const VSecurityConcerns='vsecurityconcerns';
+const VForgotPassword="vfaqs";
+const VPayment_Refunds="vpasymentrefunds";
+
+
+
+export {UserOrderDetails,VendorOrderDetails,CompanyOrderDetails,CompanyRcvedOdrDetls,
+       MyAccount,SecurityConcerns,ForgotPassword, Payment_Refunds,
+       CMyAccount,CSecurityConcerns,CForgotPassword,CPayment_Refunds,
+       VMyAccount,VSecurityConcerns,VForgotPassword,VPayment_Refunds,
+       Auth_Stack, User_Home,EditProfile, 
+       Company_Home,Company_Booking, EditCompanyProfile,VCompany_Home,
+       Change_Pass, Change_CPass , Change_VPass ,
+       Vendor_Home,Vendor_Order,EditVendorProfile,Vendor_Booking,
+       Admin_Home,Admin_Company,};
 
 
