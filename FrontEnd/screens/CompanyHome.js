@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import SelectDropdown from 'react-native-select-dropdown'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import hotels from '../components/companies';
@@ -16,6 +17,9 @@ const CompanyHome=()=>{
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
+
+    //dropdown
+    const countries = ["Islamabad", "Karachi", "Sukkur", "Lahore"]
   
      //Date
    const [date, setDate] = useState(new Date());
@@ -131,9 +135,34 @@ return(
 
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
+        <SafeAreaView style={{flex:1,backgroundColor:COLORS.white, }}>
+        <View style={style.dropdownContainer}>
+      
+         <SelectDropdown
+	          data={countries}
+            defaultButtonText="Select a city"
+            buttonStyle={style.dropdown}
+            buttonTextStyle={{color:COLORS.white}}
+	          onSelect={(selectedItem, index) => {
+		        console.log(selectedItem, index)
+	          }}
+            renderDropdownIcon={()=>{
+             return  <MaterialCommunityIcons name="arrow-down"  size={38} color={COLORS.white} onPress={showPicker}/>        
+            }}
+	          buttonTextAfterSelection={(selectedItem, index) => {
+		        return selectedItem	}}
+	          rowTextForSelection={(item, index) => {
+		        return item}}
+           />
+           
+           </View>
         <View style={style.header}>
+         {/* Dropdown */}
+        
             <View style={{paddingBottom:15}}>
+
+           
+
              <Text style={{fontSize:25, fontWeight:'bold'}}>
                Search For Vendors </Text> 
                <View style={{flexDirection:'row'}}>
@@ -266,7 +295,22 @@ const style = StyleSheet.create({
       width: cardWidth,
       borderRadius: 15,
     },
-  
+  dropdownContainer:{
+  justifyContent:'center',
+  alignItems:"center", 
+  },
+
+  dropdown:{
+    justifyContent:'center',
+      alignItems:'center',
+      marginTop:5,
+      width:'85%',
+      borderColor :COLORS.primary,
+      borderWidth:4,
+      elevation:15,
+      borderRadius:10,
+      backgroundColor:COLORS.primary,  
+  },
   
    
   });

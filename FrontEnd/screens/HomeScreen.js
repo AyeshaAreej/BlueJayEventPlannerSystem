@@ -3,11 +3,10 @@ import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   I
 import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import COLORS from '../components/colors';
-import hotels from '../components/companies';
-import { useNavigation } from '@react-navigation/native';
+import SelectDropdown from 'react-native-select-dropdown'
 import colors from '../components/colors';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { useNavigation } from '@react-navigation/native';
+
 import * as SecureStore from 'expo-secure-store';
 // import {PORT} from"@env"
 
@@ -25,6 +24,9 @@ const HomeScreen=()=>{
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
+
+   //dropdown
+   const countries = ["Islamabad", "Karachi", "Sukkur", "Lahore"]
   //Date
   const [date, setDate] = useState(new Date());
   const [isPickerShow, setIsPickerShow] = useState(false);
@@ -96,8 +98,8 @@ const HomeScreen=()=>{
                     ...style.categoryListText,
                     color:
                       selectedCategoryIndex == index
-                        ? COLORS.primary
-                        : COLORS.grey,
+                        ? colors.primary
+                        : colors.grey,
                   }}>
                   {item}
                 </Text>
@@ -106,7 +108,7 @@ const HomeScreen=()=>{
                     style={{
                       height: 3,
                       width: 30,
-                      backgroundColor: COLORS.primary,
+                      backgroundColor: colors.primary,
                       marginTop: 2,
                     }}
                   />
@@ -134,7 +136,7 @@ return(
     <View style={{...style.card}}>
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
-    <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
+    <Text style={{color:colors.white, fontSize:15,fontWeight:'bold'}}>
         ${hotel.price_range}
     </Text>
      </View>
@@ -144,17 +146,17 @@ return(
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
                <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.company_name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.address}</Text> 
+                <Text style={{color:colors.grey,fontSize:12}}>{hotel.address}</Text> 
             </View>
              <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
           <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.gray}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.gray}/>
               </View>
              
           </View>
@@ -181,7 +183,7 @@ return(
     <View style={{...style.bottomCard}}>
       <View style={{...style.cardOverLay, opacity:0}}/>
     <View style={style.priceTag}>
-    <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
+    <Text style={{color:colors.white, fontSize:15,fontWeight:'bold'}}>
         ${hotel.price_range}
     </Text>
      </View>
@@ -190,17 +192,17 @@ return(
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
                <Text style={{fontWeight:"bold",fontSize:17}}>{hotel.company_name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{hotel.address}</Text> 
+                <Text style={{color:colors.grey,fontSize:12}}>{hotel.address}</Text> 
             </View>
              <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
           <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={COLORS.gray}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
+                 <MaterialCommunityIcons name="star" size={15} color={colors.gray}/>
               </View>
              
 
@@ -213,21 +215,43 @@ return(
 };
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
+        <SafeAreaView style={{flex:1,backgroundColor:colors.white}}>
+
+        {/*Dropdown  */}
+      <View style={style.dropdownContainer}>
+      <SelectDropdown
+         data={countries}
+         defaultButtonText="Select a city"
+         buttonStyle={style.dropdown}
+         buttonTextStyle={{color:colors.white}}
+         onSelect={(selectedItem, index) => {
+         console.log(selectedItem, index)
+         }}
+         renderDropdownIcon={()=>{
+          return  <MaterialCommunityIcons name="arrow-down"  size={38} color={colors.white} onPress={showPicker}/>        
+         }}
+         buttonTextAfterSelection={(selectedItem, index) => {
+         return selectedItem	}}
+         rowTextForSelection={(item, index) => {
+         return item}}
+        />
+        
+        </View>
+
         <View style={style.header}>
             <View style={{paddingBottom:15}}>
              <Text style={{fontSize:25, fontWeight:'bold'}}>
                Select a Company </Text> 
                <View style={{flexDirection:'row'}}>
                    <Text style={{fontSize:25, fontWeight:'bold'}} >in  </Text>
-                   <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
+                   <Text style={{fontSize:25, fontWeight:'bold', color: colors.primary}} >your City </Text>
                </View>
             </View>
          
          {/* The button that used to trigger the date picker */}
       {/* {!isPickerShow && ( */}
         <View style={style.btnContainer}>
-        <MaterialCommunityIcons name="calendar-month"  size={38} color={COLORS.primary} onPress={showPicker}/>
+        <MaterialCommunityIcons name="calendar-month"  size={38} color={colors.primary} onPress={showPicker}/>
         </View>
       {/* )} */}
 
@@ -272,7 +296,7 @@ return(
            {/* Bottom View */}
 
            <View style={{flexDirection:"row",justifyContent:"space-between", }}>
-            <Text style={{fontWeight:"bold", color:COLORS.grey}}>Available Companies</Text>
+            <Text style={{fontWeight:"bold", color:colors.grey}}>Available Companies</Text>
           
            </View>
            <FlatList 
@@ -296,7 +320,7 @@ const style = StyleSheet.create({
     },
     searchInputContainer: {
       height: 50,
-      backgroundColor: COLORS.light,
+      backgroundColor: colors.light,
       margin:20,
       borderTopLeftRadius: 30,
       borderBottomLeftRadius: 30,
@@ -320,7 +344,7 @@ const style = StyleSheet.create({
       elevation: 15,
       marginRight: 20,
       borderRadius: 15,
-      backgroundColor: COLORS.white,
+      backgroundColor: colors.white,
       flexDirection:'column',
     },
     cardImage: {
@@ -332,7 +356,7 @@ const style = StyleSheet.create({
     priceTag: {
       height: 60,
       width: 80,
-      backgroundColor: COLORS.primary,
+      backgroundColor: colors.primary,
       position: 'absolute',
       zIndex: 1,
       right: 0,
@@ -344,7 +368,7 @@ const style = StyleSheet.create({
     cardDetails: {
       height: 100,
       borderRadius: 15,
-      backgroundColor: COLORS.white,
+      backgroundColor: colors.white,
       position: 'absolute',
       bottom: 0,
       padding: 20,
@@ -352,7 +376,7 @@ const style = StyleSheet.create({
     },
     cardOverLay: {
       height: 250,
-      backgroundColor: COLORS.white,
+      backgroundColor: colors.white,
       position: 'absolute',
       zIndex: 100,
       width: tcardWidth,
@@ -364,7 +388,7 @@ const style = StyleSheet.create({
       elevation: 15,
       marginBottom: 20,
       borderRadius: 15,
-      backgroundColor: COLORS.white,
+      backgroundColor: colors.white,
       flexDirection:'column',
     },
     
@@ -380,6 +404,25 @@ const style = StyleSheet.create({
       paddingTop: 12,
      
     },
+
+    dropdownContainer:{
+      justifyContent:'center',
+      alignItems:"center", 
+      },
+    
+      dropdown:{
+        justifyContent:'center',
+          alignItems:'center',
+          marginTop:5,
+          width:'85%',
+          borderColor :colors.primary,
+          borderWidth:4,
+          elevation:15,
+          borderRadius:10,
+          backgroundColor:colors.primary,  
+      },
+      
+       
   });
 
 export default HomeScreen;

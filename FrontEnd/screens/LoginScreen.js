@@ -42,8 +42,8 @@ function LoginScreen({navigation}) {
                       {
                           
                           SecureStore.setItemAsync('token',result.data)
-                          // navigation.navigate(User_Home)
-                          navigation.navigate(Company_Home)
+                          navigation.navigate(User_Home)
+                          // navigation.navigate(Company_Home)
                       }
                       else{
                         console.log(result.error)
