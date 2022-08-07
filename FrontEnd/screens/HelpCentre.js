@@ -71,18 +71,11 @@ const HelpCentre= ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-  
-
- 
-
- 
  icon:{
  color:colors.primary,
  margin:20,
 
  },
-
-
 options: {
   flexDirection: 'row',
   alignItems: 'center',
