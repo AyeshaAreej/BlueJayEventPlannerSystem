@@ -28,7 +28,7 @@ app.get('/',middleware.ValidateToken,async (req,res)=>{
     
     //role add token and if else
     const role = req.user.role
-    //console.log(role)
+    console.log(role)
     
     switch(role){
 

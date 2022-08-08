@@ -10,7 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown'
 
 import colors from '../components/colors';
-import { useNavigation } from '@react-navigation/native';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -37,6 +36,9 @@ const HomeScreen=({route})=>{
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
     const [companies, setCompanies] = React.useState([]);
+    const [myCity, setMyCity] = React.useState('');
+    
+    const cities = ["islamabad", "karachi", "sukkur", "lahore","quetta"]
     //Date
     const [date, setDate] = useState(new Date());
     const [myDate, setMyDate] = useState(" ");
@@ -108,7 +110,7 @@ const HomeScreen=({route})=>{
               setMyDate(myDate=>{
                 myDate=dateString
                 //console.log('inside',myDate)
-                next(myDate)
+                next(myDate,myCity)
                 return myDate
               })
             
@@ -116,13 +118,13 @@ const HomeScreen=({route})=>{
 
 
 
-   const next = async (myDate)=>{
+   const next = async (myDate,myCity)=>{
 
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('search by date',token)
      
-      const value = {date: myDate}
+      const value = {date: myDate, city: myCity}
       fetch(`http://10.0.2.2:5000/users/searchByDate`,{
                     method: "post",
                     body: JSON.stringify(value),
@@ -133,16 +135,18 @@ const HomeScreen=({route})=>{
                     }
                   
               }).then(res=>res.json()).then(async(result)=>{
-                //console.log(result)
+                // console.log(result)
 
                 if( result.status == 'ok'){
 
                         if(result.data == ''){
                             console.log('No companies found')
                             alert('No companies found')
+                            setCompanies(result.data)
+                            setMyDate(myDate)
                         }else{
                           await setCompanies(result.data)
-                          //console.log("result",companies)
+                          console.log(companies)
                         }
 
                 }else{
@@ -161,7 +165,7 @@ const HomeScreen=({route})=>{
   const fetchCompany=(item)=>{
     // console.log(item)
                 if(item=='All'){
-                  next(myDate)
+                  next(myDate,myCity)
                 }
                 else if(item=='Popular'){
                   
@@ -330,6 +334,7 @@ const HomeScreen=({route})=>{
 // Card
 
 const Card=({company,index})=>{
+  //console.log("result",company)
 
   const navigation = useNavigation();
 
@@ -384,15 +389,22 @@ return(
         {/*Dropdown  */}
       <View style={style.dropdownContainer}>
       <SelectDropdown
-         data={countries}
+         data={cities}
          defaultButtonText="Select a city"
          buttonStyle={style.dropdown}
          buttonTextStyle={{color:colors.white}}
          onSelect={(selectedItem, index) => {
-         console.log(selectedItem, index)
-         }}
+                        console.log(selectedItem, index)
+                        // setMyCity(selectedItem)
+                        // next(myDate)
+                        setMyCity(myCity=>{
+                          myCity=selectedItem
+                          next(myDate,myCity)
+                          return myCity
+                        })
+                    }}
          renderDropdownIcon={()=>{
-          return  <MaterialCommunityIcons name="arrow-down"  size={38} color={colors.white} onPress={showPicker}/>        
+          return  <MaterialCommunityIcons name="arrow-down"  size={38} color={colors.white} />        
          }}
          buttonTextAfterSelection={(selectedItem, index) => {
          return selectedItem	}}
@@ -403,22 +415,6 @@ return(
         </View>
 
         <View style={style.header}>
-
-            <View style={{paddingBottom:15}}>
-             <Text style={{fontSize:25, fontWeight:'bold'}}>
-               Select a Company </Text> 
-               <View style={{flexDirection:'row'}}>
-                   <Text style={{fontSize:25, fontWeight:'bold'}} >in  </Text>
-                   <Text style={{fontSize:25, fontWeight:'bold', color: colors.primary}} >your City </Text>
-               </View>
-            </View>
-         
-         {/* The button that used to trigger the date picker */}
-      {/* {!isPickerShow && ( */}
-        <View style={style.btnContainer}>
-        <MaterialCommunityIcons name="calendar-month"  size={38} color={colors.primary} onPress={showPicker}/>
-        </View>
-      {/* )} */}
 
                     <View style={{paddingBottom:15}}>
 
@@ -468,31 +464,6 @@ return(
 
         <ScrollView showsVerticalScrollIndicator={false}>
 
-         <View style={style.searchInputContainer}>
-        
-         <Searchbar 
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-         </View>
-         
-         <CategoryList/>
-         <View>
-         <Animated.FlatList
-          data={companies}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingLeft: 20,
-            marginTop: 20,
-            paddingBottom: 20,
-            
-          }}
-          renderItem={({item}) => <Card hotel={item} />}
-        />
-        </View>
-
                     <View style={style.searchInputContainer}>
                             <Searchbar 
                                placeholder="Search"
@@ -503,8 +474,9 @@ return(
                             />
                     </View>
          
-                <CategoryList/>
-              
+         <CategoryList/>
+         
+
                 <FlatList 
                   data={companies}
                   showsVerticalScrollIndicator={true} 
@@ -529,18 +501,13 @@ const style = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingHorizontal: 18,
-      paddingTop:24,
+      paddingTop:5,
     },
     searchInputContainer: {
       height: 30,
       backgroundColor: COLORS.light,
       marginTop:5,
       marginLeft:20,
-      // height: 50,
-      // backgroundColor: colors.light,
-      // margin:20,
-      // borderTopLeftRadius: 30,
-      // borderBottomLeftRadius: 30,
       flexDirection: 'row',
       alignItems: 'center',
       width:'90%',

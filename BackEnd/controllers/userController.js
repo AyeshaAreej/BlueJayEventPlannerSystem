@@ -3,7 +3,7 @@ const Company = require('../models/companySchema')
 const Order = require('../models/orderSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk'
+const JWT_SECRET = '494898./yu!$^63df!vcxfv3278dhgdjsbv3i823'
 
 
 //SignUp
@@ -59,7 +59,7 @@ const logIn = async(req,res)=>{
             id : user._id, 
             role: user.role
         },
-        JWT_SECRET
+        process.env.SECRET
         )
         return res.json({status:"ok", data : token })
     }
@@ -116,12 +116,20 @@ const searchCompany = async (req,res)=>{
 // search by date
 const searchByDate = async (req,res)=>{
 
+    var Mycity
     const user = await User.findById({_id: req.user.id})
-    console.log(user.city)
-    console.log(req.body)
-    Company.find({city: user.city}, (err,companies)=>{
+
+    if(req.body.city === '' || req.body.city === undefined){
+        Mycity=user.city
+    }else{
+        Mycity=req.body.city
+    }
+
+    console.log(Mycity)
+
+    Company.find({city: Mycity}, (err,companies)=>{
         if(companies){
-            
+
             const result = []
                      for(i of companies){ //getting whole objects
                                     var count = 0

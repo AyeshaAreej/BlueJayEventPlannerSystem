@@ -2,7 +2,7 @@ const Company = require('../models/companySchema')
 const Order = require('../models/orderSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk'
+const JWT_SECRET = '494898./yu!$^63df!vcxfv3278dhgdjsbv3i823'
 
 //sign up
 const SignUp = async (req,res)=>{

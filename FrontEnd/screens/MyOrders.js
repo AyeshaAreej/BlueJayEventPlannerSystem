@@ -10,7 +10,7 @@ import * as SecureStore from 'expo-secure-store';
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;
 
-const MyOrders=({navigation})=>{
+const MyOrders=()=>{
  
 
   const [myOrders, setMyOrders] = React.useState([]);
@@ -54,7 +54,7 @@ const MyOrders=({navigation})=>{
   
 // Card
 
-const Card=({order,navigation})=>{
+const Card=({order})=>{
 
   const navigation = useNavigation();
   

@@ -45,7 +45,6 @@ export {UserOrderDetails,VendorOrderDetails,CompanyOrderDetails,CompanyRcvedOdrD
        Auth_Stack, User_Home,EditProfile, 
        Company_Home,Company_Booking, EditCompanyProfile,VCompany_Home,
        Change_Pass, Change_CPass , Change_VPass ,
-       Vendor_Home,Vendor_Order,EditVendorProfile,Vendor_Booking,
-       Admin_Home,Admin_Company};
+       Vendor_Home,Vendor_Order,EditVendorProfile,Vendor_Booking};
 
 
