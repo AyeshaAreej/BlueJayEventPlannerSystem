@@ -37,6 +37,7 @@ const HomeScreen=({route})=>{
     const [searchQuery, setSearchQuery] = React.useState('');
     const [companies, setCompanies] = React.useState([]);
     const [myCity, setMyCity] = React.useState('');
+    const [catName, setCatName] = React.useState('');
     
     const cities = ["islamabad", "karachi", "sukkur", "lahore","quetta"]
     //Date
@@ -61,8 +62,9 @@ const HomeScreen=({route})=>{
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('search by name',token)
-     
-      const value = {date: myDate, search_text: searchQuery}
+
+      const value = {date: myDate, search_text: searchQuery, city: myCity}
+
       fetch(`http://10.0.2.2:5000/users/searchCompany`,{
                     method: "post",
                     body: JSON.stringify(value),
@@ -77,14 +79,15 @@ const HomeScreen=({route})=>{
 
                 if( result.status == 'ok'){
 
-                        if(result.data == ''){
+                       if(result.data == ''){
                             console.log('No companies found')
                             alert('No companies found')
+                            setCompanies(result.data)
+                            setMyDate(myDate)
                         }else{
                           await setCompanies(result.data)
-                          //console.log("result",companies)
+                          console.log(companies)
                         }
-
                 }else{
                   console.log(result.status)
                 }
@@ -109,7 +112,6 @@ const HomeScreen=({route})=>{
             
               setMyDate(myDate=>{
                 myDate=dateString
-                //console.log('inside',myDate)
                 next(myDate,myCity)
                 return myDate
               })
@@ -146,7 +148,7 @@ const HomeScreen=({route})=>{
                             setMyDate(myDate)
                         }else{
                           await setCompanies(result.data)
-                          console.log(companies)
+                         // console.log(companies)
                         }
 
                 }else{
@@ -162,18 +164,19 @@ const HomeScreen=({route})=>{
   };
 
 
-  const fetchCompany=(item)=>{
-    // console.log(item)
-                if(item=='All'){
+  const fetchCompany=(myDate,myCity,catName)=>{
+     console.log(myDate,myCity,catName)
+                if(catName=='All' || catName==''){
                   next(myDate,myCity)
                 }
-                else if(item=='Popular'){
+                else if(catName=='Popular'){
                   
                   SecureStore.getItemAsync('token').then(token=>{
 
                     console.log('poppular',token)
                    
-                    const value = {date: myDate}
+                    const value = {date: myDate, city: myCity}
+
                     fetch(`http://10.0.2.2:5000/users/topRated`,{
                                   method: "post",
                                   body: JSON.stringify(value),
@@ -184,17 +187,19 @@ const HomeScreen=({route})=>{
                                   }
                                 
                             }).then(res=>res.json()).then(async(result)=>{
-                              console.log(result)
+                             // console.log(result)
               
                               if( result.status == 'ok'){
               
-                                      if(result.data == ''){
-                                          console.log('No companies found')
-                                          alert('No companies found')
-                                      }else{
-                                        await setCompanies(result.data)
-                                        //console.log("result",companies)
-                                      }
+                                if(result.data == ''){
+                                  console.log('No companies found')
+                                  
+                                  setCompanies(result.data)
+                                  setMyDate(myDate)
+                              }else{
+                                await setCompanies(result.data)
+                                //console.log(companies)
+                              }
               
                               }else{
                                 console.log(result.status)
@@ -205,13 +210,14 @@ const HomeScreen=({route})=>{
                   })    
               
               
-            }else if(item=='Low Price'){
+            }else if(catName=='Low Price'){
                   
               SecureStore.getItemAsync('token').then(token=>{
 
                 console.log('Low Price',token)
                
-                const value = {date: myDate}
+                
+                const value = {date: myDate, city: myCity}
                 fetch(`http://10.0.2.2:5000/users/lowPrice`,{
                               method: "post",
                               body: JSON.stringify(value),
@@ -226,13 +232,15 @@ const HomeScreen=({route})=>{
           
                           if( result.status == 'ok'){
           
-                                  if(result.data == ''){
-                                      console.log('No companies found')
-                                      alert('No companies found')
-                                  }else{
-                                    await setCompanies(result.data)
-                                    //console.log("result",companies)
-                                  }
+                            if(result.data == ''){
+                              console.log('No companies found')
+                              
+                              setCompanies(result.data)
+                              setMyDate(myDate)
+                          }else{
+                            await setCompanies(result.data)
+                            //console.log(companies)
+                          }
           
                           }else{
                             console.log(result.status)
@@ -243,13 +251,13 @@ const HomeScreen=({route})=>{
               })    
           
 
-        }else if(item=='High Price'){
+        }else if(catName=='High Price'){
                   
           SecureStore.getItemAsync('token').then(token=>{
 
             console.log('High Price',token)
            
-            const value = {date: myDate}
+            const value = {date: myDate, city: myCity}
             fetch(`http://10.0.2.2:5000/users/highPrice`,{
                           method: "post",
                           body: JSON.stringify(value),
@@ -260,17 +268,19 @@ const HomeScreen=({route})=>{
                           }
                         
                     }).then(res=>res.json()).then(async(result)=>{
-                      console.log(result)
+                     //console.log(result)
       
                       if( result.status == 'ok'){
       
-                              if(result.data == ''){
-                                  console.log('No companies found')
-                                  alert('No companies found')
-                              }else{
-                                await setCompanies(result.data)
-                                //console.log("result",companies)
-                              }
+                             if(result.data == ''){
+                            console.log('No companies found')
+                            
+                            setCompanies(result.data)
+                            setMyDate(myDate)
+                        }else{
+                          await setCompanies(result.data)
+                          //console.log(companies)
+                        }
       
                       }else{
                         console.log(result.status)
@@ -281,7 +291,7 @@ const HomeScreen=({route})=>{
           })  
           
           
-        }else if(item=='Favorites'){
+        }else if(catName=='Favorites'){
                   
             //remaining
         }
@@ -300,7 +310,14 @@ const HomeScreen=({route})=>{
               activeOpacity={0.8}
               onPress={() => {
                 setSelectedCategoryIndex(index)
-                fetchCompany(item)
+                
+                setCatName(catName=>{
+                  catName=item
+                  console.log("purana",catName)
+                  fetchCompany(myDate,myCity,catName)
+                  return catName
+                })
+                
               }}>
               <View>
                 <Text
@@ -399,7 +416,9 @@ return(
                         // next(myDate)
                         setMyCity(myCity=>{
                           myCity=selectedItem
-                          next(myDate,myCity)
+                          console.log('naya',catName)
+                          //next(myDate,myCity)
+                          fetchCompany(myDate,myCity,catName)
                           return myCity
                         })
                     }}

@@ -59,7 +59,7 @@ const logIn = async(req,res)=>{
             id : user._id, 
             role: user.role
         },
-        process.env.SECRET
+        JWT_SECRET
         )
         return res.json({status:"ok", data : token })
     }
@@ -76,11 +76,19 @@ const searchCompany = async (req,res)=>{
     
     //case sensitive
     const {search_text} = req.body
+    
+    var Mycity
     const user = await User.findById({_id: req.user.id})
 
-    console.log(user.city)
-    
-     Company.find({"company_name" : {$regex : search_text }, "city": user.city},(err,companies)=>{
+    if(req.body.city === '' || req.body.city === undefined){
+        Mycity=user.city
+    }else{
+        Mycity=req.body.city
+    }
+
+    console.log(Mycity)
+
+     Company.find({"company_name" : {$regex : search_text }, "city": Mycity},(err,companies)=>{
         if(companies){
             
             const result = []
@@ -159,44 +167,66 @@ const searchByDate = async (req,res)=>{
 }
 
 
-//all companies of a city
-const allCompanies = async (req,res)=>{
+// //all companies of a city
+// const allCompanies = async (req,res)=>{
    
-    const user = await User.findById({_id: req.user.id})
-    console.log(user.city)
-     Company.find({city: user.city},(err,companies)=>{
-        if(companies){
+   
+//     var Mycity
+//     const user = await User.findById({_id: req.user.id})
+
+//     if(req.body.city === '' || req.body.city === undefined){
+//         Mycity=user.city
+//     }else{
+//         Mycity=req.body.city
+//     }
+
+//     console.log(Mycity)
+
+    
+//      Company.find({city: Mycity},(err,companies)=>{
+//         if(companies){
             
-            const result = []
-                     for(i of companies){ //getting whole objects
-                                    var count = 0
+//             const result = []
+//                      for(i of companies){ //getting whole objects
+//                                     var count = 0
 
-                                    for (date of i.booked_dates){ //getting dates from array
-                                        if(date === req.body.date)
-                                        {
-                                            count+=1
-                                        }
-                                    }
+//                                     for (date of i.booked_dates){ //getting dates from array
+//                                         if(date === req.body.date)
+//                                         {
+//                                             count+=1
+//                                         }
+//                                     }
 
-                                    console.log(count)
-                                    if(count<=2){ //3 allowed
-                                      result.push(i)
-                                    }
+//                                     console.log(count)
+//                                     if(count<=2){ //3 allowed
+//                                       result.push(i)
+//                                     }
 
-                    }                       
-                return res.json({status: 'ok',data:result})
-        }
-        return res.json({status: 'error',error: 'error in search company by dates'})
-    })
-}
+//                     }                       
+//                 return res.json({status: 'ok',data:result})
+//         }
+//         return res.json({status: 'error',error: 'error in search company by dates'})
+//     })
+// }
 
 
 //top rated
 const topRated = async (req,res)=>{
    console.log(req.body.date)
+
+   var Mycity
     const user = await User.findById({_id: req.user.id})
-    console.log(user.city)
-     Company.find({city: user.city},(err,companies)=>{
+
+    if(req.body.city === '' || req.body.city === undefined){
+        Mycity=user.city
+    }else{
+        Mycity=req.body.city
+    }
+
+    console.log(Mycity)
+
+
+     Company.find({city: Mycity},(err,companies)=>{
         if(companies){
             
             const result = []
@@ -227,10 +257,19 @@ const topRated = async (req,res)=>{
 //low price 
 const lowPrice = async (req,res)=>{
    
-   console.log(req.body.date)
-   const user = await User.findById({_id: req.user.id})
-   console.log(user.city)
-    Company.find({city: user.city},(err,companies)=>{
+   
+    var Mycity
+    const user = await User.findById({_id: req.user.id})
+
+    if(req.body.city === '' || req.body.city === undefined){
+        Mycity=user.city
+    }else{
+        Mycity=req.body.city
+    }
+
+    console.log(Mycity)
+
+    Company.find({city: Mycity},(err,companies)=>{
        if(companies){
            
            const result = []
@@ -261,11 +300,19 @@ const lowPrice = async (req,res)=>{
 
 // high price
 const highPrice = async (req,res)=>{
-    
-   console.log(req.body.date)
-   const user = await User.findById({_id: req.user.id})
-   console.log(user.city)
-    Company.find({city: user.city},(err,companies)=>{
+   
+    var Mycity
+    const user = await User.findById({_id: req.user.id})
+
+    if(req.body.city === '' || req.body.city === undefined){
+        Mycity=user.city
+    }else{
+        Mycity=req.body.city
+    }
+
+    console.log(Mycity)
+
+    Company.find({city: Mycity},(err,companies)=>{
        if(companies){
            
            const result = []
