@@ -2,7 +2,7 @@ const Company = require('../models/companySchema')
 const Order = require('../models/orderSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
+const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk'
 
 //sign up
 const SignUp = async (req,res)=>{
@@ -57,7 +57,7 @@ const logIn = async (req,res)=>{
         const token = jwt.sign({
             id : company._id, role: company.role
         },
-        process.env.SECRET
+        JWT_SECRET
         )
 
         return res.json({status:"ok", data : token })

@@ -72,10 +72,10 @@ app.use('/company', companyRouter)
 
 
 
-app.listen(process.env.PORT,(err)=>{
+app.listen(5000,(err)=>{
     if(err){
         console.log('error on port')
     }else{
-        console.log('app running successfully on port', process.env.PORT)
+        console.log('app running successfully on port', 5000)
     }
 })

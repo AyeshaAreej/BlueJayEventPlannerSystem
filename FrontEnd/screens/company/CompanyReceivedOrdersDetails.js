@@ -1,32 +1,22 @@
 import React from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import COLORS from '../components/colors';
+import {ImageBackground,ScrollView,StatusBar,TouchableOpacity,StyleSheet, Text, View,} from 'react-native';
+import COLORS from '../../components/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import image from '../assets/hotel1.jpg';
-import hotels from '../components/companies';
+import image from '../../assets/hotel1.jpg';
+
 
  
 
-function VendorHome({navigation}) {
-
-
-  
+function CompanyReceivedOrderDetails({navigation}) {
 
   return (
     <ScrollView
     showsVerticalScrollIndicator={false}   contentContainerStyle={{  backgroundColor: COLORS.white,}} >
-      <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"/>
+      <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
        <ImageBackground style={style.headerImage} source={image}>
-        <View style={style.header}>
+        {/* <View style={style.header}>
           <MaterialCommunityIcons name="arrow-left" size={30}color={COLORS.white} onPress={navigation.goBack} />
-        </View>
+        </View> */}
       </ImageBackground>
 
       <View>
@@ -36,47 +26,51 @@ function VendorHome({navigation}) {
 
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
         <View style={style.rightTag}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Silver Photograpy</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Location</Text>
           <View style={style.priceTag}> 
-          <Text style={style.leftTag}>Green street,Lahore </Text>
+          <Text style={style.leftTag}>Karachi </Text>
          </View>
         </View>
 
         <View style={style.rightTag}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Rating</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Guests</Text>
           <View style={style.priceTag}> 
-          <Text style={style.leftTag}>4.0 </Text>
+          <Text style={style.leftTag}>200 </Text>
          </View>
         </View>
         
         
 
           <View style={style.rightTag}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Price Range </Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Budget </Text>
           <View style={style.priceTag}> 
-          <Text style={style.leftTag}> Above $500000   </Text>
+          <Text style={style.leftTag}> Rs.200000   </Text>
          </View>
         </View>
 
         <View style={style.rightTag}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>Service</Text>
           <View style={style.priceTag}> 
-          <Text style={style.leftTag}>Photography </Text>
+          <Text style={style.leftTag}>Venue, Cattering, Decoration </Text>
          </View>
         </View>
 
           <View  style={style.rightTag}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Available Time </Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>status </Text>
           <View style={style.priceTag}>
-            <Text style={style.leftTag}>24 Hours </Text>
-            
+            <Text style={style.leftTag}>Pending </Text>
           </View>
-        </View>
+         </View>
 
         </View>
+       </View>
+        {/*Save Button  */}
         
-       
-      </View>
+        <View style={style.buttonContainer}> 
+            <TouchableOpacity  onPress={()=>{ navigation.navigate('HomeScreen') }} style={style.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> Higher Vendor </Text>
+            </TouchableOpacity>
+            </View>
     </ScrollView>
   )
 }
@@ -128,6 +122,22 @@ leftTag:{
   marginLeft: 5,
   paddingBottom:5,
 }, 
+buttonContainer:{
+  justifyContent:'center',
+  alignItems:'center',
+
+},
+editButton:{
+justifyContent:'center',
+alignItems:'center',
+marginTop:10,
+width:280,
+borderColor :COLORS.primary,
+borderWidth:4,
+elevation:15,
+borderRadius:15,
+backgroundColor:COLORS.primary,
+},
 });
 
-export default VendorHome
+export default CompanyReceivedOrderDetails;

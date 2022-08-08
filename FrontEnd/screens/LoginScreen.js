@@ -1,6 +1,8 @@
-import React from "react";
-import {useState}  from 'react'
-import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text, AsyncStorage } from "react-native";
+import React from "react";;
+import {useState, useEffect,useRef, useReducer}  from 'react';
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import { ImageBackground, Platform, Button,TextInput, TouchableOpacity, StyleSheet, View,Text, AsyncStorage } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
 import { RadioButton } from 'react-native-paper';
 import { StatusBar } from "react-native-web";
@@ -15,15 +17,78 @@ import * as SecureStore from 'expo-secure-store';
 
 // import {PORT} from"@env"
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 
 function LoginScreen({navigation}) {
 
   const [checked, setChecked] = React.useState('customer');
+  const [expoPushToken, setExpoPushToken] = useState('');
+   const [notification, setNotification] = useState(false);
+   const notificationListener = useRef();
+   const responseListener = useRef();
+
+
+   useEffect(() => {
+    registerForPushNotification().then(token=>setExpoPushToken(token));
+  
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+  
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+  })
+
+
+// token
+async function registerForPushNotification(){
+    
+   
+  let token;
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token,"Token for mobile device");
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
+} 
+
+
+  
 
   console.log(checked)
   async function handleLogin(values){
-
+    // navigation.navigate(User_Home)
     const role= checked
 
     if(role=='customer'){
@@ -44,6 +109,7 @@ function LoginScreen({navigation}) {
                           
                           SecureStore.setItemAsync('token',result.data)
                           navigation.navigate(User_Home)
+                          // navigation.navigate(Company_Home)
                       }
                       else{
                         console.log(result.error)
@@ -124,7 +190,9 @@ function LoginScreen({navigation}) {
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
+
      <Text style={{color:'white',marginLeft:140, fontSize:30,fontWeight:'bold'}}>Sign In</Text>
+
     
  </View>
 
@@ -146,7 +214,7 @@ function LoginScreen({navigation}) {
           password: yup
             .string()
             .min(5, 'More than 5 characters are needed.')
-            .max(11, 'More than 12 characters are allowed.')
+            .max(11, 'Less than 12 characters are allowed.')
             .required(),
           })}
 
@@ -171,7 +239,7 @@ function LoginScreen({navigation}) {
            <TextInput
              style={styles.input}
              name="password"
-            placeholder="Enter Password"
+             placeholder="Enter Password"
              onChangeText={handleChange('password')}
              onBlur={() => setFieldTouched('password')}
             value={values.password}
@@ -241,7 +309,16 @@ function LoginScreen({navigation}) {
            /> 
           </View>
           </View>
-       
+
+      {/* Sign in Button  */}
+            
+      {/* <View style={styles.buttonContainer}> 
+            <TouchableOpacity onPress={handleSubmit}  style={styles.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white   }}> Save </Text>
+            </TouchableOpacity>
+            </View> */}
+           
+
         </>
       )}
     </Formik>
@@ -332,6 +409,23 @@ leftTag:{
   marginLeft: 5,
   paddingBottom:5,
 }, 
+
+buttonContainer:{
+  justifyContent:'center',
+  alignItems:'center',
+
+},
+editButton:{
+justifyContent:'center',
+alignItems:'center',
+marginTop:5,
+width:180,
+borderColor :COLORS.primary,
+borderWidth:4,
+elevation:15,
+borderRadius:15,
+backgroundColor:COLORS.primary,
+},
 
 });
 

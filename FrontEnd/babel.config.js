@@ -15,7 +15,17 @@ module.exports = function(api) {
         "safe": false,
         "allowUndefined": true,
         "verbose": false
-      }]
+      },
+      "expo-notifications",
+      {
+        "icon": "./local/assets/notification-icon.png",
+        "color": "#ffffff",
+        "sounds": [
+          "./local/assets/notification-sound.wav",
+          "./local/assets/notification-sound-other.wav"
+        ]
+      }
+    ]
     ]
   };
 };

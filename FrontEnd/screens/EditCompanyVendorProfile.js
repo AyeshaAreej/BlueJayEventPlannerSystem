@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TextInput,TouchableOpacity , ScrollView ,Button, StatusBar,Image,Platform} from 'react-native'
+import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar,Image,Platform} from 'react-native'
 import colors from '../components/colors';
 import React,  { useState, useEffect } from 'react'
 import { Formik } from 'formik';
@@ -7,8 +7,26 @@ import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 
 
-const CompanyVendorProfile = ({navigation}) => {
- 
+const EditCompanyVendorProfile = ({navigation}) => {
+  const [image, setImage] = useState(null);
+
+
+  const pickImage = async () => {
+   // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
 
   return (
     <ScrollView  style={{flex:1, backgroundColor:'#fff', }} contentContainerStyle={{justifyContent:'center',
@@ -16,14 +34,12 @@ const CompanyVendorProfile = ({navigation}) => {
    
 
       {/* Form Inputs View */}
-   <View style={{marginTop:4}}>
+   <View style={{marginTop:50}}>
           <Formik
       initialValues={{companyname:'', email: '', phone_no: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
       onSubmit={
         (values) => {
-        // console.log(values, image)
-        navigation.navigate('EditCompanyVendorProfile')
-        }}
+        console.log(values, image)}}
           validationSchema={yup.object().shape({
             companyname: yup
             .string()
@@ -61,12 +77,13 @@ const CompanyVendorProfile = ({navigation}) => {
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View >
 
-    <View style={styles.buttonContainer}>
-     <Image source={require('.././assets/profile.jpg')} style={styles.profileImage} />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
+        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+  
+  </View>
+  <View style={styles.button}>
+    <Button title="Change Image" onPress={pickImage} color={colors.primary}/>
     </View>
-   
-
-
 
 
 
@@ -190,29 +207,15 @@ const CompanyVendorProfile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availabilitytime}</Text>
             }
            
-
-
-           {/* Change Password Button */}
-           <View style={styles.buttonContainer}> 
-           <TouchableOpacity style={styles.editPassword}
-             onPress={()=> navigation.navigate('ChangePassword') } >
-       
-            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}> Change Password </Text>
-            <MaterialCommunityIcons name="playlist-edit"  size={34} style={styles.passwordIcon}/> 
-        
-        </TouchableOpacity>
-        </View>
-           
-        
           
-            {/*Edit Button  */}
+            {/*Save Button  */}
         
-            <View style={styles.buttonContainer}> 
-           <TouchableOpacity  style={styles.editButton}
-            onPress={handleSubmit}>
-             <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}>Edit Profile</Text>
-           </TouchableOpacity> 
-            </View>
+          <View style={styles.button}>
+           <Button  onPress={handleSubmit}
+           title="Update"
+           color={colors.primary}
+           /> 
+          </View>
        
        </View>
     
@@ -232,21 +235,25 @@ const styles = StyleSheet.create({
   
 
    input:{
-    borderColor :colors.white,
+  
+  borderColor :colors.white,
     margin:6,
-    padding:8,
+    padding:5,
     width:280,
     fontSize:20,
     elevation:30,
     borderRadius:15,
     backgroundColor:'white'
+
+
    },
 
 
    button:{
     backgroundColor: colors.primary,
-    width: '40%',
+    width: '45%',
     height: 35,
+    // margin:60,
    marginTop:20,
    marginBottom:20,
     marginLeft:'30%',
@@ -255,53 +262,18 @@ const styles = StyleSheet.create({
    },
    icon:{
     color:colors.primary,
-    margin:10,
+    margin:20,
    
     },
     inputContainer:{
      flexDirection:'row',
      color:colors.white, 
+     // borderWidth:5,
+     // borderRadius:20,
+     // borderColor:'purple'
     },
-    passwordIcon:{
-      color:colors.white,
-      margin:10,
-     },
-    
-    editPassword: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop:10,
-      width:280,
-      borderColor :colors.primary,
-      borderWidth:2,
-      elevation:20,
-      borderRadius:15,
-      backgroundColor:colors.primary
-      },
-    profileImage:{
  
-      height: 180,
-      width: '50%',
-      borderRadius: 20,
-  
-   },
- buttonContainer:{
-    justifyContent:'center',
-    alignItems:'center',
-
-},
-editButton:{
-  justifyContent:'center',
-  alignItems:'center',
-  marginTop:4,
-  marginBottom:4,
-  width:280,
-  borderColor :colors.primary,
-  borderWidth:2,
-  elevation:20,
-  borderRadius:15,
-  backgroundColor:colors.primary,
-},
+   
 
 });
-export default CompanyVendorProfile;
+export default EditCompanyVendorProfile;

@@ -8,6 +8,8 @@ import COLORS from "../components/colors";
 
 import * as SecureStore from 'expo-secure-store';
 
+// import {PORT} from"@env"
+
 
 function SplashScreen({navigation}) {
 
@@ -18,12 +20,13 @@ useEffect(()=>{
   SecureStore.getItemAsync('token').then(token=>{
 
     if(token == ' ' || token == null){
+
       console.log("No token")
       navigation.navigate('WelcomeScreen')
     }else{
     console.log('splash screen',token)
     
-    
+
     fetch(`http://10.0.2.2:5000/`,{
                   method: "get",
                   headers: {
@@ -33,7 +36,7 @@ useEffect(()=>{
                   }   
                 
             }).then(res=>res.json()).then(result=>{
-              console.log(result)
+              console.log('inside splash fetch',result)
 
               if(result.data.role == 'customer')
                     {

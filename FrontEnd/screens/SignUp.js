@@ -1,6 +1,8 @@
 import React from "react";
 import {useState, useEffect}  from 'react'
+
 import { ImageBackground, Button, TextInput, Platform,ScrollView,Pressable, StyleSheet, View, Image, Text } from "react-native";
+
 import colors from "../components/colors";
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -23,7 +25,7 @@ const SignUp = ()=> {
 
    function handleLogin(values){
 
-    console.log(values)
+    // console.log(values)
 
       fetch(`http://10.0.2.2:5000/users/signUp`,{
         method: "post",
@@ -166,6 +168,7 @@ const SignUp = ()=> {
             }
          
             {/*SignUn Button  */}
+
           <View style={styles.button}>
 
            <Button
@@ -176,7 +179,13 @@ const SignUp = ()=> {
 
            
           </View>
-          {/* </View> */}
+
+            {/* <View style={styles.buttonContainer}> 
+            <TouchableOpacity onPress={handleSubmit}  style={styles.editButton}>
+            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white   }}> Sign Up </Text>
+            </TouchableOpacity>
+            </View> */}
+
        
         </View>
       )}
@@ -201,6 +210,7 @@ const SignUp = ()=> {
                   <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
                   <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
                   </View>
+
 
 
     </View>
@@ -241,7 +251,7 @@ center:{
 },
    
    input:{
-  
+
     borderColor :COLORS.white,
     margin:5,
     padding:10,
@@ -270,6 +280,32 @@ center:{
   
    },
    
+   sbcontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:10,
+    borderRadius: 100,
+    margin:20,
+    marginBottom: 60
+
+  },
+  buttonContainer:{
+    justifyContent:'center',
+    alignItems:'center',
+
+},
+editButton:{
+  justifyContent:'center',
+  alignItems:'center',
+  marginTop:25,
+  width:180,
+  borderColor :colors.primary,
+  borderWidth:4,
+  elevation:15,
+  borderRadius:15,
+  backgroundColor:colors.primary,
+}
 
 });
 

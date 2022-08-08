@@ -27,12 +27,12 @@ const CustomDrawer = (props) => {
 
                 <View style={{paddingTop:8,padding :20, height:110, borderTopWidth:1, borderTopColor:'#ccc' }}>
 
-                    <TouchableOpacity onPress={()=>{}} style={{paddingVertical:15}}>
+                    {/* <TouchableOpacity onPress={()=>{}} style={{paddingVertical:15}}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                          <FontAwesome name='share-alt' size={22} color='grey'/>
                           <Text>    Share with friends</Text> 
                     </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     
                     <TouchableOpacity onPress={()=>{
                                                     SecureStore.setItemAsync('token',' ')

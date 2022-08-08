@@ -8,13 +8,14 @@ import {
   View,
 } from 'react-native';
 import COLORS from '../components/colors';
+import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import image from '../assets/hotel1.jpg';
 import hotels from '../components/companies';
 
  
 
-function VendorHome({navigation}) {
+function OrderDetails({navigation}) {
 
 
   
@@ -22,17 +23,15 @@ function VendorHome({navigation}) {
   return (
     <ScrollView
     showsVerticalScrollIndicator={false}   contentContainerStyle={{  backgroundColor: COLORS.white,}} >
-      <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"/>
+      <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
        <ImageBackground style={style.headerImage} source={image}>
         <View style={style.header}>
-          <MaterialCommunityIcons name="arrow-left" size={30}color={COLORS.white} onPress={navigation.goBack} />
+          {/* <MaterialCommunityIcons name="arrow-left" size={30}color={COLORS.white} onPress={navigation.goBack} /> */}
         </View>
       </ImageBackground>
 
       <View>
-      {/* <View style={style.iconContainer}> */}
-          {/* <MaterialCommunityIcons name="location-enter" color={COLORS.white} size={20} /> */}
-      {/* </View> */}
+     
 
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
         <View style={style.rightTag}>
@@ -110,8 +109,8 @@ const style = StyleSheet.create({
   },
   headerImage: {
     height: 280,
-    borderBottomRightRadius: 40,
-    borderBottomLeftRadius: 40,
+    width:"100%",
+    borderRadius:40,
     overflow: 'hidden',
   },
   rightTag:{
@@ -130,4 +129,4 @@ leftTag:{
 }, 
 });
 
-export default VendorHome
+export default OrderDetails;
