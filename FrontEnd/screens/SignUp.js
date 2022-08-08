@@ -1,23 +1,25 @@
 import React from "react";
 import {useState, useEffect}  from 'react'
-import { ImageBackground, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
-import { StatusBar } from "react-native-web";
+import { ImageBackground, Button, TextInput, Platform,ScrollView,Pressable, StyleSheet, View, Image, Text } from "react-native";
 import colors from "../components/colors";
-import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { FacebookSocialButton } from "react-native-social-buttons";
-import {InstagramSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import { User_Home, } from "../constants";
-import LoginScreen from './LoginScreen'
+import COLORS from "../components/colors";
+
+import { useNavigation } from '@react-navigation/native';
 // import {PORT} from"@env"
 
 
 
 
 
-function SignUp({navigation}) {
+const SignUp = ()=> {
+
+
+  const navigation = useNavigation();
 
    function handleLogin(values){
 
@@ -35,7 +37,7 @@ function SignUp({navigation}) {
    }).then(res=>res.json()).then(result=>{console.log(result)
     if(result.status == 'ok')
     {
-      navigation.navigate(LoginScreen)
+      navigation.navigate("LoginScreen")
     }
     else{
       //refresh this form and show error
@@ -58,7 +60,7 @@ function SignUp({navigation}) {
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
-     <Text style={{color:'white', fontSize:25,fontWeight:'bold'}}>SignUp</Text>
+     <Text style={{color:'white',marginLeft:140, fontSize:30,fontWeight:'bold'}}>SignUp</Text>
     
  </View>
 
@@ -164,11 +166,9 @@ function SignUp({navigation}) {
             }
          
             {/*SignUn Button  */}
-          {/* <View style={styles.container}> */}
           <View style={styles.button}>
 
            <Button
-           //onPress={()=>navigation.navigate(User_Home)}
            onPress={handleSubmit}
            title="SignUp"
            color={colors.primary}
@@ -185,22 +185,27 @@ function SignUp({navigation}) {
 
      </View>
 
-     <View>
+                  <Text style={{marginLeft:100,fontSize:15,marginTop:10}}>Already Have an Account?   
+                 
+                  <Pressable onPress={()=>{navigation.navigate('LoginScreen')}}>
+                      <Text style={{fontWeight: "bold",fontSize:16}}>    SignIn</Text>
+                  </Pressable>
+                       
+                  </Text>
 
-            {/* <Text style={{paddingLeft:100,fontWeight: "bold"}}>OR</Text> */}
+                  <View style={styles.center}>
+      
+                  {/* Social buttons */}
+      
+                  <View  style={styles.socialbTag}>
+                  <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
+                  <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
+                  </View>
 
-              {/* Social buttons */}
-        
-            <View style={styles.sbcontainer} >
-              
-            <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:50,backgroundColor:'#fff' }} logoStyle={{marginLeft:120,backgroundColor:'#4267B2' }} textStyle={{color:'#fff'}}/>
-            <InstagramSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:80}} textStyle={{color:'#fff'}} />
-            <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:50}} logoStyle={{marginLeft:10}}textStyle={{color:'#fff'}} />
-            </View>
 
-            <Text style={{marginLeft:100,fontSize:15,}}>Already Have an Account?  <Text style={{fontWeight: "bold"}}> SignIn</Text> </Text>
+    </View>
 
-            </View>
+            
         
       </View>
   );
@@ -209,28 +214,43 @@ function SignUp({navigation}) {
 const styles = StyleSheet.create({
 
   topView:{
-    backgroundColor :colors.primary,
-    paddingTop:"18%",
-    paddingLeft:8,
+    backgroundColor :COLORS.primary,
+    paddingTop:"11%",
+    paddingLeft:30,
     width:"100%",
-    height:220,
+    height:250,
     
    },
+   socialbTag:{
+   flexDirection: 'column',
+   justifyContent: 'space-around',
+   alignItems: 'center',
+
+ },
 
  logo: {
   width: 200,
-  height: 110,
-  marginLeft:100,
- 
+  height: 130,
+  marginLeft:90,
 
+},
+
+center:{
+  paddingTop:25,justifyContent:'center',
+   alignItems:'center',
 },
    
    input:{
-   borderBottomColor :'#9370DB',
-   borderBottomWidth:4,
-   width:200,
-   fontSize:18,
-   paddingBottom:13,
+  
+    borderColor :COLORS.white,
+    margin:5,
+    padding:10,
+    width:280,
+    fontSize:20,
+    borderWidth:2,
+    elevation:20,
+    borderRadius:15,
+    backgroundColor:'white'
 
    },
 // button styling
@@ -242,24 +262,13 @@ const styles = StyleSheet.create({
   
   },
    button:{
-    backgroundColor:colors.primary,
-    // width: '50%',
-     marginTop:30,
+    backgroundColor:COLORS.primary,
+     marginTop:15,
     justifyContent:'center',
     alignItems:'center',
 
   
    },
-   sbcontainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:10,
-    borderRadius: 100,
-    margin:20,
-    marginBottom: 60
-
-  },
    
 
 });

@@ -39,7 +39,7 @@ const MyOrders=({navigation})=>{
 
                         if(result.data == ''){
                             console.log('No companies found')
-                            alert('No companies found')
+                            alert('No orders yet')
                         }else{
                           setMyOrders(result.data)
                           
@@ -140,7 +140,8 @@ const style = StyleSheet.create({
       width: cardWidth,
       elevation: 15,
       borderRadius: 15,
-      marginBottom:30,
+      marginBottom:10,
+      marginTop:15,
       backgroundColor: COLORS.white,
       
     },

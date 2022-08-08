@@ -67,6 +67,58 @@ const logIn = async (req,res)=>{
 
 }
 
+
+
+
+//search Vendor
+const searchVendor = async (req,res)=>{
+
+}
+
+
+
+//searchByDate
+const searchByDate = async (req,res)=>{
+
+}
+
+//caterers
+const caterers = async (req,res)=>{
+
+}
+
+
+//decoration
+const decoration = async (req,res)=>{
+
+}
+
+
+//venue
+const venue = async (req,res)=>{
+
+}
+
+
+//photographers
+const photographers = async (req,res)=>{
+
+}
+
+
+//create Order
+const createOrder = async (req,res)=>{
+
+}
+
+
+//rate Vendor
+const rateVendor = async (req,res)=>{
+
+}
+
+
+
 //show profile
 const showProfile = async (req,res)=>{
     Company.findById(req.user.id,(err,company)=>{
@@ -77,6 +129,20 @@ const showProfile = async (req,res)=>{
       return res.json({ status:'ok', data: company})
    })
 }
+
+
+//update Profile
+const updateProfile = async (req,res)=>{
+
+}
+
+
+//change Password
+const changePassword = async (req,res)=>{
+
+}
+
+
 
 //my orders
 const myOrders = async (req,res)=>{
@@ -123,5 +189,15 @@ const approveOrder = async (req,res)=>{
 }
 
 
+//order Details
+const orderDetails = async (req,res)=>{
 
-module.exports = {SignUp,logIn,showProfile,myOrders,approveOrder}
+
+
+}
+
+
+
+
+module.exports = {SignUp,logIn,showProfile,myOrders,approveOrder,orderDetails,updateProfile,changePassword,
+                  createOrder,rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers}

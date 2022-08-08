@@ -12,6 +12,7 @@ import { FacebookSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
 import * as SecureStore from 'expo-secure-store';
 
+
 // import {PORT} from"@env"
 
 
@@ -123,7 +124,7 @@ function LoginScreen({navigation}) {
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
-     <Text style={{color:'white',marginLeft:150, fontSize:25,fontWeight:'bold'}}>Sign In</Text>
+     <Text style={{color:'white',marginLeft:140, fontSize:30,fontWeight:'bold'}}>Sign In</Text>
     
  </View>
 
@@ -178,7 +179,7 @@ function LoginScreen({navigation}) {
             {touched.password && errors.password &&
               <Text style={{ marginLeft:10,fontSize: 18, color: 'red' }}>{errors.password}</Text>
             }
-            <Text style={styles.center}>Forgot Password?</Text>
+            <Text style={{fontSize: 18,padding:10}} >Forgot Password?</Text>
             {/* Radio Button */}
  
             <View style={{flexDirection:'row'}}>
@@ -194,7 +195,7 @@ function LoginScreen({navigation}) {
                               color={COLORS.primary}
                             />
                         </View>
-                        <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Customer</Text>
+                        <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Customer</Text>
 
                   </View>
 
@@ -209,7 +210,7 @@ function LoginScreen({navigation}) {
                               color={COLORS.primary}
                             />
                         </View>
-                        <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
+                        <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Company</Text>
                         
                   </View>
      
@@ -225,7 +226,7 @@ function LoginScreen({navigation}) {
                               color={COLORS.primary}
                             />
                         </View>
-                        <Text style={{fontSize: 15,color:COLORS.grey, fontWeight: 'bold'}}>Vendor</Text>
+                        <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Vendor</Text>
 
                   </View>
      
@@ -235,7 +236,7 @@ function LoginScreen({navigation}) {
           <View style={styles.center}>
           <View style={styles.button}>
            <Button  onPress={handleSubmit} 
-           title="SignIn"
+           title=" Sign In "
            color='purple'
            /> 
           </View>
@@ -269,20 +270,20 @@ const styles = StyleSheet.create({
     paddingTop:"11%",
     paddingLeft:30,
     width:'100%',
-    height:220,
+    height:250,
     
    },
 
  logo: {
   width: 200,
-  height: 110,
+  height: 130,
   marginLeft:90,
 },
    
    input:{
     borderColor :COLORS.white,
-    margin:6,
-    padding:22,
+    margin:10,
+    padding:18,
     width:280,
     fontSize:20,
     borderWidth:2,
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
 
    button:{
     backgroundColor: 'purple',
-    width: '90%',
+    width: '100%',
     height: 35,
     borderRadius:20,
     
@@ -307,7 +308,7 @@ center:{
    alignItems:'center',
 },
   socialbTag:{
-    // marginTop: ,
+     marginTop: 10,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',

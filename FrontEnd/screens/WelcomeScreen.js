@@ -23,7 +23,7 @@ function WelcomeScreen({navigation}) {
 </View>
 
 {/* Bottom View */}
-  <View style={{paddingTop:180}}>
+  <View style={{paddingTop:200}}>
    <View style={styles.bottomView}>
     <Text style={{color:'white', fontSize:30, padding:10, fontWeight:'bold'}}>Welcome</Text>
     <Text style={{padding:7,color:'white', fontSize:19,}}>
@@ -57,8 +57,8 @@ function WelcomeScreen({navigation}) {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 250,
-    height: 150,
+    width: 280,
+    height: 220,
   
   },
   logoContainer: {
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   justifyContent: "center",
   alignItems: "center",
  },
+ 
   bottomView:{
   backgroundColor : COLORS.primary,
   paddingTop:"6%",
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
 
    tagline:{
     position: "absolute",
-    paddingTop:"50%",
+    paddingTop:"60%",
     fontSize:25,
 
      fontWeight:"bold",

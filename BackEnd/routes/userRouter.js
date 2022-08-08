@@ -4,6 +4,7 @@ const middleware = require('../middlewares/index')
 
 const route = express.Router()
 
+//authorization
 route.post('/signUp', userController.signUp)//done
 route.post('/logIn',userController.logIn)//done
 
