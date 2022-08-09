@@ -52,10 +52,12 @@ const orderSchema = new mongoose.Schema({
     },
     venue:{
         type: String,
-        default: 'No'
+        default: 'No',
+        required: true
     },
     required_services:{
-        type: String
+        type: String,
+        required: true
     },
     status: {
         type: String,

@@ -56,13 +56,14 @@ import { useNavigation } from '@react-navigation/native';
           <FontAwesome name="map-marker" color={COLORS.white} size={20} />
         </View>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{company.company_name}</Text>
+        <Text style={{fontSize: 25, fontWeight: 'bold'}}>{company.company_name}</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: 20,
               fontWeight: '500',
               color: COLORS.grey,
               marginTop: 5,
+              fontWeight: 'bold',
             }}>
            {company.address}
           </Text>
@@ -88,10 +89,10 @@ import { useNavigation } from '@react-navigation/native';
           </View>
           <View style={{marginTop: 20}}>
           <Text
-            style={{ fontSize: 18,  fontWeight: 'bold',   color: COLORS.dark,
+            style={{ fontSize: 22,  fontWeight: 'bold',   color: COLORS.dark,
               marginTop: 5,  }}>Services We Provide 
           </Text>
-            <Text style={{lineHeight: 20, color: COLORS.grey}}>
+            <Text style={{fontSize: 20,fontWeight: 'bold',lineHeight: 40, color: COLORS.grey}}>
              {company.services}
              </Text>
           </View>
@@ -104,16 +105,17 @@ import { useNavigation } from '@react-navigation/native';
             paddingLeft: 20,
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{fontSize: 22, fontWeight: 'bold'}}>
             Price Range
           </Text>
           <View style={style.priceTag}>
             <Text
               style={{
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: 'bold',
                 color: COLORS.black,
                 marginLeft: 5,
+                fontWeight: 'bold',
               }}>
               $ {company.price_range} 
             </Text>

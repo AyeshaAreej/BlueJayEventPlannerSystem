@@ -17,7 +17,7 @@ const MyOrders=()=>{
 
   useEffect(()=>{
 
-    console.log("1",myOrders)
+    
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('My orders',token)
@@ -59,8 +59,7 @@ const Card=({order})=>{
   const navigation = useNavigation();
   
   function handleClick(){
-    // console.log("Card clicked")
-    navigation.navigate('OrderDetails')
+    navigation.navigate('OrderDetails',{order})
   }
 return(
    
@@ -75,11 +74,11 @@ return(
           <View style={{flexDirection:'row'}}>
                   <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
               
-                  <Text style={{ marginLeft:20, marginTop:50,marginBottom:20}}>
+                  <Text style={{ marginLeft:20, marginTop:75,marginBottom:20}}>
 
-                  <Text style={{fontSize:16,fontWeight:"bold"}}>Event Type:</Text> <Text style={{fontSize:16}}>{order.event_type}</Text>{'\n'}{'\n'}
-                  <Text style={{fontSize:16,fontWeight:"bold"}}>No of guests:</Text> <Text style={{fontSize:16}}>{order.no_of_guests}</Text>{'\n'}{'\n'}
-                  <Text style={{fontSize:16,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:16}}>{order.date}</Text>
+                  <Text style={{fontSize:18, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:16}}>{order.event_type}</Text>{'\n'}{'\n'}
+                 
+                  <Text style={{fontSize:18,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:16}}>{order.date}</Text>
                   
                   </Text>
           </View>
@@ -89,7 +88,7 @@ return(
                   
                     <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15,paddingTop:10}}>Name : {order.company_name}</Text>
                      
-                    <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}>{order.status}</Text>
+                    <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}> {order.status}</Text>
           
           </View>   
 

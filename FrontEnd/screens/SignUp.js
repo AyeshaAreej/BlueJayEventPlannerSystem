@@ -92,8 +92,6 @@ const SignUp = ()=> {
             .required(),
             phone_no: yup
             .number()
-            // .min(11, '11 or 12 digits are required')
-            // .max(12, '11 or 12 digits are required')
             .required('Phone Number is required.'), 
             city : yup
             .string()
@@ -102,6 +100,7 @@ const SignUp = ()=> {
           
            >
       {({  handleChange, handleSubmit, values,errors,touched, setFieldTouched}) => (
+        
         <View style={{ alignItems:"center",justifyContent:'center' }}>
            <TextInput
              style={styles.input}

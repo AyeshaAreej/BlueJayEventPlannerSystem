@@ -20,7 +20,7 @@ const PaymentsandRefunds= ({navigation}) => {
    <View style={{marginTop:15, marginLeft:15}}>
 
      
-         <Text style={{marginBottom:20, fontSize:24, fontWeight:'bold', }}>
+         <Text style={{marginBottom:20, fontSize:24,paddingTop:30, fontWeight:'bold', }}>
          Payment and Refund
          </Text>
       

@@ -122,6 +122,7 @@ function BookingForm({ route}) {
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
        <View style={{ alignItems:"center",justifyContent:'center', flex: 1 }}>
        
+       <View style={{borderWidth:3, padding:12, marginTop:20,marginBottom:10, borderRadius:20,borderColor:colors.primary}}>
             <TextInput
              style={styles.input}
              name="event_type"
@@ -163,13 +164,13 @@ function BookingForm({ route}) {
             
               {/* Venue */}
           
-            <View style={{borderWidth:3, padding:12, marginTop:20,marginBottom:10, borderRadius:20,borderColor:colors.primary}}>
-            <Text  style={{color:colors.grey,fontSize:20}}>Venue (Optional)</Text>
+           
+            {/* <Text  style={{color:colors.black,fontWeight: 'bold',fontSize:20}}>Venue </Text> */}
 
             <TextInput
              style={styles.input}
              name="venue"
-             placeholder='Indoor or Outdoor '
+             placeholder='Venue (Indoor or Outdoor) '
              onChangeText={handleChange('venue')}
              onBlur={()=>setFieldTouched('venue')}
             value={values.venue}
@@ -224,19 +225,25 @@ const styles = StyleSheet.create({
 },
    
    input:{
-   borderBottomColor :colors.primary,
-   borderBottomWidth:4,
-   paddingTop:15,
-   width:250,
-   fontSize:18,
 
+  borderColor :COLORS.white,
+  margin:7,
+  padding:12,
+  width:280,
+  fontSize:20,
+  borderWidth:2,
+  elevation:20,
+  borderRadius:15,
+  backgroundColor:'white'
    },
 
    
    button:{
     backgroundColor:colors.primary,
-    width: '50%',
-     marginTop:15,
+    width: '40%',
+     marginTop:20,
+     
+
      
     
 

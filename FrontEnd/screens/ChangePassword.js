@@ -4,8 +4,11 @@ import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import colors from '../components/colors';
+import * as SecureStore from 'expo-secure-store';
+
 
 export default function ChangePassword() {
+
  const [oldPassword,setOldPassword]=useState('')
  const [newPassword,setNewPassword]=useState('')
 
@@ -21,7 +24,48 @@ export default function ChangePassword() {
       initialValues={{ oldpassword: '',newpassword: '',}}
       onSubmit={
         (values) => {
-        console.log(values.oldpassword, values.newpassword)}}
+        console.log(values.oldpassword, values.newpassword)
+
+        SecureStore.getItemAsync('token').then(token=>{
+
+          console.log('view profile',token)
+         
+         
+          fetch(`http://10.0.2.2:5000/users/showProfile`,{
+                        method: "get",
+                        headers: {
+                            Accept: "application/json, text/plain, */*",
+                            "Content-Type": "application/json",
+                            token
+                        }
+                      
+                  }).then(res=>res.json()).then(async(result)=>{
+                  
+    
+                    if( result.status == 'ok'){
+                      console.log(result)
+                      setUser(result.data)
+                        
+                    }else{
+                      console.log(result.status)
+                      
+    
+                    }
+    
+    
+                  }).catch(err=>console.log('catch',err.message))
+        })  
+         
+
+
+
+
+
+
+      }}
+
+
+
         validationSchema={yup.object().shape({
           oldpassword: yup
             .string()
@@ -42,7 +86,7 @@ export default function ChangePassword() {
         <View >
 
         <View style={styles.inputContainer} >
-        <Text style={{marginBottom:20, fontSize:17}}>
+        <Text style={{marginTop:20, marginBottom:20, fontSize:20,fontWeight: 'bold'}}>
         Changing your password? Go for at least 6 characters
         </Text>
         </View>
@@ -89,7 +133,7 @@ export default function ChangePassword() {
             {/* Button  */}
             
            <View style={styles.buttonContainer}> 
-            <TouchableOpacity onPress={()=>{  handleSubmit}} style={styles.editButton}>
+            <TouchableOpacity onPress={handleSubmit} style={styles.editButton}>
             <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white,   }}> Save </Text>
             </TouchableOpacity>
             </View>

@@ -24,7 +24,7 @@ const SafetyConcerns= ({navigation}) => {
    <View style={{marginTop:15, marginLeft:15}}>
 
      
-         <Text style={{marginBottom:20, fontSize:18, }}>
+         <Text style={{marginBottom:18,fontWeight:'bold', fontSize:20 ,marginTop:50 }}>
          We want you to have a seamless experience with your order.If you have safety issues with you order or company, please reach out to us below, we will get back to you as soon as possible.
          </Text>
       
@@ -67,7 +67,7 @@ const SafetyConcerns= ({navigation}) => {
     </View>
   </View>
 
-  <Text style={{marginTop:30, fontSize:18, }}>Enter your order number (if relevant):    </Text>
+  <Text style={{marginTop:30, fontSize:18,fontWeight:'bold', }}>Enter your order number (if relevant):    </Text>
 
  
 
@@ -103,7 +103,7 @@ const SafetyConcerns= ({navigation}) => {
               <Text style={{ marginLeft:70,fontSize: 18, color: 'red' }}>{errors.ordernumber}</Text>
             }
            {/* Further Details */}
-            <Text style={{marginTop:30, marginLeft:10, fontSize:18, }}>Further Details:   </Text>
+            <Text style={{marginTop:30, marginLeft:10, fontSize:18,fontWeight:'bold', }}>Further Details:   </Text>
              
             <View style={styles.inputContainer} >
             <TextInput
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   input:{
     borderColor :colors.white,
     margin:6,
-    padding:18,
+    padding:13,
     width:'95%',
     fontSize:20,
     borderWidth:2,

@@ -521,16 +521,6 @@ const myOrders = async (req,res)=>{
 }
 
 
-//order details
-const orderDetails = async (req,res)=>{
-    Order.findById(req.body.o_id,(err,order)=>{
-        if(err){
-            res.json({status:"error",err})
-        }
-        res.json({status:"ok",data : order})
-    })
-}
-
 
 const rateCompany = async (req,res)=>{
     //console.log(req.body)
@@ -557,5 +547,5 @@ const rateCompany = async (req,res)=>{
 
 
 
-module.exports = {signUp,logIn,searchCompany,searchByDate,allCompanies,topRated,lowPrice,highPrice,
+module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,
                   createOrder,showProfile,updateProfile,changePassword,myOrders,orderDetails,rateCompany}

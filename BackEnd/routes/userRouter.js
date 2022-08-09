@@ -23,14 +23,13 @@ route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)
 
 
 //-profile
-route.get('/showProfile',middleware.ValidateToken ,userController.showProfile)
+route.get('/showProfile',middleware.ValidateToken ,userController.showProfile)//done
 route.patch('/updateProfile',middleware.ValidateToken ,userController.updateProfile)
-route.patch('/changePassword',middleware.ValidateToken ,userController.changePassword)
+route.patch('/changePassword',middleware.ValidateToken ,userController.changePassword)//done
 
 
 //My orders
 route.get('/myOrders',middleware.ValidateToken ,userController.myOrders)//done
-route.post('/orderDetails',middleware.ValidateToken ,userController.orderDetails)
 
 
 

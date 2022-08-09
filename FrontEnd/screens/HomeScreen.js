@@ -351,12 +351,12 @@ const HomeScreen=({route})=>{
 // Card
 
 const Card=({company,index})=>{
-  //console.log("result",company)
+  
 
   const navigation = useNavigation();
 
   function handleClick(){
-    console.log("Card clicked")
+    
     navigation.navigate('CompanyDetails',{company,myDate})
   }
 return(
@@ -403,35 +403,7 @@ return(
     return(
         <SafeAreaView style={{flex:1,backgroundColor:colors.white}}>
 
-        {/*Dropdown  */}
-      <View style={style.dropdownContainer}>
-      <SelectDropdown
-         data={cities}
-         defaultButtonText="Select a city"
-         buttonStyle={style.dropdown}
-         buttonTextStyle={{color:colors.white}}
-         onSelect={(selectedItem, index) => {
-                        console.log(selectedItem, index)
-                        // setMyCity(selectedItem)
-                        // next(myDate)
-                        setMyCity(myCity=>{
-                          myCity=selectedItem
-                          console.log('naya',catName)
-                          //next(myDate,myCity)
-                          fetchCompany(myDate,myCity,catName)
-                          return myCity
-                        })
-                    }}
-         renderDropdownIcon={()=>{
-          return  <MaterialCommunityIcons name="arrow-down"  size={38} color={colors.white} />        
-         }}
-         buttonTextAfterSelection={(selectedItem, index) => {
-         return selectedItem	}}
-         rowTextForSelection={(item, index) => {
-         return item}}
-        />
-        
-        </View>
+      
 
         <View style={style.header}>
 
@@ -470,9 +442,37 @@ return(
                             </View>
 
                             <View style={{flexDirection:'row'}}>
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5}}> Selected Date :</Text>
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5,color: COLORS.primary}}> {myDate}</Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:13}}> Date :</Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:13,color: COLORS.primary}}> {myDate}</Text>
       
+
+                                  {/*Dropdown  */}
+                                  <View style={style.dropdownContainer}>
+                                      <SelectDropdown
+                                        data={cities}
+                                        defaultButtonText="Select a city"
+                                        buttonStyle={style.dropdown}
+                                        buttonTextStyle={{color:colors.white}}
+                                        onSelect={(selectedItem, index) => {
+                                                        console.log(selectedItem, index)
+                                                        setMyCity(myCity=>{
+                                                          myCity=selectedItem
+                                                          console.log('naya',catName)
+                                                          fetchCompany(myDate,myCity,catName)
+                                                          return myCity
+                                                        })
+                                                    }}
+                                        renderDropdownIcon={()=>{
+                                          return  <MaterialCommunityIcons name="arrow-down"  size={38} color={colors.white} />        
+                                        }}
+                                        buttonTextAfterSelection={(selectedItem, index) => {
+                                        return selectedItem	}}
+                                        rowTextForSelection={(item, index) => {
+                                        return item}}
+                                        />
+                                        
+                                        </View>
+
                             </View>
                     
 
@@ -610,7 +610,7 @@ const style = StyleSheet.create({
     },
 
     dropdownContainer:{
-      justifyContent:'center',
+      // justifyContent:'center',
       alignItems:"center", 
       },
     
@@ -618,10 +618,11 @@ const style = StyleSheet.create({
         justifyContent:'center',
           alignItems:'center',
           marginTop:5,
-          width:'85%',
+          marginRight:50,
+          width:'75%',
           borderColor :colors.primary,
-          borderWidth:4,
-          elevation:15,
+          borderWidth:1,
+          elevation:0,
           borderRadius:10,
           backgroundColor:colors.primary,  
       },

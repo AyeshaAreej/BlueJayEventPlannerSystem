@@ -20,7 +20,7 @@ const ForgotPassword= ({navigation}) => {
    <View style={{marginTop:15, marginLeft:15}}>
 
      
-         <Text style={{marginBottom:20, fontSize:18, fontWeight:'bold', }}>
+         <Text style={{marginBottom:20,paddingTop:40, fontSize:20, fontWeight:'bold', }}>
          To reset your password follow the steps:
          </Text>
       
@@ -60,8 +60,14 @@ const ForgotPassword= ({navigation}) => {
    
 
      <View style={styles.textContainer}>
-         <Text style={{fontSize:17, }}>Be careful and not to share your password with anyone. Our Customer care team will never ask for your password.</Text>
+         <Text style={{fontSize:20,fontWeight: 'bold' }}>Be careful and not to share your password with anyone. Our Customer care team will never ask for your password.</Text>
       </View>
+
+
+      <View style={styles.textContainer}>
+         <Text style={{fontSize:20, fontWeight: 'bold'}}>Was this helpful?</Text>
+      </View>
+
 
      </View>
 
@@ -95,9 +101,10 @@ const styles = StyleSheet.create({
 options: {
   flexDirection: 'row',
   alignItems: 'center',
-  marginTop:10,
-  padding:7,
-  width:'100%',
+  marginTop:12,
+  padding:10,
+  // marginRight:50,
+  width:'95%',
   borderColor :colors.white,
   elevation:20,
   borderRadius:15,
