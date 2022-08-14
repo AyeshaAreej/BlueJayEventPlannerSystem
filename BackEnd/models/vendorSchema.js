@@ -52,7 +52,7 @@ const vendorSchema = new mongoose.Schema({
     booked_dates:[String],
     
     orders:[ 
-        {  type: mongoose.Schema.Types.ObjectId, ref:'Order' }
+        {  type: mongoose.Schema.Types.ObjectId, ref:'CvOrder' }
     ]
 });
 

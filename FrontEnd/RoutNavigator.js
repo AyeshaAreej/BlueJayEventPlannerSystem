@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'; 
 
-import { UserOrderDetails,VendorOrderDetails,CompanyOrderDetails,CompanyRcvedOdrDetls,VCompany_Home, MyAccount ,SecurityConcerns,ForgotPassword,Payment_Refunds, CMyAccount,CSecurityConcerns,CForgotPassword,CPayment_Refunds,VMyAccount,VSecurityConcerns,VForgotPassword,VPayment_Refunds, Auth_Stack, Company_Booking,Admin_Company, User_Home,EditProfile,EditCompanyProfile,EditVendorProfile,Change_Pass, Change_CPass,Change_VPass, Company_Home, Vendor_Booking,Admin_Home, Vendor_Home } from './constants';
+import { UserOrderDetails,VendorOrderDetails,CompanyOrderDetails,CompanyRcvedOdrDetls,VCompany_Home, MyAccount ,SecurityConcerns,ForgotPassword,Payment_Refunds, CMyAccount,CSecurityConcerns,CForgotPassword,CPayment_Refunds,VMyAccount,VSecurityConcerns,VForgotPassword,VPayment_Refunds, Auth_Stack, Company_Booking,Admin_Company, User_Home,EditProfile,EditCompanyProfile,EditVendorProfile,Change_Pass, Change_CPass,Change_VPass, Company_Home, Vendor_Booking,Admin_Home, Vendor_Home, HireVendors } from './constants';
 
 import AuthStack from './AuthStack';
 import UserHomeStack from './UserHomeStack';
@@ -173,7 +173,7 @@ function RoutNavigator(){
                 options={{headerShown:false}}
              />
              <MainStack.Screen
-                name={CompanyRcvedOdrDetls}
+                name={HireVendors}
                 component={CompanyHomeStack}
                 options={{headerShown:false}}
              />

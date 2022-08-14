@@ -434,7 +434,10 @@ const updateProfile =  (req,res)=>{
         new:true
     },
     (err,user)=>{
-        return res.json(user)
+        if(user){
+            return res.json({status:'ok', data:user})
+        }
+        return res.json({status:'error', error:err})
     }
     )
 
@@ -449,6 +452,7 @@ const changePassword = async (req,res)=>{
         const user = await User.findById(req.user.id)
         if(await bcrypt.compare(old_password,user.password)){
 
+            console.log("old pass correct")
                 if(new_orignal_password.length<5){
                     return res.json({status:'error', error: 'Password should be atleast 5 characters' })
                 }
@@ -463,7 +467,7 @@ const changePassword = async (req,res)=>{
                     (err,user)=>{
                     if(user){
                        
-                        return res.json({status:'ok', data: user })
+                        return res.json({status:'ok'})
                     }
                     return res.json({status:'error', error: 'user not updated',err })
                 })
@@ -485,20 +489,6 @@ const myOrders = async (req,res)=>{
 
     User.findOne({_id: req.user.id},{orders:1,_id:0},async (err,orders)=>{
 
-            //    try {
-            //                 const my_new_orders = []
-            //                 for(i of my_orders.orders){
-            //                         const order = await Order.findById(i)
-            //                         my_new_orders.push(order)
-            
-                                    
-            //                 }
-                            
-            //                 return res.json({ status:'ok', data: my_new_orders})
-                
-            //    } catch (error) {
-            //                 return res.json({status:"Error",error})
-            //    }
                 
                 try {
                         const my_orders =  orders.orders.map(async (o_id)=>{
@@ -548,4 +538,4 @@ const rateCompany = async (req,res)=>{
 
 
 module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,
-                  createOrder,showProfile,updateProfile,changePassword,myOrders,orderDetails,rateCompany}
+                  createOrder,showProfile,updateProfile,changePassword,myOrders,rateCompany}

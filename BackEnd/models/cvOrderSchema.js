@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 
-const orderSchema = new mongoose.Schema({
-    customer_id :{
+const cvOrderSchema = new mongoose.Schema({
+    company_id :{
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    customer_name :{
+    company_name :{
         type: String,
         required: true
     },
-    company_id:{
+    vendor_id:{
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    company_name:{
+    vendor_name:{
         type: String,
         required: true
     },
-    company_pic:{
+    vendor_pic:{
         type: String,
         required: true
     },
@@ -54,20 +54,17 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: 'No'
     },
-    required_services:{
+    required_service:{
         type: String,
         required: true
     },
     status: {
         type: String,
         default: 'Pending'
-    },
-    sub_orders:[
-        {type: mongoose.Schema.Types.ObjectId, ref:'CvOrder'}
-    ]
+    }
 
 });
 
-const  Order = mongoose.model('Order', orderSchema)
-module.exports = Order
+const  CvOrder = mongoose.model('CvOrder', cvOrderSchema)
+module.exports = CvOrder
 

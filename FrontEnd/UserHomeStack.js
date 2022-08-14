@@ -13,6 +13,7 @@ import OrderDetails from './screens/OrderDetails';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserStack from './UserStack';
+import Profile from './screens/Profile';
 
 
 const Stack = createNativeStackNavigator();  
@@ -26,6 +27,7 @@ const UserHomeStack = () => {
            <Stack.Screen name='HomeScreen' component={HomeScreen} options={{headerShown:false}}/>
            <Stack.Screen name='CompanyDetails' component={CompanyDetails} options={{headerShown:false}}/>
            <Stack.Screen name='BookingForm' component={BookingForm} options={{headerShown:false}}/>
+           {/* <Stack.Screen name='Profile' component={Profile} /> */}
            <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:false}}/>
            <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown:false}}/>
            <Stack.Screen name="MyAccount" component={MyAccount} options={{headerShown:false}}/>

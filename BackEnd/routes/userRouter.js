@@ -24,7 +24,7 @@ route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)
 
 //-profile
 route.get('/showProfile',middleware.ValidateToken ,userController.showProfile)//done
-route.patch('/updateProfile',middleware.ValidateToken ,userController.updateProfile)
+route.patch('/updateProfile',middleware.ValidateToken ,userController.updateProfile)//done
 route.patch('/changePassword',middleware.ValidateToken ,userController.changePassword)//done
 
 

@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import CompanyHome from '../CompanyHome';
-import CompanyVendorProfile from '../CompanyVendorProfile';
-import CompanyVendorOrders from '../CompanyVendorOrders';
+import CompanyProfile from '../CompanyProfile';
+import AcceptedOrders from '../AcceptedOrders';
 import ReceivedOrders from './ReceivedOrders';
 import Location from '../Location';
 import Message from '../Message';
@@ -17,7 +17,9 @@ import { FontAwesome } from '@expo/vector-icons';
 const Drawer = createDrawerNavigator();
 
 
-const CompanyStack = () => {
+const CompanyStack = ({route}) => {
+
+  
   return (
     <Drawer.Navigator 
     drawerContent={props=><CustomDrawer {...props} /> } 
@@ -27,7 +29,7 @@ const CompanyStack = () => {
       drawerInactiveTintColor:'#333'
     }}
     useLegacyImplementation>
-          <Drawer.Screen name='Home' component={CompanyHome} 
+          <Drawer.Screen name='Home' initialParams={ route.params } component={CompanyHome} 
             options={{
               drawerIcon:({focused,size})=>(
                 <FontAwesome
@@ -39,7 +41,7 @@ const CompanyStack = () => {
             }}
             
           />
-          <Drawer.Screen name=' Profile' component={CompanyVendorProfile}
+          <Drawer.Screen name=' Profile' component={CompanyProfile}
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome
@@ -50,7 +52,7 @@ const CompanyStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='My Orders' component={CompanyVendorOrders} 
+          <Drawer.Screen name='My Orders' component={AcceptedOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome

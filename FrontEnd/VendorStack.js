@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import VendorHome from './screens/VendorHome';
-import CompanyVendorProfile from './screens/CompanyVendorProfile';
-import CompanyVendorOrders from './screens/CompanyVendorOrders';
+import VendorProfile from './screens/VendorProfile'
+import AcceptedOrders from './screens/AcceptedOrders';
 import Location from './screens/Location';
 import Message from './screens/Message';
 import HelpCentre from './screens/HelpCentre';
@@ -38,7 +38,7 @@ const VendorStack = () => {
             }}
             
           />
-          <Drawer.Screen name=' Profile' component={CompanyVendorProfile}
+          <Drawer.Screen name=' Profile' component={VendorProfile}
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome
@@ -49,7 +49,7 @@ const VendorStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='My Orders' component={CompanyVendorOrders} 
+          <Drawer.Screen name='My Orders' component={AcceptedOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome

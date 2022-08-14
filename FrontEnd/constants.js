@@ -17,7 +17,7 @@ const Vendor_Order='vendororder';
 const UserOrderDetails="UserOrderDetails";
 const VendorOrderDetails="VendorOrderDetails";
 const CompanyOrderDetails="CompanyOrderDetails";
-const CompanyRcvedOdrDetls="CompanyReceivedOrderDetails";
+const HireVendors="HireVendors";
 // Help Screens for user
 const MyAccount='updatemyaccount';
 const SecurityConcerns='securityconcerns';
@@ -38,7 +38,7 @@ const VPayment_Refunds="vpasymentrefunds";
 
 
 
-export {UserOrderDetails,VendorOrderDetails,CompanyOrderDetails,CompanyRcvedOdrDetls,
+export {UserOrderDetails,VendorOrderDetails,CompanyOrderDetails,HireVendors,
        MyAccount,SecurityConcerns,ForgotPassword, Payment_Refunds,
        CMyAccount,CSecurityConcerns,CForgotPassword,CPayment_Refunds,
        VMyAccount,VSecurityConcerns,VForgotPassword,VPayment_Refunds,

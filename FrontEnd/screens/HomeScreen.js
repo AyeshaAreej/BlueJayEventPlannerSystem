@@ -3,15 +3,12 @@ import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   I
 import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
-
 import SelectDropdown from 'react-native-select-dropdown'
-
 import colors from '../components/colors';
-
 import * as SecureStore from 'expo-secure-store';
+
 
 
 const {width}= Dimensions.get('screen');
@@ -40,6 +37,7 @@ const HomeScreen=({route})=>{
     const [catName, setCatName] = React.useState('');
     
     const cities = ["islamabad", "karachi", "sukkur", "lahore","quetta"]
+
     //Date
     const [date, setDate] = useState(new Date());
     const [myDate, setMyDate] = useState(" ");
@@ -48,8 +46,9 @@ const HomeScreen=({route})=>{
 
    console.log(route.params.params)
    const onChangeSearch = (query) => {
-    setSearchQuery(query)}
-    ;
+    setSearchQuery(query)
+  }
+    
 
    
   //  console.log(date);
@@ -403,11 +402,10 @@ return(
     return(
         <SafeAreaView style={{flex:1,backgroundColor:colors.white}}>
 
-      
 
         <View style={style.header}>
 
-                    <View style={{paddingBottom:15}}>
+                    <View style={{paddingBottom:8}}>
 
                             <View style={{flexDirection:'row'}}>
                                   <Text style={{fontSize:25, fontWeight:'bold'}}> Search a Company </Text> 
@@ -442,9 +440,21 @@ return(
                             </View>
 
                             <View style={{flexDirection:'row'}}>
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:13}}> Date :</Text>
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:13,color: COLORS.primary}}> {myDate}</Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5}}>Selected Date :</Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5,color: COLORS.primary}}> {myDate}</Text>
       
+
+                            </View>
+                    
+
+                    </View>
+   
+        </View>
+
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+
+
 
                                   {/*Dropdown  */}
                                   <View style={style.dropdownContainer}>
@@ -473,15 +483,6 @@ return(
                                         
                                         </View>
 
-                            </View>
-                    
-
-                    </View>
-   
-        </View>
-
-
-        <ScrollView showsVerticalScrollIndicator={false}>
 
                     <View style={style.searchInputContainer}>
                             <Searchbar 
@@ -535,7 +536,7 @@ const style = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginHorizontal: 20,
-      marginTop: 20,
+      marginTop: 28,
       paddingBottom:20
     },
     categoryListText: {
@@ -543,15 +544,15 @@ const style = StyleSheet.create({
       fontWeight: 'bold',
     },
 
-    card: {
-      height: 250,
-      width: tcardWidth,
-      elevation: 15,
-      marginRight: 20,
-      borderRadius: 15,
-      backgroundColor: colors.white,
-      flexDirection:'column',
-    },
+    // card: {
+    //   height: 250,
+    //   width: tcardWidth,
+    //   elevation: 15,
+    //   marginRight: 20,
+    //   borderRadius: 15,
+    //   backgroundColor: colors.white,
+    //   flexDirection:'column',
+    // },
     cardImage: {
       height: 180,
       width: '100%',
@@ -617,9 +618,8 @@ const style = StyleSheet.create({
       dropdown:{
         justifyContent:'center',
           alignItems:'center',
-          marginTop:5,
-          marginRight:50,
-          width:'75%',
+          marginBottom:18,
+          width:'90%',
           borderColor :colors.primary,
           borderWidth:1,
           elevation:0,

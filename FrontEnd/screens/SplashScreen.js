@@ -49,6 +49,7 @@ useEffect(()=>{
                     }
               if(result.data.role == 'vendor')
                     {
+                      //console.log("vendor")
                       navigation.navigate(Vendor_Home)
                     }
 

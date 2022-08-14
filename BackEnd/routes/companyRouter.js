@@ -6,17 +6,17 @@ const route = express.Router()
 
 
 //authorization
-route.post('/signUp', companyController.SignUp)
-route.post('/logIn',companyController.logIn)
+route.post('/signUp', companyController.signUp) //done
+route.post('/logIn',companyController.logIn)//done
 
 
 //-Home Screen
-route.post('/searchVendor',middleware.ValidateToken ,companyController.searchVendor)  
-route.post('/searchByDate',middleware.ValidateToken ,companyController.searchByDate) 
-route.post('/caterers',middleware.ValidateToken ,companyController.caterers) 
-route.post('/decoration',middleware.ValidateToken ,companyController.decoration) 
-route.post('/venue',middleware.ValidateToken ,companyController.venue) 
-route.post('/photographers',middleware.ValidateToken ,companyController.photographers) 
+route.post('/searchVendor',middleware.ValidateToken ,companyController.searchVendor)  //done
+route.post('/searchByDate',middleware.ValidateToken ,companyController.searchByDate) //done
+route.post('/caterers',middleware.ValidateToken ,companyController.caterers) //done
+route.post('/decoration',middleware.ValidateToken ,companyController.decoration) //done
+route.post('/venue',middleware.ValidateToken ,companyController.venue) //done
+route.post('/photographers',middleware.ValidateToken ,companyController.photographers) //done
 
 
 //orders
@@ -31,10 +31,9 @@ route.patch('/changePassword',middleware.ValidateToken ,companyController.change
 
 
 //My orders
-route.get('/myOrders',middleware.ValidateToken ,companyController.myOrders)
-route.patch('/approveOrder',middleware.ValidateToken ,companyController.approveOrder)
-route.post('/orderDetails',middleware.ValidateToken ,companyController.orderDetails)
-
+route.get('/rec_Orders',middleware.ValidateToken ,companyController.rec_Orders) //done
+route.patch('/approveOrder',middleware.ValidateToken ,companyController.approveOrder) 
+route.get('/myOrders',middleware.ValidateToken ,companyController.myOrders)//done
 
 
 

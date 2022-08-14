@@ -6,7 +6,7 @@ const route = express.Router()
 
 
 //authorization
-route.post('/signUp', vendorController.SignUp)
+route.post('/signUp', vendorController.signUp)
 route.post('/logIn',vendorController.logIn)
 
 
@@ -19,7 +19,6 @@ route.patch('/changePassword',middleware.ValidateToken ,vendorController.changeP
 //My orders
 route.get('/myOrders',middleware.ValidateToken ,vendorController.myOrders)
 route.patch('/approveOrder',middleware.ValidateToken ,vendorController.approveOrder)
-route.post('/orderDetails',middleware.ValidateToken ,vendorController.orderDetails)
 
 
 

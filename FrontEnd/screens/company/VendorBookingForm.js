@@ -8,9 +8,17 @@ import { Formik} from 'formik';
 import COLORS from '../../components/colors';
 
 
-function VendorBookingForm({  navigation}) {
+function VendorBookingForm({ route, navigation}) {
 
- 
+  const vendor = route.params.vendor
+  const myDate = route.params.myDate
+  const o_id = route.params.o_id
+
+  //console.log("vendor",vendor)
+  //console.log("myDate",myDate)
+  console.log("o_id",o_id)
+
+
    const [date, setDate] = useState(new Date());
    const [isPickerShow, setIsPickerShow] = useState(false);
 

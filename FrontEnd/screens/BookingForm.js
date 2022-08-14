@@ -11,8 +11,6 @@ import HomeScreen from './HomeScreen';
 function BookingForm({ route}) {
 
 
-  
-  const [bool, setBool] = React.useState(false);
   const navigation = useNavigation();
 
   const company = route.params.company

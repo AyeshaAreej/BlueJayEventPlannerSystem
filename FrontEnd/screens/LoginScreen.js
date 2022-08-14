@@ -311,14 +311,7 @@ async function registerForPushNotification(){
           </View>
           </View>
 
-      {/* Sign in Button  */}
-            
-      {/* <View style={styles.buttonContainer}> 
-            <TouchableOpacity onPress={handleSubmit}  style={styles.editButton}>
-            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white   }}> Save </Text>
-            </TouchableOpacity>
-            </View> */}
-           
+      
 
         </>
       )}
@@ -373,9 +366,8 @@ const styles = StyleSheet.create({
 
    button:{
     backgroundColor: 'purple',
-    width: '100%',
-    height: 35,
-    borderRadius:20,
+    width: '120%',
+    height: 37,
     
     
 

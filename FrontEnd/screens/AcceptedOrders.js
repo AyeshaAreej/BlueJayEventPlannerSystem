@@ -1,18 +1,18 @@
 import React from 'react';
-import {useState,useEffect} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {useState,useEffect} from 'react';
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 
 
+
 const {width}= Dimensions.get('screen');
-const cardWidth=width/1.1;
+const cardWidth=width/1.12;
 
-const MyOrders=()=>{
+const AcceptedOrders=({navigation})=>{
  
-
   const [myOrders, setMyOrders] = React.useState([]);
 
   useEffect(()=>{
@@ -22,7 +22,7 @@ const MyOrders=()=>{
 
       console.log('My orders',token)
 
-      fetch(`http://10.0.2.2:5000/users/myOrders`,{
+      fetch(`http://10.0.2.2:5000/company/myOrders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -31,7 +31,7 @@ const MyOrders=()=>{
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                //console.log(result)
+                console.log(result)
 
                 if( result.status == 'ok'){
 
@@ -51,7 +51,8 @@ const MyOrders=()=>{
 
 
    },[]);
-  
+
+
 // Card
 
 const Card=({order})=>{
@@ -59,8 +60,12 @@ const Card=({order})=>{
   const navigation = useNavigation();
   
   function handleClick(){
-    navigation.navigate('OrderDetails',{order})
+    // console.log("Card clicked")
+    navigation.navigate('HireVendors',{order})
   }
+
+  if(order){
+
 return(
    
     <TouchableOpacity style={{...style.card}} onPress={handleClick}>
@@ -71,46 +76,44 @@ return(
                   </View>
           </View>
 
+      
+    
           <View style={{flexDirection:'row'}}>
-                  <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
-              
-                  <Text style={{ marginLeft:20, marginTop:75,marginBottom:20}}>
+                
+                  <Text style={{ marginLeft:20, marginTop:25,marginBottom:20}}>
 
-                  <Text style={{fontSize:18, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:16}}>{order.event_type}</Text>{'\n'}{'\n'}
+                  <Text style={{fontSize:20, fontWeight:"bold"}}>Order :</Text>{'\n'}{'\n'}
+            
+                  <Text style={{fontSize:20, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:20}}>{order.event_type}</Text>{'\n'}{'\n'}
                  
-                  <Text style={{fontSize:18,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:16}}>{order.date}</Text>
+                  <Text style={{fontSize:20,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:20}}>{order.date}</Text>
+                  
+                  <Text style={{fontWeight:"bold",fontSize:22,paddingTop:20}}>                 {order.status}</Text>{'\n'}{'\n'}
+                  
+                  <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15}}>Total :</Text> <Text style={{fontSize:20}}> Rs.{order.available_budget}</Text>
+            
                   
                   </Text>
           </View>
 
-    
-          <View style={{flexDirection:"row"}}>
-                  
-                    <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15,paddingTop:10}}>Name : {order.company_name}</Text>
-                     
-                    <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}> {order.status}</Text>
-          
-          </View>   
 
-           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
-                  
-           <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:15}}>Total : Rs.{order.available_budget}</Text>
-                   
-          </View>      
-        
-    </TouchableOpacity>
-    
-    
-    
+    </TouchableOpacity> 
 
 )
+
+}else{
+  return(
+    <>
+    </>
+  )
+}
 };
 
 
 
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
-            <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
+      
         <ScrollView showsVerticalScrollIndicator={false}>
     
          <View>
@@ -138,12 +141,12 @@ return(
 const style = StyleSheet.create({
 
     card: {
-      height: 250,
+      height: 220,
       width: cardWidth,
       elevation: 15,
       borderRadius: 15,
-      marginBottom:10,
-      marginTop:15,
+      marginBottom:30,
+      marginTop:10,
       backgroundColor: COLORS.white,
       
     },
@@ -181,4 +184,4 @@ const style = StyleSheet.create({
    
   });
 
-export default MyOrders;
+export default AcceptedOrders;

@@ -14,21 +14,28 @@ import image from '../assets/hotel1.jpg';
 import { useNavigation } from '@react-navigation/native';
 
 
- function CompanyDetails({route}) {
+ function VendorDetails({route}) {
 
 
  
   const navigation = useNavigation();
 
-  const company = route.params.company
+  const vendor = route.params.vendor
   const myDate = route.params.myDate
-  // console.log("company",company)
-  console.log("myDate",myDate)
+  const o_id = route.params.o_id
+  //console.log("vendor",vendor)
+  //console.log("myDate",myDate)
+  console.log("o_id",o_id)
 
   
   function handleClick(){
     console.log("Card clicked")
-    navigation.navigate('BookingForm',{company,myDate})
+    if(o_id === undefined){
+      alert('Cant book vendor from here')
+    }else if(o_id){
+      navigation.navigate('VendorBookingForm',{vendor,myDate,o_id})
+    }
+    
   }
 
   return (
@@ -48,6 +55,7 @@ import { useNavigation } from '@react-navigation/native';
             color={COLORS.white}
             onPress={navigation.goBack}
           />
+        
         </View>
       </ImageBackground>
       <View>
@@ -55,7 +63,7 @@ import { useNavigation } from '@react-navigation/native';
           <FontAwesome name="map-marker" color={COLORS.white} size={20} />
         </View>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
-        <Text style={{fontSize: 25, fontWeight: 'bold'}}>{company.company_name}</Text>
+        <Text style={{fontSize: 25, fontWeight: 'bold'}}>{vendor.vendor_name}</Text>
           <Text
             style={{
               fontSize: 20,
@@ -64,7 +72,7 @@ import { useNavigation } from '@react-navigation/native';
               marginTop: 5,
               fontWeight: 'bold',
             }}>
-           {company.address}
+           {vendor.address}
           </Text>
           <View
             style={{
@@ -81,7 +89,7 @@ import { useNavigation } from '@react-navigation/native';
                 <MaterialCommunityIcons name="star" size={20} color={COLORS.grey} />
               </View>
               <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 9}}>
-                {company.rating}
+                {vendor.rating}
               </Text>
             </View>
             
@@ -89,10 +97,10 @@ import { useNavigation } from '@react-navigation/native';
           <View style={{marginTop: 20}}>
           <Text
             style={{ fontSize: 22,  fontWeight: 'bold',   color: COLORS.dark,
-              marginTop: 5,  }}>Services We Provide 
+              marginTop: 5,  }}>Service We Provide 
           </Text>
             <Text style={{fontSize: 20,fontWeight: 'bold',lineHeight: 40, color: COLORS.grey}}>
-             {company.services}
+             {vendor.service}
              </Text>
           </View>
         </View>
@@ -116,7 +124,7 @@ import { useNavigation } from '@react-navigation/native';
                 marginLeft: 5,
                 fontWeight: 'bold',
               }}>
-              $ {company.price_range} 
+              $ {vendor.price_range} 
             </Text>
            
           </View>
@@ -183,4 +191,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default CompanyDetails
+export default VendorDetails

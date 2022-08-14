@@ -5,8 +5,17 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
 
-const EditProfile = ({navigate}) => {
+
+import { useNavigation } from '@react-navigation/native';
+
+
+const EditProfile = ({route}) => {
+
+  const navigation = useNavigation();
+  const user = route.params.user
+  const setUser = route.params.setUser
 
   const [image, setImage] = useState(null);
 
@@ -36,11 +45,46 @@ const EditProfile = ({navigate}) => {
       {/* Form Inputs View */}
    <View style={{marginTop:20, }}>
           <Formik
-      initialValues={{username:'', email: '', phone_no: '',city:'', }}
+      initialValues={{username:user.username, email: user.email, phone_no: user.phone_no ,city:user.city }}
       onSubmit={
         (values) => {
-         console.log(values)
+
+         SecureStore.getItemAsync('token').then(token=>{
+
+          console.log('update Profile',token)
+         
+          const value = {username:values.username, email: values.email ,
+                         phone_no: values.phone_no , city: values.city }
+
+          console.log(value)
+
+          fetch(`http://10.0.2.2:5000/users/updateProfile`,{
+                        method: "patch",
+                        body: JSON.stringify(value),
+                        headers: {
+                            Accept: "application/json, text/plain, */*",
+                            "Content-Type": "application/json",
+                            token
+                        }
+                      
+                  }).then(res=>res.json()).then((result)=>{
+        
+    
+                    if( result.status == 'ok'){
+                      setUser(result.data)
+                      navigation.navigate("UserStack")
+                       
+                    }else{
+                      console.log(result.status)
+                    }
+    
+    
+                  }).catch(err=>console.log('catch',err.message))
+        })  
+         
+         
           }}
+
           validationSchema={yup.object().shape({
             username: yup
             .string()
@@ -67,9 +111,12 @@ const EditProfile = ({navigate}) => {
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View>
 
+
+        
         <View style={styles.imageContainer}>
         {image && <Image source={{ uri: image }} style={styles.profileImage}  />}
         
+
          
         </View>
         <View style={styles.button}>
@@ -83,7 +130,6 @@ const EditProfile = ({navigate}) => {
              name="username"
              placeholder='User Name'
              onChangeText={handleChange('username')}
-            
              onBlur={()=>setFieldTouched('username')}
             value={values.username}
            
@@ -203,6 +249,11 @@ const styles = StyleSheet.create({
 
    
 },
+buttonContainer:{
+  justifyContent:'center',
+  alignItems:'center',
+
+},
  icon:{
  color:colors.primary,
  margin:20,
@@ -215,10 +266,14 @@ const styles = StyleSheet.create({
  },
  profileImage:{
  
-  height: '100%',
+  // height: '100%',
+  // width: '50%',
+  // borderRadius: 20,
+
+  height: 180,
   width: '50%',
   borderRadius: 20,
-
+  marginBottom:20
 },
   imageContainer:{
       flex:1,

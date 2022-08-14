@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator();
 
 
 const UserStack = ({route,navigation}) => {
-  //console.log('params', route.params);
+  // console.log('params', route.params);
 
   return (
     <Drawer.Navigator 

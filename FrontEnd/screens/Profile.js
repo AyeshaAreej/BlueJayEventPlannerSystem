@@ -2,11 +2,11 @@ import { StyleSheet, Text, View,TextInput,TouchableOpacity, ScrollView ,Button,I
 import colors from '../components/colors';
 import React,{useState,useEffect} from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { LogBox } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 
-const Profile = ({navigation}) => {
+const Profile = ({route,navigation}) => {
 
   
   const [user,setUser] = useState([])
@@ -14,6 +14,7 @@ const Profile = ({navigation}) => {
 
   useEffect(()=>{
    
+    console.log('2')
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('view profile',token)
@@ -47,9 +48,9 @@ const Profile = ({navigation}) => {
 
    },[]);
    
-
-
-
+   LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
 
 
   return (
@@ -101,15 +102,24 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
             </View>
 
+            
            
            
          
            <View style={styles.buttonContainer}> 
            <TouchableOpacity  style={styles.editButton}
-            onPress={()=> navigation.navigate('EditProfile')}>
+            onPress={()=> navigation.navigate('EditProfile',{user,setUser})}>
              <Text style={{ paddingTop:5,paddingBottom:5, fontSize: 23,  fontWeight: 'bold',  color: colors.white,   }}>Edit</Text>
            </TouchableOpacity> 
             </View>
+       
+{/*        
+            <View style={styles.buttonContainer}> 
+           <TouchableOpacity  style={styles.editButton}
+            onPress={RefreshPage}>
+             <Text style={{ paddingTop:5,paddingBottom:5, fontSize: 23,  fontWeight: 'bold',  color: colors.white,   }}>Refresh</Text>
+           </TouchableOpacity> 
+            </View> */}
        
  
 

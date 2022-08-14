@@ -9,9 +9,6 @@ import * as SecureStore from 'expo-secure-store';
 
 export default function ChangePassword() {
 
- const [oldPassword,setOldPassword]=useState('')
- const [newPassword,setNewPassword]=useState('')
-
  
   return (
     <ScrollView  style={{flex:1, backgroundColor:'#fff', }} contentContainerStyle={{justifyContent:'center',
@@ -24,32 +21,31 @@ export default function ChangePassword() {
       initialValues={{ oldpassword: '',newpassword: '',}}
       onSubmit={
         (values) => {
-        console.log(values.oldpassword, values.newpassword)
+        
 
         SecureStore.getItemAsync('token').then(token=>{
 
-          console.log('view profile',token)
+          console.log('change Password',token)
          
-         
-          fetch(`http://10.0.2.2:5000/users/showProfile`,{
-                        method: "get",
+          const value = {old_password: values.oldpassword, new_password: values.newpassword}
+          console.log(value)
+          fetch(`http://10.0.2.2:5000/users/changePassword`,{
+                        method: "patch",
+                        body: JSON.stringify(value),
                         headers: {
                             Accept: "application/json, text/plain, */*",
                             "Content-Type": "application/json",
                             token
                         }
                       
-                  }).then(res=>res.json()).then(async(result)=>{
+                  }).then(res=>res.json()).then((result)=>{
                   
     
                     if( result.status == 'ok'){
                       console.log(result)
-                      setUser(result.data)
-                        
+                     
                     }else{
                       console.log(result.status)
-                      
-    
                     }
     
     
@@ -69,12 +65,12 @@ export default function ChangePassword() {
         validationSchema={yup.object().shape({
           oldpassword: yup
             .string()
-            .min(6, 'More than 6 characters are needed.')
+            .min(5, 'More than 4 characters are needed.')
             .max(11, 'Less than 12 characters are allowed.')
             .required('Current Password is required'),
           newpassword: yup
           .string()
-            .min(6, 'More than 6 characters are needed.')
+            .min(5, 'More than 4 characters are needed.')
             .max(11, 'Less than 12 characters are allowed.')
             .required('Old Password is required'),         
        
@@ -87,7 +83,7 @@ export default function ChangePassword() {
 
         <View style={styles.inputContainer} >
         <Text style={{marginTop:20, marginBottom:20, fontSize:20,fontWeight: 'bold'}}>
-        Changing your password? Go for at least 6 characters
+        Changing your password? Go for at least 5 characters
         </Text>
         </View>
       

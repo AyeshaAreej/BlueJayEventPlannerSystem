@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 
 
-const EditCompanyVendorProfile = ({navigation}) => {
+const EditCompanyProfile = ({navigation}) => {
   const [image, setImage] = useState(null);
 
 
@@ -276,4 +276,4 @@ const styles = StyleSheet.create({
    
 
 });
-export default EditCompanyVendorProfile;
+export default EditCompanyProfile;

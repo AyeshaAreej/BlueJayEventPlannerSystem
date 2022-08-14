@@ -3,10 +3,12 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const userRouter = require('./routes/userRouter')
 const companyRouter = require('./routes/companyRouter')
+const vendorRouter = require('./routes/vendorRouter')
 const db = require('./config/mongoose')
 const middleware = require('./middlewares/index')
 const User = require('./models/userSchema')
 const Company = require("./models/companySchema")
+const Vendor = require('./models/vendorSchema')
 const cors = require("cors")
 
 require('dotenv').config();
@@ -50,14 +52,14 @@ app.get('/',middleware.ValidateToken,async (req,res)=>{
             })
             break;
 
-        // case 'vendor':
-        //         Vendor.findById(req.user.id,(err,user)=>{
-        //            if(err){
-        //                return res.json({status:'error', error: 'cant find user' })
-        //            }
-        //          return res.json({ status:'ok', data: user})
-        //     })
-        //     break;
+        case 'vendor':
+                Vendor.findById(req.user.id,(err,user)=>{
+                   if(err){
+                       return res.json({status:'error', error: 'cant find user' })
+                   }
+                 return res.json({ status:'ok', data: user})
+            })
+            break;
         
   
     }
@@ -69,6 +71,7 @@ app.get('/',middleware.ValidateToken,async (req,res)=>{
 //routes
 app.use('/users', userRouter)
 app.use('/company', companyRouter)
+app.use('/vendor', vendorRouter)
 
 
 

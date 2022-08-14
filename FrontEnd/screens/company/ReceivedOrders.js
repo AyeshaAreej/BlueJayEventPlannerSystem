@@ -1,81 +1,157 @@
 import React from 'react';
+import {useState,useEffect} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../../components/colors';
-import hotels from '../../components/companies';
 
 import { useNavigation } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 
 const {width}= Dimensions.get('screen');
-const cardWidth=width/1.1;
+const cardWidth=width/1.08;
 
 const ReceivedOrders=({navigation})=>{
  
+
+  const [myOrders, setMyOrders] = React.useState([]);
+  const [approved, setApproved] = React.useState(false);
+
+  useEffect(()=>{
+
+    
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Received Orders',token)
+
+      fetch(`http://10.0.2.2:5000/company/rec_Orders`,{
+                    method: "get",
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                         setMyOrders(result.data)
+                        if(result.data == ''){
+                            console.log('No orders found')
+                            alert('No orders yet')
+                        }
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+
+   },[]);
+
+
+
+   const acceptOrder = ()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Accept Order',token)
+
+      fetch(`http://10.0.2.2:5000/company/approveOrder`,{
+                    method: "get",
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                        setApproved(true)
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+
+
+   }
   
 // Card
 
-const Card=({hotel,index})=>{
-
+const Card=({order})=>{
   const navigation = useNavigation();
   
   function handleClick(){
-    console.log("Card clicked")
-    navigation.navigate('CompanyReceivedOrderDetails')
+    // console.log("Card clicked")
+    navigation.navigate('CompanyOrderDetails',{order})
   }
-
+if(order){
 return(
    
       <TouchableOpacity style={{...style.card}} onPress={handleClick}>
-    <View style={style.priceTag}>
-    <View style={{color:COLORS.white, }}>
-     <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white}/>
-    </View>
- 
-     </View>
-     <View style={{flexDirection:'row'}}>
-         <Image source={hotel.image} style={style.cardImage} />
-     <View  style={{flexDirection:'column'}}>
-         <Text style={{fontSize:16, marginLeft:20, marginTop:50,marginBottom:20}}>
-         Event Type: Wedding{'\n'}{'\n'}Status: Pending{'\n' }{'\n' }Date: 4/july/2022  </Text>
-      
 
-         </View>
-         </View>
-        
-         <View style={{flexDirection:'row'}}>
-         <Text style={{fontWeight:"bold",fontSize:15,paddingLeft:10,paddingTop:10}}>Name : {hotel.name}</Text>
-         <Text style={{fontWeight:"bold",fontSize:17,paddingLeft:110}}>Pending</Text>
-         </View>
-        
-         
+
+          <View style={style.priceTag}>
+                  <View style={{color:COLORS.white, }}>
+                  <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white}/>
+                  </View>
+          </View>
+
+           <View style={{flexDirection:'row'}}>
+                 
+                  <Text style={{ marginLeft:20, marginTop:25,marginBottom:10}}>
+                          <Text style={{fontSize:20, fontWeight:"bold"}}>Order :</Text>{'\n'}{'\n'}
+                          <Text style={{fontSize:20, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:20}}>{order.event_type}</Text>{'\n'}{'\n'}
+                          <Text style={{fontSize:20,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:20}}>{order.date}</Text>{'\n'}{'\n'}
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15,paddingTop:8}}>Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:8}}>{order.available_budget}</Text>
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:100}}>                        {order.status}</Text>
+            
+                 </Text>
+
+          </View>
+
+      
+   
            <View style={{flexDirection:'row'}}>
                
-               <Text style={{fontWeight:"bold",fontSize:15,paddingLeft:10,paddingTop:5}}>Total : Rs.{hotel.price}</Text>
+          
 
-                <View  style={{flexDirection:"row", justifyContent:'center',paddingLeft:100}}>
+                <View  style={{paddingLeft:220}}>
                 <Button
-                //  onPress={()=>navigation.navigate('CompanyDetails')}
+                onPress={acceptOrder}
                 title="Accept"
                 color={COLORS.primary}
                 /> 
                 </View>
 
-               <View style={{paddingLeft:10, borderRadius:12}}>
+               <View style={{paddingLeft:15, borderRadius:12}}>
                 <Button  title="Reject"
                 color={COLORS.primary}/>
               </View>
         
                
           </View>
-         
-           
         
+
     </TouchableOpacity>
     
     
     
 
 )
+}
+else{
+  return(
+    <>
+    </>
+  )
+}
 };
 
 
@@ -87,7 +163,7 @@ return(
     
          <View>
          <Animated.FlatList
-          data={hotels}
+          data={myOrders}
           vertical
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -95,7 +171,7 @@ return(
             alignItems:'center',
             
           }}
-          renderItem={({item}) => <Card hotel={item}  />}
+          renderItem={({item}) => <Card order={item}  />}
         />
         </View>
 
@@ -110,17 +186,18 @@ return(
 const style = StyleSheet.create({
 
     card: {
-      height: 250,
+      height: 230,
       width: cardWidth,
       elevation: 15,
       borderRadius: 15,
-      marginBottom:30,
+      marginBottom:15,
+      marginTop:10,
       backgroundColor: COLORS.white,
       
     },
     cardImage: {
       height: 180,
-      width: '50%',
+      width: '55%',
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       borderBottomLeftRadius:15,
