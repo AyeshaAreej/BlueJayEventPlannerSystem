@@ -21,15 +21,15 @@ const cvOrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    email:{
-        type: String,
-        required: true
-    },
     city:{
         type: String,
         required: true
     },
-    phone_no:{
+    c_phone_no:{
+        type: String,
+        required: true
+    },
+    v_phone_no:{
         type: String,
         required: true
     },
@@ -49,10 +49,6 @@ const cvOrderSchema = new mongoose.Schema({
     available_budget:{
         type: Number,
         required: true
-    },
-    venue:{
-        type: String,
-        default: 'No'
     },
     required_service:{
         type: String,

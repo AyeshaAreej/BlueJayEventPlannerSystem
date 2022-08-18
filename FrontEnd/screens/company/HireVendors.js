@@ -101,7 +101,7 @@ function HireVendors({route}) {
 
         {/*Save Button  */}
         <View style={style.buttonContainer}> 
-            <TouchableOpacity  onPress={()=>{ navigation.navigate('CompanyHomeScreen',{date: order.date, o_id : order._id}) }} style={style.editButton}>
+            <TouchableOpacity  onPress={()=>{ navigation.navigate('Home',{date: order.date, o_id : order._id}) }} style={style.editButton}>
             <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> Hire Vendor </Text>
             </TouchableOpacity>
         </View>

@@ -1,18 +1,18 @@
 import React from 'react';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-
+import {OrderContext} from '../OrderContext'
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;
 
 const MyOrders=()=>{
  
-
+  const [orderC,setOrderC] = useContext(OrderContext)
   const [myOrders, setMyOrders] = React.useState([]);
 
   useEffect(()=>{
@@ -34,13 +34,10 @@ const MyOrders=()=>{
                 //console.log(result)
 
                 if( result.status == 'ok'){
-
+                    setMyOrders(result.data)
                         if(result.data == ''){
                             console.log('No orders found')
                             alert('No orders yet')
-                        }else{
-                          setMyOrders(result.data)
-                          
                         }
                 }else{
                   console.log(result.status)
@@ -50,7 +47,7 @@ const MyOrders=()=>{
     })    
 
 
-   },[]);
+   },[orderC]);
   
 // Card
 
@@ -74,7 +71,7 @@ return(
           <View style={{flexDirection:'row'}}>
                   <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
               
-                  <Text style={{ marginLeft:20, marginTop:75,marginBottom:20}}>
+                  <Text style={{ marginLeft:10, marginTop:75,marginBottom:20}}>
 
                   <Text style={{fontSize:18, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:16}}>{order.event_type}</Text>{'\n'}{'\n'}
                  

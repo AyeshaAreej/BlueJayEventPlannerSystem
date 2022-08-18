@@ -1,9 +1,10 @@
 import React from 'react';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../../components/colors';
 
+import {OrderContext} from '../../OrderContext'
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 
@@ -14,7 +15,7 @@ const ReceivedOrders=({navigation})=>{
  
 
   const [myOrders, setMyOrders] = React.useState([]);
-  const [approved, setApproved] = React.useState(false);
+  const [orderC,setOrderC] = useContext(OrderContext)
 
   useEffect(()=>{
 
@@ -48,18 +49,21 @@ const ReceivedOrders=({navigation})=>{
     })    
 
 
-   },[]);
+   },[orderC]);
 
 
 
-   const acceptOrder = ()=>{
+   const acceptOrder = (o_id)=>{
 
     SecureStore.getItemAsync('token').then(token=>{
 
-      console.log('Accept Order',token)
+      console.log('Accept Order',token,o_id)
+
+      const value = {o_id: o_id}
 
       fetch(`http://10.0.2.2:5000/company/approveOrder`,{
-                    method: "get",
+                    method: "patch",
+                    body: JSON.stringify(value),
                     headers: {
                         Accept: "application/json, text/plain, */*",
                         "Content-Type": "application/json",
@@ -70,15 +74,14 @@ const ReceivedOrders=({navigation})=>{
                 console.log(result)
 
                 if( result.status == 'ok'){
-                        setApproved(true)
+                        setOrderC(!orderC)
                 }else{
                   console.log(result.status)
                 }
 
               }).catch(err=>console.log('catch',err.message))
+
     })    
-
-
 
    }
   
@@ -105,11 +108,11 @@ return(
 
            <View style={{flexDirection:'row'}}>
                  
-                  <Text style={{ marginLeft:20, marginTop:25,marginBottom:10}}>
+                  <Text style={{ marginLeft:20, marginTop:20,marginBottom:10}}>
                           <Text style={{fontSize:20, fontWeight:"bold"}}>Order :</Text>{'\n'}{'\n'}
                           <Text style={{fontSize:20, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:20}}>{order.event_type}</Text>{'\n'}{'\n'}
                           <Text style={{fontSize:20,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:20}}>{order.date}</Text>{'\n'}{'\n'}
-                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15,paddingTop:8}}>Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:8}}>{order.available_budget}</Text>
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15}}>Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:8}}>{order.available_budget}</Text>
                           <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:100}}>                        {order.status}</Text>
             
                  </Text>
@@ -124,7 +127,8 @@ return(
 
                 <View  style={{paddingLeft:220}}>
                 <Button
-                onPress={acceptOrder}
+                //onPress={acceptOrder(order._id)}
+                onPress={()=>{acceptOrder(order._id)}}
                 title="Accept"
                 color={COLORS.primary}
                 /> 
@@ -186,11 +190,11 @@ else{
 const style = StyleSheet.create({
 
     card: {
-      height: 230,
+      height: 226,
       width: cardWidth,
       elevation: 15,
       borderRadius: 15,
-      marginBottom:15,
+      marginBottom:10,
       marginTop:10,
       backgroundColor: COLORS.white,
       

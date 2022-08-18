@@ -74,7 +74,7 @@ const UserStack = ({route,navigation}) => {
                     ),
                   }}
                   />
-          <Drawer.Screen name='   Location' component={Location} 
+          {/* <Drawer.Screen name='   Location' component={Location} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome
@@ -84,7 +84,7 @@ const UserStack = ({route,navigation}) => {
                   />
                 ),
               }}
-          />
+          /> */}
           <Drawer.Screen name=' Message' component={Message}
                 options={{
                   drawerIcon:({focused,size})=>(

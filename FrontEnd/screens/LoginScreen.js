@@ -400,7 +400,7 @@ leftTag:{
  
   color: COLORS.grey,
   marginLeft: 5,
-  paddingBottom:5,
+ 
 }, 
 
 buttonContainer:{

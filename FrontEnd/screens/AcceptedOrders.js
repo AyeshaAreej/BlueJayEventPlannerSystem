@@ -1,11 +1,11 @@
 import React from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-
+import {OrderContext} from '../OrderContext'
 
 
 const {width}= Dimensions.get('screen');
@@ -14,6 +14,8 @@ const cardWidth=width/1.12;
 const AcceptedOrders=({navigation})=>{
  
   const [myOrders, setMyOrders] = React.useState([]);
+  
+  const [orderC,setOrderC] = useContext(OrderContext)
 
   useEffect(()=>{
 
@@ -50,7 +52,7 @@ const AcceptedOrders=({navigation})=>{
     })    
 
 
-   },[]);
+   },[orderC]);
 
 
 // Card
@@ -141,11 +143,11 @@ return(
 const style = StyleSheet.create({
 
     card: {
-      height: 220,
+      height: 210,
       width: cardWidth,
       elevation: 15,
       borderRadius: 15,
-      marginBottom:30,
+      marginBottom:22,
       marginTop:10,
       backgroundColor: COLORS.white,
       

@@ -1,5 +1,6 @@
 import React from 'react'
 import colors from '../components/colors';
+import { useState,useContext } from 'react';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import * as yup from 'yup';
 import { Formik} from 'formik';
@@ -7,10 +8,12 @@ import COLORS from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
+import {OrderContext} from '../OrderContext'
 
 function BookingForm({ route}) {
 
 
+  const [orderC,setOrderC] = useContext(OrderContext)
   const navigation = useNavigation();
 
   const company = route.params.company
@@ -20,6 +23,7 @@ function BookingForm({ route}) {
 
 
   const c_id = company._id
+
   
   function handleOrder(values){
 
@@ -53,6 +57,7 @@ function BookingForm({ route}) {
 
                 if(result.status == 'ok')
                      {
+                      setOrderC(!orderC)
                       alert('order confirmed')
                       navigation.navigate("UserStack")
                       }
@@ -127,6 +132,7 @@ function BookingForm({ route}) {
              placeholder='Event Type'
              onChangeText={handleChange('event_type')}
              onBlur={()=>setFieldTouched('event_type')}
+             multiline={true}
             value={values.event_type}
            
            /> 
@@ -142,6 +148,7 @@ function BookingForm({ route}) {
              onBlur={()=>setFieldTouched('no_of_guests')}
             value={values.numberofguests}
             keyboardType="numeric"
+            multiline={true}
             />
              {touched.no_of_guests && errors.no_of_guests &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.no_of_guests}</Text>
@@ -155,6 +162,7 @@ function BookingForm({ route}) {
              onBlur={()=>setFieldTouched('available_budget')}
             value={values.available_budget}
             keyboardType="numeric"
+            multiline={true}
             />
             {touched.available_budget && errors.available_budget &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
@@ -172,6 +180,7 @@ function BookingForm({ route}) {
              onChangeText={handleChange('venue')}
              onBlur={()=>setFieldTouched('venue')}
             value={values.venue}
+            multiline={true}
            
            />
            {touched.venue && errors.venue &&
@@ -185,6 +194,7 @@ function BookingForm({ route}) {
              onChangeText={handleChange('required_services')}
              onBlur={()=>setFieldTouched('required_services')}
              value={values.required_services}
+             multiline={true}
            
            />
            {touched.required_services && errors.required_services &&

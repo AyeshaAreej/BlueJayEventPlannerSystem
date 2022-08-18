@@ -28,12 +28,32 @@ import { useNavigation } from '@react-navigation/native';
   console.log("o_id",o_id)
 
   
-  function handleClick(){
-    console.log("Card clicked")
+  function handleClick(service){
+    
     if(o_id === undefined){
       alert('Cant book vendor from here')
     }else if(o_id){
-      navigation.navigate('VendorBookingForm',{vendor,myDate,o_id})
+      
+      
+      switch(service){
+        case 'caterers':
+          navigation.navigate('CatererBookingForm',{vendor,myDate,o_id})
+          break;
+        
+        case 'decoration':
+          navigation.navigate('DecorationBookingForm',{vendor,myDate,o_id})
+          break;
+
+        case 'venue':
+          navigation.navigate('VenueBookingForm',{vendor,myDate,o_id})
+          break;
+
+        case 'photography':
+          navigation.navigate('PhotographyBookingForm',{vendor,myDate,o_id})
+          break;
+        
+
+      }
     }
     
   }
@@ -131,7 +151,7 @@ import { useNavigation } from '@react-navigation/native';
         </View>
         <View style={style.btn}>
           <Text 
-         onPress={handleClick}
+         onPress={()=>{handleClick(vendor.service)}}
           style={{color: COLORS.white, fontSize: 18, fontWeight: 'bold'}}>
             Book Now
           </Text>
@@ -149,6 +169,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
+    marginBottom:80,
     backgroundColor: COLORS.primary,
     marginHorizontal: 20,
     borderRadius: 10,

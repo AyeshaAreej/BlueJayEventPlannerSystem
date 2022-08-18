@@ -540,7 +540,8 @@ const rec_Orders = async (req,res)=>{
                     
             } catch (error) {
                 
-                    return res.json({status:"Error",error})
+                    // return res.json({status:"Error",error})
+                    console.log(error)
             }      
 })
 
@@ -550,6 +551,7 @@ const rec_Orders = async (req,res)=>{
 //approve order
 const approveOrder = async (req,res)=>{
 
+    console.log(req.body.o_id)
         try {
                         await Order.updateOne({_id : req.body.o_id},{$set:{status:"Approved"}})
 
@@ -557,10 +559,11 @@ const approveOrder = async (req,res)=>{
                             if(err){
                                 res.json({status:"error",err})
                             }
-                        console.log(approved_order)
-                        res.json({status:"ok",data : approved_order})
+                            console.log(approved_order)
+                            res.json({status:"ok",data : approved_order})
                         })
-                
+
+
         }catch (error) {
 
             console.log(error)

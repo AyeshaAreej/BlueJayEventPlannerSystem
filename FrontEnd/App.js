@@ -1,16 +1,25 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from "react";
 import 'react-native-gesture-handler'
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import RoutNavigator from './RoutNavigator';
-const Drawer = createDrawerNavigator();
-import SplashScreen from './screens/SplashScreen';
+import { OrderContext } from './OrderContext';
+
+
 
 export default function App() {
 
+    const [orderC, setOrderC] = useState(false)
+
  return (
-  <RoutNavigator/>
+    <>
+        <OrderContext.Provider value={[orderC,setOrderC]}>
+            <RoutNavigator/>
+        </OrderContext.Provider>
+
+    </>
+ 
     
  );
  }
+
+ 

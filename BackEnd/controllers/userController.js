@@ -359,7 +359,7 @@ const createOrder = async (req,res)=>{
                             company_name: company.company_name,
                             company_pic: company.image,
                             email: user.email, 
-                            city: user.city,
+                            city: company.city,
                             phone_no: user.phone_no,
                             event_type: req.body.event_type,
                             date: req.body.date,
