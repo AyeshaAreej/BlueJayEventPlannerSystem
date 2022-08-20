@@ -1,12 +1,13 @@
 import React from 'react'
-import {useState}  from 'react'
+import {useState,useEffect,useContext} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../../components/colors';
-
+import {CvOrderContext} from '../../Contexts'
+import * as SecureStore from 'expo-secure-store';
 
 function DecorationBookingForm({ route, navigation}) {
 
@@ -14,6 +15,58 @@ function DecorationBookingForm({ route, navigation}) {
   const myDate = route.params.myDate
   const o_id = route.params.o_id
   const v_id = vendor._id
+
+  
+  const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
+
+
+  function handleOrder(values){
+
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('create decoration order',token)
+
+      const value = {
+        o_id,
+        v_id,
+        no_of_guests: values.no_of_guests,
+        available_budget: values.available_budget,
+        special_instructions: values.special_instructions,
+        location_address: values.location_address,
+        time: values.time,
+        location_details:values.location_details,
+        decor_theme_detail:values.decor_theme_detail
+
+      }
+      console.log("value",value)
+      
+      fetch(`http://10.0.2.2:5000/company/createDecorationOrder`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.status == 'ok')
+                     {
+                      setCvOrderC(!cvOrderC)
+                      alert('order confirmed')
+                      navigation.navigate('Home',{date: myDate, o_id : o_id})
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+ 
+  }
+
+
+
   
 
 
@@ -32,17 +85,12 @@ function DecorationBookingForm({ route, navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{no_of_guests:'', location_address:'', location_details:'',theme:'',time: '',availablebudget:'', special_instructions:'',}}
+     initialValues={{no_of_guests:'', location_address:'', location_details:'',decor_theme_detail:'',time: '',available_budget:'', special_instructions:'',}}
      onSubmit={(values) => {
-                  console.log(values)
+      handleOrder(values)
 
-
-
-
-
-
-                }} 
-     
+   }} 
+   
      validationSchema={yup.object().shape({
             no_of_guests: yup
             .number()
@@ -56,15 +104,14 @@ function DecorationBookingForm({ route, navigation}) {
             location_details: yup
             .string()
             .required(' Location details is required.'), 
-            theme: yup
+            decor_theme_detail: yup
             .string()
-            .required(' Theme is required.'), 
-            availablebudget: yup
+            .required(' Decor theme is required.'), 
+            available_budget: yup
             .number()
             .required(' Budget is required.'),
            special_instructions: yup
-             .string()
-            .required(' Special instructions are required.'),    
+             .string()   
           })}
  >
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
@@ -122,16 +169,16 @@ function DecorationBookingForm({ route, navigation}) {
 
         <TextInput
              style={styles.input}
-             name="theme"
+             name="decor_theme_detail"
              placeholder='Enter Decoration theme'
-             onChangeText={handleChange('theme')}
-             onBlur={()=>setFieldTouched('theme')}
+             onChangeText={handleChange('decor_theme_detail')}
+             onBlur={()=>setFieldTouched('decor_theme_detail')}
              multiline={true}
-            value={values.theme}
+            value={values.decor_theme_detail}
            
            />
-           {touched.theme && errors.theme &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.theme}</Text>
+           {touched.decor_theme_detail && errors.decor_theme_detail &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.decor_theme_detail}</Text>
             }
 
             <TextInput
@@ -151,16 +198,16 @@ function DecorationBookingForm({ route, navigation}) {
            
            <TextInput
              style={styles.input}
-             name="availablebudget"
+             name="available_budget"
             placeholder="Available Budget"
-             onChangeText={handleChange('availablebudget')}
-             onBlur={()=>setFieldTouched('availablebudget')}
-            value={values.availablebudget}
+             onChangeText={handleChange('available_budget')}
+             onBlur={()=>setFieldTouched('available_budget')}
+            value={values.available_budget}
             multiline={true}
             keyboardType="numeric"
             />
-            {touched.availablebudget && errors.availablebudget &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availablebudget}</Text>
+            {touched.available_budget && errors.available_budget &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
           

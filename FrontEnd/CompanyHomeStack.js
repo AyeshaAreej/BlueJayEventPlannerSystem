@@ -9,14 +9,22 @@ import PhotographyBookingForm from './screens/company/PhotographyBookingForm';
 import CompanyStack from './screens/company/CompanyStack';
 import EditCompanyProfile from './screens/EditCompanyProfile';
 import ChangePassword from './screens/ChangePassword';
+import CompanyOrderDetails from './screens/company/CompanyOrderDetails';
+import AcceptedOrders from './screens/AcceptedOrders'
+import HireVendors from './screens/company/HireVendors';
+import CatererOrderDetails from './screens/company/CatererOrderDetails'
+import DecorationOrderDetails from './screens/company/DecorationOrderDetails'
+import VenueOrderDetails from './screens/company/VenueOrderDetails'
+import PhotographerOrderDetails from './screens/company/PhotographerOrderDetails'
+
+
 // Help Screens
 import MyAccount from './screens/help/MyAccount';
 import SafetyConcerns from './screens/help/SafetyConcerns';
 import PaymentsandRefunds from './screens/help/PaymentsandRefunds';
 import ForgotPassword from './screens/help/ForgotPassword';
-import CompanyOrderDetails from './screens/company/CompanyOrderDetails';
-import AcceptedOrders from './screens/AcceptedOrders'
-import HireVendors from './screens/company/HireVendors';
+
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();  
@@ -38,7 +46,10 @@ const CompanyHomeStack = () => {
            <Stack.Screen name="SafetyConcerns" component={SafetyConcerns} options={{headerShown:false}}/>
            <Stack.Screen name="PaymentsandRefunds" component={PaymentsandRefunds} options={{headerShown:false}}/>
            <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
-
+           <Stack.Screen name='CatererOrderDetails' component={CatererOrderDetails} options={{headerShown:false}}/>
+           <Stack.Screen name='DecorationOrderDetails' component={DecorationOrderDetails} options={{headerShown:false}}/>
+           <Stack.Screen name='VenueOrderDetails' component={VenueOrderDetails} options={{headerShown:false}}/>
+           <Stack.Screen name='PhotographerOrderDetails' component={PhotographerOrderDetails} options={{headerShown:false}}/>
            <Stack.Screen name="CompanyOrderDetails" component={CompanyOrderDetails} options={{headerShown:false}}/>
            
            <Stack.Screen name="AcceptedOrders" component={AcceptedOrders} options={{headerShown:false}}/>

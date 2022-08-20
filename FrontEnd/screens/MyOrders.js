@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-import {OrderContext} from '../OrderContext'
+import {OrderContext} from '../Contexts'
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;

@@ -36,19 +36,19 @@ import { useNavigation } from '@react-navigation/native';
       
       
       switch(service){
-        case 'caterers':
+        case 'Caterer':
           navigation.navigate('CatererBookingForm',{vendor,myDate,o_id})
           break;
         
-        case 'decoration':
+        case 'Decoration':
           navigation.navigate('DecorationBookingForm',{vendor,myDate,o_id})
           break;
 
-        case 'venue':
+        case 'Venue':
           navigation.navigate('VenueBookingForm',{vendor,myDate,o_id})
           break;
 
-        case 'photography':
+        case 'Photography':
           navigation.navigate('PhotographyBookingForm',{vendor,myDate,o_id})
           break;
         

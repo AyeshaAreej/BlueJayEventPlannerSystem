@@ -57,7 +57,44 @@ const cvOrderSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'Pending'
-    }
+    },
+    special_instructions:{
+        type: String
+    },
+    location:{
+        type: String
+    },
+    time:{
+        type: String
+    },
+    menu:{
+        type: String,
+    },
+    location_details:{
+        type: String
+    },
+    decor_theme_detail:{
+        type: String
+    },
+    start_time:{
+        type: String
+    },
+    end_time:{
+        type: String
+    },
+    venue_catering:{
+        type: String
+    },
+    venue_decor:{
+        type: String
+    },
+    session_time:{
+        type: String
+    },
+    shoot_type:{
+        type: String
+    },
+    
 
 });
 

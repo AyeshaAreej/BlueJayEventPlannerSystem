@@ -20,7 +20,10 @@ route.post('/photographers',middleware.ValidateToken ,companyController.photogra
 
 
 //orders
-route.post('/createOrder',middleware.ValidateToken ,companyController.createOrder) 
+route.post('/createCatererOrder',middleware.ValidateToken ,companyController.createCatererOrder) //done
+route.post('/createDecorationOrder',middleware.ValidateToken ,companyController.createDecorationOrder)//done
+route.post('/createVenueOrder',middleware.ValidateToken ,companyController.createVenueOrder)//done
+route.post('/createPhotographerOrder',middleware.ValidateToken ,companyController.createPhotographerOrder)//done
 route.post('/rateVendor',middleware.ValidateToken ,companyController.rateVendor)
 
 
@@ -31,10 +34,11 @@ route.patch('/changePassword',middleware.ValidateToken ,companyController.change
 
 
 //My orders
-route.get('/rec_Orders',middleware.ValidateToken ,companyController.rec_Orders) //done
-route.patch('/approveOrder',middleware.ValidateToken ,companyController.approveOrder) 
 route.get('/myOrders',middleware.ValidateToken ,companyController.myOrders)//done
-
+route.get('/rec_Orders',middleware.ValidateToken ,companyController.rec_Orders) //done
+route.patch('/approveOrder',middleware.ValidateToken ,companyController.approveOrder) //done
+route.patch('/rejectOrder',middleware.ValidateToken ,companyController.rejectOrder) 
+route.post('/showHiredVendors',middleware.ValidateToken ,companyController.showHiredVendors)
 
 
 

@@ -1,12 +1,13 @@
 import React from 'react'
-import {useState}  from 'react'
+import {useState,useEffect,useContext} from 'react';
 import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import { RadioButton } from 'react-native-paper';
 import COLORS from '../../components/colors';
-
+import {CvOrderContext} from '../../Contexts'
+import * as SecureStore from 'expo-secure-store';
 
 function VenueBookingForm({ route, navigation}) {
 
@@ -15,8 +16,65 @@ function VenueBookingForm({ route, navigation}) {
   const o_id = route.params.o_id
   const v_id = vendor._id
   
+  
+  const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
+
   const [catering, setCatering] = React.useState('no');
   const [decor, setDecor] = React.useState('no');
+
+
+  
+  function handleOrder(values){
+
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('create venue order',token)
+
+      const value = {
+        o_id,
+        v_id,
+        no_of_guests: values.no_of_guests,
+        available_budget: values.available_budget,
+        special_instructions: values.special_instructions,
+        start_time: values.start_time,
+        end_time: values.end_time,
+        venue_catering: catering,
+        venue_decor: decor,
+        menu:values.menu,
+        decor_theme_detail:values.decor_theme_detail
+
+      }
+      console.log("value",value)
+      
+      fetch(`http://10.0.2.2:5000/company/createVenueOrder`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.status == 'ok')
+                     {
+                      setCvOrderC(!cvOrderC)
+                      alert('order confirmed')
+                      navigation.navigate('Home',{date: myDate, o_id : o_id})
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+ 
+  }
+
+
+
+
+
 
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
@@ -33,16 +91,12 @@ function VenueBookingForm({ route, navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{no_of_guests:'', start_time:'',end_time: '',menu:'',decor_theme:'',availablebudget:'', special_instructions:'',}}
+     initialValues={{no_of_guests:'', start_time:'',end_time: '',menu:'',decor_theme_detail:'',available_budget:'', special_instructions:'',}}
      onSubmit={(values) => {
-                  console.log(values)
+    
+      handleOrder(values)
 
-
-
-
-
-
-                }} 
+      }} 
      
      validationSchema={yup.object().shape({
             no_of_guests: yup
@@ -55,12 +109,10 @@ function VenueBookingForm({ route, navigation}) {
             .string()
             .required(' End time is required.'), 
             menu: yup
-             .string()
-             .required(' Menu is required.'), 
-            decor_theme: yup
-            .string()
-            .required(' Decor theme is required.'),
-            availablebudget: yup
+             .string(),
+            decor_theme_detail: yup
+            .string(),
+            available_budget: yup
             .number()
             .required(' Budget is required.'),
            special_instructions: yup
@@ -115,6 +167,7 @@ function VenueBookingForm({ route, navigation}) {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.end_time}</Text>
             }  
            
+
 
 
            
@@ -227,10 +280,10 @@ function VenueBookingForm({ route, navigation}) {
 
         <TextInput
              style={styles.input}
-             name="decor_theme"
+             name="decor_theme_detail"
              placeholder='Enter decor theme'
-             onChangeText={handleChange('decor_theme')}
-             onBlur={()=>setFieldTouched('decor_theme')}
+             onChangeText={handleChange('decor_theme_detail')}
+             onBlur={()=>setFieldTouched('decor_theme_detail')}
              multiline={true}
              numberOfLines={3}
             textAlignVertical='top'
@@ -240,20 +293,21 @@ function VenueBookingForm({ route, navigation}) {
            />
             
 
-      }
+      } 
+
 
            <TextInput
              style={styles.input}
-             name="availablebudget"
+             name="available_budget"
             placeholder="Available Budget"
-             onChangeText={handleChange('availablebudget')}
-             onBlur={()=>setFieldTouched('availablebudget')}
-            value={values.availablebudget}
+             onChangeText={handleChange('available_budget')}
+             onBlur={()=>setFieldTouched('available_budget')}
+            value={values.available_budget}
             multiline={true}
             keyboardType="numeric"
             />
-            {touched.availablebudget && errors.availablebudget &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availablebudget}</Text>
+            {touched.available_budget && errors.available_budget &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
           
@@ -277,9 +331,9 @@ function VenueBookingForm({ route, navigation}) {
        </View>
    
                   
-      <View style={styles.button}>
-       <Button onPress={handleSubmit} title="Submit" color={COLORS.primary} />
-       </View>
+              <View style={styles.button}>
+              <Button onPress={handleSubmit} title="Submit" color={COLORS.primary} />
+              </View>
       </View>
      )}
   </Formik>

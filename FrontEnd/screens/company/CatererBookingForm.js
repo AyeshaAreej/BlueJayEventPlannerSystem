@@ -1,11 +1,13 @@
 import React from 'react'
-import {useState}  from 'react'
+import {useState,useEffect,useContext} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../../components/colors';
+import {CvOrderContext} from '../../Contexts'
+import * as SecureStore from 'expo-secure-store';
 
 
 function CatererBookingForm({ route, navigation}) {
@@ -15,6 +17,57 @@ function CatererBookingForm({ route, navigation}) {
   const o_id = route.params.o_id
   const v_id = vendor._id
   
+
+  const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
+
+ 
+  function handleOrder(values){
+
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('create caterer order',token)
+
+      const value = {
+        o_id,
+        v_id,
+        no_of_guests: values.no_of_guests,
+        available_budget: values.available_budget,
+        special_instructions: values.special_instructions,
+        location: values.location,
+        time: values.time,
+        menu:values.menu
+
+      }
+      console.log("value",value)
+      
+      fetch(`http://10.0.2.2:5000/company/createCatererOrder`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.status == 'ok')
+                     {
+                      setCvOrderC(!cvOrderC)
+                      alert('order confirmed')
+                      // navigation.navigate('Home',{date: myDate, o_id : o_id})
+                      navigation.navigate('Home',{date: myDate, o_id : o_id})
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+ 
+  }
+
+
+
 
 
   return (
@@ -32,14 +85,9 @@ function CatererBookingForm({ route, navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{no_of_guests:'', location:'',time: '',availablebudget:'', menu:'', special_instructions:'',}}
+     initialValues={{no_of_guests:'', location:'',time: '',available_budget:'', menu:'', special_instructions:'',}}
      onSubmit={(values) => {
-                  console.log(values)
-
-
-
-
-
+                   handleOrder(values)
 
                 }} 
      
@@ -56,12 +104,12 @@ function CatererBookingForm({ route, navigation}) {
             menu: yup
             .string()
             .required(' Menu is required.'), 
-            availablebudget: yup
+            available_budget: yup
             .number()
             .required(' Budget is required.'),
            special_instructions: yup
              .string()
-            .required(' Special instructions are required.'),    
+               
           })}
  >
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
@@ -114,16 +162,16 @@ function CatererBookingForm({ route, navigation}) {
            
            <TextInput
              style={styles.input}
-             name="availablebudget"
+             name="available_budget"
             placeholder="Available Budget"
-             onChangeText={handleChange('availablebudget')}
-             onBlur={()=>setFieldTouched('availablebudget')}
-            value={values.availablebudget}
+             onChangeText={handleChange('available_budget')}
+             onBlur={()=>setFieldTouched('available_budget')}
+            value={values.available_budget}
             multiline={true}
             keyboardType="numeric"
             />
-            {touched.availablebudget && errors.availablebudget &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availablebudget}</Text>
+            {touched.available_budget && errors.available_budget &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
           

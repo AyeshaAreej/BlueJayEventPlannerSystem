@@ -1,20 +1,71 @@
 import React from 'react'
-import {useState}  from 'react'
+import {useState,useEffect,useContext} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '../../components/colors';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../../components/colors';
+import {CvOrderContext} from '../../Contexts'
+import * as SecureStore from 'expo-secure-store';
 
-
-function CatererBookingForm({ route, navigation}) {
+function PhotographerBookingForm({ route, navigation}) {
 
   const vendor = route.params.vendor
   const myDate = route.params.myDate
   const o_id = route.params.o_id
   const v_id = vendor._id
   
+  const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
+
+
+  
+  function handleOrder(values){
+
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('create photography order',token)
+
+      const value = {
+        o_id,
+        v_id,
+        available_budget: values.available_budget,
+        special_instructions: values.special_instructions,
+        session_time:values.session_time,
+        location: values.location,
+        time: values.time,
+        shoot_type:values.shoot_type
+        
+
+      }
+      console.log("value",value)
+      
+      fetch(`http://10.0.2.2:5000/company/createPhotographerOrder`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.status == 'ok')
+                     {
+                      setCvOrderC(!cvOrderC)
+                      alert('order confirmed')
+                      navigation.navigate('Home',{date: myDate, o_id : o_id})
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+ 
+  }
+
+
 
 
   return (
@@ -32,20 +83,15 @@ function CatererBookingForm({ route, navigation}) {
 
     {/* Form */}
     <Formik
-     initialValues={{session_time:'', location:'',time: '',availablebudget:'', type_of_shoot:'', special_instructions:'',}}
+     initialValues={{session_time:'', location:'',time: '',available_budget:'', shoot_type:'', special_instructions:'',}}
      onSubmit={(values) => {
-                  console.log(values)
+      handleOrder(values)
 
-
-
-
-
-
-                }} 
+   }} 
      
      validationSchema={yup.object().shape({
             session_time: yup
-            .number()
+            .string()
             .required(' Session time is required.'),  
             time: yup
             .string()
@@ -53,15 +99,14 @@ function CatererBookingForm({ route, navigation}) {
             location: yup
              .string()
             .required(' Location is required.'),    
-            type_of_shoot: yup
+            shoot_type: yup
             .string()
             .required(' Type of shoot is required.'), 
-            availablebudget: yup
+            available_budget: yup
             .number()
             .required(' Budget is required.'),
            special_instructions: yup
-             .string()
-            .required(' Special instructions are required.'),    
+             .string()  
           })}
  >
     {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
@@ -71,7 +116,7 @@ function CatererBookingForm({ route, navigation}) {
        <TextInput
              style={styles.input}
              name="session_time"
-             placeholder='Enter Session time (in hours)'
+             placeholder='Enter Session time'
              onChangeText={handleChange('session_time')}
              onBlur={()=>setFieldTouched('session_time')}
              multiline={true}
@@ -114,32 +159,32 @@ function CatererBookingForm({ route, navigation}) {
            
            <TextInput
              style={styles.input}
-             name="availablebudget"
+             name="available_budget"
             placeholder="Available Budget"
-             onChangeText={handleChange('availablebudget')}
-             onBlur={()=>setFieldTouched('availablebudget')}
-            value={values.availablebudget}
+             onChangeText={handleChange('available_budget')}
+             onBlur={()=>setFieldTouched('available_budget')}
+            value={values.available_budget}
             multiline={true}
             keyboardType="numeric"
             />
-            {touched.availablebudget && errors.availablebudget &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availablebudget}</Text>
+            {touched.available_budget && errors.available_budget &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
           
             <TextInput
              style={styles.input}
-             name="type_of_shoot"
+             name="shoot_type"
              placeholder='Enter type of shoot'
-             onChangeText={handleChange('type_of_shoot')}
-             onBlur={()=>setFieldTouched('type_of_shoot')}
+             onChangeText={handleChange('shoot_type')}
+             onBlur={()=>setFieldTouched('shoot_type')}
              multiline={true}
             textAlignVertical='top'
-            value={values.type_of_shoot}
+            value={values.shoot_type}
             
            />
-            {touched.type_of_shoot && errors.type_of_shoot &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.type_of_shoot}</Text>
+            {touched.shoot_type && errors.shoot_type &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.shoot_type}</Text>
             }
             
             
@@ -216,4 +261,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default CatererBookingForm
+export default PhotographerBookingForm
