@@ -66,6 +66,13 @@ function OrderDetails({route}) {
                       <Text style={style.leftTag}>{order.company_name} </Text>
                     </View>
                     </View>
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Phone no: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.c_phone_no} </Text>
+                    </View>
+                    </View>
                     
                     
 

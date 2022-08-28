@@ -67,7 +67,7 @@ import { useNavigation } from '@react-navigation/native';
       }} >
       <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"
       />
-       <ImageBackground style={style.headerImage} source={image}>
+       <ImageBackground style={style.headerImage} source={{uri: vendor.image}}>
         <View style={style.header}>
           <MaterialCommunityIcons
             name="keyboard-return"

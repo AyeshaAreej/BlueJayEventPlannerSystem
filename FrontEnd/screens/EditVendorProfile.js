@@ -1,31 +1,60 @@
 import { StyleSheet, Text, View,TextInput, ScrollView ,Button, StatusBar,Image,Platform} from 'react-native'
 import colors from '../components/colors';
-import React,  { useState, useEffect } from 'react'
+import React,  { useState, useContext } from 'react'
 import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
+import * as SecureStore from 'expo-secure-store';
+import {UserContext} from '../Contexts'
+import { useNavigation } from '@react-navigation/native';
 
-
-const EditCompanyProfile = ({navigation}) => {
-  const [image, setImage] = useState(null);
-
+const EditCompanyProfile = () => {
+  const navigation = useNavigation();
+  const [user,setUser] = useContext(UserContext)
+  const [image, setImage] = useState(user.image);
 
   const pickImage = async () => {
-   // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+    // No permissions request is necessary for launching the image library
+     let result = await ImagePicker.launchImageLibraryAsync({
+       mediaTypes: ImagePicker.MediaTypeOptions.All,
+       allowsEditing: true,
+       aspect: [4, 3],
+       quality: 1,
+     });
+ 
+     console.log(result);
+ 
+     if (!result.cancelled) {
+       let newfile = {uri:result.uri, 
+                      type:`test/${result.uri.split('.')[1]}`,
+                      name:`test/${result.uri.split('.')[1]}`
+                     }
+       handleUpload(newfile)
+     }
+   };
+ 
+ 
+   const handleUpload = async (picture)=>{
+  
+     const data = new FormData()
+     await data.append('file',picture)
+     await data.append('upload_preset','BluejayUsers')
+     await data.append('cloud_name','bluejaymobapp')
 
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
+     fetch('https://api.cloudinary.com/v1_1/bluejaymobapp/image/upload',{
+       method:'post',
+       body:data
+     }).then(res=>res.json()).then(async(data)=>{
+       
+       console.log('url',data.url)
+       setImage(data.url)
+       
+     }).catch(err=>{console.log(err)})
+ 
+   }
+ 
+ 
 
 
   return (
@@ -34,38 +63,84 @@ const EditCompanyProfile = ({navigation}) => {
    
 
       {/* Form Inputs View */}
-   <View style={{marginTop:50}}>
+   <View style={{marginTop:20}}>
+
           <Formik
-      initialValues={{companyname:'', email: '', phone_no: '',city:'',services:'',pricerange:'',address:'',availabilitytime:'',}}
+      initialValues={{vendor_name:user.vendor_name,
+                      email: user.email, 
+                      phone_no: user.phone_no,
+                      city:user.city,
+                      address:user.address,
+                      price_range:user.price_range,
+                      available_hours:user.available_hours
+                    }}
       onSubmit={
-        (values) => {
-        console.log(values, image)}}
+          (values) => {
+
+            SecureStore.getItemAsync('token').then(token=>{
+   
+             console.log('update Profile',token)
+            
+             const value = {vendor_name:values.vendor_name, 
+                            email: values.email ,
+                            phone_no: values.phone_no , 
+                            city: values.city,
+                            address:values.address,
+                            price_range:values.price_range,
+                            available_hours:values.available_hours,
+                            image:image
+                            }
+   
+             console.log(value)
+   
+             fetch(`http://10.0.2.2:5000/vendor/updateProfile`,{
+                           method: "patch",
+                           body: JSON.stringify(value),
+                           headers: {
+                               Accept: "application/json, text/plain, */*",
+                               "Content-Type": "application/json",
+                               token
+                           }
+                         
+                     }).then(res=>res.json()).then((result)=>{
+           console.log(result)
+       
+                       if( result.status == 'ok'){
+                         setUser(result.data)
+                         navigation.navigate("VendorStack")
+                          
+                       }else{
+                         console.log(result.status)
+                       }
+       
+       
+                     }).catch(err=>console.log('catch',err.message))
+           })  
+
+      }
+    }
+
           validationSchema={yup.object().shape({
-            companyname: yup
+            vendor_name: yup
             .string()
-            .required('Company Name is required.'),  
+            .required('Vendor Name is required.'),  
             email: yup
             .string()
             .email()
             .required('Email is required.'),  
             phone_no: yup
-            .number()
-            .min(11, 'min 11 digits are required')
-            // .max(11, 'max 11 digits are required')
-            .required('Phone Number is required.'), 
+            .string()
+            .required('Phone number is required.'),
             city : yup
-             .string()
+            .string()
             .required('City is required.'),  
-            services : yup
-            .string()
-            .required('Service is required.'), 
-            pricerange: yup
-            .string()
-            .required('Price Range is required.'), 
             address: yup
             .string()
             .required('Address is required'),
-            availabilitytime: yup
+            price_range: yup
+            .string()
+            .required('Price Range is required.'), 
+            available_hours: yup
             .string()
             .required('Available hours required')
                 
@@ -77,8 +152,9 @@ const EditCompanyProfile = ({navigation}) => {
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <View >
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
+        <View style={styles.imageContainer}>
+        {<Image source={{ uri: image }} style={styles.profileImage}  />}
   
   </View>
   <View style={styles.button}>
@@ -87,24 +163,26 @@ const EditCompanyProfile = ({navigation}) => {
 
 
 
-    <View style={styles.inputContainer} >
+      <View style={styles.inputContainer} >
         <MaterialCommunityIcons name="account"  size={34} style={styles.icon}/>
         <TextInput
              style={styles.input}
-             name="companyname"
-             placeholder='Company Name'
-             onChangeText={handleChange('companyname')}
-             onBlur={()=>setFieldTouched('companyname')}
-            value={values.companyname}
+             name="vendor_name"
+             placeholder='Vendor Name'
+             onChangeText={handleChange('vendor_name')}
+             onBlur={()=>setFieldTouched('vendor_name')}
+            value={values.vendor_name}
            
            />
             </View>
-           {touched.companyname && errors.companyname &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.companyname}</Text>
+           {touched.vendor_name && errors.vendor_name &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.vendor_name}</Text>
             }
+
+
        
-            <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="email"  size={34} style={styles.icon}/>
+       <View style={styles.inputContainer} >
+          <MaterialCommunityIcons name="email"  size={34} style={styles.icon}/>
            <TextInput
              style={styles.input}
              name="email"
@@ -118,7 +196,10 @@ const EditCompanyProfile = ({navigation}) => {
             {touched.email && errors.email &&
               <Text style={{  justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red'}}>{errors.email}</Text>
             }
-            <View style={styles.inputContainer} >
+
+
+            
+        <View style={styles.inputContainer} >
           <MaterialCommunityIcons name="phone"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
@@ -127,14 +208,15 @@ const EditCompanyProfile = ({navigation}) => {
              onChangeText={handleChange('phone_no')}
              onBlur={()=>setFieldTouched('phone_no')}
             value={values.phone_no}
-            keyboardType="numeric"
             
            /></View>
             {touched.phone_no && errors.phone_no &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.phone_no}</Text>
             }
 
-            <View style={styles.inputContainer} >
+
+
+        <View style={styles.inputContainer} >
           <MaterialCommunityIcons name="city"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
@@ -148,35 +230,9 @@ const EditCompanyProfile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
             }
 
-            <View style={styles.inputContainer} >
-        <MaterialCommunityIcons name="application-settings"  size={34} style={styles.icon}/>
-            <TextInput
-             style={styles.input}
-             name="services"
-             placeholder='Services '
-             onChangeText={handleChange('services')}
-             onBlur={()=>setFieldTouched('services')}
-             value={values.services}
-           
-           /></View>
-           {touched.services && errors.services &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.services}</Text>
-            }
             
-            <View style={styles.inputContainer} >
-            <MaterialCommunityIcons name="currency-usd"  size={34} style={styles.icon}/>
-            <TextInput
-             style={styles.input}
-             name="pricerange"
-             placeholder='Price Range '
-             onChangeText={handleChange('pricerange')}
-             onBlur={()=>setFieldTouched('pricerange')}
-            value={values.pricerange}
-           /></View>
-            {touched.pricerange && errors.pricerange &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.pricerange}</Text>
-            }
-            <View style={styles.inputContainer} >
+            
+        <View style={styles.inputContainer} >
             <MaterialCommunityIcons name="home"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
@@ -191,22 +247,40 @@ const EditCompanyProfile = ({navigation}) => {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.address}</Text>
             }
             
+
+
+           <View style={styles.inputContainer} >
+            <MaterialCommunityIcons name="currency-usd"  size={34} style={styles.icon}/>
+            <TextInput
+             style={styles.input}
+             name="price_range"
+             placeholder='Price Range '
+             onChangeText={handleChange('price_range')}
+             onBlur={()=>setFieldTouched('price_range')}
+            value={values.price_range}
+           /></View>
+            {touched.price_range && errors.price_range &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.price_range}</Text>
+            }
+
+             
             <View style={styles.inputContainer} >
             <MaterialCommunityIcons name="clock"  size={34} style={styles.icon}/>
             <TextInput
              style={styles.input}
-             name="availabilitytime"
+             name="available_hours"
              placeholder='Available Hours '
-             onChangeText={handleChange('availabilitytime')}
-             onBlur={()=>setFieldTouched('availabilitytime')}
-            value={values.availabilitytime}
+             onChangeText={handleChange('available_hours')}
+             onBlur={()=>setFieldTouched('available_hours')}
+            value={values.available_hours}
             
             
            /></View>
-            {touched.availabilitytime && errors.availabilitytime &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.availabilitytime}</Text>
+            {touched.available_hours && errors.available_hours &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_hours}</Text>
             }
            
+
           
             {/*Save Button  */}
         
@@ -234,46 +308,54 @@ const EditCompanyProfile = ({navigation}) => {
 const styles = StyleSheet.create({
   
 
-   input:{
+  input:{
   
-  borderColor :colors.white,
-    margin:6,
-    padding:5,
-    width:280,
-    fontSize:20,
-    elevation:30,
-    borderRadius:15,
-    backgroundColor:'white'
-
-
-   },
-
-
-   button:{
-    backgroundColor: colors.primary,
-    width: '45%',
-    height: 35,
-    // margin:60,
-   marginTop:20,
-   marginBottom:20,
-    marginLeft:'30%',
+    borderColor :colors.white,
+      paddingLeft:20,
+      height:60,
+      width:280,
+      fontSize:20,
+      elevation:30,
+      borderRadius:15,
+      backgroundColor:'white'
+  
+  
+     },
+  
+  
+     button:{
+      backgroundColor: colors.primary,
+      width: '45%',
+      height: 35,
+     marginBottom:10,
+      marginLeft:'30%',
+     
+  
+     },
+     icon:{
+      color:colors.primary,
+      margin:20,
+     
+      },
+      inputContainer:{
+       flexDirection:'row',
+       color:colors.white,
+      }, 
+    profileImage:{
    
-
-   },
-   icon:{
-    color:colors.primary,
-    margin:20,
-   
+      height: 140,
+      width: '80%',
+      borderRadius: 20,
+      marginLeft:15
     },
-    inputContainer:{
-     flexDirection:'row',
-     color:colors.white, 
-     // borderWidth:5,
-     // borderRadius:20,
-     // borderColor:'purple'
-    },
- 
-   
+      imageContainer:{
+          flex:1,
+          justifyContent:'center',
+          alignItems:'center',
+          marginTop:20,
+          marginBottom:12
+     
+      }, 
 
 });
 export default EditCompanyProfile;

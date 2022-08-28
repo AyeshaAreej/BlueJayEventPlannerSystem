@@ -1,6 +1,8 @@
 const User = require('../models/userSchema')
 const Company = require('../models/companySchema')
 const Order = require('../models/orderSchema')
+const CvOrder = require('../models/cvOrderSchema')
+const Vendor = require('../models/vendorSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = '494898./yu!$^63df!vcxfv3278dhgdjsbv3i823'
@@ -23,6 +25,7 @@ await User.create({
         username: req.body.username,
         email: req.body.email,
         password: password,
+        image: req.body.image,
         phone_no: req.body.phone_no,
         city: req.body.city,
         role: 'customer',
@@ -61,7 +64,7 @@ const logIn = async(req,res)=>{
         },
         JWT_SECRET
         )
-        return res.json({status:"ok", data : token })
+        return res.json({status:"ok", token : token, data: user})
     }
 
     return res.json({status:"error", error : 'Invalid username/password'})
@@ -357,16 +360,30 @@ const createOrder = async (req,res)=>{
                             customer_name: user.username, 
                             company_id: company._id,
                             company_name: company.company_name,
-                            company_pic: company.image,
+                            image: company.image,
                             email: user.email, 
                             city: company.city,
-                            phone_no: user.phone_no,
-                            event_type: req.body.event_type,
+                            u_phone_no: user.phone_no,
+                            c_phone_no: company.phone_no,
+
                             date: req.body.date,
+                            event_type: req.body.event_type,
                             no_of_guests: req.body.no_of_guests,
-                            available_budget: req.body.available_budget,
+                            catering: req.body.catering,
+                            menu: req.body.menu,
+                            decor: req.body.decor,
+                            decor_theme: req.body.decor_theme,
+                            photographer: req.body.photographer,
+                            photoShoot_details: req.body.photoShoot_details,
                             venue: req.body.venue,
-                            required_services: req.body.required_services
+                            venue_preference: req.body.venue_preference,
+                            location: req.body.location,
+                            start_time: req.body.start_time,
+                            event_duration: req.body.event_duration,
+                            available_budget: req.body.available_budget,
+                            special_instructions: req.body.special_instructions
+
+
                         },(err,order)=>{
                             if(err){
                                 console.log('error in order creation')
@@ -406,18 +423,6 @@ const createOrder = async (req,res)=>{
 }
 
 
-//PROFILE
-const showProfile = async (req,res)=>{
-
-      User.findById(req.user.id,(err,user)=>{
-          if(err){
-              return res.json({status:'error', error: 'cant find user' })
-          }
-        
-        return res.json({ status:'ok', data: user})
-     })
-   
-}
 
 
 //edit profile
@@ -428,7 +433,8 @@ const updateProfile =  (req,res)=>{
         username: req.body.username,
         email: req.body.email,
         phone_no: req.body.phone_no,
-        city: req.body.city
+        city: req.body.city,
+        image: req.body.image
     },
     {
         new:true
@@ -536,6 +542,184 @@ const rateCompany = async (req,res)=>{
 }
 
 
+const cancelOrder = async(req,res)=>{
+    let v_index=0,c_index=0
+    const o_id = req.body.o_id
+    console.log('cancel order',o_id)
+        try {
+                 Order.findById(o_id,async(err,order)=>{
+                
+     
+                                    for(so_id of order.sub_orders){
+
+
+                                        CvOrder.findById(so_id,(err,sub_order)=>{
+                                          
+                                                                Vendor.find({_id:sub_order.vendor_id},{orders:1,booked_dates:1,_id:0},async (err,array)=>{
+                                                    
+                                                                    for(i of array){
+                                                                        
+                                                                            for (id of i.orders){
+                                                                                
+                                                                                if(id.equals(so_id )){
+                                                                                    console.log('incompare')
+                                                                                    Vendor.findOneAndUpdate({_id:sub_order.vendor_id},{$pull: { orders: so_id  }},
+                                                                                        {
+                                                                                            new:true
+                                                                                        },(err,order)=>{
+                                                                                            if(order){
+                                                                                            console.log('vendor orders updated')
+                                                                                            }else{
+                                                                                                console.log('vendor orders not updated')
+                                                                                            }
+                                                                                        
+                                                                                        })
+                                                                                        break
+                                                                                }
+                                                                            }
+                                        
+                                                                            for(date of i.booked_dates){
+                                                                                console.log('compare',date,sub_order.date) 
+                                                                                if(date === sub_order.date ){
+                                                                                
+                                                                                    Vendor.findOne({_id:sub_order.vendor_id},
+                                                                                        (err,vendor)=>{
+                                                                                                if(vendor){
+                                                                                                vendor.booked_dates.splice(v_index,1)
+                                                                                                vendor.save()
+                                                                                                console.log('vendor date updated',vendor)
+                                                                                                }else{
+                                                                                                    console.log('vendor date not updated')
+                                                                                                }
+                                                                                            
+                                                                                            })
+                                                                                            break;
+                                                                                }
+                                                                                v_index++
+                                                                            }
+                                        
+                                                                    }
+                                                                
+                                        
+                                                                })
+
+                                                                
+                                                            })
+                                        
+                                       /////////////////////////                    
+
+                                        CvOrder.updateOne({_id : so_id},{$set:{status:"Cancelled"}},
+                                            {new:true},(err,cancelled_order)=>{
+                                                if(err){
+                                                    // res.json({status:"error",err})
+                                                    console.log('sub order not cancelled')
+                                                }
+                                                console.log('sub order cancelled')
+                                                // res.json({status:"ok"})
+                                            })
+                                                        
+                                     }
+                        
+
+
+
+                  //noti to customer that order is cancelled remaining
+                        User.find({_id:order.customer_id},{orders:1,_id:0},async (err,orders_array)=>{
+                           
+                                    for(i of orders_array){
+                                            for (id of i.orders){
+                                                        if(id == o_id ){
+                                                            User.findByIdAndUpdate({_id:order.customer_id},{$pull: { orders: o_id }},
+                                                                {
+                                                                    new:true
+                                                                },(err,order)=>{
+                                                                    if(order){
+                                                                    console.log('user updated')
+                                                                    }else{
+                                                                        console.log('user not updated')
+                                                                    }
+                                                                
+                                                                })
+                                                        }
+                                            }
+                                    }
+                        })
+
+
+
+                        Company.find({_id:order.company_id},{orders:1,booked_dates:1,_id:0},async (err,array)=>{
+                            
+                            for(i of array){
+
+                                    for (id of i.orders){
+                                        if(id == o_id ){
+                                           
+                                            Company.findByIdAndUpdate({_id:order.company_id},{$pull: { orders: o_id }},
+                                                {
+                                                    new:true
+                                                },(err,order)=>{
+                                                    if(order){
+                                                    console.log('company order updated')
+                                                    }else{
+                                                        console.log('company order not updated')
+                                                    }
+                                                
+                                                })
+                                        }
+                                    }
+
+                                    for(date of i.booked_dates){
+                                        //console.log(date,order.date) 
+                                        console.log('c_index',c_index)
+                                        if(date === order.date ){
+                                           
+                                                Company.findOne({_id:order.company_id},
+                                                    (err,company)=>{
+                                                        if(company){
+                                                            console.log(c_index,'found company',company)
+                                                            company.booked_dates.splice(c_index,1)
+                                                            company.save()
+                                                            console.log('company date updated',company)
+                                                            }else{
+                                                                console.log('company date not updated')
+                                                            }
+                                                    
+                                                    })
+
+                                                    break
+                                        }
+                                        c_index++
+                                    }
+
+                            }
+                           
+
+                        })
+
+
+
+                        Order.updateOne({_id : req.body.o_id},{$set:{status:"Cancelled"}},
+                        {new:true},(err,cancelled_order)=>{
+                            if(err){
+                                res.json({status:"error",err})
+                            }
+                            console.log(cancelled_order)
+                            res.json({status:"ok"})
+                        })
+
+                       
+
+    
+                    })
+
+        }catch (error) {
+
+            console.log(error)
+        }
+
+}
+
+
 
 module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,
-                  createOrder,showProfile,updateProfile,changePassword,myOrders,rateCompany}
+                  createOrder,updateProfile,changePassword,myOrders,rateCompany,cancelOrder}

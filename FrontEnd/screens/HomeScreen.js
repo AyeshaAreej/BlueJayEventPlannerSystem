@@ -42,7 +42,7 @@ const HomeScreen=({route})=>{
     const [date, setDate] = useState(new Date());
     const [myDate, setMyDate] = useState(" ");
     const [isPickerShow, setIsPickerShow] = useState(false);
- 
+    var minDate = new Date()
 
    console.log(route.params.params)
    const onChangeSearch = (query) => {
@@ -351,7 +351,6 @@ const HomeScreen=({route})=>{
 
 const Card=({company,index})=>{
   
-
   const navigation = useNavigation();
 
   function handleClick(){
@@ -370,7 +369,7 @@ return(
 
     </Text>
      </View>
-         <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
+         <Image source={{ uri: company.image }} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
@@ -434,6 +433,7 @@ return(
                                           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                                           // is24Hour={true}
                                           onChange={onChange}
+                                          minimumDate = {new Date(minDate)}
                                           style={style.datePicker}
                                         />
                                       )}
@@ -450,10 +450,6 @@ return(
                     </View>
    
         </View>
-
-
-        <ScrollView showsVerticalScrollIndicator={false}>
-
 
 
                                   {/*Dropdown  */}
@@ -507,8 +503,6 @@ return(
                   renderItem={({item})=><Card company={item}/>}
                 />
 
-
-        </ScrollView>
 
      </SafeAreaView>
    

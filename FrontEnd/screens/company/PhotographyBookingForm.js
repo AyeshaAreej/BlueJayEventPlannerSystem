@@ -92,7 +92,7 @@ function PhotographerBookingForm({ route, navigation}) {
      validationSchema={yup.object().shape({
             session_time: yup
             .string()
-            .required(' Session time is required.'),  
+            .required(' Session duration is required.'),  
             time: yup
             .string()
             .required(' Time is required.'), 
@@ -116,7 +116,7 @@ function PhotographerBookingForm({ route, navigation}) {
        <TextInput
              style={styles.input}
              name="session_time"
-             placeholder='Enter Session time'
+             placeholder='Enter Session duration'
              onChangeText={handleChange('session_time')}
              onBlur={()=>setFieldTouched('session_time')}
              multiline={true}

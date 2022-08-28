@@ -11,7 +11,7 @@ import {OrderContext} from '../Contexts'
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.12;
 
-const AcceptedOrders=({navigation})=>{
+const VAcceptedOrders=({navigation})=>{
  
   const [myOrders, setMyOrders] = React.useState([]);
   
@@ -24,7 +24,7 @@ const AcceptedOrders=({navigation})=>{
 
       console.log('My orders',token)
 
-      fetch(`http://10.0.2.2:5000/company/myOrders`,{
+      fetch(`http://10.0.2.2:5000/vendor/myOrders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -36,11 +36,13 @@ const AcceptedOrders=({navigation})=>{
                 console.log(result)
 
                 if( result.status == 'ok'){
-                  setMyOrders(result.data)
+
                         if(result.data == ''){
-                         
                             console.log('No orders found')
-                            // alert('No orders yet')
+                            alert('No orders yet')
+                        }else{
+                          setMyOrders(result.data)
+                          
                         }
                 }else{
                   console.log(result.status)
@@ -88,7 +90,7 @@ const AcceptedOrders=({navigation})=>{
 
       const value = {o_id: o_id}
 
-      fetch(`http://10.0.2.2:5000/company/cancelOrder`,{
+      fetch(`http://10.0.2.2:5000/vendor/cancelOrder`,{
                     method: "patch",
                     body: JSON.stringify(value),
                     headers: {
@@ -123,7 +125,7 @@ const Card=({order})=>{
   
   function handleClick(){
     // console.log("Card clicked")
-    navigation.navigate('HireVendors',{order})
+    navigation.navigate('VendorOrderDetails',{order})
   }
 
   if(order){
@@ -244,4 +246,4 @@ const style = StyleSheet.create({
    
   });
 
-export default AcceptedOrders;
+export default VAcceptedOrders;

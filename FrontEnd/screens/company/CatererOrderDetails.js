@@ -82,7 +82,7 @@ function CatererOrderDetails({route}) {
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue: </Text>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Location: </Text>
                       <View style={style.priceTag}> 
                       <Text style={style.leftTag}>{sub_order.location}</Text>
                     </View>

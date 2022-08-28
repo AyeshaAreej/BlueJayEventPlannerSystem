@@ -1,5 +1,5 @@
 import React from "react";;
-import {useState, useEffect,useRef, useReducer}  from 'react';
+import {useState, useEffect,useRef, useReducer,useContext}  from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { ImageBackground, Platform, Button,TextInput, TouchableOpacity, StyleSheet, View,Text, AsyncStorage } from "react-native";
@@ -15,6 +15,10 @@ import {GoogleSocialButton } from "react-native-social-buttons";
 import * as SecureStore from 'expo-secure-store';
 
 
+import {UserContext} from '../Contexts'
+
+
+
 // import {PORT} from"@env"
 
 Notifications.setNotificationHandler({
@@ -27,6 +31,9 @@ Notifications.setNotificationHandler({
 
 
 function LoginScreen({navigation}) {
+
+  
+  const [user,setUser] = useContext(UserContext)
 
   const [checked, setChecked] = React.useState('customer');
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -88,8 +95,10 @@ async function registerForPushNotification(){
   
 
   console.log(checked)
+
+  
   async function handleLogin(values){
-    // navigation.navigate(User_Home)
+
     const role= checked
 
     if(role=='customer'){
@@ -108,9 +117,9 @@ async function registerForPushNotification(){
                 if(result.status === 'ok')
                       {
                           
-                          SecureStore.setItemAsync('token',result.data)
+                          SecureStore.setItemAsync('token',result.token)
+                          setUser(result.data)
                           navigation.navigate(User_Home)
-                          // navigation.navigate(Company_Home)
                       }
                       else{
                         console.log(result.error)
@@ -138,7 +147,8 @@ async function registerForPushNotification(){
                   if(result.status === 'ok')
                         {
                             
-                            SecureStore.setItemAsync('token',result.data);
+                            SecureStore.setItemAsync('token',result.token);
+                            setUser(result.data)
                             navigation.navigate(Company_Home)
                         }
                         else{
@@ -164,7 +174,8 @@ async function registerForPushNotification(){
                     if(result.status === 'ok')
                           {
                               
-                              SecureStore.setItemAsync('token',result.data);
+                              SecureStore.setItemAsync('token',result.token);
+                              setUser(result.data)
                               navigation.navigate(Vendor_Home)
                           }
                           else{

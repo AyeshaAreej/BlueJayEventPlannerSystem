@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import {GoogleSocialButton } from "react-native-social-buttons";
-import { User_Home, } from "../constants";
+import * as ImagePicker from 'expo-image-picker';
 import COLORS from "../components/colors";
 
 import { useNavigation } from '@react-navigation/native';
@@ -22,14 +22,63 @@ const SignUp = ()=> {
 
 
   const navigation = useNavigation();
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+     let result = await ImagePicker.launchImageLibraryAsync({
+       mediaTypes: ImagePicker.MediaTypeOptions.All,
+       allowsEditing: true,
+       aspect: [4, 3],
+       quality: 1,
+     });
+ 
+     console.log(result);
+ 
+     if (!result.cancelled) {
+       let newfile = {uri:result.uri, 
+                      type:`test/${result.uri.split('.')[1]}`,
+                      name:`test/${result.uri.split('.')[1]}`
+                     }
+       handleUpload(newfile)
+     }
+   };
+ 
+ 
+   const handleUpload = (picture)=>{
+     const data = new FormData()
+     data.append('file',picture)
+     data.append('upload_preset','BluejayUsers')
+     data.append('cloud_name','bluejaymobapp')
+ 
+     fetch('https://api.cloudinary.com/v1_1/bluejaymobapp/image/upload',{
+       method:'post',
+       body:data
+     }).then(res=>res.json()).then(async(data)=>{
+      //  console.log('url',data.url)
+       setImage(data.url)
+       
+     })
+ 
+   }
+
+
 
    function handleLogin(values){
 
-    // console.log(values)
+    const value = {username:values.username, 
+                   email: values.email ,
+                   password: values.password,
+                   phone_no: values.phone_no, 
+                   city: values.city,
+                   image:image 
+                  }
+
+     console.log(value)
 
       fetch(`http://10.0.2.2:5000/users/signUp`,{
         method: "post",
-        body: JSON.stringify(values),
+        body: JSON.stringify(value),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -92,6 +141,8 @@ const SignUp = ()=> {
             .required(),
             phone_no: yup
             .number()
+            .min(1111111111, 'min 11 digits are required')
+            .max(11111111111, 'max 11 digits are required')
             .required('Phone Number is required.'), 
             city : yup
             .string()
@@ -101,7 +152,11 @@ const SignUp = ()=> {
            >
       {({  handleChange, handleSubmit, values,errors,touched, setFieldTouched}) => (
         
+        
         <View style={{ alignItems:"center",justifyContent:'center' }}>
+
+
+      
            <TextInput
              style={styles.input}
              name="username"
@@ -166,7 +221,13 @@ const SignUp = ()=> {
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
             }
          
-            {/*SignUn Button  */}
+
+        {<Image source={{uri: image}} style={styles.profileImage}  />}
+
+        
+        <View style={styles.button}>
+         <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
+         </View>
 
           <View style={styles.button}>
 
@@ -179,13 +240,6 @@ const SignUp = ()=> {
            
           </View>
 
-            {/* <View style={styles.buttonContainer}> 
-            <TouchableOpacity onPress={handleSubmit}  style={styles.editButton}>
-            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: colors.white   }}> Sign Up </Text>
-            </TouchableOpacity>
-            </View> */}
-
-       
         </View>
       )}
     </Formik>
@@ -193,26 +247,21 @@ const SignUp = ()=> {
 
      </View>
 
-                  <Text style={{marginLeft:100,fontSize:15,marginTop:10}}>Already Have an Account?   
+                  <Text style={{marginLeft:100,fontSize:15,marginTop:2}}>Already Have an Account?   
                  
                   <Pressable onPress={()=>{navigation.navigate('LoginScreen')}}>
-                      <Text style={{fontWeight: "bold",fontSize:16}}>    SignIn</Text>
+                      <Text style={{fontWeight: "bold",fontSize:15}}>    SignIn</Text>
                   </Pressable>
                        
                   </Text>
 
-                  <View style={styles.center}>
       
                   {/* Social buttons */}
       
-                  <View  style={styles.socialbTag}>
+                  {/* <View  style={styles.socialbTag}>
                   <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
                   <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
-                  </View>
-
-
-
-    </View>
+                  </View> */}
 
             
         
@@ -224,10 +273,10 @@ const styles = StyleSheet.create({
 
   topView:{
     backgroundColor :COLORS.primary,
-    paddingTop:"11%",
+    paddingTop:"9%",
     paddingLeft:30,
     width:"100%",
-    height:250,
+    height:210,
     
    },
    socialbTag:{
@@ -239,7 +288,7 @@ const styles = StyleSheet.create({
 
  logo: {
   width: 200,
-  height: 130,
+  height: 110,
   marginLeft:90,
 
 },
@@ -252,7 +301,7 @@ center:{
    input:{
 
     borderColor :COLORS.white,
-    margin:5,
+    marginBottom:10,
     padding:10,
     width:280,
     fontSize:20,
@@ -262,49 +311,27 @@ center:{
     backgroundColor:'white'
 
    },
-// button styling
-   container: {
-    flex: 1,
-    paddingTop:'15%',
-   
-   
-  
-  },
    button:{
     backgroundColor:COLORS.primary,
-     marginTop:15,
+     marginTop:10,
     justifyContent:'center',
     alignItems:'center',
 
   
    },
-   
-   sbcontainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:10,
-    borderRadius: 100,
-    margin:20,
-    marginBottom: 60
-
-  },
+  
+ profileImage:{
+ 
+  height: 120,
+  width: '40%',
+  borderRadius: 20,
+  marginTop:4,
+},
   buttonContainer:{
     justifyContent:'center',
     alignItems:'center',
 
 },
-editButton:{
-  justifyContent:'center',
-  alignItems:'center',
-  marginTop:25,
-  width:180,
-  borderColor :colors.primary,
-  borderWidth:4,
-  elevation:15,
-  borderRadius:15,
-  backgroundColor:colors.primary,
-}
 
 });
 

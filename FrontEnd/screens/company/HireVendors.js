@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState,useEffect,useContext} from 'react';
-import {ImageBackground,Dimensions,ScrollView,FlatList,StatusBar,Image,TouchableOpacity,StyleSheet, Text, View,} from 'react-native';
+import {ImageBackground,Alert,Dimensions,SafeAreaView,ScrollView,FlatList,StatusBar,Image,TouchableOpacity,StyleSheet, Text, View,} from 'react-native';
 import COLORS from '../../components/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -64,7 +64,73 @@ function HireVendors({route}) {
    },[cvOrderC]);
 
 
-   const Card=({sub_order})=>{
+
+
+   const showAlert = (o_id)=>{
+    // console.log(o_id)
+ Alert.alert(
+  "Are your sure?",
+  "Are you sure you want to cancell this order?",
+  [
+    
+    {
+      text: "Yes",
+      onPress: ()=>{cancelOrder(o_id)}
+    },
+    
+    {
+      text: "No",
+      onPress: () => {
+        console.log('order not cancelled')
+      },
+    },
+  ]
+);
+
+}
+
+
+const cancelOrder = (o_id)=>{
+
+SecureStore.getItemAsync('token').then(token=>{
+
+  console.log('Cancell Order',token,o_id)
+
+  const value = {o_id: o_id}
+
+  fetch(`http://10.0.2.2:5000/company/cancelVendorOrder`,{
+                method: "patch",
+                body: JSON.stringify(value),
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "Content-Type": "application/json",
+                    token
+                }
+              
+          }).then(res=>res.json()).then(result=>{
+            console.log(result)
+
+            if( result.status == 'ok'){
+                    setCvOrderC(!cvOrderC)
+            }else{
+              console.log(result.status)
+            }
+
+          }).catch(err=>console.log('catch',err.message))
+
+})    
+
+
+
+}
+
+
+
+
+  
+  
+  
+const Card=({sub_order})=>{
 
     const navigation = useNavigation();
     
@@ -93,10 +159,6 @@ function HireVendors({route}) {
 
       }
 
-       
-
-
-
     }
     
   return(
@@ -105,22 +167,22 @@ function HireVendors({route}) {
         
             <View style={style.deleteTag}>
                     <View style={{color:COLORS.white, }}>
-                    <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white}/>
+                    <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white} onPress={()=>{showAlert(sub_order._id)}}/>
                     </View>
             </View>
   
             <View style={{flexDirection:'row'}}>
-                    {/* <Image source={require("../../assets/hotel4.jpg")} style={style.cardImage} /> */}
+                    {/* <Image source={{uri : sub_order.image}} style={style.cardImage} /> */}
                 
                     <Text style={{ marginLeft:30, marginTop:20,marginBottom:10}}>
                       
                           <Text style={{fontWeight:"bold",fontSize:22,paddingLeft:15}}>{sub_order.required_service}</Text>{'\n'}{'\n'}
                            
-                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15}}>Name :</Text> <Text style={{fontSize:20}}> {sub_order.company_name}</Text>{'\n'}{'\n'}
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15}}>Name :</Text> <Text style={{fontSize:20}}> {sub_order.vendor_name}</Text>{'\n'}{'\n'}
                             
                           <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15}}>Total :</Text> <Text style={{fontSize:20}}> Rs.{sub_order.available_budget}</Text>
                     
-                          <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}>                      {sub_order.status}</Text>
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingTop:20,paddingLeft:80}}>               {sub_order.status}</Text>
             
                     </Text>
             </View>

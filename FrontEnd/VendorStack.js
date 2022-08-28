@@ -2,9 +2,10 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import VendorHome from './screens/VendorHome';
 import VendorProfile from './screens/VendorProfile'
-import AcceptedOrders from './screens/AcceptedOrders';
+import VAcceptedOrders from './screens/VAcceptedOrders';
 import Location from './screens/Location';
 import Message from './screens/Message';
+import VReceivedOrders from './screens/VReceivedOrders'
 import HelpCentre from './screens/HelpCentre';
 import PaymentMethod from './screens/PaymentMethod';
 import Notifications from './screens/Notifications'
@@ -49,7 +50,7 @@ const VendorStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='My Orders' component={AcceptedOrders} 
+          <Drawer.Screen name='My Orders' component={VAcceptedOrders} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome
@@ -60,6 +61,19 @@ const VendorStack = () => {
                 ),
               }}
           /> 
+          <Drawer.Screen name='Received Orders' component={VReceivedOrders} 
+              options={{
+                drawerIcon:({focused,size})=>(
+                  <FontAwesome
+                  name='shopping-cart'
+                  size={size}
+                  color={focused? 'white' : 'purple'}
+                  />
+                ),
+              }}
+          /> 
+
+
           <Drawer.Screen name='Notifications' component={Notifications} 
                   options={{
                     drawerIcon:({focused,size})=>(
@@ -104,7 +118,7 @@ const VendorStack = () => {
                     ),
                   }}
           />
-          <Drawer.Screen name=' Vendor Help Centre' component={HelpCentre}
+          <Drawer.Screen name=' Help Centre' component={HelpCentre}
                   options={{
                     drawerIcon:({focused,size})=>(
                       <FontAwesome

@@ -17,9 +17,8 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    company_pic:{
+    image:{
         type: String,
-        required: true
     },
     email:{
         type: String,
@@ -29,7 +28,15 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone_no:{
+    u_phone_no:{
+        type: String,
+        required: true
+    },
+    c_phone_no:{
+        type: String,
+        required: true
+    },
+    date:{
         type: String,
         required: true
     },
@@ -37,26 +44,55 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date:{
-        //type: Date,
+    no_of_guests:{
+        type: Number,
+        required: true
+    },
+    catering:{
         type: String,
         required: true
     },
-    no_of_guests:{
-        type: Number,
+    menu:{
+        type: String,
+    },
+    decor:{
+        type: String,
+        required: true
+    },
+    decor_theme:{
+        type: String,
+    },
+    photographer:{
+        type: String,
+        required: true
+    },
+    photoShoot_details:{
+        type: String,
+    },
+    venue:{
+        type: String,
+        required: true
+    },
+    venue_preference:{
+        type: String,
+    },
+    location:{
+        type: String,
+    },
+    start_time:{
+        type: String,
+        required: true
+    },
+    event_duration:{
+        type: String,
         required: true
     },
     available_budget:{
         type: Number,
         required: true
     },
-    venue:{
+    special_instructions:{
         type: String,
-        default: 'No'
-    },
-    required_services:{
-        type: String,
-        required: true
     },
     status: {
         type: String,

@@ -52,9 +52,9 @@ function CompanyOrderDetails({route}) {
                     </View>
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Email: </Text>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Phone no: </Text>
                       <View style={style.priceTag}> 
-                      <Text style={style.leftTag}>{order.email} </Text>
+                      <Text style={style.leftTag}>{order.u_phone_no} </Text>
                     </View>
                     </View>
                     

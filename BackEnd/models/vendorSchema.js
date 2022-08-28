@@ -27,8 +27,7 @@ const vendorSchema = new mongoose.Schema({
         required: true
     },
     price_range:{
-        type: Number,
-        min: 0,
+        type: String,
         required: true
     },
     address:{

@@ -1,5 +1,5 @@
 import React from "react";
-import {useState,useEffect}  from 'react'
+import {useState,useEffect,useContext}  from 'react'
 import { ImageBackground, Button, TextInput, Platform,Alert,ScrollView, StyleSheet, View, Image, Text } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home, Auth_Stack } from "../constants";
 import WelcomeScreen from "./WelcomeScreen";
@@ -8,11 +8,15 @@ import COLORS from "../components/colors";
 
 import * as SecureStore from 'expo-secure-store';
 
+
+import {UserContext} from '../Contexts'
+
 // import {PORT} from"@env"
 
 
 function SplashScreen({navigation}) {
-
+  
+  const [user,setUser] = useContext(UserContext)
 
 useEffect(()=>{
  setTimeout(()=>{
@@ -37,21 +41,29 @@ useEffect(()=>{
                 
             }).then(res=>res.json()).then(result=>{
               console.log('inside splash fetch',result)
+                            
+              if(result.status =='ok'){
 
-              if(result.data.role == 'customer')
-                    {
-                      navigation.navigate(User_Home)
-                     
-                    }
-              else if(result.data.role == 'company')
-                    {
-                      navigation.navigate(Company_Home)
-                    }
-              if(result.data.role == 'vendor')
-                    {
-                      //console.log("vendor")
-                      navigation.navigate(Vendor_Home)
-                    }
+                setUser(result.data)
+
+                                if(result.data.role == 'customer')
+                                      {
+
+                                        navigation.navigate(User_Home)
+                                      
+                                      }
+                                else if(result.data.role == 'company')
+                                      {
+                                        navigation.navigate(Company_Home)
+                                      }
+                                else if(result.data.role == 'vendor')
+                                      {
+                                        navigation.navigate(Vendor_Home)
+                                      }
+
+              }else{
+                  console.log(result.status)
+              }
 
             }).catch(err=>console.log('catch',err.message))
      }  

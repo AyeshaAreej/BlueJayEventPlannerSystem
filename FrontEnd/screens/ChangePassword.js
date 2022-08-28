@@ -1,13 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView,Button,TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import colors from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
+import {UserContext} from '../Contexts'
+
 
 
 export default function ChangePassword() {
+
+  const [user,setUser] = useContext(UserContext)
+
+  let route = ''
+  
+  if(user.role=='customer'){
+    route = 'users'
+    console.log(route)
+  }else if(user.role=='company'){
+    route = 'company'
+    console.log(route)
+  }else if(user.role=='vendor'){
+    route = 'vendor'
+    console.log(route)
+  }
+  
 
  
   return (
@@ -29,7 +47,7 @@ export default function ChangePassword() {
          
           const value = {old_password: values.oldpassword, new_password: values.newpassword}
           console.log(value)
-          fetch(`http://10.0.2.2:5000/users/changePassword`,{
+          fetch(`http://10.0.2.2:5000/${route}/changePassword`,{
                         method: "patch",
                         body: JSON.stringify(value),
                         headers: {
@@ -43,9 +61,11 @@ export default function ChangePassword() {
     
                     if( result.status == 'ok'){
                       console.log(result)
+                      alert('Password updated sucessfully')
                      
                     }else{
-                      console.log(result.status)
+                      console.log(result.error)
+                      alert(result.error)
                     }
     
     

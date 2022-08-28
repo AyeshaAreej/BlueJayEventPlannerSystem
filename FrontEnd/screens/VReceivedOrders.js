@@ -2,16 +2,16 @@ import React from 'react';
 import {useState,useEffect,useContext} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import COLORS from '../../components/colors';
+import COLORS from '../components/colors';
 
-import {OrderContext} from '../../Contexts'
+import {OrderContext} from '../Contexts'
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;
 
-const ReceivedOrders=({navigation})=>{
+const VReceivedOrders=()=>{
  
 
   const [myOrders, setMyOrders] = React.useState([]);
@@ -24,7 +24,7 @@ const ReceivedOrders=({navigation})=>{
 
       console.log('Received Orders',token)
 
-      fetch(`http://10.0.2.2:5000/company/rec_Orders`,{
+      fetch(`http://10.0.2.2:5000/vendor/rec_Orders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -39,7 +39,7 @@ const ReceivedOrders=({navigation})=>{
                          setMyOrders(result.data)
                         if(result.data == ''){
                             console.log('No orders found')
-                            // alert('No orders yet')
+                            alert('No orders yet')
                         }
                 }else{
                   console.log(result.status)
@@ -61,7 +61,7 @@ const ReceivedOrders=({navigation})=>{
 
       const value = {o_id: o_id}
 
-      fetch(`http://10.0.2.2:5000/company/approveOrder`,{
+      fetch(`http://10.0.2.2:5000/vendor/approveOrder`,{
                     method: "patch",
                     body: JSON.stringify(value),
                     headers: {
@@ -96,7 +96,7 @@ const ReceivedOrders=({navigation})=>{
 
       const value = {o_id: o_id}
 
-      fetch(`http://10.0.2.2:5000/company/rejectOrder`,{
+      fetch(`http://10.0.2.2:5000/vendor/rejectOrder`,{
                     method: "patch",
                     body: JSON.stringify(value),
                     headers: {
@@ -131,7 +131,7 @@ const Card=({order})=>{
   
   function handleClick(){
     // console.log("Card clicked")
-    navigation.navigate('CompanyOrderDetails',{order})
+     navigation.navigate('VendorOrderDetails',{order})
   }
 if(order){
 return(
@@ -236,4 +236,4 @@ const style = StyleSheet.create({
    
   });
 
-export default ReceivedOrders;
+export default VReceivedOrders;

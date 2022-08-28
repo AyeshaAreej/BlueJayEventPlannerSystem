@@ -1,24 +1,22 @@
 import { StyleSheet, Text, View,TextInput, Image,ScrollView ,Button, StatusBar} from 'react-native'
 import colors from '../components/colors';
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
-
+import {UserContext} from '../Contexts'
 import { useNavigation } from '@react-navigation/native';
 
 
-const EditProfile = ({route}) => {
+const EditProfile = () => {
 
   const navigation = useNavigation();
-  const user = route.params.user
-  const setUser = route.params.setUser
-
-  const [image, setImage] = useState(null);
-
+  const [user,setUser] = useContext(UserContext)
+  const [image, setImage] = useState(user.image);
+  
 
   const pickImage = async () => {
    // No permissions request is necessary for launching the image library
@@ -32,9 +30,31 @@ const EditProfile = ({route}) => {
     console.log(result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      let newfile = {uri:result.uri, 
+                     type:`test/${result.uri.split('.')[1]}`,
+                     name:`test/${result.uri.split('.')[1]}`
+                    }
+      handleUpload(newfile)
     }
   };
+
+
+  const handleUpload = (picture)=>{
+    const data = new FormData()
+    data.append('file',picture)
+    data.append('upload_preset','BluejayUsers')
+    data.append('cloud_name','bluejaymobapp')
+
+    fetch('https://api.cloudinary.com/v1_1/bluejaymobapp/image/upload',{
+      method:'post',
+      body:data
+    }).then(res=>res.json()).then(async(data)=>{
+      console.log('url',data.url)
+      setImage(data.url)
+      
+    })
+
+  }
 
 
   return (
@@ -54,7 +74,8 @@ const EditProfile = ({route}) => {
           console.log('update Profile',token)
          
           const value = {username:values.username, email: values.email ,
-                         phone_no: values.phone_no , city: values.city }
+                         phone_no: values.phone_no , city: values.city,
+                         image:image }
 
           console.log(value)
 
@@ -98,7 +119,8 @@ const EditProfile = ({route}) => {
             .required('Name is required.'),  
             phone_no: yup
             .number()
-            .min(11, 'min 11 digits are required')
+            .min(1111111111, 'min 11 digits are required')
+            .max(11111111111, 'max 11 digits are required')
             .required('Phone Number is required.'), 
             city : yup
             .string()
@@ -109,19 +131,19 @@ const EditProfile = ({route}) => {
     
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
-        <View>
+        <View style={{paddingTop:20}}>
 
 
         
         <View style={styles.imageContainer}>
         {image && <Image source={{ uri: image }} style={styles.profileImage}  />}
-        
-
-         
         </View>
+        
         <View style={styles.button}>
-         <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
+         <Button title="Change Image" onPress={pickImage} color={colors.primary}/>
          </View>
+
+
 
         <View style={styles.inputContainer} >
         <MaterialCommunityIcons name="account"  size={34} style={styles.icon}/>
@@ -138,6 +160,9 @@ const EditProfile = ({route}) => {
            {touched.username && errors.username &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.username}</Text>
             }
+
+
+
             <View style={styles.inputContainer} >
         <MaterialCommunityIcons name="email"  size={34} style={styles.icon}/>
            <TextInput
@@ -236,8 +261,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     width: '40%',
     height: 35,
-    margin:5,
-    marginLeft:'29%',
+    marginBottom:35,
+    marginLeft:'30%',
+    marginTop:10
      
  },
  updateButton:{
@@ -245,7 +271,6 @@ const styles = StyleSheet.create({
   backgroundColor: colors.primary,
   width: '40%',
   height: 38,
-  margin:5,
 
    
 },
@@ -261,25 +286,21 @@ buttonContainer:{
  },
  inputContainer:{
   flexDirection:'row',
-  color:colors.white, 
+  color:colors.white,
   
  },
  profileImage:{
  
-  // height: '100%',
-  // width: '50%',
-  // borderRadius: 20,
-
   height: 180,
   width: '50%',
   borderRadius: 20,
-  marginBottom:20
+  marginBottom:20,
 },
   imageContainer:{
       flex:1,
       justifyContent:'center',
       alignItems:'center',
- 
+      marginTop:40
  
   }, 
 

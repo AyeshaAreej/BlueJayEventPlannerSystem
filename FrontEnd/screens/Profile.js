@@ -1,56 +1,15 @@
 import { StyleSheet, Text, View,TextInput,TouchableOpacity, ScrollView ,Button,Image,StatusBar, InputAccessoryView} from 'react-native'
 import colors from '../components/colors';
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LogBox } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
+import {UserContext} from '../Contexts'
 
 const Profile = ({route,navigation}) => {
 
   
-  const [user,setUser] = useState([])
-
-
-  useEffect(()=>{
-   
-    console.log('2')
-    SecureStore.getItemAsync('token').then(token=>{
-
-      console.log('view profile',token)
-     
-     
-      fetch(`http://10.0.2.2:5000/users/showProfile`,{
-                    method: "get",
-                    headers: {
-                        Accept: "application/json, text/plain, */*",
-                        "Content-Type": "application/json",
-                        token
-                    }
-                  
-              }).then(res=>res.json()).then(async(result)=>{
-              
-
-                if( result.status == 'ok'){
-                  console.log(result)
-                  setUser(result.data)
-                    
-                }else{
-                  console.log(result.status)
-                  
-
-                }
-
-
-              }).catch(err=>console.log('catch',err.message))
-    })  
-     
-
-   },[]);
-   
-   LogBox.ignoreLogs([
-    'Non-serializable values were found in the navigation state',
-  ]);
+  const [user,setUser] = useContext(UserContext)
 
 
   return (
@@ -61,7 +20,7 @@ const Profile = ({route,navigation}) => {
      
         <View>
         <View style={styles.buttonContainer}>
-        <Image source={require('.././assets/profile.jpg')} style={styles.profileImage} />
+        <Image source={{ uri: user.image }} style={styles.profileImage} />
         </View>
      
 
@@ -108,19 +67,12 @@ const Profile = ({route,navigation}) => {
          
            <View style={styles.buttonContainer}> 
            <TouchableOpacity  style={styles.editButton}
-            onPress={()=> navigation.navigate('EditProfile',{user,setUser})}>
+            onPress={()=> navigation.navigate('EditProfile')}>
              <Text style={{ paddingTop:5,paddingBottom:5, fontSize: 23,  fontWeight: 'bold',  color: colors.white,   }}>Edit</Text>
            </TouchableOpacity> 
             </View>
        
-{/*        
-            <View style={styles.buttonContainer}> 
-           <TouchableOpacity  style={styles.editButton}
-            onPress={RefreshPage}>
-             <Text style={{ paddingTop:5,paddingBottom:5, fontSize: 23,  fontWeight: 'bold',  color: colors.white,   }}>Refresh</Text>
-           </TouchableOpacity> 
-            </View> */}
-       
+
  
 
 
@@ -228,7 +180,6 @@ editPassword: {
   buttonContainer:{
       justifyContent:'center',
       alignItems:'center',
- 
   },
  inputContainer:{
   flexDirection:'row',
@@ -241,8 +192,7 @@ editPassword: {
     height: 180,
     width: '50%',
     borderRadius: 20,
-    marginBottom:20
-
+    marginBottom:20,
 
  },
 

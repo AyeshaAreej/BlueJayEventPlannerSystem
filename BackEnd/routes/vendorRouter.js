@@ -7,18 +7,23 @@ const route = express.Router()
 
 //authorization
 route.post('/signUp', vendorController.signUp)
-route.post('/logIn',vendorController.logIn)
+route.post('/logIn',vendorController.logIn)//done
 
 
-//-profile
-route.get('/showProfile',middleware.ValidateToken ,vendorController.showProfile)
-route.patch('/updateProfile',middleware.ValidateToken ,vendorController.updateProfile)
-route.patch('/changePassword',middleware.ValidateToken ,vendorController.changePassword)
+//-profile 
+route.patch('/updateProfile',middleware.ValidateToken ,vendorController.updateProfile)//done
+route.patch('/changePassword',middleware.ValidateToken ,vendorController.changePassword)//done
 
 
 //My orders
-route.get('/myOrders',middleware.ValidateToken ,vendorController.myOrders)
-route.patch('/approveOrder',middleware.ValidateToken ,vendorController.approveOrder)
+route.get('/rec_Orders',middleware.ValidateToken ,vendorController.rec_Orders)//done
+route.patch('/approveOrder',middleware.ValidateToken ,vendorController.approveOrder)//done
+route.patch('/rejectOrder',middleware.ValidateToken ,vendorController.rejectOrder) //done
+route.get('/myOrders',middleware.ValidateToken ,vendorController.myOrders)//done
+route.patch('/cancelOrder',middleware.ValidateToken ,vendorController.cancelOrder)//done
+route.patch('/completeOrder',middleware.ValidateToken ,vendorController.completeOrder)//halffffffffff done
+
+
 
 
 

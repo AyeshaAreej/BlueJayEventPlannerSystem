@@ -18,7 +18,7 @@ const bcardWidth=width/1.1;
 
 const CompanyHome=({route})=>{
 
-
+console.log(route.params.o_id)
   useEffect(()=>{
 
     if(myDate===' ' && route.params.date === undefined){
@@ -50,7 +50,7 @@ const CompanyHome=({route})=>{
    const [date, setDate] = useState(new Date());
    const [myDate, setMyDate] = useState(" ");
    const [isPickerShow, setIsPickerShow] = useState(false);
-
+   var minDate = new Date()
 
     //console.log(route.params)
     const onChangeSearch = (query) => {
@@ -380,7 +380,8 @@ const Card=({vendor,index,})=>{
 
   function handleClick(){
     console.log("Card clicked")
-    o_id=route.params.o_id
+    let o_id=route.params.o_id
+    console.log(o_id)
     navigation.navigate('VendorDetails',{vendor,myDate,o_id})
   }
 return(
@@ -395,7 +396,7 @@ return(
 
     </Text>
      </View>
-         <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
+         <Image source={{uri : vendor.image}} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
@@ -433,53 +434,53 @@ return(
         
             <View style={{paddingBottom:8}}>
 
-            <View style={{flexDirection:'row'}}>
-                  <Text style={{fontSize:25, fontWeight:'bold'}}> Search For Vendors </Text> 
-                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:60,paddingTop:5}}>Pick a date </Text>
-            
+                            <View style={{flexDirection:'row'}}>
+                                  <Text style={{fontSize:25, fontWeight:'bold'}}> Search For Vendors </Text> 
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:60,paddingTop:5}}>Pick a date </Text>
+                            
+                            </View>
+
+                            <View style={{flexDirection:'row'}}>
+                                <Text style={{fontSize:25, fontWeight:'bold'}} > in  </Text>
+                                <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
+                            
+
+
+                                  {/* The button that used to trigger the date picker */}
+                                    <View style={style.btnContainer}>
+                                        <MaterialCommunityIcons name="calendar"  size={45} color={COLORS.primary} onPress={showPicker}/>
+                                    </View>
+                                
+
+                                  {/* The date picker */}
+                                  { isPickerShow && (
+                                    <DateTimePicker
+                                      value={date}
+                                      mode={'date'}
+                                      display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                                      // is24Hour={true}
+                                      onChange={onChange}
+                                      minimumDate = {new Date(minDate)}
+                                      style={style.datePicker}
+                                    />
+                                  )}
+
+
+                            </View>
+
+                            <View style={{flexDirection:'row'}}>
+                                                <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5}}>  Selected Date :</Text>
+                                                <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5,color: COLORS.primary}}> {myDate}</Text>
+                    
+
+                            </View>
+
             </View>
 
-               <View style={{flexDirection:'row'}}>
-                   <Text style={{fontSize:25, fontWeight:'bold'}} > in  </Text>
-                   <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
-              
-
-
-                    {/* The button that used to trigger the date picker */}
-                      <View style={style.btnContainer}>
-                          <MaterialCommunityIcons name="calendar"  size={45} color={COLORS.primary} onPress={showPicker}/>
-                      </View>
-                  
-
-                    {/* The date picker */}
-                    { isPickerShow && (
-                      <DateTimePicker
-                        value={date}
-                        mode={'date'}
-                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                        // is24Hour={true}
-                        onChange={onChange}
-                        style={style.datePicker}
-                      />
-                    )}
-
-
-               </View>
-
-               <View style={{flexDirection:'row'}}>
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5}}>  Selected Date :</Text>
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingTop:5,color: COLORS.primary}}> {myDate}</Text>
-      
-
-               </View>
 
         </View>
 
 
-   </View>
-
-
-        <ScrollView showsVerticalScrollIndicator={false}>
 
                 <View style={style.dropdownContainer}>
                         
@@ -538,7 +539,6 @@ return(
 
 
          
-        </ScrollView>
      </SafeAreaView>
    
  )

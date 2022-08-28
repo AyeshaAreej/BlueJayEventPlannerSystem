@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState,useEffect,useContext} from 'react';
-import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
+import {Dimensions,Alert,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
@@ -48,6 +48,68 @@ const MyOrders=()=>{
 
 
    },[orderC]);
+
+
+   const showAlert = (o_id)=>{
+    // console.log(o_id)
+ Alert.alert(
+  "Are your sure?",
+  "Are you sure you want to cancell this order?",
+  [
+    
+    {
+      text: "Yes",
+      onPress: ()=>{cancelOrder(o_id)}
+    },
+    
+    {
+      text: "No",
+      onPress: () => {
+        console.log('order not cancelled')
+      },
+    },
+  ]
+);
+
+}
+
+
+const cancelOrder = (o_id)=>{
+
+SecureStore.getItemAsync('token').then(token=>{
+
+  console.log('Cancell Order',token,o_id)
+
+  const value = {o_id: o_id}
+
+  fetch(`http://10.0.2.2:5000/users/cancelOrder`,{
+                method: "patch",
+                body: JSON.stringify(value),
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "Content-Type": "application/json",
+                    token
+                }
+              
+          }).then(res=>res.json()).then(result=>{
+            console.log(result)
+
+            if( result.status == 'ok'){
+                    setOrderC(!orderC)
+            }else{
+              console.log(result.status)
+            }
+
+          }).catch(err=>console.log('catch',err.message))
+
+})    
+
+
+
+}
+
+
+
   
 // Card
 
@@ -64,12 +126,12 @@ return(
       
           <View style={style.priceTag}>
                   <View style={{color:COLORS.white, }}>
-                  <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white}/>
+                  <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white} onPress={()=>{showAlert(order._id)}}/>
                   </View>
           </View>
 
           <View style={{flexDirection:'row'}}>
-                  <Image source={require("../assets/hotel4.jpg")} style={style.cardImage} />
+                  <Image source={{ uri: order.image }} style={style.cardImage} />
               
                   <Text style={{ marginLeft:10, marginTop:75,marginBottom:20}}>
 
@@ -108,25 +170,21 @@ return(
     return(
         <SafeAreaView style={{flex:1,backgroundColor:COLORS.white}}>
             <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
-        <ScrollView showsVerticalScrollIndicator={false}>
-    
-         <View>
-         <Animated.FlatList
-          data={myOrders}
-          vertical
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            justifyContent:'center',
-            alignItems:'center',
-            
-          }}
-          renderItem={({item}) => <Card order={item}  />}
-        />
-        </View>
+                
+                          <View>
+                          <Animated.FlatList
+                            data={myOrders}
+                            vertical
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                              justifyContent:'center',
+                              alignItems:'center',
+                              
+                            }}
+                            renderItem={({item}) => <Card order={item}  />}
+                          />
+                          </View>
 
-
-         
-        </ScrollView>
      </SafeAreaView>
    
  )

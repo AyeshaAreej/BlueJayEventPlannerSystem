@@ -17,8 +17,12 @@ const cvOrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    vendor_pic:{
+    image:{
         type: String,
+    },
+    order_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Order',
         required: true
     },
     city:{

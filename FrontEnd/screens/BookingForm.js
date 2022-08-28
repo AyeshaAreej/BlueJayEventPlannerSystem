@@ -5,6 +5,7 @@ import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, Styl
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../components/colors';
+import { RadioButton } from 'react-native-paper';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
@@ -12,15 +13,24 @@ import {OrderContext} from '../Contexts'
 
 function BookingForm({ route}) {
 
-
-  const [orderC,setOrderC] = useContext(OrderContext)
   const navigation = useNavigation();
 
   const company = route.params.company
   const myDate = route.params.myDate
-  //console.log("company",company)
-  console.log("myDate",myDate)
+  // console.log("myDate",myDate)
 
+
+  const [catering, setCatering] = React.useState('no');
+  const [venue, setVenue] = React.useState('no');
+  const [decor, setDecor] = React.useState('no');
+  const [photographer, setPhotographer] = React.useState('no');
+
+  const [orderC,setOrderC] = useContext(OrderContext)
+
+  // console.log(catering)
+  // console.log(venue)
+  // console.log(decor)
+  // console.log(photography)
 
   const c_id = company._id
 
@@ -37,9 +47,20 @@ function BookingForm({ route}) {
         date: myDate,
         event_type:values.event_type,
         no_of_guests: values.no_of_guests,
+        catering: catering,
+        menu:values.menu,
+        decor: decor,
+        decor_theme:values.decor_theme,
+        photographer: photographer,
+        photoShoot_details:values.photoShoot_details,
+        venue:venue,
+        venue_preference:values.venue_preference,
+        location:values.location,
+        start_time:values.start_time,
+        event_duration:values.event_duration,
         available_budget: values.available_budget,
-        venue: values.venue,
-        required_services: values.required_services
+        special_instructions: values.special_instructions
+       
       }
       console.log("value",value)
       
@@ -63,13 +84,8 @@ function BookingForm({ route}) {
                       }
 
               }).catch(err=>console.log('catch',err.message))
-    })    
-
-
-
-
-      
- 
+    
+  })    
   }
 
   return (
@@ -95,7 +111,18 @@ function BookingForm({ route}) {
 
     {/* Form */}
     <Formik
-     initialValues={{event_type:'', no_of_guests:'',available_budget:'',venue:'',required_services:'' }}
+     initialValues={{event_type:'',
+                     no_of_guests:'',
+                     menu:'',
+                     decor_theme:'',
+                     photoShoot_details:'',
+                     venue_preference:'',
+                     location:'',
+                     start_time:'',
+                     event_duration:'',
+                     available_budget:'',
+                     special_instructions:''
+                    }}
      onSubmit={values => {
       // console.log(values)
       handleOrder(values)
@@ -109,16 +136,36 @@ function BookingForm({ route}) {
            
             no_of_guests: yup
             .number()
-            .required('Number of guests is required.'), 
+            .required('Number of guests is required.'),
+            
+            menu: yup
+            .string(),
+
+            decor_theme: yup
+            .string(),
+
+            photoShoot_details: yup
+            .string(),
+
+            venue_preference: yup
+            .string(),
+
+            location: yup
+            .string(),
+            
+            start_time: yup
+            .string()
+            .required('Start time is required.'), 
+
+            event_duration: yup
+            .string()
+            .required('Event duration is required.'), 
 
             available_budget: yup
             .number()
             .required('Budget is required.'), 
 
-            venue: yup
-            .string(),
-
-            required_services : yup
+            special_instructions : yup
             .string(),
           })}
  >
@@ -146,13 +193,320 @@ function BookingForm({ route}) {
             placeholder="Number of Guests"
              onChangeText={handleChange('no_of_guests')}
              onBlur={()=>setFieldTouched('no_of_guests')}
-            value={values.numberofguests}
+            value={values.no_of_guests}
             keyboardType="numeric"
             multiline={true}
             />
              {touched.no_of_guests && errors.no_of_guests &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.no_of_guests}</Text>
             }
+
+
+
+
+<View style={{flexDirection:'row'}}>
+
+        
+<Text style={{color:colors.primary, fontSize:20,paddingLeft:12,paddingTop:8}}>Catering:         </Text>
+
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="yes"
+                     status={ catering === 'yes' ? 'checked' : 'unchecked' }
+                     onPress={() => setCatering('yes')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Yes</Text>
+
+         </View>
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="no"
+                     status={ catering === 'no' ? 'checked' : 'unchecked' }
+                     onPress={() => setCatering('no')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>No</Text>
+               
+         </View>
+
+</View>
+
+
+{
+catering == 'yes' &&
+
+<TextInput
+    style={styles.input}
+    name="menu"
+    placeholder='Enter Menu items'
+    onChangeText={handleChange('menu')}
+    onBlur={()=>setFieldTouched('menu')}
+    multiline={true}
+    numberOfLines={3}
+   textAlignVertical='top'
+    value={values.menu}
+   
+   
+  />
+   
+
+}
+
+
+<View style={{flexDirection:'row'}}>
+
+        
+<Text style={{color:colors.primary, fontSize:20,paddingLeft:12,paddingTop:8}}>Decoration:     </Text>
+
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="yes"
+                     status={ decor === 'yes' ? 'checked' : 'unchecked' }
+                     onPress={() => setDecor('yes')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Yes</Text>
+
+         </View>
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="no"
+                     status={ decor === 'no' ? 'checked' : 'unchecked' }
+                     onPress={() => setDecor('no')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>No</Text>
+               
+         </View>
+
+</View>
+
+
+{
+decor == 'yes' &&
+
+<TextInput
+    style={styles.input}
+    name="decor_theme"
+    placeholder=' Enter Decor Theme'
+    onChangeText={handleChange('decor_theme')}
+    onBlur={()=>setFieldTouched('decor_theme')}
+    multiline={true}
+    numberOfLines={1}
+   textAlignVertical='top'
+    value={values.decor_theme}
+   
+  />
+
+
+}
+
+
+
+
+<View style={{flexDirection:'row'}}>
+
+        
+<Text style={{color:colors.primary, fontSize:20,paddingLeft:12,paddingTop:8}}>Photographer:</Text>
+
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="yes"
+                     status={ photographer === 'yes' ? 'checked' : 'unchecked' }
+                     onPress={() => setPhotographer('yes')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Yes</Text>
+
+         </View>
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="no"
+                     status={ photographer === 'no' ? 'checked' : 'unchecked' }
+                     onPress={() => setPhotographer('no')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>No</Text>
+               
+         </View>
+
+</View>
+
+
+{
+photographer == 'yes' &&
+
+<TextInput
+    style={styles.input}
+    name="photoShoot_details"
+    placeholder='Full event/couple shoot'
+    onChangeText={handleChange('photoShoot_details')}
+    onBlur={()=>setFieldTouched('photoShoot_details')}
+    multiline={true}
+    numberOfLines={1}
+   textAlignVertical='top'
+    value={values.photoShoot_details}
+   
+  />
+
+
+}
+
+
+
+
+
+
+<View style={{flexDirection:'row'}}>
+
+        
+<Text style={{color:colors.primary, fontSize:20,paddingLeft:12,paddingTop:8}}>Venue:              </Text>
+
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="yes"
+                     status={ venue === 'yes' ? 'checked' : 'unchecked' }
+                     onPress={() => setVenue('yes')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>Yes</Text>
+
+         </View>
+
+         <View style={styles.rightTag}>
+               
+               <View style={styles.leftTag}>
+                   <RadioButton
+                     value="no"
+                     status={ venue === 'no' ? 'checked' : 'unchecked' }
+                     onPress={() => setVenue('no')}
+                     uncheckedColor={COLORS.primary}
+                     color={COLORS.primary}
+                   />
+               </View>
+               <Text style={{fontSize: 18,color:COLORS.grey, fontWeight: 'bold'}}>No</Text>
+               
+         </View>
+
+</View>
+
+
+{
+venue == 'yes' &&
+
+<TextInput
+    style={styles.input}
+    name="venue_preference"
+    placeholder=' Enter Venue Preference
+    Indoor/Outdoor/Hall/Beach'
+    onChangeText={handleChange('venue_preference')}
+    onBlur={()=>setFieldTouched('venue_preference')}
+    multiline={true}
+    numberOfLines={2}
+   textAlignVertical='top'
+    value={values.venue_preference}
+   
+  />
+
+
+}
+{
+venue == 'no' &&
+
+<TextInput
+    style={styles.input}
+    name="location"
+    placeholder='Enter your selected Event location'
+    onChangeText={handleChange('location')}
+    onBlur={()=>setFieldTouched('location')}
+    multiline={true}
+    numberOfLines={2}
+   textAlignVertical='top'
+    value={values.location}
+   
+  />
+
+
+}
+{/* {
+  touched.venue_preference && errors.venue_preference && venue=='yes' &&
+  <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.venue_preference}</Text>
+           
+} */}
+
+
+
+            <TextInput
+             style={styles.input}
+             name="start_time"
+             placeholder='Event start time'
+             onChangeText={handleChange('start_time')}
+             onBlur={()=>setFieldTouched('start_time')}
+             value={values.start_time}
+             multiline={true}
+           
+           />
+           {touched.start_time && errors.start_time &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.start_time}</Text>
+            }
+
+
+            <TextInput
+             style={styles.input}
+             name="event_duration"
+             placeholder='Event Duration'
+             onChangeText={handleChange('event_duration')}
+             onBlur={()=>setFieldTouched('event_duration')}
+             value={values.event_duration}
+             multiline={true}
+           
+           />
+           {touched.event_duration && errors.event_duration &&
+              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.event_duration}</Text>
+            }
+
+
+
+
+
+
+
             
             <TextInput
              style={styles.input}
@@ -168,38 +522,18 @@ function BookingForm({ route}) {
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
-              {/* Venue */}
-          
-           
-            {/* <Text  style={{color:colors.black,fontWeight: 'bold',fontSize:20}}>Venue </Text> */}
-
-            <TextInput
-             style={styles.input}
-             name="venue"
-             placeholder='Venue (Indoor or Outdoor) '
-             onChangeText={handleChange('venue')}
-             onBlur={()=>setFieldTouched('venue')}
-            value={values.venue}
-            multiline={true}
-           
-           />
-           {touched.venue && errors.venue &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.venue}</Text>
-            }
 
            <TextInput
              style={styles.input}
-             name="required_services"
-             placeholder='Services '
-             onChangeText={handleChange('required_services')}
-             onBlur={()=>setFieldTouched('required_services')}
-             value={values.required_services}
+             name="special_instructions"
+             placeholder='Special instructions '
+             onChangeText={handleChange('special_instructions')}
+             onBlur={()=>setFieldTouched('special_instructions')}
+             value={values.special_instructions}
              multiline={true}
            
            />
-           {touched.required_services && errors.required_services &&
-              <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.required_services}</Text>
-            }
+           
 
 
             </View>
@@ -209,13 +543,28 @@ function BookingForm({ route}) {
       </View>
      )}
   </Formik>
-  {/* In the end the expected total amount will be calcultaed according to required_services selected and will be displayed to user and data will be send to company via message or email */}
+
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
 
+
+  rightTag:{
+    marginTop: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    
+
+  },
+leftTag:{
+ 
+  color: COLORS.grey,
+  marginLeft: 6,
+  // paddingBottom:5,
+}, 
   topView:{
   
     paddingTop:"2%",
@@ -250,6 +599,7 @@ const styles = StyleSheet.create({
     backgroundColor:colors.primary,
     width: '40%',
      marginTop:20,
+     marginBottom:30
      
 
      

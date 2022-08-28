@@ -19,11 +19,12 @@ route.post('/highPrice',middleware.ValidateToken ,userController.highPrice)//don
 //orders
 route.post('/createOrder',middleware.ValidateToken ,userController.createOrder)//done
 route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)
+route.patch('/cancelOrder',middleware.ValidateToken ,userController.cancelOrder)//done
+
 
 
 
 //-profile
-route.get('/showProfile',middleware.ValidateToken ,userController.showProfile)//done
 route.patch('/updateProfile',middleware.ValidateToken ,userController.updateProfile)//done
 route.patch('/changePassword',middleware.ValidateToken ,userController.changePassword)//done
 
