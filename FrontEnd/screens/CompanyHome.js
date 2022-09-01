@@ -378,11 +378,26 @@ const Card=({vendor,index,})=>{
 
   const navigation = useNavigation();
 
+
+  const filled = []
+  const rating = vendor.rating.toFixed(0)
+ 
+  for (var i = 0; i < rating; i++) {
+    filled.push(i);
+  }
+
+const emp = []
+ const empty = 5-rating
+  for (var i = 0; i < empty; i++) {
+    emp.push(i);
+  }
+
+
   function handleClick(){
     console.log("Card clicked")
     let o_id=route.params.o_id
     console.log(o_id)
-    navigation.navigate('VendorDetails',{vendor,myDate,o_id})
+    navigation.navigate('VendorDetails',{vendor,myDate,o_id,filled,emp})
   }
 return(
 
@@ -407,13 +422,22 @@ return(
             </View>
              <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
-          <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
+          <View  style={{flexDirection:"row", marginTop:6, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.gray}/>
+             {
+                filled.map((i,key)=>{
+
+                   return <View key={i}><MaterialCommunityIcons name="star" size={20} color={colors.orange}/></View>
+                })
+                
+              }
+
+              {
+                emp.map((i,key)=>{
+                  return <View key={i}><MaterialCommunityIcons name="star" size={20} color={colors.gray}/></View>
+                })
+                
+              }
               </View>
              
 

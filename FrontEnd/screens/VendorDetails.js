@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import COLORS from '../components/colors';
+import colors from '../components/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import image from '../assets/hotel1.jpg';
@@ -23,6 +24,9 @@ import { useNavigation } from '@react-navigation/native';
   const vendor = route.params.vendor
   const myDate = route.params.myDate
   const o_id = route.params.o_id
+  const filled = route.params.filled
+  const emp = route.params.emp
+  
   //console.log("vendor",vendor)
   //console.log("myDate",myDate)
   console.log("o_id",o_id)
@@ -102,11 +106,20 @@ import { useNavigation } from '@react-navigation/native';
             }}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flexDirection: 'row'}}>
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.grey} />
+              {
+                filled.map((i,key)=>{
+
+                   return <View key={i}><MaterialCommunityIcons name="star" size={22} color={colors.orange}/></View>
+                })
+                
+              }
+
+              {
+                emp.map((i,key)=>{
+                  return <View key={i}><MaterialCommunityIcons name="star" size={22} color={colors.gray}/></View>
+                })
+                
+              }
               </View>
               <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 9}}>
                 {vendor.rating}

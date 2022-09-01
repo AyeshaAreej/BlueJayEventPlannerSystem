@@ -3,6 +3,8 @@ import React from 'react'
 import VendorDetails from './screens/VendorDetails';
 import CompanyHome from './screens/CompanyHome';
 import CatererBookingForm from './screens/company/CatererBookingForm';
+import RateVendors from './screens/company/RateVendors';
+import Rating from './screens/Rating';
 import DecorationBookingForm from './screens/company/DecorationBookingForm';
 import VenueBookingForm from './screens/company/VenueBookingForm';
 import PhotographyBookingForm from './screens/company/PhotographyBookingForm';
@@ -42,6 +44,8 @@ const CompanyHomeStack = () => {
            <Stack.Screen name='PhotographyBookingForm' component={PhotographyBookingForm} options={{headerShown:false}}/>
            <Stack.Screen name='EditCompanyProfile' component={EditCompanyProfile} options={{headerShown:false}}/>
            <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown:false}}/>
+           <Stack.Screen name="RateVendors" component={RateVendors} options={{headerShown:false}}/>
+           <Stack.Screen name="Rating" component={Rating} options={{headerShown:false}}/>
            <Stack.Screen name="MyAccount" component={MyAccount} options={{headerShown:false}}/>
            <Stack.Screen name="SafetyConcerns" component={SafetyConcerns} options={{headerShown:false}}/>
            <Stack.Screen name="PaymentsandRefunds" component={PaymentsandRefunds} options={{headerShown:false}}/>

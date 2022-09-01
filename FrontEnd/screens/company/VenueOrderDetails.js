@@ -110,7 +110,7 @@ function VenueOrderDetails({route}) {
                       </View>
                     </View>
 
-
+                {sub_order.venue_catering=='yes' &&
                     <View  style={style.rightTag}>
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Menu: </Text>
                       <View style={style.priceTag}>
@@ -118,7 +118,7 @@ function VenueOrderDetails({route}) {
                       </View>
                     </View>
 
-
+                }
 
                       <View  style={style.rightTag}>
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Need venue decor : </Text>
@@ -127,7 +127,7 @@ function VenueOrderDetails({route}) {
                       </View>
                     </View>
 
-
+                  {sub_order.venue_decor=='yes' &&
                     <View  style={style.rightTag}>
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Decor details: </Text>
                       <View style={style.priceTag}>
@@ -135,6 +135,7 @@ function VenueOrderDetails({route}) {
                       </View>
                     </View>
 
+                  }
                     <View  style={style.rightTag}>
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Special note: </Text>
                       <View style={{height: 60, alignItems: 'center', marginLeft: 20,  paddingLeft: 20, flex: 1,backgroundColor: COLORS.secondary, borderTopLeftRadius: 20, borderBottomLeftRadius: 20,flexDirection: 'row'}}>

@@ -31,9 +31,9 @@ function CompanyOrderDetails({route}) {
 
       <View>
 
-        <View style={{marginTop: 100,marginBottom:80, paddingHorizontal: 20}}>
+        <View style={{marginTop: 70,marginBottom:80, paddingHorizontal: 20}}>
 
-        <Text style={{color:COLORS.primary, fontSize:32,fontWeight:'bold',paddingLeft:'28%',marginBottom: 50}}>Order Details</Text>
+        <Text style={{color:COLORS.primary, fontSize:32,fontWeight:'bold',paddingLeft:'28%',marginBottom: 30}}>Order Details</Text>
     
 
                     <View style={style.rightTag}>
@@ -55,6 +55,13 @@ function CompanyOrderDetails({route}) {
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Phone no: </Text>
                       <View style={style.priceTag}> 
                       <Text style={style.leftTag}>{order.u_phone_no} </Text>
+                    </View>
+                    </View>
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>City: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.city} </Text>
                     </View>
                     </View>
                     
@@ -81,6 +88,102 @@ function CompanyOrderDetails({route}) {
                     </View>
                     </View>
 
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Catering: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.catering} </Text>
+                    </View>
+                    </View>
+
+                    {order.catering=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Menu: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.menu} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Decor: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.decor} </Text>
+                    </View>
+                    </View>
+
+                    {order.catering=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Decor theme: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.decor_theme} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.venue} </Text>
+                    </View>
+                    </View>
+
+                    {order.venue=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue Preference: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.venue_preference} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+                    {order.venue=='no' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Location: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.location} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Photographer: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.photographer} </Text>
+                    </View>
+                    </View>
+
+                    {order.photographer=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Photo shoot: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.photoShoot_details} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+
+                     <View  style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Start time: </Text>
+                      <View style={style.priceTag}>
+                        <Text style={style.leftTag}>{order.start_time}</Text>
+                      </View>
+                    </View>
+
+
+                    <View  style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Event duration: </Text>
+                      <View style={style.priceTag}>
+                        <Text style={style.leftTag}>{order.event_duration}</Text>
+                      </View>
+                    </View>
+
+
                       <View  style={style.rightTag}>
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Budget: </Text>
                       <View style={style.priceTag}>
@@ -88,17 +191,12 @@ function CompanyOrderDetails({route}) {
                       </View>
                     </View>
 
-                    <View  style={style.rightTag}>
-                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue: </Text>
-                      <View style={style.priceTag}>
-                        <Text style={style.leftTag}>{order.venue}</Text>
-                      </View>
-                    </View>
+                   
 
                     <View  style={style.rightTag}>
-                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Required Services: </Text>
-                      <View style={style.priceTag}>
-                        <Text style={style.leftTag}>{order.required_services}</Text>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Special Instructions:</Text>
+                      <View style={style.WideTag}>
+                        <Text style={style.leftTag}>{order.special_instructions}</Text>
                       </View>
                     </View>
 
@@ -116,11 +214,21 @@ function CompanyOrderDetails({route}) {
 
 const style = StyleSheet.create({
  
-
+  WideTag: {
+    height: 60,
+    alignItems: 'center',
+    marginLeft: 8,
+    paddingLeft: 20,
+    flex: 1,
+    backgroundColor: COLORS.secondary,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    flexDirection: 'row',
+  },
   priceTag: {
     height: 40,
     alignItems: 'center',
-    marginLeft: 20,
+    marginLeft: 8,
     paddingLeft: 20,
     flex: 1,
     backgroundColor: COLORS.secondary,

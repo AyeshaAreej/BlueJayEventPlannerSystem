@@ -9,11 +9,11 @@ import MyAccount from './screens/help/MyAccount';
 import SafetyConcerns from './screens/help/SafetyConcerns';
 import PaymentsandRefunds from './screens/help/PaymentsandRefunds';
 import ForgotPassword from './screens/help/ForgotPassword';
+import Rating from './screens/Rating'
 import OrderDetails from './screens/OrderDetails';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserStack from './UserStack';
-import Profile from './screens/Profile';
 
 
 const Stack = createNativeStackNavigator();  
@@ -34,7 +34,7 @@ const UserHomeStack = () => {
            <Stack.Screen name="PaymentsandRefunds" component={PaymentsandRefunds} options={{headerShown:false}}/>
            <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
            <Stack.Screen name="OrderDetails" component={OrderDetails} options={{headerShown:false}}/>
-
+           <Stack.Screen name="Rating" component={Rating} options={{headerShown:false}}/>
          </Stack.Navigator> 
   )
 }

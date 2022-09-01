@@ -39,7 +39,7 @@ const VReceivedOrders=()=>{
                          setMyOrders(result.data)
                         if(result.data == ''){
                             console.log('No orders found')
-                            alert('No orders yet')
+                            // alert('No orders yet')
                         }
                 }else{
                   console.log(result.status)

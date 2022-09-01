@@ -6,7 +6,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import {CvOrderContext} from '../../Contexts'
 import * as SecureStore from 'expo-secure-store';
- 
+import { LogBox } from 'react-native';
+
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.16;
@@ -22,7 +23,7 @@ function HireVendors({route}) {
 
   const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
   const [subOrders, setSubOrders] = React.useState([]);
-
+  LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
   useEffect(()=>{
 
@@ -58,6 +59,10 @@ function HireVendors({route}) {
                 }
 
               }).catch(err=>console.log('catch',err.message))
+
+
+
+             
     })    
 
 
@@ -161,6 +166,7 @@ const Card=({sub_order})=>{
 
     }
     
+    
   return(
    
       <TouchableOpacity style={{...style.card}} onPress={handleClick}>
@@ -192,13 +198,13 @@ const Card=({sub_order})=>{
         
   
   )
+   
   };
   
   
 
-
-
   return (
+  
     <ScrollView
     showsVerticalScrollIndicator={false}   contentContainerStyle={{  backgroundColor: COLORS.white,}} >
       <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
@@ -219,99 +225,193 @@ const Card=({sub_order})=>{
 
 
             <View style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Customer: </Text>
-              <View style={style.priceTag}> 
-              <Text style={style.leftTag}>{order.customer_name} </Text>
-            </View>
-            </View>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Customer: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.customer_name} </Text>
+                    </View>
+                    </View>
 
-            <View style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Email: </Text>
-              <View style={style.priceTag}> 
-              <Text style={style.leftTag}>{order.email} </Text>
-            </View>
-            </View>
-            
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Phone no: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.u_phone_no} </Text>
+                    </View>
+                    </View>
 
-            <View style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Event: </Text>
-              <View style={style.priceTag}> 
-              <Text style={style.leftTag}>{order.event_type}</Text>
-            </View>
-            </View>
-            
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>City: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.city} </Text>
+                    </View>
+                    </View>
+                    
 
-              <View style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Date: </Text>
-              <View style={style.priceTag}> 
-              <Text style={style.leftTag}> {order.date}</Text>
-            </View>
-            </View>
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Event: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.event_type}</Text>
+                    </View>
+                    </View>
+                    
 
-            <View style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>No# of guests: </Text>
-              <View style={style.priceTag}> 
-              <Text style={style.leftTag}>{order.no_of_guests} </Text>
-            </View>
-            </View>
+                      <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Date: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}> {order.date}</Text>
+                    </View>
+                    </View>
 
-              <View  style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Budget: </Text>
-              <View style={style.priceTag}>
-                <Text style={style.leftTag}>{order.available_budget}</Text>
-              </View>
-            </View>
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>No# of guests: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.no_of_guests} </Text>
+                    </View>
+                    </View>
 
-            <View  style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue: </Text>
-              <View style={style.priceTag}>
-                <Text style={style.leftTag}>{order.venue}</Text>
-              </View>
-            </View>
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Catering: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.catering} </Text>
+                    </View>
+                    </View>
 
-            <View  style={style.rightTag}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Required Services: </Text>
-              <View style={style.priceTag}>
-                <Text style={style.leftTag}>{order.required_services}</Text>
-              </View>
-            </View>
+                    {order.catering=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Menu: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.menu} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Decor: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.decor} </Text>
+                    </View>
+                    </View>
+
+                    {order.catering=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Decor theme: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.decor_theme} </Text>
+                      </View>
+                      </View>
+
+                    }
 
 
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.venue} </Text>
+                    </View>
+                    </View>
+
+                    {order.venue=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Venue Preference: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.venue_preference} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+                    {order.venue=='no' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Location: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.location} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+                    <View style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Photographer: </Text>
+                      <View style={style.priceTag}> 
+                      <Text style={style.leftTag}>{order.photographer} </Text>
+                    </View>
+                    </View>
+
+                    {order.photographer=='yes' &&
+                      <View style={style.rightTag}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Photo shoot: </Text>
+                        <View style={style.WideTag}> 
+                        <Text style={style.leftTag}>{order.photoShoot_details} </Text>
+                      </View>
+                      </View>
+
+                    }
+
+
+                     <View  style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Start time: </Text>
+                      <View style={style.priceTag}>
+                        <Text style={style.leftTag}>{order.start_time}</Text>
+                      </View>
+                    </View>
+
+
+                    <View  style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Event duration: </Text>
+                      <View style={style.priceTag}>
+                        <Text style={style.leftTag}>{order.event_duration}</Text>
+                      </View>
+                    </View>
+
+
+                      <View  style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Budget: </Text>
+                      <View style={style.priceTag}>
+                        <Text style={style.leftTag}>{order.available_budget}</Text>
+                      </View>
+                    </View>
+
+                   
+
+                    <View  style={style.rightTag}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Special Instructions:</Text>
+                      <View style={style.WideTag}>
+                        <Text style={style.leftTag}>{order.special_instructions}</Text>
+                      </View>
+                    </View>
 
     </View>
 
 </View>
 
 
+
+
        
-        <View style={style.buttonContainer}> 
-            <TouchableOpacity  onPress={()=>{ navigation.navigate('Home',{date: order.date, o_id : order._id}) }} style={style.editButton}>
-            <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> Hire Vendor </Text>
-            </TouchableOpacity>
-        </View> 
+       <View style={style.buttonContainer}> 
+       <TouchableOpacity  onPress={()=>{ navigation.navigate('Home',{date: order.date, o_id : order._id}) }} style={style.editButton}>
+       <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> Hire Vendor </Text>
+       </TouchableOpacity>
+   </View> 
+
+   <View>
+    <FlatList
+     data={subOrders}
+     vertical
+     showsVerticalScrollIndicator={false}
+     contentContainerStyle={{
+       justifyContent:'center',
+       alignItems:'center',
+       
+     }}
+     renderItem={({item}) => <Card sub_order={item}  />}
+   />
+   </View>
 
 
-        <View>
-         <FlatList
-          data={subOrders}
-          vertical
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            justifyContent:'center',
-            alignItems:'center',
-            
-          }}
-          renderItem={({item}) => <Card sub_order={item}  />}
-        />
-        </View>
+   </ScrollView>
 
 
-
-
-
-
-
-    </ScrollView>
   )
 }
 
@@ -319,6 +419,17 @@ const Card=({sub_order})=>{
 
 const style = StyleSheet.create({
  
+  WideTag: {
+    height: 60,
+    alignItems: 'center',
+    marginLeft: 8,
+    paddingLeft: 20,
+    flex: 1,
+    backgroundColor: COLORS.secondary,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    flexDirection: 'row',
+  },
   card: {
     height: 150,
     width: cardWidth,

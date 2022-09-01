@@ -56,6 +56,8 @@ const HomeScreen=({route})=>{
     setIsPickerShow(true);
   };
 
+
+
   const fetchSearch = ()=>{
     console.log('search pressed')
     SecureStore.getItemAsync('token').then(token=>{
@@ -353,40 +355,63 @@ const Card=({company,index})=>{
   
   const navigation = useNavigation();
 
+  const filled = []
+  const rating = company.rating.toFixed(0)
+ 
+  for (var i = 0; i < rating; i++) {
+    filled.push(i);
+  }
+
+const emp = []
+ const empty = 5-rating
+  for (var i = 0; i < empty; i++) {
+    emp.push(i);
+  }
+
+
   function handleClick(){
     
-    navigation.navigate('CompanyDetails',{company,myDate})
+    navigation.navigate('CompanyDetails',{company,myDate,filled,emp})
   }
 return(
    
   <TouchableOpacity onPress={handleClick}>
     <View style={{...style.Card}}>
       <View style={{...style.cardOverLay, opacity:0}}/>
+
+
     <View style={style.priceTag}>
-
-    <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>
-        ${company.price_range}
-
-    </Text>
+        <Text style={{color:COLORS.white, fontSize:15,fontWeight:'bold'}}>${company.price_range}</Text>
      </View>
          <Image source={{ uri: company.image }} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
            <View>
 
-               <Text style={{fontWeight:"bold",fontSize:17}}>{company.company_name}</Text>
-                <Text style={{color:COLORS.grey,fontSize:12}}>{company.address}</Text> 
+               <Text style={{fontWeight:"bold",fontSize:17}}> {company.company_name}</Text>
+                <Text style={{color:COLORS.grey,fontSize:17}}> {company.address}</Text> 
 
             </View>
              <MaterialCommunityIcons name="bookmark-outline" size={30}/>
           </View>
-          <View  style={{flexDirection:"row", marginTop:10, justifyContent:'space-between'}}>
+          <View  style={{flexDirection:"row", marginTop:5, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.orange}/>
-                 <MaterialCommunityIcons name="star" size={15} color={colors.gray}/>
+              {
+                filled.map((i,key)=>{
+
+                   return <View key={i}><MaterialCommunityIcons name="star" size={18} color={colors.orange}/></View>
+                })
+                
+              }
+
+              {
+                emp.map((i,key)=>{
+                  return <View key={i}><MaterialCommunityIcons name="star" size={18} color={colors.gray}/></View>
+                })
+                
+              }
+
+
               </View>
              
 

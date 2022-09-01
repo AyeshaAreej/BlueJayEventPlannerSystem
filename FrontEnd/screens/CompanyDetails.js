@@ -22,6 +22,8 @@ import { useNavigation } from '@react-navigation/native';
 
   const company = route.params.company
   const myDate = route.params.myDate
+  const filled = route.params.filled
+  const emp = route.params.emp
   // console.log("company",company)
   console.log("myDate",myDate)
 
@@ -38,7 +40,7 @@ import { useNavigation } from '@react-navigation/native';
         backgroundColor: COLORS.white,
         paddingBottom: 20,
       }} >
-      <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"
+      <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}
       />
        <ImageBackground style={style.headerImage} source={{ uri: company.image }}>
         <View style={style.header}>
@@ -73,13 +75,20 @@ import { useNavigation } from '@react-navigation/native';
               justifyContent: 'space-between',
             }}>
             <View style={{flexDirection: 'row'}}>
-              <View style={{flexDirection: 'row'}}>
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.orange} />
-                <MaterialCommunityIcons name="star" size={20} color={COLORS.grey} />
-              </View>
+            {
+                filled.map((i,key)=>{
+
+                   return <View key={i}><MaterialCommunityIcons name="star" size={18} color={COLORS.orange}/></View>
+                })
+                
+              }
+
+              {
+                emp.map((i,key)=>{
+                  return <View key={i}><MaterialCommunityIcons name="star" size={18} color={COLORS.gray}/></View>
+                })
+                
+              }
               <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 9}}>
                 {company.rating}
               </Text>

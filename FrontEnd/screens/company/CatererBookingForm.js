@@ -72,7 +72,7 @@ function CatererBookingForm({ route, navigation}) {
 
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
-        <StatusBar barStyle="light-content"  translucent backgroundColor="rgb(147, 112, 219)"   />
+        <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
        {/* <View style={styles.topView}>
         <ImageBackground
          style={styles.logo}
