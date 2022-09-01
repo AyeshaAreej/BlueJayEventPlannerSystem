@@ -433,29 +433,7 @@ const completeOrder = async (req,res)=>{
                  CvOrder.findById(o_id,async(err,order)=>{
                 
                   
-                        Order.find({_id:order.order_id},{sub_orders:1,_id:0},async (err,sub_orders_array)=>{
-                           
-                                    for(i of sub_orders_array){
-                                            for (id of i.sub_orders){
-                                                        if(id == o_id ){
-                                                            Order.findByIdAndUpdate({_id:order.order_id},{$pull: { sub_orders: o_id }},
-                                                                {
-                                                                    new:true
-                                                                },(err,order)=>{
-                                                                    if(order){
-                                                                    console.log('company order updated')
-                                                                    }else{
-                                                                        console.log('company order not updated')
-                                                                    }
-                                                                
-                                                                })
-                                                        }
-                                            }
-                                    }
-                        })
-
-
-
+        
                         Vendor.find({_id:order.vendor_id},{orders:1,booked_dates:1,_id:0},async (err,array)=>{
                             
                             for(i of array){
@@ -527,10 +505,32 @@ const completeOrder = async (req,res)=>{
 
 }
 
+const completedOrders = async (req,res)=>{
 
+                try {
+                       CvOrder.find({vendor_id:req.user.id,status:'Completed'},(err,array)=>{
+                        if(array){
+                            res.json({status:"ok",data : array})
+                        }else{
+                            return res.json({status:"Error",err})
+                        }
+                       
+                       }).sort({date:1})
+                        
+                           
+                    
+                        
+                } catch (error) {
+                    
+                    return res.json({status:"Error",error})
+                }
+            
+    
+  
+}
 
 
 
 
 module.exports = {signUp,logIn,myOrders,approveOrder,updateProfile,changePassword,
-                  rec_Orders,rejectOrder,cancelOrder,completeOrder}
+                  completedOrders,rec_Orders,rejectOrder,cancelOrder,completeOrder}

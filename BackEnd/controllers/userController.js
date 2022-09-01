@@ -520,8 +520,12 @@ const myOrders = async (req,res)=>{
 
 const rateCompany = async (req,res)=>{
     //console.log(req.body)
-    const {c_id, order_rating} = req.body
+    const {o_id,c_id, order_rating} = req.body
+
     const company = await Company.findByIdAndUpdate(c_id, {$push: { rating_list : order_rating } })
+    Order.findByIdAndUpdate(o_id,{$set:{rated:'yes'}},(err,order)=>{
+        console.log(order.rated)
+    })
 
     var sum = 0;
     const list = company.rating_list
@@ -721,5 +725,31 @@ const cancelOrder = async(req,res)=>{
 
 
 
-module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,
+const completedOrders = async (req,res)=>{
+
+   
+                try {
+                       Order.find({customer_id:req.user.id,status:'Completed'},(err,array)=>{
+                            if(array){
+                                res.json({status:"ok",data : array})
+                            }else{
+                                return res.json({status:"Error",err})
+                            }
+                           
+                       }).sort({date:-1})
+                            
+                        
+                           
+                       
+                } catch (error) {
+                    
+                        return res.json({status:"Error",error})
+                }
+        
+}
+
+
+
+
+module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,completedOrders,
                   createOrder,updateProfile,changePassword,myOrders,rateCompany,cancelOrder}

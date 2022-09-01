@@ -98,6 +98,10 @@ const cvOrderSchema = new mongoose.Schema({
     shoot_type:{
         type: String
     },
+    rated: {
+        type: String,
+        default: 'no'
+    },
     
 
 });

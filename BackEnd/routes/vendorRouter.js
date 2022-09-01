@@ -21,7 +21,8 @@ route.patch('/approveOrder',middleware.ValidateToken ,vendorController.approveOr
 route.patch('/rejectOrder',middleware.ValidateToken ,vendorController.rejectOrder) //done
 route.get('/myOrders',middleware.ValidateToken ,vendorController.myOrders)//done
 route.patch('/cancelOrder',middleware.ValidateToken ,vendorController.cancelOrder)//done
-route.patch('/completeOrder',middleware.ValidateToken ,vendorController.completeOrder)//halffffffffff done
+route.patch('/completeOrder',middleware.ValidateToken ,vendorController.completeOrder)//done
+route.get('/completedOrders',middleware.ValidateToken ,vendorController.completedOrders)//done
 
 
 

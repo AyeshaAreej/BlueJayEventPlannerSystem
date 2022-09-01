@@ -668,8 +668,12 @@ const createPhotographerOrder = async (req,res)=>{
 //rate Vendor
 const rateVendor = async (req,res)=>{
   //console.log(req.body)
-  const {v_id, order_rating} = req.body
+  const {o_id,v_id, order_rating} = req.body
   const vendor = await Vendor.findByIdAndUpdate(v_id, {$push: { rating_list : order_rating } })
+
+  CvOrder.findByIdAndUpdate(o_id,{$set:{rated:'yes'}},(err,order)=>{
+    console.log(order.rated)
+})
 
   var sum = 0;
   const list = vendor.rating_list
@@ -1000,7 +1004,7 @@ const cancelOrder = async (req,res)=>{
                                                                 
                                                             })
                                         
-                                       /////////////////////////                    
+                                                        
 
                                         CvOrder.updateOne({_id : so_id},{$set:{status:"Cancelled"}},
                                             {new:true},(err,cancelled_order)=>{
@@ -1115,16 +1119,57 @@ const cancelOrder = async (req,res)=>{
 
 }
 
+const checkSubComplete = (req,res)=>{
 
+    let count=0,bool;
+    const o_id = req.body.o_id
+    console.log('check sub orders',o_id)
+
+    Order.findById(o_id,async(err,order)=>{
+                bool=true
+    if(order.sub_orders.length>0){     
+        for(so_id of order.sub_orders){
+            
+            CvOrder.findById(so_id,(err,sub_order)=>{
+                count++
+                if(sub_order.status !=='Completed'){
+                    bool=false
+                }
+                console.log(count,bool,order.sub_orders.length)
+
+                if(count==order.sub_orders.length && bool==true){
+                    console.log('final',count,bool)
+                    return res.json({status:"ok"})
+                }
+                else if(count==order.sub_orders.length && bool==false){
+                    return res.json({status:"Error",error:"vendor orders not completed yet"})
+                }
+        
+        
+            })
+               
+           
+        }
+
+    }else{
+        return res.json({status:"ok"})
+    }
+        
+       
+    })
+
+}
 
 //complete Order
 const completeOrder = async (req,res)=>{
+    let v_index=0,c_index=0,bool
     const o_id = req.body.o_id
     console.log('complete order',o_id)
         try {
-                 Order.findById(o_id,async(err,order)=>{
-                
-                  //noti to customer that order is completed remaining
+
+            Order.findById(o_id,async(err,order)=>{
+
+                  //noti to customer that order is cancelled remaining
                         User.find({_id:order.customer_id},{orders:1,_id:0},async (err,orders_array)=>{
                            
                                     for(i of orders_array){
@@ -1151,7 +1196,7 @@ const completeOrder = async (req,res)=>{
                         Company.find({_id:order.company_id},{orders:1,booked_dates:1,_id:0},async (err,array)=>{
                             
                             for(i of array){
-                                
+
                                     for (id of i.orders){
                                         if(id == o_id ){
                                            
@@ -1170,20 +1215,26 @@ const completeOrder = async (req,res)=>{
                                     }
 
                                     for(date of i.booked_dates){
+                                        //console.log(date,order.date) 
+                                        console.log('c_index',c_index)
                                         if(date === order.date ){
                                            
-                                                Company.findByIdAndUpdate({_id:order.company_id},{$pull: { booked_dates: date }},
-                                                    {
-                                                        new:true
-                                                    },(err,date)=>{
-                                                        if(date){
-                                                        console.log('company date updated')
-                                                        }else{
-                                                            console.log('company date not updated')
-                                                        }
+                                                Company.findOne({_id:order.company_id},
+                                                    (err,company)=>{
+                                                        if(company){
+                                                            console.log(c_index,'found company',company)
+                                                            company.booked_dates.splice(c_index,1)
+                                                            company.save()
+                                                            console.log('company date updated',company)
+                                                            }else{
+                                                                console.log('company date not updated')
+                                                            }
                                                     
                                                     })
+
+                                                    break
                                         }
+                                        c_index++
                                     }
 
                             }
@@ -1198,19 +1249,18 @@ const completeOrder = async (req,res)=>{
                             if(err){
                                 res.json({status:"error",err})
                             }
-                            console.log(completed_order)
+                            // console.log(completed_order)
                             res.json({status:"ok"})
                         })
 
-                       
-
-    
                     })
+
 
         }catch (error) {
 
             console.log(error)
         }
+
 
 
 
@@ -1232,7 +1282,7 @@ const showHiredVendors =async (req,res)=>{
                 })
                 
                 Promise.all(hired_vendors).then((hired_vendors)=>{
-                    console.log(hired_vendors)
+                    console.log('wapis',hired_vendors)
                     res.json({status:"ok",data : hired_vendors})
                 })
                 
@@ -1346,8 +1396,31 @@ const cancelVendorOrder =async (req,res)=>{
 
 }
 
+const completedOrders = async (req,res)=>{
+
+   
+    try {
+           Order.find({company_id:req.user.id,status:'Completed'},(err,array)=>{
+                if(array){
+                    res.json({status:"ok",data : array})
+                }else{
+                    return res.json({status:"Error",err})
+                }
+               
+           }).sort({date:1})
+                
+            
+               
+           
+    } catch (error) {
+        
+            return res.json({status:"Error",error})
+    }
+
+}
 
 
 
-module.exports = {signUp,logIn,rec_Orders,approveOrder,updateProfile,changePassword,createCatererOrder,createDecorationOrder,createVenueOrder,cancelOrder,cancelVendorOrder,
-                  createPhotographerOrder,rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers,myOrders,rejectOrder,showHiredVendors,completeOrder}
+
+module.exports = {signUp,logIn,rec_Orders,approveOrder,updateProfile,changePassword,createCatererOrder,createDecorationOrder,createVenueOrder,cancelOrder,cancelVendorOrder,createPhotographerOrder,
+                  rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers,myOrders,rejectOrder,showHiredVendors,completeOrder,checkSubComplete,completedOrders}

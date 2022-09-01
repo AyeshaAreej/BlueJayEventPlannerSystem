@@ -38,9 +38,11 @@ route.patch('/approveOrder',middleware.ValidateToken ,companyController.approveO
 route.patch('/rejectOrder',middleware.ValidateToken ,companyController.rejectOrder) //done
 route.get('/myOrders',middleware.ValidateToken ,companyController.myOrders)//done
 route.patch('/cancelOrder',middleware.ValidateToken ,companyController.cancelOrder)//done
-route.patch('/completeOrder',middleware.ValidateToken ,companyController.completeOrder)//halfffffffffffffff done
+route.patch('/checkSubComplete',middleware.ValidateToken ,companyController.checkSubComplete)//done
+route.patch('/completeOrder',middleware.ValidateToken ,companyController.completeOrder)//done
 route.patch('/cancelVendorOrder',middleware.ValidateToken ,companyController.cancelVendorOrder)//done
 route.post('/showHiredVendors',middleware.ValidateToken ,companyController.showHiredVendors)//done
+route.get('/completedOrders',middleware.ValidateToken ,companyController.completedOrders)//done
 
 
 

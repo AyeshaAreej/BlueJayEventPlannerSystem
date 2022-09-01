@@ -18,7 +18,7 @@ route.post('/highPrice',middleware.ValidateToken ,userController.highPrice)//don
 
 //orders
 route.post('/createOrder',middleware.ValidateToken ,userController.createOrder)//done
-route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)
+route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)//done
 route.patch('/cancelOrder',middleware.ValidateToken ,userController.cancelOrder)//done
 
 
@@ -31,6 +31,7 @@ route.patch('/changePassword',middleware.ValidateToken ,userController.changePas
 
 //My orders
 route.get('/myOrders',middleware.ValidateToken ,userController.myOrders)//done
+route.get('/completedOrders',middleware.ValidateToken ,userController.completedOrders)//done
 
 
 

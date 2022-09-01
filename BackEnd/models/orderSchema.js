@@ -98,6 +98,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: 'Pending'
     },
+    rated: {
+        type: String,
+        default: 'no'
+    },
     sub_orders:[
         {type: mongoose.Schema.Types.ObjectId, ref:'CvOrder'}
     ]
