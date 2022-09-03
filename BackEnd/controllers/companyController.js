@@ -31,6 +31,7 @@ const signUp = async (req,res)=>{
             price_range: req.body.price_range,
             address: req.body.address,
             available_hours:req.body.available_hours,
+            cancelled_orders: 0,
             role: 'company',
             rating_list:[],
             rating: 0,
@@ -169,7 +170,7 @@ const searchByDate = async (req,res)=>{
         
         }
         return res.json({status: 'error',error: 'error in search vendors by dates'})
-    })
+    }).sort({cancelled_orders:1})
 
 }
 
@@ -214,7 +215,7 @@ const caterers = async (req,res)=>{
         }
         return res.json({status: 'error',error: 'error in search vendor'})
 
-    })
+    }).sort({cancelled_orders:1})
 
 
 }
@@ -260,7 +261,7 @@ const decoration = async (req,res)=>{
          }
          return res.json({status: 'error',error: 'error in search vendor'})
  
-     })
+     }).sort({cancelled_orders:1})
  
 }
 
@@ -305,7 +306,7 @@ const venue = async (req,res)=>{
          }
          return res.json({status: 'error',error: 'error in search vendor'})
  
-     })
+     }).sort({cancelled_orders:1})
  
 }
 
@@ -350,7 +351,7 @@ const photographers = async (req,res)=>{
          }
          return res.json({status: 'error',error: 'error in search vendor'})
  
-     })
+     }).sort({cancelled_orders:1})
  
 }
 
@@ -379,7 +380,8 @@ const createCatererOrder = async (req,res)=>{
                             c_phone_no: company.phone_no,
                             v_phone_no: vendor.phone_no,
                             event_type: order.event_type,  
-                            date: order.date,              
+                            date: order.date,
+                            compDate: order.compDate,              
                             no_of_guests: req.body.no_of_guests, 
                             available_budget: req.body.available_budget,
                             required_service: vendor.service,
@@ -455,7 +457,8 @@ const createDecorationOrder = async (req,res)=>{
                     c_phone_no: company.phone_no,
                     v_phone_no: vendor.phone_no,
                     event_type: order.event_type,  
-                    date: order.date,              
+                    date: order.date,
+                    compDate: order.compDate,              
                     no_of_guests: req.body.no_of_guests, 
                     available_budget: req.body.available_budget,
                     required_service: vendor.service,
@@ -531,7 +534,8 @@ const createVenueOrder = async (req,res)=>{
                             c_phone_no: company.phone_no,
                             v_phone_no: vendor.phone_no,
                             event_type: order.event_type,  
-                            date: order.date,              
+                            date: order.date,
+                            compDate: order.compDate,              
                             no_of_guests: req.body.no_of_guests, 
                             available_budget: req.body.available_budget,
                             required_service: vendor.service,
@@ -609,7 +613,8 @@ const createPhotographerOrder = async (req,res)=>{
                             c_phone_no: company.phone_no,
                             v_phone_no: vendor.phone_no,
                             event_type: order.event_type,  
-                            date: order.date,       
+                            date: order.date,
+                            compDate: order.compDate,       
                             no_of_guests: order.no_of_guests,       
                             available_budget: req.body.available_budget,
                             required_service: vendor.service,
@@ -1094,6 +1099,15 @@ const cancelOrder = async (req,res)=>{
 
                         })
 
+                        Company.findByIdAndUpdate({_id:order.company_id},{$inc:{cancelled_orders: 1},$push:{rating_list:0}},
+                        {new:true},async (err,company)=>{
+                            if(err){
+                                console.log(error)
+                            }else{
+                            console.log('success',company)
+                            }
+                        })
+
 
 
                         Order.updateOne({_id : req.body.o_id},{$set:{status:"Cancelled"}},
@@ -1168,6 +1182,8 @@ const completeOrder = async (req,res)=>{
         try {
 
             Order.findById(o_id,async(err,order)=>{
+
+                if(order.compDate<new Date()){
 
                   //noti to customer that order is cancelled remaining
                         User.find({_id:order.customer_id},{orders:1,_id:0},async (err,orders_array)=>{
@@ -1253,7 +1269,12 @@ const completeOrder = async (req,res)=>{
                             res.json({status:"ok"})
                         })
 
-                    })
+
+                }else{
+                        res.json({status:"date-error"})
+                      }
+
+            })
 
 
         }catch (error) {
@@ -1407,7 +1428,7 @@ const completedOrders = async (req,res)=>{
                     return res.json({status:"Error",err})
                 }
                
-           }).sort({date:1})
+           }).sort({compDate:-1})
                 
             
                

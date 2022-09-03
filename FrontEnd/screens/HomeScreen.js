@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown'
 import colors from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
+import {DateContext,UserContext} from '../Contexts'
 
 
 
@@ -29,6 +30,7 @@ const HomeScreen=({route})=>{
 
    },[]);
 
+    const [user,setUser] = useContext(UserContext)
     const categories = ['All', 'Popular', 'Low Price', 'High Price', 'Favorites'];
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -39,23 +41,91 @@ const HomeScreen=({route})=>{
     const cities = ["islamabad", "karachi", "sukkur", "lahore","quetta"]
 
     //Date
-    const [date, setDate] = useState(new Date());
+    const [date,setDate] = useContext(DateContext)
     const [myDate, setMyDate] = useState(" ");
     const [isPickerShow, setIsPickerShow] = useState(false);
     var minDate = new Date()
 
-   console.log(route.params.params)
    const onChangeSearch = (query) => {
     setSearchQuery(query)
   }
     
 
    
-  //  console.log(date);
+    // console.log(date);
    const showPicker = () => {
     setIsPickerShow(true);
   };
 
+
+  const AddToFav = (c_id) => {
+
+SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Add to favs',token)
+
+      const value = {c_id: c_id}
+
+      fetch(`http://10.0.2.2:5000/users/addToFavs`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(async(result)=>{
+                //console.log(result)
+
+                if( result.status == 'ok'){
+                      console.log('added')
+                      alert('Added to favorites')
+                      setUser(result.data)
+                      setCompanies(companies)
+                }else{
+                  console.log(result.status)
+                }
+
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+  }
+
+  const RemoveFromFav = (c_id) => {
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Remove from favs',token)
+
+      const value = {c_id: c_id}
+
+      fetch(`http://10.0.2.2:5000/users/removeFromFavs`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(async(result)=>{
+                //console.log(result)
+
+                if( result.status == 'ok'){
+                      console.log('removed')
+                      alert('Removed from favorites')
+                      setUser(result.data)
+                      setCompanies(companies)
+                }else{
+                  console.log(result.status)
+                }
+
+
+              }).catch(err=>console.log('catch',err.message))
+    })    
+
+  }
 
 
   const fetchSearch = ()=>{
@@ -166,7 +236,9 @@ const HomeScreen=({route})=>{
 
 
   const fetchCompany=(myDate,myCity,catName)=>{
+
      console.log(myDate,myCity,catName)
+     
                 if(catName=='All' || catName==''){
                   next(myDate,myCity)
                 }
@@ -293,8 +365,44 @@ const HomeScreen=({route})=>{
           
           
         }else if(catName=='Favorites'){
+          console.log('enters')
                   
-            //remaining
+          SecureStore.getItemAsync('token').then(token=>{
+
+            console.log('fav_companies',token)
+           
+            const value = {date: myDate, city: myCity}
+            fetch(`http://10.0.2.2:5000/users/fav_companies`,{
+                          method: "post",
+                          body: JSON.stringify(value),
+                          headers: {
+                              Accept: "application/json, text/plain, */*",
+                              "Content-Type": "application/json",
+                              token
+                          }
+                        
+                    }).then(res=>res.json()).then(async(result)=>{
+                     console.log(result)
+      
+                      if( result.status == 'ok'){
+      
+                            if(result.data == ''){
+                            console.log('No companies found')
+                            
+                            setCompanies(result.data)
+                            setMyDate(myDate)
+                        }else{
+                          await setCompanies(result.data)
+                          //console.log(companies)
+                        }
+      
+                      }else{
+                        console.log(result.status)
+                      }
+      
+      
+                    }).catch(err=>console.log('catch',err.message))
+          })  
         }
 
                 
@@ -354,11 +462,25 @@ const HomeScreen=({route})=>{
 const Card=({company,index})=>{
   
   const navigation = useNavigation();
+  var bool=false
+  
+  const [bookMark, setBookMark] = React.useState(false);
+//console.log(user)
+  for(id of user.fav_companies){
+    if(id == company._id){
+     
+      bool = true
+      console.log('a',id,bool)
+    }
+  }
+
+  
 
   const filled = []
   const rating = company.rating.toFixed(0)
  
   for (var i = 0; i < rating; i++) {
+    // console.log('kkk')
     filled.push(i);
   }
 
@@ -368,6 +490,8 @@ const emp = []
     emp.push(i);
   }
 
+
+  
 
   function handleClick(){
     
@@ -386,13 +510,39 @@ return(
          <Image source={{ uri: company.image }} style={style.cardImage} />
          <View style={style.cardDetails}>
           <View style={{flexDirection:"row", justifyContent:'space-between'}}>
-           <View>
 
+           <View>
                <Text style={{fontWeight:"bold",fontSize:17}}> {company.company_name}</Text>
                 <Text style={{color:COLORS.grey,fontSize:17}}> {company.address}</Text> 
-
             </View>
-             <MaterialCommunityIcons name="bookmark-outline" size={30}/>
+
+          {  bool==true &&
+                <View style={style.bookMarkTag}>
+                  <View style={{color:COLORS.white, }}>
+                      <MaterialCommunityIcons name="bookmark" size={35} onPress={()=>{
+                       bool=false
+                       setBookMark(!bookMark)
+                       RemoveFromFav(company._id)
+                      
+                      }}/> 
+                  </View>
+                </View>
+          }
+
+          {bookMark == false && bool != true &&
+
+          <View style={style.bookMarkTag}>
+             <View style={{color:COLORS.white, }}>
+                 <MaterialCommunityIcons name="bookmark-outline" size={35} onPress={()=>{
+                  bool=true
+                  setBookMark(!bookMark)
+                  AddToFav(company._id)
+                  }}/> 
+             </View>
+           </View>
+
+            }
+
           </View>
           <View  style={{flexDirection:"row", marginTop:5, justifyContent:'space-between'}}>
              <View  style={{flexDirection:"row"}}>
@@ -424,7 +574,7 @@ return(
 };
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:colors.white}}>
+        <ScrollView style={{flex:1,backgroundColor:colors.white}}>
 
 
         <View style={style.header}>
@@ -433,7 +583,7 @@ return(
 
                             <View style={{flexDirection:'row'}}>
                                   <Text style={{fontSize:25, fontWeight:'bold'}}> Search a Company </Text> 
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:60,paddingTop:5}}> Pick a date </Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:30,paddingTop:5}}> Pick event date </Text>
        
                             </View>
 
@@ -529,7 +679,7 @@ return(
                 />
 
 
-     </SafeAreaView>
+     </ScrollView>
    
  )
 }
@@ -587,6 +737,16 @@ const style = StyleSheet.create({
       right: 0,
       borderTopRightRadius: 15,
       borderBottomLeftRadius: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    bookMarkTag: {
+      height: 60,
+      width: 80,
+      backgroundColor: colors.white,
+      position: 'absolute',
+      zIndex: 1,
+      right: 0,
       justifyContent: 'center',
       alignItems: 'center',
     },

@@ -165,7 +165,7 @@ const searchByDate = async (req,res)=>{
         
         }
         return res.json({status: 'error',error: 'error in search company by dates'})
-    })
+    }).sort({cancelled_orders:1})
 
 }
 
@@ -342,6 +342,129 @@ const highPrice = async (req,res)=>{
    }).sort({price_range:-1})
 }
 
+
+
+// fav companies 
+const fav_companies = async (req,res)=>{
+   
+    var Mycity
+    var result = [],totalcount=0
+    const user = await User.findById({_id: req.user.id})
+
+    if(req.body.city === '' || req.body.city === undefined){
+        Mycity=user.city
+    }else{
+        Mycity=req.body.city
+    }
+
+    console.log(Mycity)
+
+    User.findOne({_id: req.user.id},{fav_companies:1,_id:0},async (err,array)=>{
+
+        try {
+
+            var length = array.fav_companies.length
+
+             for(c_id of array.fav_companies){
+                
+              
+                Company.findOne({_id:c_id},(err,company)=>{
+                  
+                   totalcount++
+
+                     if(company&& company.city == Mycity){
+                           
+                            var count = 0
+                            for (date of company.booked_dates){ 
+                                if(date === req.body.date)
+                                {
+                                    count+=1
+                                }
+                            }
+
+                            if(count<=2){ 
+                            result.push(company)
+                            console.log('1',result)
+                            }
+                    }
+
+                    if(totalcount == length){
+                        console.log(result)
+                             return res.json({status: 'ok',data:result})
+                     }
+                    
+
+                })
+                
+              
+             }
+
+             if(length==0){
+                return res.json({status: 'ok',data:result})
+             }
+
+           
+
+           
+            
+        } catch (error) {
+            
+                return res.json({status:"Error",error})
+        }
+    
+})
+
+
+
+}
+
+const addToFavs = async(req,res)=>{
+
+    const c_id = req.body.c_id
+    var count=0
+
+    // User.find(req.user.id,(err,user)=>{
+
+    //     var length=user.fav_companies.length
+
+    //     for(id of user.fav_companies){
+    //         if(id==c_id){
+    //             return res.json({status:'already added'})
+    //         }
+    //         count++
+    //     }
+
+
+    // })
+     
+    User.findByIdAndUpdate(req.user.id,{$push:{fav_companies:c_id}},
+        {new:true},
+        (err,user)=>{
+            if(user){
+                return res.json({status: 'ok',data:user})
+            }
+    })
+
+}
+
+const removeFromFavs = async(req,res)=>{
+    
+    const c_id = req.body.c_id
+     
+    User.findByIdAndUpdate(req.user.id,{$pull:{fav_companies:c_id}},
+        {new:true},
+        (err,user)=>{
+            if(user){
+                return res.json({status: 'ok',data:user})
+            }
+    })
+    
+}
+
+
+
+
+
 //create order
 const createOrder = async (req,res)=>{
     
@@ -367,6 +490,7 @@ const createOrder = async (req,res)=>{
                             c_phone_no: company.phone_no,
 
                             date: req.body.date,
+                            compDate: req.body.compDate,
                             event_type: req.body.event_type,
                             no_of_guests: req.body.no_of_guests,
                             catering: req.body.catering,
@@ -736,7 +860,7 @@ const completedOrders = async (req,res)=>{
                                 return res.json({status:"Error",err})
                             }
                            
-                       }).sort({date:-1})
+                       }).sort({compDate:-1})
                             
                         
                            
@@ -751,5 +875,5 @@ const completedOrders = async (req,res)=>{
 
 
 
-module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,completedOrders,
-                  createOrder,updateProfile,changePassword,myOrders,rateCompany,cancelOrder}
+module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,fav_companies,createOrder,addToFavs,
+                  updateProfile,changePassword,myOrders,completedOrders,rateCompany,cancelOrder,removeFromFavs}

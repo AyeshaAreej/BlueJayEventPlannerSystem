@@ -378,7 +378,6 @@ const Card=({vendor,index,})=>{
 
   const navigation = useNavigation();
 
-
   const filled = []
   const rating = vendor.rating.toFixed(0)
  
@@ -451,7 +450,7 @@ return(
 
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:COLORS.white, }}>
+        <ScrollView style={{flex:1,backgroundColor:COLORS.white, }}>
        
         <View style={style.header}>
         
@@ -563,7 +562,7 @@ return(
 
 
          
-     </SafeAreaView>
+     </ScrollView>
    
  )
 }

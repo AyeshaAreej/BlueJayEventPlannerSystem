@@ -46,6 +46,10 @@ const cvOrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    compDate:{
+        type: Date,
+        required: true
+    },
     no_of_guests:{
         type: Number,
         required: true

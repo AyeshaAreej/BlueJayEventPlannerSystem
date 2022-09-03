@@ -44,6 +44,9 @@ const vendorSchema = new mongoose.Schema({
     image:{
         type: String
     },
+    cancelled_orders:{
+        type: Number
+    },
     rating_list:[Number],
 
     rating:{ type: Number},

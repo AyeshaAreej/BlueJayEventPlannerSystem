@@ -9,7 +9,7 @@ import { RadioButton } from 'react-native-paper';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
-import {OrderContext} from '../Contexts'
+import {OrderContext,DateContext} from '../Contexts'
 
 function BookingForm({ route}) {
 
@@ -26,6 +26,7 @@ function BookingForm({ route}) {
   const [photographer, setPhotographer] = React.useState('no');
 
   const [orderC,setOrderC] = useContext(OrderContext)
+  const [date,setDate] = useContext(DateContext)
 
   // console.log(catering)
   // console.log(venue)
@@ -45,6 +46,7 @@ function BookingForm({ route}) {
       const value = {
         c_id,
         date: myDate,
+        compDate: date,
         event_type:values.event_type,
         no_of_guests: values.no_of_guests,
         catering: catering,

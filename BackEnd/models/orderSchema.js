@@ -40,6 +40,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    compDate:{
+        type: Date,
+        required: true
+    },
     event_type:{
         type: String,
         required: true

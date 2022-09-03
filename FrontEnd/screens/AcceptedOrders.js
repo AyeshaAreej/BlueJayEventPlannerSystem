@@ -170,10 +170,12 @@ const completeOrder= (o_id)=>{
                 
             }).then(res=>res.json()).then(result=>{
               console.log(result)
-
+              
               if( result.status == 'ok'){
                       alert('Order completed sucessfully')
                       setOrderC(!orderC)
+              }else if(result.status == 'date-error'){
+                      alert(`You can't complete this order yet`)
               }else{
                 console.log(result.status)
               }

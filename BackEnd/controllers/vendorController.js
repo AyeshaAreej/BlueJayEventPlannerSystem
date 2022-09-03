@@ -29,6 +29,7 @@ const signUp = async (req,res)=>{
             price_range: req.body.price_range,
             address: req.body.address,
             available_hours:req.body.available_hours,
+            cancelled_orders: 0,
             role: 'vendor',
             rating_list:[],
             rating: 0,
@@ -398,6 +399,16 @@ const cancelOrder = async (req,res)=>{
                         })
 
 
+                        Vendor.findByIdAndUpdate({_id:order.vendor_id},{$inc:{cancelled_orders: 1},$push:{rating_list:0}},
+                            {new:true},async (err,vendor)=>{
+                                if(err){
+                                    console.log(error)
+                                }else{
+                                console.log('success',vendor)
+                                }
+                            })
+
+
 
                         CvOrder.updateOne({_id : req.body.o_id},{$set:{status:"Cancelled"}},
                         {new:true},(err,cancelled_order)=>{
@@ -432,8 +443,10 @@ const completeOrder = async (req,res)=>{
         try {
                  CvOrder.findById(o_id,async(err,order)=>{
                 
-                  
-        
+              if(order.compDate<new Date()){
+               
+              
+       
                         Vendor.find({_id:order.vendor_id},{orders:1,booked_dates:1,_id:0},async (err,array)=>{
                             
                             for(i of array){
@@ -490,7 +503,9 @@ const completeOrder = async (req,res)=>{
                         })
 
                        
-
+              }else{
+                res.json({status:"date-error"})
+              }
     
                     })
 
@@ -515,7 +530,7 @@ const completedOrders = async (req,res)=>{
                             return res.json({status:"Error",err})
                         }
                        
-                       }).sort({date:1})
+                       }).sort({compDate:-1})
                         
                            
                     

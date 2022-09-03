@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
     role:{
         type: String
     },
+    fav_companies:[
+        {type: mongoose.Schema.Types.ObjectId, ref:'Company'}
+    ],
     orders:[
         {type: mongoose.Schema.Types.ObjectId, ref:'Order'}
     ]

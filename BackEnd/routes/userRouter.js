@@ -15,6 +15,11 @@ route.post('/searchByDate',middleware.ValidateToken ,userController.searchByDate
 route.post('/topRated',middleware.ValidateToken ,userController.topRated)//done
 route.post('/lowPrice',middleware.ValidateToken ,userController.lowPrice)//done
 route.post('/highPrice',middleware.ValidateToken ,userController.highPrice)//done
+route.post('/fav_companies',middleware.ValidateToken ,userController.fav_companies)//done
+
+route.post('/addToFavs',middleware.ValidateToken ,userController.addToFavs)//done
+route.post('/removeFromFavs',middleware.ValidateToken ,userController.removeFromFavs)//done
+
 
 //orders
 route.post('/createOrder',middleware.ValidateToken ,userController.createOrder)//done
