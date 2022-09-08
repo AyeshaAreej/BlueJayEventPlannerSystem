@@ -75,10 +75,10 @@ app.use('/vendor', vendorRouter)
 
 
 
-app.listen(5000,(err)=>{
+app.listen(process.env.PORT || 5000,'0.0.0.0',(err)=>{
     if(err){
         console.log('error on port')
     }else{
-        console.log('app running successfully on port', 5000)
+        console.log('app running successfully on port', process.env.PORT)
     }
 })
