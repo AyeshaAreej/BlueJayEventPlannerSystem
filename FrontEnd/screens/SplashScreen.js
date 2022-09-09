@@ -28,11 +28,11 @@ useEffect(()=>{
       console.log("No token")
       navigation.navigate('WelcomeScreen')
     }else{
-      
+
     console.log('splash screen',token)
     
 
-    fetch(`http://10.0.2.2:5000/`,{
+    fetch(`http://10.0.2.2:5000/getUser`,{
                   method: "get",
                   headers: {
                       Accept: "application/json, text/plain, */*",
