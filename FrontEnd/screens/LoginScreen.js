@@ -103,7 +103,7 @@ async function registerForPushNotification(){
 
     if(role=='customer'){
       
-           fetch(`http://10.0.2.2:5000/users/logIn`,{
+           fetch(`https://bluejay-mobile-app.herokuapp.com/users/logIn`,{
                     method: "post",
                     body: JSON.stringify(values),
                     headers: {

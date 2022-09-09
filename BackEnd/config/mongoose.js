@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose')
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/bluejay-db')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://umeaemun:umeaemun18@bluejay-db.8emst51.mongodb.net/?retryWrites=true&w=majority')
 
 const db = mongoose.connection
 
