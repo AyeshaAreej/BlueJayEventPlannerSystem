@@ -7,7 +7,7 @@ const ValidateToken = async (req, res, next) => {
 
     const {token} = req.headers;
 
-        const user = jwt.verify(token,JWT_SECRET)
+        const user = jwt.verify(token,process.env.SECRET || JWT_SECRET)
         if (user){
             req.user = user
             console.log(user)
