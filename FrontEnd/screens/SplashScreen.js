@@ -28,6 +28,7 @@ useEffect(()=>{
       console.log("No token")
       navigation.navigate('WelcomeScreen')
     }else{
+      
     console.log('splash screen',token)
     
 

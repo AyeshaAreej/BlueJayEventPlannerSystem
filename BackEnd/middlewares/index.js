@@ -6,6 +6,9 @@ const JWT_SECRET = '494898./yu!$^63df!vcxfv3278dhgdjsbv3i823'
 const ValidateToken = async (req, res, next) => {
 
     const {token} = req.headers;
+    if(token == null || token== "" ){
+        return res.json("end")
+    }
 
         const user = jwt.verify(token,process.env.SECRET || JWT_SECRET)
         if (user){
