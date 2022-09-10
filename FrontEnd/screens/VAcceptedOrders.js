@@ -28,7 +28,7 @@ const VAcceptedOrders=({navigation})=>{
 
       console.log('My orders',token)
 
-      fetch(`http://10.0.2.2:5000/vendor/myOrders`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/myOrders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -65,7 +65,7 @@ const completedOrders = ()=>{
 
       console.log('Completed orders',token)
 
-      fetch(`http://10.0.2.2:5000/vendor/completedOrders`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/completedOrders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -123,7 +123,7 @@ const completeOrder= (o_id)=>{
 
     const value = {o_id: o_id}
 
-    fetch(`http://10.0.2.2:5000/vendor/completeOrder`,{
+    fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/completeOrder`,{
                   method: "patch",
                   body: JSON.stringify(value),
                   headers: {
@@ -187,7 +187,7 @@ const cancelOrder = (o_id)=>{
 
       const value = {o_id: o_id}
 
-      fetch(`http://10.0.2.2:5000/vendor/cancelOrder`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/cancelOrder`,{
                     method: "patch",
                     body: JSON.stringify(value),
                     headers: {

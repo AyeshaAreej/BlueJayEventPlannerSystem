@@ -41,7 +41,7 @@ function DecorationBookingForm({ route, navigation}) {
       }
       console.log("value",value)
       
-      fetch(`http://10.0.2.2:5000/company/createDecorationOrder`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/createDecorationOrder`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {

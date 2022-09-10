@@ -78,7 +78,7 @@ if(route.params.date === undefined){
 
       const value = {date: myDate, search_text: searchQuery, city: myCity}
 
-      fetch(`http://10.0.2.2:5000/company/searchVendor`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/searchVendor`,{
 
                     method: "post",
                     body: JSON.stringify(value),
@@ -139,7 +139,7 @@ if(route.params.date === undefined){
      
       const value = {date: myDate, city: myCity}
 
-      fetch(`http://10.0.2.2:5000/company/searchByDate`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/searchByDate`,{
 
                     method: "post",
                     body: JSON.stringify(value),
@@ -188,7 +188,7 @@ if(route.params.date === undefined){
                   
                    const value = {date: myDate, city: myCity}
 
-                   fetch(`http://10.0.2.2:5000/company/caterers`,{
+                   fetch(`https://bluejay-mobile-app.herokuapp.com/company/caterers`,{
                                  method: "post",
                                  body: JSON.stringify(value),
                                  headers: {
@@ -225,7 +225,7 @@ if(route.params.date === undefined){
               
                
                const value = {date: myDate, city: myCity}
-               fetch(`http://10.0.2.2:5000/company/decoration`,{
+               fetch(`https://bluejay-mobile-app.herokuapp.com/company/decoration`,{
                              method: "post",
                              body: JSON.stringify(value),
                              headers: {
@@ -259,7 +259,7 @@ if(route.params.date === undefined){
            console.log('Venue',token)
           
            const value = {date: myDate, city: myCity}
-           fetch(`http://10.0.2.2:5000/company/venue`,{
+           fetch(`https://bluejay-mobile-app.herokuapp.com/company/venue`,{
                          method: "post",
                          body: JSON.stringify(value),
                          headers: {
@@ -294,7 +294,7 @@ if(route.params.date === undefined){
           console.log('Photography',token)
          
           const value = {date: myDate, city: myCity}
-          fetch(`http://10.0.2.2:5000/company/photographers`,{
+          fetch(`https://bluejay-mobile-app.herokuapp.com/company/photographers`,{
                         method: "post",
                         body: JSON.stringify(value),
                         headers: {
@@ -458,14 +458,14 @@ return(
             <View style={{paddingBottom:8}}>
 
                             <View style={{flexDirection:'row'}}>
-                                  <Text style={{fontSize:25, fontWeight:'bold'}}> Search For Vendors </Text> 
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:60,paddingTop:5}}>Pick a date </Text>
+                                  <Text style={{fontSize:23, fontWeight:'bold'}}> Search For Vendors </Text> 
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:50,paddingTop:5}}>Pick date </Text>
                             
                             </View>
 
                             <View style={{flexDirection:'row'}}>
-                                <Text style={{fontSize:25, fontWeight:'bold'}} > in  </Text>
-                                <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
+                                <Text style={{fontSize:23, fontWeight:'bold'}} > in  </Text>
+                                <Text style={{fontSize:23, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
                             
 
 

@@ -29,7 +29,7 @@ const MyOrders=()=>{
 
       console.log('My orders',token)
 
-      fetch(`http://10.0.2.2:5000/users/myOrders`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/myOrders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -64,7 +64,7 @@ const MyOrders=()=>{
 
       console.log('Completed orders',token)
 
-      fetch(`http://10.0.2.2:5000/users/completedOrders`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/completedOrders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -121,7 +121,7 @@ SecureStore.getItemAsync('token').then(token=>{
 
   const value = {o_id: o_id}
 
-  fetch(`http://10.0.2.2:5000/users/cancelOrder`,{
+  fetch(`https://bluejay-mobile-app.herokuapp.com/users/cancelOrder`,{
                 method: "patch",
                 body: JSON.stringify(value),
                 headers: {
@@ -403,7 +403,7 @@ const style = StyleSheet.create({
       justifyContent:'center',
       alignItems:'center',
       width:190,
-      marginRight:25,
+      marginRight:9,
       marginBottom:10,
       borderColor :COLORS.primary,
       borderWidth:4,

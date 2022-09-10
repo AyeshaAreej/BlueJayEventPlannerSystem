@@ -47,7 +47,7 @@ function VenueBookingForm({ route, navigation}) {
       }
       console.log("value",value)
       
-      fetch(`http://10.0.2.2:5000/company/createVenueOrder`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/createVenueOrder`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {

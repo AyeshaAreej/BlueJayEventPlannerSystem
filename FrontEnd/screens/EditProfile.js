@@ -79,7 +79,7 @@ const EditProfile = () => {
 
           console.log(value)
 
-          fetch(`http://10.0.2.2:5000/users/updateProfile`,{
+          fetch(`https://bluejay-mobile-app.herokuapp.com/users/updateProfile`,{
                         method: "patch",
                         body: JSON.stringify(value),
                         headers: {

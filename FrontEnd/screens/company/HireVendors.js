@@ -36,7 +36,7 @@ function HireVendors({route}) {
 
       console.log("value",value)
 
-      fetch(`http://10.0.2.2:5000/company/showHiredVendors`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/showHiredVendors`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {
@@ -103,7 +103,7 @@ SecureStore.getItemAsync('token').then(token=>{
 
   const value = {o_id: o_id}
 
-  fetch(`http://10.0.2.2:5000/company/cancelVendorOrder`,{
+  fetch(`https://bluejay-mobile-app.herokuapp.com/company/cancelVendorOrder`,{
                 method: "patch",
                 body: JSON.stringify(value),
                 headers: {

@@ -24,7 +24,7 @@ const VReceivedOrders=()=>{
 
       console.log('Received Orders',token)
 
-      fetch(`http://10.0.2.2:5000/vendor/rec_Orders`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/rec_Orders`,{
                     method: "get",
                     headers: {
                         Accept: "application/json, text/plain, */*",
@@ -61,7 +61,7 @@ const VReceivedOrders=()=>{
 
       const value = {o_id: o_id}
 
-      fetch(`http://10.0.2.2:5000/vendor/approveOrder`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/approveOrder`,{
                     method: "patch",
                     body: JSON.stringify(value),
                     headers: {
@@ -96,7 +96,7 @@ const VReceivedOrders=()=>{
 
       const value = {o_id: o_id}
 
-      fetch(`http://10.0.2.2:5000/vendor/rejectOrder`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/rejectOrder`,{
                     method: "patch",
                     body: JSON.stringify(value),
                     headers: {

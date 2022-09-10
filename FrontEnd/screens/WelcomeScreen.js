@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding:25,
     borderRadius: 100,
-    margin:12,
+    marginBottom:15,
+    marginHorizontal:12
 
   },
   button: {

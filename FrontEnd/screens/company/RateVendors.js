@@ -32,7 +32,7 @@ const RateVendors = ({route}) => {
     
           console.log("value",value)
     
-          fetch(`http://10.0.2.2:5000/company/showHiredVendors`,{
+          fetch(`https://bluejay-mobile-app.herokuapp.com/company/showHiredVendors`,{
                         method: "post",
                         body: JSON.stringify(value),
                         headers: {

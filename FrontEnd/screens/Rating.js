@@ -55,7 +55,7 @@ const Rating = ({route}) => {
             console.log('My orders',token)
             const value = {o_id:order._id,c_id: order.company_id,order_rating: defaultRating }
       
-            fetch(`http://10.0.2.2:5000/users/rateCompany`,{
+            fetch(`https://bluejay-mobile-app.herokuapp.com/users/rateCompany`,{
                           method: "post",
                           body: JSON.stringify(value),
                           headers: {
@@ -87,7 +87,7 @@ const Rating = ({route}) => {
             console.log('My orders',token)
             const value = {o_id:order._id,v_id: order.vendor_id,order_rating: defaultRating }
       
-            fetch(`http://10.0.2.2:5000/company/rateVendor`,{
+            fetch(`https://bluejay-mobile-app.herokuapp.com/company/rateVendor`,{
                           method: "post",
                           body: JSON.stringify(value),
                           headers: {

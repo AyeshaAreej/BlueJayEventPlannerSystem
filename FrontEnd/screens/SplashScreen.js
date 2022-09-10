@@ -32,7 +32,7 @@ useEffect(()=>{
     console.log('splash screen',token)
     
 
-    fetch(`http://10.0.2.2:5000/getUser`,{
+    fetch(`https://bluejay-mobile-app.herokuapp.com/getUser`,{
                   method: "get",
                   headers: {
                       Accept: "application/json, text/plain, */*",
@@ -99,14 +99,15 @@ const styles = StyleSheet.create({
     width:'100%',
     height:'100%',
     justifyContent:'center',
+    display:'flex'
     
    },
    tagline:{
-    position: "absolute",
-    paddingTop:"40%",
-    paddingLeft:"5%",
-   margin:31,
-    fontSize:20,
+    // position: "absolute",
+    // paddingTop:"40%",
+    alignItems:'center',
+    alignSelf:'center',
+    fontSize:18,
     fontWeight:"bold",
     // textTransform:"uppercase",
     color:COLORS.white,

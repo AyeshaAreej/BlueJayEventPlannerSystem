@@ -76,7 +76,7 @@ const SignUp = ()=> {
 
      console.log(value)
 
-      fetch(`http://10.0.2.2:5000/users/signUp`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/signUp`,{
         method: "post",
         body: JSON.stringify(value),
         headers: {

@@ -66,7 +66,7 @@ function BookingForm({ route}) {
       }
       console.log("value",value)
       
-      fetch(`http://10.0.2.2:5000/users/createOrder`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/createOrder`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {

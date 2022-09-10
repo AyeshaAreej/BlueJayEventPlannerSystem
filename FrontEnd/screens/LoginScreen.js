@@ -133,7 +133,7 @@ async function registerForPushNotification(){
 
     else if (role=='company'){
       
-                    fetch(`http://10.0.2.2:5000/company/logIn`,{
+                    fetch(`https://bluejay-mobile-app.herokuapp.com/company/logIn`,{
                       method: "post",
                       body: JSON.stringify(values),
                       headers: {
@@ -160,7 +160,7 @@ async function registerForPushNotification(){
     }
 
     else if(role=='vendor'){
-                      fetch(`http://10.0.2.2:5000/vendor/logIn`,{
+                      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/logIn`,{
                         method: "post",
                         body: JSON.stringify(values),
                         headers: {

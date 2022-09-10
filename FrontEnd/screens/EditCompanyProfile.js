@@ -98,7 +98,7 @@ const EditCompanyProfile = () => {
    
              console.log(value)
    
-             fetch(`http://10.0.2.2:5000/company/updateProfile`,{
+             fetch(`https://bluejay-mobile-app.herokuapp.com/company/updateProfile`,{
                            method: "patch",
                            body: JSON.stringify(value),
                            headers: {

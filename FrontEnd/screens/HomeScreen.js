@@ -66,7 +66,7 @@ SecureStore.getItemAsync('token').then(token=>{
 
       const value = {c_id: c_id}
 
-      fetch(`http://10.0.2.2:5000/users/addToFavs`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/addToFavs`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {
@@ -100,7 +100,7 @@ SecureStore.getItemAsync('token').then(token=>{
 
       const value = {c_id: c_id}
 
-      fetch(`http://10.0.2.2:5000/users/removeFromFavs`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/removeFromFavs`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {
@@ -136,7 +136,7 @@ SecureStore.getItemAsync('token').then(token=>{
 
       const value = {date: myDate, search_text: searchQuery, city: myCity}
 
-      fetch(`http://10.0.2.2:5000/users/searchCompany`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/searchCompany`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {
@@ -198,7 +198,7 @@ SecureStore.getItemAsync('token').then(token=>{
       console.log('search by date',token)
      
       const value = {date: myDate, city: myCity}
-      fetch(`http://10.0.2.2:5000/users/searchByDate`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/searchByDate`,{
                     method: "post",
                     body: JSON.stringify(value),
                     headers: {
@@ -250,7 +250,7 @@ SecureStore.getItemAsync('token').then(token=>{
                    
                     const value = {date: myDate, city: myCity}
 
-                    fetch(`http://10.0.2.2:5000/users/topRated`,{
+                    fetch(`https://bluejay-mobile-app.herokuapp.com/users/topRated`,{
                                   method: "post",
                                   body: JSON.stringify(value),
                                   headers: {
@@ -291,7 +291,7 @@ SecureStore.getItemAsync('token').then(token=>{
                
                 
                 const value = {date: myDate, city: myCity}
-                fetch(`http://10.0.2.2:5000/users/lowPrice`,{
+                fetch(`https://bluejay-mobile-app.herokuapp.com/users/lowPrice`,{
                               method: "post",
                               body: JSON.stringify(value),
                               headers: {
@@ -331,7 +331,7 @@ SecureStore.getItemAsync('token').then(token=>{
             console.log('High Price',token)
            
             const value = {date: myDate, city: myCity}
-            fetch(`http://10.0.2.2:5000/users/highPrice`,{
+            fetch(`https://bluejay-mobile-app.herokuapp.com/users/highPrice`,{
                           method: "post",
                           body: JSON.stringify(value),
                           headers: {
@@ -372,7 +372,7 @@ SecureStore.getItemAsync('token').then(token=>{
             console.log('fav_companies',token)
            
             const value = {date: myDate, city: myCity}
-            fetch(`http://10.0.2.2:5000/users/fav_companies`,{
+            fetch(`https://bluejay-mobile-app.herokuapp.com/users/fav_companies`,{
                           method: "post",
                           body: JSON.stringify(value),
                           headers: {
@@ -582,15 +582,15 @@ return(
                     <View style={{paddingBottom:8}}>
 
                             <View style={{flexDirection:'row'}}>
-                                  <Text style={{fontSize:25, fontWeight:'bold'}}> Search a Company </Text> 
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:30,paddingTop:5}}> Pick event date </Text>
+                                  <Text style={{fontSize:23, fontWeight:'bold'}}> Search a Company</Text> 
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:55,paddingTop:5}}> Pick date </Text>
        
                             </View>
 
                             <View style={{flexDirection:'row'}}>
 
-                                      <Text style={{fontSize:25, fontWeight:'bold'}} > in  </Text>
-                                      <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
+                                      <Text style={{fontSize:23, fontWeight:'bold'}} > in  </Text>
+                                      <Text style={{fontSize:23, fontWeight:'bold', color: COLORS.primary}} >your City </Text>
 
 
 

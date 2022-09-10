@@ -47,7 +47,7 @@ export default function ChangePassword() {
          
           const value = {old_password: values.oldpassword, new_password: values.newpassword}
           console.log(value)
-          fetch(`http://10.0.2.2:5000/${route}/changePassword`,{
+          fetch(`https://bluejay-mobile-app.herokuapp.com/${route}/changePassword`,{
                         method: "patch",
                         body: JSON.stringify(value),
                         headers: {
