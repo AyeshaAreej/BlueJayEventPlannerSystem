@@ -9,12 +9,16 @@ import SelectDropdown from 'react-native-select-dropdown'
 import colors from '../components/colors';
 import * as SecureStore from 'expo-secure-store';
 import {DateContext,UserContext} from '../Contexts'
+import { LogBox } from 'react-native';
 
 
 
 const {width}= Dimensions.get('screen');
 const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
+
+
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
 
 const HomeScreen=({route})=>{

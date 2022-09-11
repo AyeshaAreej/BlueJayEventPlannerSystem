@@ -207,7 +207,7 @@ const style = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     width:160,
-    marginLeft:60,
+    marginLeft:40,
     marginTop:8,
     borderColor :COLORS.primary,
     borderWidth:4,

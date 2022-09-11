@@ -404,7 +404,7 @@ const CompletedCard=({order})=>{
                          onPress={()=>{ navigation.navigate('RateVendors',{order}) 
                          }} 
                          >
-                        <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> Rate Vendors </Text>
+                        <Text style={{  fontSize: 20,  fontWeight: 'bold',  color: COLORS.white,   }}> Rate Vendors </Text>
                         </TouchableOpacity>
              
                      
@@ -475,7 +475,7 @@ const CompletedCard=({order})=>{
 const style = StyleSheet.create({
 
   card: {
-    height: 235,
+    height: 275,
     width: cardWidth,
     elevation: 15,
     borderRadius: 15,
@@ -501,7 +501,7 @@ const style = StyleSheet.create({
       justifyContent:'center',
       alignItems:'center',
       width:180,
-      marginLeft:185,
+      marginLeft:175,
       borderColor :COLORS.primary,
       borderWidth:4,
       elevation:15,

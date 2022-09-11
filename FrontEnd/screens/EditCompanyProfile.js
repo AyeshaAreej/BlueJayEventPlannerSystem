@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     height: 140,
     width: '50%',
     borderRadius: 20,
-    marginLeft:15
+    marginLeft:95,
   },
     imageContainer:{
         flex:1,

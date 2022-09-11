@@ -9,12 +9,15 @@ import colors from '../components/colors';
 import hotels from '../components/companies';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import { LogBox } from 'react-native';
 
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.2;
 const bcardWidth=width/1.1;
 
+
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
 const CompanyHome=({route})=>{
 

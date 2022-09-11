@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
      width: 280,
      borderRadius: 20,
      marginBottom:5,
-     marginLeft:10
+     marginLeft:60
  
  
   },
