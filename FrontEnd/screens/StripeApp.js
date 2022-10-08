@@ -9,11 +9,16 @@ const API_URL = "https://bluejay-mobile-app.herokuapp.com";
 const StripeApp= () => {
     
     const [email, setEmail] = useState();
+    const [amount, setAmount] = useState();
     const [cardDetails, setCardDetails] = useState();
     const { confirmPayment, loading } = useConfirmPayment();
 
     const fetchPaymentIntentClientSecret = async () => {
+
+        const value = {amount: amount}
+
         const response = await fetch(`${API_URL}/create-payment-intent`, {
+          body: JSON.stringify(value),
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -72,6 +77,14 @@ const StripeApp= () => {
                 style={styles.input}
             />
 
+             <TextInput
+                autoCapitalize="none"
+                placeholder="Amount"
+                keyboardType="Enter Amount"
+                onChange={value => setAmount(value.nativeEvent.text)}
+                style={styles.input}
+            />
+
             <CardField
             postalCodeEnabled={true}
             placeholder={{
@@ -101,7 +114,7 @@ const StripeApp= () => {
 const styles = StyleSheet.create({
 
     buttonContainer:{
-        marginTop:60,
+        marginTop:110,
         justifyContent:'center',
         alignItems:'center',
     
@@ -110,11 +123,12 @@ const styles = StyleSheet.create({
       container: {
         flex: 1,
         justifyContent: "center",
-        marginTop: 100,
+        marginTop: 150,
         margin:20
       },
       input: {
         backgroundColor: "#efefefef",
+        marginTop:20,
         borderRadius: 8,
         fontSize: 20,
         height: 50,
