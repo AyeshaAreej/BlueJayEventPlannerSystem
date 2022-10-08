@@ -80,7 +80,7 @@ const StripeApp= () => {
              <TextInput
                 autoCapitalize="none"
                 placeholder="Amount"
-                keyboardType="Enter Amount"
+                keyboardType="text"
                 onChange={value => setAmount(value.nativeEvent.text)}
                 style={styles.input}
             />

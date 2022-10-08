@@ -84,7 +84,7 @@ app.post("/create-payment-intent", async (req, res) => {
 
       const amount = req.body.pay_amount
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: 777, //lowest denomination of particular currency
+        amount: amount, //lowest denomination of particular currency
         currency: "usd",
         payment_method_types: ["card"], //by default
       });
