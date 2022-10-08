@@ -81,11 +81,11 @@ app.get('/getUser',middleware.ValidateToken,async (req,res)=>{
 app.post("/create-payment-intent", async (req, res) => {
   
     try {
-      console.log(req.body.pay_amount)
+      
       const amount = req.body.pay_amount
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount, //lowest denomination of particular currency
-        currency: "usd",
+        currency: "pkr",
         payment_method_types: ["card"], //by default
       });
   
