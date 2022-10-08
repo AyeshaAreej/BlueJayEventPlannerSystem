@@ -15,7 +15,7 @@ const StripeApp= () => {
 
     const fetchPaymentIntentClientSecret = async () => {
 
-        const value = {amount: amount}
+        const value = {pay_amount: amount}
 
         const response = await fetch(`${API_URL}/create-payment-intent`, {
           body: JSON.stringify(value),

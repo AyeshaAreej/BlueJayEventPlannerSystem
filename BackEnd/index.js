@@ -81,9 +81,10 @@ app.get('/getUser',middleware.ValidateToken,async (req,res)=>{
 app.post("/create-payment-intent", async (req, res) => {
   
     try {
-      console.log(req.body.amount)
+      console.log(req.body.pay_amount)
+      const amount = req.body.pay_amount
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: 1100, //lowest denomination of particular currency
+        amount: amount, //lowest denomination of particular currency
         currency: "usd",
         payment_method_types: ["card"], //by default
       });
