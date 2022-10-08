@@ -10,8 +10,6 @@ import COLORS, { colors } from "../components/colors";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 // Social buttons
-import { FacebookSocialButton } from "react-native-social-buttons";
-import {GoogleSocialButton } from "react-native-social-buttons";
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -234,6 +232,7 @@ async function registerForPushNotification(){
     >
       {({ handleChange, handleSubmit, values,errors,touched, setFieldTouched }) => (
         <>
+        <View style={{marginTop:30}}>
            <TextInput
              style={styles.input}
              name="email"
@@ -259,10 +258,14 @@ async function registerForPushNotification(){
             {touched.password && errors.password &&
               <Text style={{ marginLeft:10,fontSize: 18, color: 'red' }}>{errors.password}</Text>
             }
-            <Text style={{fontSize: 18,padding:10}} >Forgot Password?</Text>
+
+        </View>
+            <Text style={{fontSize: 18,padding:10,marginTop:20}} >Forgot Password?</Text>
+
+           
             {/* Radio Button */}
  
-            <View style={{flexDirection:'row'}}>
+            <View style={{flexDirection:'row',marginTop:20}}>
 
                   <View style={styles.rightTag}>
                         
@@ -331,16 +334,6 @@ async function registerForPushNotification(){
 
      </View>
 
-     <View style={styles.center}>
-      
-    {/* Social buttons */}
-    
-         <View  style={styles.socialbTag}>
-              <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
-              <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
-              </View>
-       </View>
-    
  </View>
   );
 }
@@ -379,8 +372,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple',
     width: '120%',
     height: 37,
-    
-    
+    marginTop:20,
 
    },
    

@@ -4,7 +4,6 @@ import VendorHome from './screens/VendorHome';
 import VendorProfile from './screens/VendorProfile'
 import VAcceptedOrders from './screens/VAcceptedOrders';
 import Location from './screens/Location';
-import Message from './screens/Message';
 import VReceivedOrders from './screens/VReceivedOrders'
 import HelpCentre from './screens/HelpCentre';
 import PaymentMethod from './screens/PaymentMethod';
@@ -95,17 +94,6 @@ const VendorStack = () => {
                   />
                 ),
               }}
-          />
-          <Drawer.Screen name=' Message' component={Message}
-                options={{
-                  drawerIcon:({focused,size})=>(
-                    <FontAwesome
-                    name='comment'
-                    size={size}
-                    color={focused? 'white' : 'purple'}
-                    />
-                  ),
-                }}
           />
           <Drawer.Screen name='Payment' component={PaymentMethod} 
                   options={{

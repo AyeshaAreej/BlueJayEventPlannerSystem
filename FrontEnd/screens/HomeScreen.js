@@ -18,7 +18,8 @@ const tcardWidth=width/1.8;
 const bcardWidth=width/1.1;
 
 
-LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+LogBox.ignoreLogs(['VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.'
+,'fontFamily "MaterialCommunityIcons" is not a system font and has not been loaded through Font.loadAsync.']);
 
 
 const HomeScreen=({route})=>{
@@ -587,7 +588,7 @@ return(
 
                             <View style={{flexDirection:'row'}}>
                                   <Text style={{fontSize:23, fontWeight:'bold'}}> Search a Company</Text> 
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:55,paddingTop:5}}> Pick date </Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:75,paddingTop:5}}> Pick date </Text>
        
                             </View>
 
@@ -663,10 +664,13 @@ return(
                             <Searchbar 
                                placeholder="Search"
                                onChangeText={onChangeSearch}
+                               icon= "arrow-back"
                                onIconPress = {fetchSearch}
                                onSubmitEditing = {fetchSearch}
                                value={searchQuery}
                             />
+                           
+
                     </View>
          
          <CategoryList/>
@@ -788,7 +792,7 @@ const style = StyleSheet.create({
     },
     btnContainer: {
       // paddingTop: 12,
-      paddingRight:0,
+      paddingRight:50,
       paddingHorizontal:"43%"
      
     },

@@ -5,7 +5,6 @@ import CompanyProfile from '../CompanyProfile';
 import AcceptedOrders from '../AcceptedOrders';
 import ReceivedOrders from './ReceivedOrders';
 import Location from '../Location';
-import Message from '../Message';
 import HelpCentre from '../HelpCentre';
 import PaymentMethod from '../PaymentMethod';
 import Notifications from '../Notifications'
@@ -96,17 +95,6 @@ const CompanyStack = ({route}) => {
                   />
                 ),
               }}
-          />
-          <Drawer.Screen name=' Message' component={Message}
-                options={{
-                  drawerIcon:({focused,size})=>(
-                    <FontAwesome
-                    name='comment'
-                    size={size}
-                    color={focused? 'white' : 'purple'}
-                    />
-                  ),
-                }}
           />
           <Drawer.Screen name='Payment' component={PaymentMethod} 
                   options={{

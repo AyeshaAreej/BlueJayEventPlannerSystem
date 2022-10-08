@@ -4,7 +4,6 @@ import HomeScreen from './screens/HomeScreen';
 import Profile from './screens/Profile';
 import MyOrders from './screens/MyOrders';
 import Location from './screens/Location';
-import Message from './screens/Message';
 import HelpCentre from './screens/HelpCentre';
 import PaymentMethod from './screens/PaymentMethod';
 import Notifications from './screens/Notifications'
@@ -74,28 +73,6 @@ const UserStack = ({route,navigation}) => {
                     ),
                   }}
                   />
-          {/* <Drawer.Screen name='   Location' component={Location} 
-              options={{
-                drawerIcon:({focused,size})=>(
-                  <FontAwesome
-                  name='map-marker'
-                  size={size}
-                  color={focused? 'white' : 'purple'}
-                  />
-                ),
-              }}
-          /> */}
-          <Drawer.Screen name=' Message' component={Message}
-                options={{
-                  drawerIcon:({focused,size})=>(
-                    <FontAwesome
-                    name='comment'
-                    size={size}
-                    color={focused? 'white' : 'purple'}
-                    />
-                  ),
-                }}
-          />
           <Drawer.Screen name='Payment' component={PaymentMethod} 
                   options={{
                     drawerIcon:({focused,size})=>(
