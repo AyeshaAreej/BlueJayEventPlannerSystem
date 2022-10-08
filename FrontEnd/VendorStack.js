@@ -95,7 +95,7 @@ const VendorStack = () => {
                 ),
               }}
           />
-          <Drawer.Screen name='Payment' component={PaymentMethod} 
+          {/* <Drawer.Screen name='Payment' component={PaymentMethod} 
                   options={{
                     drawerIcon:({focused,size})=>(
                       <FontAwesome
@@ -105,7 +105,7 @@ const VendorStack = () => {
                       />
                     ),
                   }}
-          />
+          /> */}
           <Drawer.Screen name=' Help Centre' component={HelpCentre}
                   options={{
                     drawerIcon:({focused,size})=>(

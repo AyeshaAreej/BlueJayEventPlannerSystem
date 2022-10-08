@@ -540,7 +540,6 @@ return(
                     <Searchbar 
                          placeholder="Search"
                          onChangeText={onChangeSearch}
-                         icon= "arrow-back"
                          onIconPress = {fetchSearch}
                          onSubmitEditing = {fetchSearch}
                          value={searchQuery}
