@@ -26,7 +26,7 @@ const signUp = async (req,res)=>{
             password: password,
             phone_no: req.body.phone_no,
             city: req.body.city,
-            image: req.body.image,
+            image: '0',
             services: req.body.services,
             price_range: req.body.price_range,
             address: req.body.address,

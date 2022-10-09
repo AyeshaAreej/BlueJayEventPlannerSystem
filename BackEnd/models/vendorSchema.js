@@ -43,7 +43,6 @@ const vendorSchema = new mongoose.Schema({
     },
     image:{
         type: String,
-        dafault:''
     },
     verified:{
         type: Boolean,

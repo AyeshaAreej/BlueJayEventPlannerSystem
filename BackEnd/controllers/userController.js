@@ -368,7 +368,7 @@ const fav_companies = async (req,res)=>{
              for(c_id of array.fav_companies){
                 
               
-                Company.findOne({_id:c_id},(err,company)=>{
+                Company.findOne({_id:c_id,verified:true},(err,company)=>{
                   
                    totalcount++
 
