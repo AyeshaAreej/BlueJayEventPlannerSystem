@@ -2,7 +2,7 @@ import React from "react";;
 import {useState, useEffect,useRef, useReducer,useContext}  from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import { ImageBackground, Platform, Button,TextInput, TouchableOpacity, StyleSheet, View,Text } from "react-native";
+import { ImageBackground,Pressable, Platform, Button,TextInput, TouchableOpacity, StyleSheet, View,Text } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
 import { RadioButton } from 'react-native-paper';
 import COLORS, { colors } from "../components/colors";
@@ -73,7 +73,7 @@ async function registerForPushNotification(){
             console.log(token,"Token for mobile device");
             
   } else {
-    //alert('Must use physical device for Push Notifications');
+    alert('Must use physical device for Push Notifications');
   }
 
   if (Platform.OS === 'android') {
@@ -90,7 +90,7 @@ async function registerForPushNotification(){
 
 
   
-
+  // console.log(expoPushToken)
   console.log(checked)
 
   
@@ -325,7 +325,9 @@ async function registerForPushNotification(){
           </View>
 
       
-
+          <Text style={{marginLeft:25,fontSize:15,marginTop:2, flexDirection:'row'}}>Don't Have an Account?   
+                 <Text style={{fontWeight: "bold",fontSize:15}} onPress={()=>{navigation.navigate('SignUp')}}> SignUp</Text>
+             </Text>
         </>
       )}
     </Formik>
@@ -341,8 +343,9 @@ const styles = StyleSheet.create({
   
   topView:{
     backgroundColor :COLORS.primary,
-    paddingTop:"11%",
-    paddingLeft:30,
+    display:"flex",
+    justifyContent:'center',
+    alignContent:'center',
     width:'100%',
     height:250,
     

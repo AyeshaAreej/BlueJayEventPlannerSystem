@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
  
   bottomView:{
   backgroundColor : COLORS.primary,
-  paddingTop:"6%",
+  paddingTop:"1%",
   paddingLeft:8,
   paddingBottom:15,
   width:'100%',

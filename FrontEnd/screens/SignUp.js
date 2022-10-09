@@ -1,7 +1,7 @@
 import React from "react";
 import {useState, useEffect}  from 'react'
 
-import { ImageBackground, Button, TextInput, Platform,ScrollView,Pressable, StyleSheet, View, Image, Text } from "react-native";
+import { ImageBackground, Button, TextInput, Platform,ScrollView,StyleSheet, View, Image, Text } from "react-native";
 
 import colors from "../components/colors";
 import { Formik } from 'formik';
@@ -222,12 +222,12 @@ const SignUp = ()=> {
             }
          
 
-        {<Image source={{uri: image}} style={styles.profileImage}  />}
-
-        
+        {/* {<Image source={{uri: image}} style={styles.profileImage}  />} */}
         <View style={styles.button}>
          <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
          </View>
+        
+      
 
           <View style={styles.button}>
 
@@ -244,24 +244,15 @@ const SignUp = ()=> {
       )}
     </Formik>
 
-
      </View>
 
-                  <Text style={{marginLeft:100,fontSize:15,marginTop:2}}>Already Have an Account?   
+                  <Text style={{marginLeft:70,fontSize:15,marginTop:2,}}>Already Have an Account?   
                  
-                  <Pressable onPress={()=>{navigation.navigate('LoginScreen')}}>
-                      <Text style={{fontWeight: "bold",fontSize:15}}>    SignIn</Text>
-                  </Pressable>
-                       
+              
+                      <Text style={{fontWeight: "bold",fontSize:15}}  onPress={()=>{navigation.navigate('LoginScreen')}}>    SignIn</Text>
+                
                   </Text>
 
-      
-                  {/* Social buttons */}
-      
-                  {/* <View  style={styles.socialbTag}>
-                  <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
-                  <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
-                  </View> */}
 
             
         
@@ -273,33 +264,27 @@ const styles = StyleSheet.create({
 
   topView:{
     backgroundColor :COLORS.primary,
-    paddingTop:"9%",
-    paddingLeft:30,
+    display:'flex',
+    justifyContent:'center',
+    alignContent:'center',
     width:"100%",
     height:210,
     
    },
-   socialbTag:{
-   flexDirection: 'column',
-   justifyContent: 'space-around',
-   alignItems: 'center',
-
- },
-
+   
  logo: {
   width: 200,
   height: 110,
   marginLeft:90,
 
 },
-
 center:{
-  paddingTop:25,justifyContent:'center',
+  paddingTop:30,
+  justifyContent:'center',
    alignItems:'center',
 },
    
    input:{
-
     borderColor :COLORS.white,
     marginBottom:10,
     padding:10,
@@ -309,19 +294,18 @@ center:{
     elevation:20,
     borderRadius:15,
     backgroundColor:'white'
-
    },
    button:{
     backgroundColor:COLORS.primary,
      marginTop:10,
     justifyContent:'center',
     alignItems:'center',
+    // borderRadius:'2px',
 
   
    },
   
  profileImage:{
- 
   height: 120,
   width: '40%',
   borderRadius: 20,
@@ -330,7 +314,7 @@ center:{
   buttonContainer:{
     justifyContent:'center',
     alignItems:'center',
-
+  
 },
 
 });
