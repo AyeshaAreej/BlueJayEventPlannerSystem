@@ -48,36 +48,36 @@ const signUp = async (req,res)=>{
 
     
     //login
-    // const logIn = async(req,res)=>{
+    const logIn = async(req,res)=>{
     
-    //     const {email,password} = req.body
+        const {email,password} = req.body
         
-    //     const user = await User.findOne({email}).lean()
+        const admin = await Admin.findOne({email}).lean()
     
-    //     if(!user){
+        if(!admin){
             
-    //         return res.json({status:"error", error : 'Invalid username/password'})
+            return res.json({status:"error", error : 'Invalid admin_name/password'})
             
-    //     }
+        }
     
-    //     if(await bcrypt.compare(password,user.password)){
+        if(await bcrypt.compare(password,admin.password)){
     
-    //         const token = await jwt.sign({
-    //             id : user._id, 
-    //             role: user.role
-    //         },
-    //         JWT_SECRET
-    //         )
-    //         return res.json({status:"ok", token : token, data: user})
-    //     }
+            const token = await jwt.sign({
+                id : admin._id, 
+                role: admin.role
+            },
+            JWT_SECRET
+            )
+            return res.json({status:"ok", token : token, data: admin})
+        }
     
-    //     return res.json({status:"error", error : 'Invalid username/password'})
+        return res.json({status:"error", error : 'Invalid admin_name/password'})
     
-    // }
+    }
 
     
 
 
 
 
-module.exports = {signUp}
+module.exports = {signUp,logIn}

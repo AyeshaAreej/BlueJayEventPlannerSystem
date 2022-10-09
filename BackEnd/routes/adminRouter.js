@@ -7,7 +7,7 @@ const route = express.Router()
 
 //authorization
 route.post('/signUp', adminController.signUp)
-// route.post('/logIn',adminController.logIn)//done
+route.post('/logIn',adminController.logIn)//done
 
 
 // //-Home Screen
