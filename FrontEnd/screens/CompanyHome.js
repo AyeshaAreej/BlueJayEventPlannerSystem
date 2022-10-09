@@ -25,7 +25,8 @@ console.log(route.params.o_id)
   useEffect(()=>{
 
     if(myDate===' ' && route.params.date === undefined){
-      showPicker()
+      // showPicker()
+      next(myDate,myCity)
     }else{
       //console.log(route.params.date)
       //console.log(route.params.o_id)
