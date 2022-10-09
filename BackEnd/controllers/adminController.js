@@ -24,14 +24,13 @@ const signUp = async (req,res)=>{
     const password = await bcrypt.hash(orignalPassword,10)
     
     await User.create({
-            username: req.body.username,
+            admin_name: req.body.admin_name,
             email: req.body.email,
             password: password,
             image: "0",
             phone_no: req.body.phone_no,
             city: req.body.city,
-            role: 'customer',
-            orders: []
+            role: 'admin'
         },
         (err,user)=>{
             if(err){

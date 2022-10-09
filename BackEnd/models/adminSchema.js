@@ -14,16 +14,21 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image:{
+        type: String
+    },
     phone_no:{
+        type: String,
+        required: true
+    },
+    city:{
         type: String,
         required: true
     },
     role:{
         type: String
     },
-    image:{
-        type: String
-    },
+    
     
 });
 
