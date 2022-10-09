@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname,'assets')))
 
 app.get('/',async (req,res)=>{
-    return res.json({status:'ok',msg:'Hello'})
+    return res.json({status:'ok',msg:'Hello deer'})
 })
 
 app.get('/getUser',middleware.ValidateToken,async (req,res)=>{
