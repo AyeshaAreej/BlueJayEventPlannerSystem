@@ -1,5 +1,6 @@
 const User = require('../models/userSchema')
 const Company = require('../models/companySchema')
+const Admin = require('../models/adminSchema')
 const Vendor = require('../models/vendorSchema')
 const Order = require('../models/orderSchema')
 const CvOrder = require('../models/cvOrderSchema')
@@ -23,7 +24,7 @@ const signUp = async (req,res)=>{
     
     const password = await bcrypt.hash(orignalPassword,10)
     
-    await User.create({
+    await Admin.create({
             admin_name: req.body.admin_name,
             email: req.body.email,
             password: password,
@@ -32,7 +33,7 @@ const signUp = async (req,res)=>{
             city: req.body.city,
             role: 'admin'
         },
-        (err,user)=>{
+        (err,admin)=>{
             if(err){
                 console.log('error in signup')
                 return res.json({status: 'error',error: 'error in signup'})
@@ -47,36 +48,36 @@ const signUp = async (req,res)=>{
 
     
     //login
-    const logIn = async(req,res)=>{
+    // const logIn = async(req,res)=>{
     
-        const {email,password} = req.body
+    //     const {email,password} = req.body
         
-        const user = await User.findOne({email}).lean()
+    //     const user = await User.findOne({email}).lean()
     
-        if(!user){
+    //     if(!user){
             
-            return res.json({status:"error", error : 'Invalid username/password'})
+    //         return res.json({status:"error", error : 'Invalid username/password'})
             
-        }
+    //     }
     
-        if(await bcrypt.compare(password,user.password)){
+    //     if(await bcrypt.compare(password,user.password)){
     
-            const token = await jwt.sign({
-                id : user._id, 
-                role: user.role
-            },
-            JWT_SECRET
-            )
-            return res.json({status:"ok", token : token, data: user})
-        }
+    //         const token = await jwt.sign({
+    //             id : user._id, 
+    //             role: user.role
+    //         },
+    //         JWT_SECRET
+    //         )
+    //         return res.json({status:"ok", token : token, data: user})
+    //     }
     
-        return res.json({status:"error", error : 'Invalid username/password'})
+    //     return res.json({status:"error", error : 'Invalid username/password'})
     
-    }
+    // }
 
     
 
 
 
 
-module.exports = {}
+module.exports = {signUp}

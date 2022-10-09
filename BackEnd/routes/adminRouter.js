@@ -7,18 +7,18 @@ const route = express.Router()
 
 //authorization
 route.post('/signUp', adminController.signUp)
-route.post('/logIn',adminController.logIn)//done
+// route.post('/logIn',adminController.logIn)//done
 
 
-//-Home Screen
-route.post('/searchVendor',middleware.ValidateToken ,adminController.searchVendor)  //done
-route.post('/searchByDate',middleware.ValidateToken ,adminController.searchByDate) //done
-route.post('/caterers',middleware.ValidateToken ,adminController.caterers) //done
+// //-Home Screen
+// route.post('/searchVendor',middleware.ValidateToken ,adminController.searchVendor)  //done
+// route.post('/searchByDate',middleware.ValidateToken ,adminController.searchByDate) //done
+// route.post('/caterers',middleware.ValidateToken ,adminController.caterers) //done
 
 
-//-profile
-route.patch('/updateProfile',middleware.ValidateToken ,adminController.updateProfile)//done
-route.patch('/changePassword',middleware.ValidateToken ,adminController.changePassword)//done
+// //-profile
+// route.patch('/updateProfile',middleware.ValidateToken ,adminController.updateProfile)//done
+// route.patch('/changePassword',middleware.ValidateToken ,adminController.changePassword)//done
 
 
 
