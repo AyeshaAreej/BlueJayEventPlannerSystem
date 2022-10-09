@@ -4,6 +4,7 @@ const path = require('path')
 const userRouter = require('./routes/userRouter')
 const companyRouter = require('./routes/companyRouter')
 const vendorRouter = require('./routes/vendorRouter')
+const adminRouter = require('./routes/adminRouter')
 const db = require('./config/mongoose')
 const middleware = require('./middlewares/index')
 const User = require('./models/userSchema')
@@ -106,6 +107,7 @@ app.post("/create-payment-intent", async (req, res) => {
 app.use('/users', userRouter)
 app.use('/company', companyRouter)
 app.use('/vendor', vendorRouter)
+app.use('/admin', adminRouter)
 
 
 

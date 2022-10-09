@@ -94,7 +94,7 @@ const searchVendor = async (req,res)=>{
 
     console.log(Mycity)
 
-     Vendor.find({"vendor_name" : {$regex : search_text }, "city": Mycity},(err,vendors)=>{
+     Vendor.find({"vendor_name" : {$regex : search_text }, "city": Mycity,verified:true},(err,vendors)=>{
         if(vendors){
             
             const result = []
@@ -191,7 +191,7 @@ const caterers = async (req,res)=>{
     console.log(Mycity)
 
 
-     Vendor.find({city: Mycity, service: "Caterer"},(err,vendors)=>{
+     Vendor.find({city: Mycity, service: "Caterer",verified:true},(err,vendors)=>{
         if(vendors){
             
             const result = []
@@ -237,7 +237,7 @@ const decoration = async (req,res)=>{
      console.log(Mycity)
  
  
-      Vendor.find({city: Mycity, service: "Decoration"},(err,vendors)=>{
+      Vendor.find({city: Mycity, service: "Decoration",verified:true},(err,vendors)=>{
          if(vendors){
              
              const result = []
@@ -282,7 +282,7 @@ const venue = async (req,res)=>{
      console.log(Mycity)
  
  
-      Vendor.find({city: Mycity, service: "Venue"},(err,vendors)=>{
+      Vendor.find({city: Mycity, service: "Venue",verified:true},(err,vendors)=>{
          if(vendors){
              
              const result = []
@@ -327,7 +327,7 @@ const photographers = async (req,res)=>{
      console.log(Mycity)
  
  
-      Vendor.find({city: Mycity, service: "Photography"},(err,vendors)=>{
+      Vendor.find({city: Mycity, service: "Photography",verified:true},(err,vendors)=>{
          if(vendors){
              
              const result = []

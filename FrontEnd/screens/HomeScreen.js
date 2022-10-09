@@ -588,7 +588,7 @@ return(
 
                             <View style={{flexDirection:'row'}}>
                                   <Text style={{fontSize:23, fontWeight:'bold'}}> Search a Company</Text> 
-                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:75,paddingTop:5}}> Pick date </Text>
+                                  <Text style={{fontSize:20, fontWeight:'bold',paddingLeft:55,paddingTop:5}}> Pick date </Text>
        
                             </View>
 

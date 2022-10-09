@@ -27,7 +27,7 @@ const signUp = async (req,res)=>{
             username: req.body.username,
             email: req.body.email,
             password: password,
-            image: req.body.image,
+            image: "0",
             phone_no: req.body.phone_no,
             city: req.body.city,
             role: 'customer',

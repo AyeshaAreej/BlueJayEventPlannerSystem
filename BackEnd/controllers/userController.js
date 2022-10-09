@@ -229,7 +229,7 @@ const topRated = async (req,res)=>{
     console.log(Mycity)
 
 
-     Company.find({city: Mycity},(err,companies)=>{
+     Company.find({city: Mycity,verified:true},(err,companies)=>{
         if(companies){
             
             const result = []
@@ -272,7 +272,7 @@ const lowPrice = async (req,res)=>{
 
     console.log(Mycity)
 
-    Company.find({city: Mycity},(err,companies)=>{
+    Company.find({city: Mycity,verified:true},(err,companies)=>{
        if(companies){
            
            const result = []
@@ -315,7 +315,7 @@ const highPrice = async (req,res)=>{
 
     console.log(Mycity)
 
-    Company.find({city: Mycity},(err,companies)=>{
+    Company.find({city: Mycity,verified:true},(err,companies)=>{
        if(companies){
            
            const result = []
@@ -368,7 +368,7 @@ const fav_companies = async (req,res)=>{
              for(c_id of array.fav_companies){
                 
               
-                Company.findOne({_id:c_id},(err,company)=>{
+                Company.findOne({_id:c_id,verified:true},(err,company)=>{
                   
                    totalcount++
 
