@@ -143,7 +143,7 @@ const searchByDate = async (req,res)=>{
 
     console.log(Mycity)
 
-    Vendor.find({city: Mycity}, (err,vendors)=>{
+    Vendor.find({city: Mycity,verified:true}, (err,vendors)=>{
         if(vendors){
 
             const result = []

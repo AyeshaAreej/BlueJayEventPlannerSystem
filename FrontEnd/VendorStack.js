@@ -84,7 +84,7 @@ const VendorStack = () => {
                     ),
                   }}
                   />
-          <Drawer.Screen name='   Location' component={Location} 
+          {/* <Drawer.Screen name='   Location' component={Location} 
               options={{
                 drawerIcon:({focused,size})=>(
                   <FontAwesome
@@ -94,7 +94,7 @@ const VendorStack = () => {
                   />
                 ),
               }}
-          />
+          /> */}
           {/* <Drawer.Screen name='Payment' component={PaymentMethod} 
                   options={{
                     drawerIcon:({focused,size})=>(

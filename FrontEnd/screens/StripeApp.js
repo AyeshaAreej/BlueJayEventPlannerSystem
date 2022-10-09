@@ -16,7 +16,7 @@ const StripeApp= () => {
     const fetchPaymentIntentClientSecret = async () => {
 
         const value = {pay_amount: amount}
-
+// console.log(value)
         const response = await fetch(`${API_URL}/create-payment-intent`, {
           body: JSON.stringify(value),
           method: "POST",
@@ -80,7 +80,6 @@ const StripeApp= () => {
              <TextInput
                 autoCapitalize="none"
                 placeholder="Amount"
-                keyboardType="text"
                 onChange={value => setAmount(value.nativeEvent.text)}
                 style={styles.input}
             />

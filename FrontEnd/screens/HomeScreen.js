@@ -43,7 +43,7 @@ const HomeScreen=({route})=>{
     const [myCity, setMyCity] = React.useState('');
     const [catName, setCatName] = React.useState('');
     
-    const cities = ["islamabad", "karachi", "sukkur", "lahore","quetta"]
+    const cities = ["Islamabad", "Karachi", "Sukkur", "Lahore","Quetta"]
 
     //Date
     const [date,setDate] = useContext(DateContext)

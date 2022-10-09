@@ -42,7 +42,12 @@ const vendorSchema = new mongoose.Schema({
         type: String
     },
     image:{
-        type: String
+        type: String,
+        dafault:''
+    },
+    verified:{
+        type: Boolean,
+        default:false
     },
     cancelled_orders:{
         type: Number

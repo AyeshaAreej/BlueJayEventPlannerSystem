@@ -91,7 +91,7 @@ const searchCompany = async (req,res)=>{
 
     console.log(Mycity)
 
-     Company.find({"company_name" : {$regex : search_text }, "city": Mycity},(err,companies)=>{
+     Company.find({"company_name" : {$regex : search_text }, "city": Mycity, "verified": true},(err,companies)=>{
         if(companies){
             
             const result = []
@@ -138,7 +138,7 @@ const searchByDate = async (req,res)=>{
 
     console.log(Mycity)
 
-    Company.find({city: Mycity}, (err,companies)=>{
+    Company.find({city: Mycity,verified:true}, (err,companies)=>{
         if(companies){
 
             const result = []
