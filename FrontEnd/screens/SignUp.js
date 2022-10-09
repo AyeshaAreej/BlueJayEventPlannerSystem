@@ -221,11 +221,14 @@ const SignUp = ()=> {
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
             }
          
-
-        {/* {<Image source={{uri: image}} style={styles.profileImage}  />} */}
-        <View style={styles.button}>
-         <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
-         </View>
+     
+      
+        <View style={styles.imageContainer} >
+        
+        <Image source={{uri: image}} style={styles.profileImage}  />
+      </View>
+         <Button title="Upload Image" onPress={pickImage} color={colors.primary} style={styles.button}/>
+       
         
       
 
@@ -306,17 +309,28 @@ center:{
    },
   
  profileImage:{
-  height: 120,
-  width: '40%',
+  height: 100,
+  width: 175,
   borderRadius: 20,
-  marginTop:4,
+  marginTop:2,
+  // marginLeft:'1%'
 },
   buttonContainer:{
     justifyContent:'center',
     alignItems:'center',
   
 },
-
+imageContainer:{
+  borderColor :COLORS.white,
+  marginBottom:3,
+  // padding:10,
+  width:180,
+  fontSize:20,
+  borderWidth:2,
+  elevation:20,
+  borderRadius:15,
+  backgroundColor:'white'
+}
 });
 
 export default SignUp;
