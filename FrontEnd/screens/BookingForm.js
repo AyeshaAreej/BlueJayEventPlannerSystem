@@ -35,6 +35,7 @@ function BookingForm({ route}) {
   const [toolTipVisible, setToolTipVisible] = useState(false);
 
 console.log(toolTipVisible)
+console.log('order',company.noti_token)
   // console.log(catering)
   // console.log(venue)
   // console.log(decor)
