@@ -65,8 +65,13 @@ const logIn = async (req,res)=>{
         },
         JWT_SECRET
         )
-
-        return res.json({status:"ok", token : token, data: company})
+        const new_company = await Company.findByIdAndUpdate({_id:company._id},{noti_token:req.body.noti_token});
+        
+        if(new_company){
+            return res.json({status:"ok", token : token, data: new_company})
+        }
+     
+        return res.json({status:"error", msg:"token not set"})
     }
 
     return res.json({status:"error", error : 'Invalid username/password'})

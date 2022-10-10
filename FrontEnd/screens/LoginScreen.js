@@ -153,7 +153,7 @@ async function registerForPushNotification(){
       
                     fetch(`https://bluejay-mobile-app.herokuapp.com/company/logIn`,{
                       method: "post",
-                      body: JSON.stringify(values),
+                      body: JSON.stringify(value),
                       headers: {
                           Accept: "application/json, text/plain, */*",
                           "Content-Type": "application/json"
@@ -180,7 +180,7 @@ async function registerForPushNotification(){
     else if(role=='vendor'){
                       fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/logIn`,{
                         method: "post",
-                        body: JSON.stringify(values),
+                        body: JSON.stringify(value),
                         headers: {
                             Accept: "application/json, text/plain, */*",
                             "Content-Type": "application/json"
