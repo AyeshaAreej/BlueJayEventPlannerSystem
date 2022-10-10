@@ -45,15 +45,43 @@ await User.create({
 
 
 //login
+// const logIn = async(req,res)=>{
+
+//     const {email,password,noti_token} = req.body
+    
+//     const user = await User.findOne({email}).lean()
+
+//     if(!user){
+        
+//         return res.json({status:"error", error : 'Invalid username/password'})
+        
+//     }
+
+//     if(await bcrypt.compare(password,user.password)){
+
+//         const token = await jwt.sign({
+//             id : user._id, 
+//             role: user.role
+//         },
+//         JWT_SECRET
+//         )
+//         return res.json({status:"ok", token : token, data: user})
+//     }
+
+//     return res.json({status:"error", error : 'Invalid username/password'})
+
+// }
+
 const logIn = async(req,res)=>{
 
     const {email,password,noti_token} = req.body
+    console.log(req.body)
     
     const user = await User.findOne({email}).lean()
 
     if(!user){
         
-        return res.json({status:"error", error : 'Invalid username/password'})
+        return res.json({status:"error", error : 'Invalid username1/password'})
         
     }
 
@@ -65,7 +93,15 @@ const logIn = async(req,res)=>{
         },
         JWT_SECRET
         )
-        return res.json({status:"ok", token : token, data: user})
+
+        
+        const new_user = await User.findByIdAndUpdate({_id:user._id},{noti_token:req.body.noti_token});
+        
+        if(new_user){
+            return res.json({status:"ok", token : token, data: new_user})
+        }
+     
+        return res.json({status:"error", msg:"token not set"})
     }
 
     return res.json({status:"error", error : 'Invalid username/password'})
