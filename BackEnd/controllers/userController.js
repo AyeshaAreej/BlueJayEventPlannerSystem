@@ -67,7 +67,7 @@ const logIn = async(req,res)=>{
         JWT_SECRET
         )
 
-        User.findByIdAndUpdate(req.user.id,{$set:{noti_token:req.body.noti_token}},
+        User.findOneAndUpdate({email:user.email},{$set:{noti_token:req.body.noti_token}},
             {
                 new:true
             },
