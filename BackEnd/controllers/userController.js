@@ -48,7 +48,6 @@ await User.create({
 const logIn = async(req,res)=>{
 
     const {email,password,noti_token} = req.body
-    console.log(req.body)
     
     const user = await User.findOne({email}).lean()
 
@@ -66,19 +65,7 @@ const logIn = async(req,res)=>{
         },
         JWT_SECRET
         )
-
-        User.findOneAndUpdate({email:user.email},{$set:{noti_token:req.body.noti_token}},
-            {
-                new:true
-            },
-            (err,user)=>{
-            if(user){
-                return res.json({status:"ok", token : token, data: user})
-            }
-            return res.json({status:'error', error: 'user not updated',err })
-        })
-
-
+        return res.json({status:"ok", token : token, data: user})
     }
 
     return res.json({status:"error", error : 'Invalid username/password'})
