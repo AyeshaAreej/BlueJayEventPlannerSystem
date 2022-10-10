@@ -105,7 +105,7 @@ async function registerForPushNotification(){
 // };
 
   
-  // console.log(expoPushToken)
+  console.log(expoPushToken)
   console.log(checked)
 
   
