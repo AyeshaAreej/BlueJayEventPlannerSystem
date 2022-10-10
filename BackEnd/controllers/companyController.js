@@ -32,6 +32,7 @@ const signUp = async (req,res)=>{
             address: req.body.address,
             available_hours:req.body.available_hours,
             cancelled_orders: 0,
+            noti_token: '',
             role: 'company',
             rating_list:[],
             rating: 0,
@@ -65,13 +66,15 @@ const logIn = async (req,res)=>{
         },
         JWT_SECRET
         )
-        const new_company = await Company.findByIdAndUpdate({_id:company._id},{noti_token:req.body.noti_token});
-        
-        if(new_company){
-            return res.json({status:"ok", token : token, data: new_company})
-        }
-     
-        return res.json({status:"error", msg:"token not set"})
+
+        Company.findByIdAndUpdate({_id:company._id},{noti_token:req.body.noti_token},{new:true},
+            async(err,new_company)=>{
+                if(new_company){
+                    return res.json({status:"ok", token : token, data: new_company})
+                }
+                return res.json({status:"error", msg:"token not set"})
+            });
+      
     }
 
     return res.json({status:"error", error : 'Invalid username/password'})
