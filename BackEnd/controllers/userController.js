@@ -47,7 +47,7 @@ await User.create({
 //login
 const logIn = async(req,res)=>{
 
-    const {email,password} = req.body
+    const {email,password,noti_token} = req.body
     
     const user = await User.findOne({email}).lean()
 
@@ -65,9 +65,6 @@ const logIn = async(req,res)=>{
         },
         JWT_SECRET
         )
-
-        const user = await User.findByIdAndUpdate(req.user.id,{noti_token:req.body.noti_token});
-        
         return res.json({status:"ok", token : token, data: user})
     }
 
