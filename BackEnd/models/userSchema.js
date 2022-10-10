@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    noti_token:{
+        type: String,
+    },
     role:{
         type: String
     },

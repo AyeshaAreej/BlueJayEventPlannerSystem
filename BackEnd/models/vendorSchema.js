@@ -44,6 +44,9 @@ const vendorSchema = new mongoose.Schema({
     image:{
         type: String,
     },
+    noti_token:{
+        type: String,
+    },
     verified:{
         type: Boolean,
         default:false

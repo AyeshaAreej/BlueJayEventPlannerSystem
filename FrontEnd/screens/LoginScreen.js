@@ -113,11 +113,17 @@ async function registerForPushNotification(){
 
     const role= checked
 
+    const value = {
+      email: values.email,
+      password: values.password,
+      noti_token: expoPushToken
+    }
+
     if(role=='customer'){
       
            fetch(`https://bluejay-mobile-app.herokuapp.com/users/logIn`,{
                     method: "post",
-                    body: JSON.stringify(values),
+                    body: JSON.stringify(value),
                     headers: {
                         Accept: "application/json, text/plain, */*",
                         "Content-Type": "application/json"

@@ -28,6 +28,7 @@ await User.create({
         image: req.body.image,
         phone_no: req.body.phone_no,
         city: req.body.city,
+        noti_token: '',
         role: 'customer',
         orders: []
     },
@@ -64,6 +65,9 @@ const logIn = async(req,res)=>{
         },
         JWT_SECRET
         )
+
+        const user = await User.findByIdAndUpdate(req.user.id,{noti_token:req.body.noti_token});
+        
         return res.json({status:"ok", token : token, data: user})
     }
 
