@@ -12,6 +12,7 @@ import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
 import {OrderContext,DateContext} from '../Contexts'
+import {UserContext} from '../Contexts'
 
 function BookingForm({ route}) {
 
@@ -26,7 +27,9 @@ function BookingForm({ route}) {
   const [venue, setVenue] = React.useState('no');
   const [decor, setDecor] = React.useState('no');
   const [photographer, setPhotographer] = React.useState('no');
-
+  
+  
+  const [user,setUser] = useContext(UserContext)
   const [orderC,setOrderC] = useContext(OrderContext)
   const [date,setDate] = useContext(DateContext)
   const [toolTipVisible, setToolTipVisible] = useState(false);
@@ -93,6 +96,24 @@ console.log(toolTipVisible)
     
   })    
   }
+
+const sendRequestNotification = () => {
+  let response = fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      to: company.noti_token,
+      sound: 'default',
+      title: "Order Received",
+      body:  "You have a received a order."
+    })
+  });
+};
+
+
 
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
