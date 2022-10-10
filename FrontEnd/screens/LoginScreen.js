@@ -206,7 +206,7 @@ async function registerForPushNotification(){
    
   }
   return (
-   <View style={{flex:1, backgroundColor:'#fff'}} >
+   <View style={{display:"flex", backgroundColor:'#fff'}} >
      {/* <StatusBar barStyle="light-content"  translucent backgroundColor="#fff"/> */}
    <View style={styles.topView}>
    <ImageBackground
@@ -215,7 +215,7 @@ async function registerForPushNotification(){
      resizeMode="cover" >
     </ImageBackground>
 
-     <Text style={{color:'white',marginLeft:140, fontSize:30,fontWeight:'bold'}}>Sign In</Text>
+     <Text style={{color:'white',marginLeft:145, fontSize:30,fontWeight:'bold'}}>Sign In</Text>
 
     
  </View>
@@ -369,7 +369,10 @@ const styles = StyleSheet.create({
  logo: {
   width: 200,
   height: 130,
-  marginLeft:90,
+  display:"flex",
+  justifyContent:'center',
+  alignContent:'center',
+  marginLeft:92,
 },
    
    input:{
