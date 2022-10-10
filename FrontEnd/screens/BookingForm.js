@@ -89,6 +89,7 @@ console.log(toolTipVisible)
                      {
                       setOrderC(!orderC)
                       alert('order confirmed')
+                      sendRequestNotification()
                       navigation.navigate("UserStack")
                       }
 
