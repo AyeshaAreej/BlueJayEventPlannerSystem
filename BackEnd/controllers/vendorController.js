@@ -26,6 +26,7 @@ const signUp = async (req,res)=>{
             city: req.body.city,
             image: '0',
             service: req.body.service,
+            noti_token: '',
             price_range: req.body.price_range,
             address: req.body.address,
             available_hours:req.body.available_hours,
@@ -64,7 +65,13 @@ const logIn = async (req,res)=>{
         JWT_SECRET
         )
 
-        return res.json({status:"ok", token : token, data: vendor})
+        const new_vendor = await Vendor.findByIdAndUpdate({_id:vendor._id},{noti_token:req.body.noti_token},{new:true});
+        
+        if(new_vendor){
+            return res.json({status:"ok", token : token, data: new_vendor})
+        }
+     
+        return res.json({status:"error", msg:"token not set"})
     }
 
     return res.json({status:"error", error : 'Invalid username/password'})

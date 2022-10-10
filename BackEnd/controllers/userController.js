@@ -95,7 +95,7 @@ const logIn = async(req,res)=>{
         )
 
         
-        const new_user = await User.findByIdAndUpdate({_id:user._id},{noti_token:req.body.noti_token});
+        const new_user = await User.findByIdAndUpdate({_id:user._id},{noti_token:req.body.noti_token},{new:true});
         
         if(new_user){
             return res.json({status:"ok", token : token, data: new_user})
