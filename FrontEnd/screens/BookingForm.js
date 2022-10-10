@@ -2,6 +2,8 @@ import React from 'react'
 import colors from '../components/colors';
 import { useState,useContext } from 'react';
 import { ImageBackground,StatusBar, Button, TextInput, Platform,ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import Tooltip from 'react-native-walkthrough-tooltip';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import { Formik} from 'formik';
 import COLORS from '../components/colors';
@@ -27,7 +29,9 @@ function BookingForm({ route}) {
 
   const [orderC,setOrderC] = useContext(OrderContext)
   const [date,setDate] = useContext(DateContext)
+  const [toolTipVisible, setToolTipVisible] = useState(false);
 
+console.log(toolTipVisible)
   // console.log(catering)
   // console.log(venue)
   // console.log(decor)
@@ -524,18 +528,29 @@ venue == 'no' &&
               <Text style={{ justifyContent:'center',alignContent:'center', fontSize: 18, color: 'red'}}>{errors.available_budget}</Text>
             }
             
-
-           <TextInput
-             style={styles.input}
+           <Tooltip
+           animated={true}
+           arrowSize={{width: 11, height: 8}}
+           backgroundColor="rgba(0,0,0,0.2)"
+           isVisible={toolTipVisible}
+           content={<Text>Let us know if you want anything else other than above specified things: Like Flowers and so on.</Text>}
+           placement="top"
+           onClose={() => setToolTipVisible(false)}
+           >
+           <View style={styles.inputContainer} > 
+          
+            <TextInput
+             style={styles.inputInstruction}
              name="special_instructions"
              placeholder='Special instructions '
              onChangeText={handleChange('special_instructions')}
              onBlur={()=>setFieldTouched('special_instructions')}
              value={values.special_instructions}
-             multiline={true}
-           
-           />
-           
+             multiline={true}/>
+              <MaterialCommunityIcons name="help"  size={20} style={styles.icon}   onPress={() => setToolTipVisible(true)}/>   
+             </View> 
+          </Tooltip>
+       
 
 
             </View>
@@ -584,7 +599,6 @@ leftTag:{
 },
    
    input:{
-
   borderColor :COLORS.white,
   margin:7,
   padding:12,
@@ -603,10 +617,6 @@ leftTag:{
      marginTop:20,
      marginBottom:30
      
-
-     
-    
-
    },
    container: {
     flex: 1,
@@ -622,6 +632,31 @@ leftTag:{
   checkbox: {
     alignSelf: "center",
   },
+  icon:{
+    color:colors.primary,
+
+   
+    },
+    inputContainer:{
+      flexDirection:'row',
+      justifyContent:'space-between',
+      borderColor :COLORS.white,
+      margin:7,
+      padding:12,
+      width:280,
+      fontSize:20,
+      borderWidth:2,
+      elevation:20,
+      borderRadius:15,
+      backgroundColor:'white'
+      
+     },
+     inputInstruction:{
+      borderColor :COLORS.white,
+      fontSize:20,
+      borderWidth:2,
+       },
+    
 
 });
 

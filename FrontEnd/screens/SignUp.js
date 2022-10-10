@@ -1,7 +1,7 @@
 import React from "react";
 import {useState, useEffect}  from 'react'
 
-import { ImageBackground, Button, TextInput, Platform,ScrollView,Pressable, StyleSheet, View, Image, Text } from "react-native";
+import { ImageBackground, Button, TextInput, Platform,ScrollView,StyleSheet, View, Image, Text } from "react-native";
 
 import colors from "../components/colors";
 import { Formik } from 'formik';
@@ -221,13 +221,16 @@ const SignUp = ()=> {
               <Text style={{ justifyContent:'center',alignContent:'center',fontSize: 18, color: 'red' }}>{errors.city}</Text>
             }
          
-
-        {<Image source={{uri: image}} style={styles.profileImage}  />}
-
+     
+      
+        <View style={styles.imageContainer} >
         
-        <View style={styles.button}>
-         <Button title="Upload Image" onPress={pickImage} color={colors.primary}/>
-         </View>
+        <Image source={{uri: image}} style={styles.profileImage}  />
+      </View>
+         <Button title="Upload Image" onPress={pickImage} color={colors.primary} style={styles.button}/>
+       
+        
+      
 
           <View style={styles.button}>
 
@@ -244,24 +247,15 @@ const SignUp = ()=> {
       )}
     </Formik>
 
-
      </View>
 
-                  <Text style={{marginLeft:100,fontSize:15,marginTop:2}}>Already Have an Account?   
+                  <Text style={{marginLeft:70,fontSize:15,marginTop:2,}}>Already Have an Account?   
                  
-                  <Pressable onPress={()=>{navigation.navigate('LoginScreen')}}>
-                      <Text style={{fontWeight: "bold",fontSize:15}}>    SignIn</Text>
-                  </Pressable>
-                       
+              
+                      <Text style={{fontWeight: "bold",fontSize:15}}  onPress={()=>{navigation.navigate('LoginScreen')}}>    SignIn</Text>
+                
                   </Text>
 
-      
-                  {/* Social buttons */}
-      
-                  {/* <View  style={styles.socialbTag}>
-                  <GoogleSocialButton onPress={() => {}} buttonViewStyle={{width:'74%',backgroundColor:'#F5F5DC', }} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.dark,fontSize:18}} />
-                  <FacebookSocialButton onPress={() => {}} buttonViewStyle={{width:'70%'}} logoStyle={{marginLeft:10}}textStyle={{color:COLORS.white,fontSize:18}} />
-                  </View> */}
 
             
         
@@ -273,33 +267,27 @@ const styles = StyleSheet.create({
 
   topView:{
     backgroundColor :COLORS.primary,
-    paddingTop:"9%",
-    paddingLeft:30,
+    display:'flex',
+    justifyContent:'center',
+    alignContent:'center',
     width:"100%",
     height:210,
     
    },
-   socialbTag:{
-   flexDirection: 'column',
-   justifyContent: 'space-around',
-   alignItems: 'center',
-
- },
-
+   
  logo: {
   width: 200,
   height: 110,
   marginLeft:90,
 
 },
-
 center:{
-  paddingTop:25,justifyContent:'center',
+  paddingTop:30,
+  justifyContent:'center',
    alignItems:'center',
 },
    
    input:{
-
     borderColor :COLORS.white,
     marginBottom:10,
     padding:10,
@@ -309,30 +297,40 @@ center:{
     elevation:20,
     borderRadius:15,
     backgroundColor:'white'
-
    },
    button:{
     backgroundColor:COLORS.primary,
      marginTop:10,
     justifyContent:'center',
     alignItems:'center',
+    // borderRadius:'2px',
 
   
    },
   
  profileImage:{
- 
-  height: 120,
-  width: '40%',
+  height: 100,
+  width: 175,
   borderRadius: 20,
-  marginTop:4,
+  marginTop:2,
+  // marginLeft:'1%'
 },
   buttonContainer:{
     justifyContent:'center',
     alignItems:'center',
-
+  
 },
-
+imageContainer:{
+  borderColor :COLORS.white,
+  marginBottom:3,
+  // padding:10,
+  width:180,
+  fontSize:20,
+  borderWidth:2,
+  elevation:20,
+  borderRadius:15,
+  backgroundColor:'white'
+}
 });
 
 export default SignUp;
