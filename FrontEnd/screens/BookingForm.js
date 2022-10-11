@@ -66,6 +66,7 @@ console.log('date',date)
                     }
                   
               }).then(res=>res.json()).then(result=>{
+                console.log(result)
                 if(result.status=='ok'){
                 console.log('stored in db')
                 }
