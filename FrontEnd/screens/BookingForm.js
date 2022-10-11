@@ -34,14 +34,18 @@ function BookingForm({ route}) {
   const [date,setDate] = useContext(DateContext)
   const [toolTipVisible, setToolTipVisible] = useState(false);
 
-console.log(toolTipVisible)
-console.log('order',company.noti_token)
+// console.log(toolTipVisible)
+// console.log('order',company.noti_token)
+
+console.log('date',date)
+
  
 const noti_obj= {
   to: company.noti_token,
   sound: 'default',
   title: "Order Received",
-  body:  "You have a received a order."
+  body:  "You have a received a order.",
+  compDate: date
 }
 
   const c_id = company._id
@@ -63,7 +67,9 @@ const noti_obj= {
                     }
                   
               }).then(res=>res.json()).then(result=>{
+                if(result.status=='ok'){
                 console.log('stored in db')
+                }
 
               }).catch(err=>console.log('catch',err.message))
     
@@ -131,7 +137,12 @@ const sendRequestNotification = () => {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(noti_obj)
+    body: JSON.stringify({
+      to: company.noti_token,
+      sound: 'default',
+      title: "Order Received",
+      body:  "You have a received a order.",
+    })
   }).then(res=>res.json()).then(result=>{
     console.log(result)
     if(result.data.status=='ok'){
