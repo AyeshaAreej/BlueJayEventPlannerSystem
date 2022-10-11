@@ -52,7 +52,7 @@ console.log('date',date)
        
         title: "Order Received",
         body:  "You have a received a order.",
-        compDate: now()
+        compDate: new Date()
       }
 
       
