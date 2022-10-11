@@ -909,8 +909,27 @@ const completedOrders = async (req,res)=>{
         
 }
 
+const orderCreateNoti = async (req,res)=>{
+
+    try {
+      
+        User.findByIdAndUpdate({_id:'62bed962730eceda1809e8dc'},{$push: { notifications : {'title': req.body.title, 'description': req.body.description}}},async(err,user)=>{
+            if(user){
+                res.json({status:"ok"})
+            }else{
+                return res.json({status:"Error",err})
+            }
+        })
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+
+  
+}
+
 
 
 
 module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,fav_companies,createOrder,addToFavs,
-                  updateProfile,changePassword,myOrders,completedOrders,rateCompany,cancelOrder,removeFromFavs}
+                  updateProfile,changePassword,myOrders,completedOrders,rateCompany,cancelOrder,removeFromFavs,orderCreateNoti}

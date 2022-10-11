@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
     noti_token:{
         type: String,
     },
+    notifications:[
+        {
+            title: String,
+            description: String,
+        }
+    ],
     role:{
         type: String
     },

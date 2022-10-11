@@ -36,16 +36,50 @@ function BookingForm({ route}) {
 
 console.log(toolTipVisible)
 console.log('order',company.noti_token)
-  // console.log(catering)
-  // console.log(venue)
-  // console.log(decor)
-  // console.log(photography)
+ 
+const noti_obj= {
+  to: company.noti_token,
+  sound: 'default',
+  title: "Order Received",
+  body:  "You have a received a order."
+}
 
   const c_id = company._id
 
+  const SendToDb = ()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('noti db store',token)
+
+      console.log("value",value)
+      
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/orderCreateNoti`,{
+                    method: "post",
+                    body: JSON.stringify(noti_obj),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if(result.status == 'ok')
+                     {
+                      setOrderC(!orderC)
+                      alert('order confirmed')
+                      sendRequestNotification()
+                      navigation.navigate("UserStack")
+                      }
+
+              }).catch(err=>console.log('catch',err.message))
+    
+  })  
+  }
   
   function handleOrder(values){
-
 
     SecureStore.getItemAsync('token').then(token=>{
 
@@ -100,19 +134,22 @@ console.log('order',company.noti_token)
   }
 
 const sendRequestNotification = () => {
-  let response = fetch('https://exp.host/--/api/v2/push/send', {
+  fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      to: company.noti_token,
-      sound: 'default',
-      title: "Order Received",
-      body:  "You have a received a order."
-    })
-  });
+    body: JSON.stringify(noti_obj)
+  }).then(res=>res.json()).then(result=>{
+    console.log(result)
+    if(result.status=='ok'){
+      SendToDb()
+    }
+  }).catch(err=>console.log('catch',err.message))
+  
+  
+
 };
 
 

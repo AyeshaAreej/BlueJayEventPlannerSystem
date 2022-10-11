@@ -47,6 +47,12 @@ const vendorSchema = new mongoose.Schema({
     noti_token:{
         type: String,
     },
+    notifications:[
+        {
+            title: String,
+            description: String,
+        }
+    ],
     verified:{
         type: Boolean,
         default:false

@@ -144,38 +144,35 @@ return(
                  
                   <Text style={{ marginLeft:20, marginTop:20}}>
                           <Text style={{color:COLORS.primary,fontSize:24, fontWeight:"bold"}}>Order :</Text>{'\n'}{'\n'}
-                          <Text style={{fontSize:20, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:20}}>{order.event_type}</Text>{'\n'}{'\n'}
-                          <Text style={{fontSize:20,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:20}}>{order.date}</Text>
-                          <Text style={{fontWeight:"bold",fontSize:22,paddingLeft:100}}>                 {order.status}</Text>{'\n'}
-                         
+                          <Text style={{fontSize:20, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:20}}>{order.event_type}</Text>{'\n'}
+                          <Text style={{fontSize:20,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:20}}>{order.date}</Text>{'\n'}
+                          <Text style={{fontWeight:"bold",fontSize:22,paddingLeft:100}}>{order.status}</Text>{'\n'}
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15,paddingTop:2}}>Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:2}}>{order.available_budget}</Text>{'\n'}
+            
             
                  </Text>
 
           </View>
 
-      
-   
-           <View style={{flexDirection:'row'}}>
-               
-           <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15,paddingTop:2}}> Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:2}}>{order.available_budget}</Text>
-                          
+ 
 
-                <View  style={{paddingLeft:70}}>
-                <Button
-                onPress={()=>{acceptOrder(order._id)}}
-                title="Accept"
-                color={COLORS.primary}
-                /> 
-                </View>
+          <View style={{flexDirection:'row'}}>
 
-               <View style={{paddingLeft:15, borderRadius:12}}>
-                <Button  
-                onPress={()=>{rejectOrder(order._id)}}
-                title="Reject"
-                color={COLORS.primary}/>
-              </View>
-        
-               
+          <View  style={{paddingLeft:115}}>
+                    <Button
+                    onPress={()=>{acceptOrder(order._id)}}
+                    title="Accept"
+                    color={COLORS.primary}
+                    /> 
+                    </View>
+
+                  <View style={{paddingLeft:15, borderRadius:12}}>
+                    <Button  
+                    onPress={()=>{rejectOrder(order._id)}}
+                    title="Reject"
+                    color={COLORS.primary}/>
+                  </View>
+
           </View>
         
 
@@ -224,7 +221,7 @@ else{
 const style = StyleSheet.create({
 
     card: {
-      height: 210,
+      height: 260,
       width: cardWidth,
       elevation: 35,
       borderRadius: 15,
