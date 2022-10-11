@@ -1446,8 +1446,28 @@ const completedOrders = async (req,res)=>{
 
 }
 
+const orderCreateNoti = async (req,res)=>{
+
+    try {
+      
+        Company.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,company)=>{
+            if(company){
+                res.json({status:"ok"})
+            }else{
+                return res.json({status:"Error",err})
+            }
+        })
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+
+  
+}
+
+
 
 
 
 module.exports = {signUp,logIn,rec_Orders,approveOrder,updateProfile,changePassword,createCatererOrder,createDecorationOrder,createVenueOrder,cancelOrder,cancelVendorOrder,createPhotographerOrder,
-                  rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers,myOrders,rejectOrder,showHiredVendors,completeOrder,checkSubComplete,completedOrders}
+                  rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers,myOrders,rejectOrder,showHiredVendors,completeOrder,checkSubComplete,completedOrders,orderCreateNoti}

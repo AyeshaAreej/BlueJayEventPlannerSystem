@@ -909,27 +909,27 @@ const completedOrders = async (req,res)=>{
         
 }
 
-const orderCreateNoti = async (req,res)=>{
+// const orderCreateNoti = async (req,res)=>{
 
-    try {
+//     try {
       
-        User.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,user)=>{
-            if(user){
-                res.json({status:"ok"})
-            }else{
-                return res.json({status:"Error",err})
-            }
-        })
+//         User.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,user)=>{
+//             if(user){
+//                 res.json({status:"ok"})
+//             }else{
+//                 return res.json({status:"Error",err})
+//             }
+//         })
         
-    } catch (error) {
-        return res.json({status:"Error",error})
-    }
+//     } catch (error) {
+//         return res.json({status:"Error",error})
+//     }
 
   
-}
+// }
 
 
 
 
 module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,fav_companies,createOrder,addToFavs,
-                  updateProfile,changePassword,myOrders,completedOrders,rateCompany,cancelOrder,removeFromFavs,orderCreateNoti}
+                  updateProfile,changePassword,myOrders,completedOrders,rateCompany,cancelOrder,removeFromFavs}

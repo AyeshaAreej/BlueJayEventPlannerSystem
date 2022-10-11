@@ -56,7 +56,7 @@ console.log('date',date)
       }
 
       
-      fetch(`https://bluejay-mobile-app.herokuapp.com/users/orderCreateNoti`,{
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/orderCreateNoti`,{
                     method: "post",
                     body: JSON.stringify(noti_obj),
                     headers: {

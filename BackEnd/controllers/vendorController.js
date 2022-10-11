@@ -551,8 +551,28 @@ const completedOrders = async (req,res)=>{
   
 }
 
+const orderCreateNoti = async (req,res)=>{
+
+    try {
+      
+        Vendor.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,vendor)=>{
+            if(vendor){
+                res.json({status:"ok"})
+            }else{
+                return res.json({status:"Error",err})
+            }
+        })
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+
+  
+}
+
+
 
 
 
 module.exports = {signUp,logIn,myOrders,approveOrder,updateProfile,changePassword,
-                  completedOrders,rec_Orders,rejectOrder,cancelOrder,completeOrder}
+                  completedOrders,rec_Orders,rejectOrder,cancelOrder,completeOrder,orderCreateNoti}

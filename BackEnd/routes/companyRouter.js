@@ -25,6 +25,7 @@ route.post('/createDecorationOrder',middleware.ValidateToken ,companyController.
 route.post('/createVenueOrder',middleware.ValidateToken ,companyController.createVenueOrder)//done
 route.post('/createPhotographerOrder',middleware.ValidateToken ,companyController.createPhotographerOrder)//done
 route.post('/rateVendor',middleware.ValidateToken ,companyController.rateVendor)
+route.post('/orderCreateNoti',middleware.ValidateToken ,companyController.orderCreateNoti)//done
 
 
 //-profile

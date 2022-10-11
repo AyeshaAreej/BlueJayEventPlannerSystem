@@ -51,6 +51,7 @@ const companySchema = new mongoose.Schema({
         {
             title: String,
             description: String,
+            date: Date,
         }
     ],
     verified:{
