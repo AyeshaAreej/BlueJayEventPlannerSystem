@@ -39,14 +39,6 @@ function BookingForm({ route}) {
 
 console.log('date',date)
 
- 
-const noti_obj= {
-  to: company.noti_token,
-  sound: 'default',
-  title: "Order Received",
-  body:  "You have a received a order.",
-  compDate: date
-}
 
   const c_id = company._id
  
@@ -55,6 +47,13 @@ const noti_obj= {
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('noti db store',token)
+
+      const noti_obj= {
+       
+        title: "Order Received",
+        body:  "You have a received a order.",
+        compDate: now()
+      }
 
       
       fetch(`https://bluejay-mobile-app.herokuapp.com/users/orderCreateNoti`,{
