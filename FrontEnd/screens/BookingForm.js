@@ -63,15 +63,7 @@ const noti_obj= {
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
-
-                if(result.status == 'ok')
-                     {
-                      setOrderC(!orderC)
-                      alert('order confirmed')
-                      sendRequestNotification()
-                      navigation.navigate("UserStack")
-                      }
+                console.log('stored in db')
 
               }).catch(err=>console.log('catch',err.message))
     
@@ -143,9 +135,7 @@ const sendRequestNotification = () => {
   }).then(res=>res.json()).then(result=>{
     console.log(result)
     if(result.data.status=='ok'){
-     const chk =()=>{
         SendToDb()
-       }
       }
   }).catch(err=>console.log('catch',err.message))
   
