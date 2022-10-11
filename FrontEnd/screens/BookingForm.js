@@ -144,7 +144,7 @@ const sendRequestNotification = () => {
     console.log(result)
     if(result.data.status=='ok'){
      const chk =()=>{
-        SendToDb
+        SendToDb()
        }
       }
   }).catch(err=>console.log('catch',err.message))
