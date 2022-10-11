@@ -50,6 +50,7 @@ console.log('date',date)
 
       const noti_obj= {
        
+        c_id: c_id,
         title: "Order Received",
         body:  "You have a received a order.",
         compDate: new Date()

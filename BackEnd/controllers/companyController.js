@@ -1450,7 +1450,7 @@ const orderCreateNoti = async (req,res)=>{
 
     try {
       
-        Company.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,company)=>{
+        Company.findByIdAndUpdate({_id:req.body.c_id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,company)=>{
             if(company){
                 res.json({status:"ok"})
             }else{
