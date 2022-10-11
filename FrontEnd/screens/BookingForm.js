@@ -143,8 +143,10 @@ const sendRequestNotification = () => {
   }).then(res=>res.json()).then(result=>{
     console.log(result)
     if(result.data.status=='ok'){
-      SendToDb()
-    }
+    //  const chk =()=>{
+        endToDb
+      //  }
+      }
   }).catch(err=>console.log('catch',err.message))
   
   
