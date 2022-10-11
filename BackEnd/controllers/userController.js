@@ -913,7 +913,7 @@ const orderCreateNoti = async (req,res)=>{
 
     try {
       
-        User.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body}}},async(err,user)=>{
+        User.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date':now()}}},async(err,user)=>{
             if(user){
                 res.json({status:"ok"})
             }else{
