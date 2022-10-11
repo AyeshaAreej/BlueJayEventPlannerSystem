@@ -45,14 +45,13 @@ const noti_obj= {
 }
 
   const c_id = company._id
-
+ 
   const SendToDb = ()=>{
 
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('noti db store',token)
 
-      console.log("value",value)
       
       fetch(`https://bluejay-mobile-app.herokuapp.com/users/orderCreateNoti`,{
                     method: "post",
@@ -143,7 +142,7 @@ const sendRequestNotification = () => {
     body: JSON.stringify(noti_obj)
   }).then(res=>res.json()).then(result=>{
     console.log(result)
-    if(result.status=='ok'){
+    if(result.data.status=='ok'){
       SendToDb()
     }
   }).catch(err=>console.log('catch',err.message))
