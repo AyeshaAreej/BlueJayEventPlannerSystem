@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext,useState,useEffect} from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -26,7 +26,38 @@ function CompanyOrderDetails({route}) {
 
   const order = route.params.order
 
-  console.log(order)
+  // console.log(order)
+
+  useEffect(()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('get user for noti_token',token)
+
+      const value = {u_id: order.customer_id}
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                        SetUser(result.data)
+                        
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+  },[]);
 
 
 
@@ -54,7 +85,8 @@ function CompanyOrderDetails({route}) {
 
                         setOrderC(!orderC)
                         alert('Order moved to My Orders')
-                        getUser('accept')
+                        sendRequestNotificationAccept()
+                       
                 }else{
                   console.log(result.status)
                 }
@@ -88,7 +120,8 @@ function CompanyOrderDetails({route}) {
 
                 if( result.status == 'ok'){
                         setOrderC(!orderC)
-                        getUser('reject')
+                        sendRequestNotificationReject()
+                     
                 }else{
                   console.log(result.status)
                 }
@@ -99,94 +132,56 @@ function CompanyOrderDetails({route}) {
 
    }
 
-   const getUser = (status) =>{
+   
 
-    SecureStore.getItemAsync('token').then(token=>{
 
-      console.log('get user noti_token',token)
 
-      const value = {u_id: order.customer_id}
-
-      fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
-                    method: "post",
-                    body: JSON.stringify(value),
-                    headers: {
-                        Accept: "application/json, text/plain, */*",
-                        "Content-Type": "application/json",
-                        token
-                    }
-                  
-              }).then(res=>res.json()).then(result=>{
-                console.log(result)
-
-                if( result.status == 'ok'){
-                        SetUser(result.data)
-                        console.log('user fetch',result.data)
-                        sendRequestNotification(status)
-
-                }
-
-              }).catch(err=>console.log('catch',err.message))
-
-    })    
-
-   }
-
-   const sendRequestNotification = (status) => {
-
+   const sendRequestNotificationAccept = () => {
     
 
-    if(status=='accept'){
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          to: user.noti_token,
+          sound: 'default',
+          title: "Order Accepted",
+          body:  "Your order has been accepted",
+        })
+      }).then(res=>res.json()).then(result=>{
+        console.log('noti_result',result)
+        if(result.data.status=='ok'){
+          SendToDbAccept()
+          }
+      }).catch(err=>console.log('catch',err.message))
       
-     const noti_obj = {
-        to: user.noti_token,
-        sound: 'default',
-        title: "Order Confirmed",
-        body:  "You order has been confirmed",
-      }
-
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(noti_obj)
-      }).then(res=>res.json()).then(result=>{
-        console.log(result)
-        if(result.data.status=='ok'){
-            SendToDbAccept()
-          }
-      }).catch(err=>console.log('catch',err.message))
-
-    }else if(status=='reject'){
-
-     const noti_obj = {
-        to: user.noti_token,
-        sound: 'default',
-        title: "Order Rejected",
-        body:  "You order has been rejected",
-      }
-
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(noti_obj)
-      }).then(res=>res.json()).then(result=>{
-        console.log(result)
-        if(result.data.status=='ok'){
-            SendToDbReject()
-          }
-      }).catch(err=>console.log('catch',err.message))
 
     }
 
-   
-    
-    
+    const sendRequestNotificationReject = () =>{
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          to: user.noti_token,
+          sound: 'default',
+          title: "Order Rejected",
+          body:  "Your order has been rejected",
+        })
+      }).then(res=>res.json()).then(result=>{
+        console.log('noti_result',result)
+        if(result.data.status=='ok'){
+          SendToDbReject()
+          }
+      }).catch(err=>console.log('catch',err.message))
+      
   
   };
 
@@ -200,8 +195,8 @@ function CompanyOrderDetails({route}) {
       const noti_obj= {
        
         c_id: order.customer_id,
-        title: "Order Received",
-        body:  "You have received a order.",
+        title: "Order Accepted",
+        body:  "Your order has been accepted",
         compDate: new Date()
       }
 
@@ -237,8 +232,8 @@ function CompanyOrderDetails({route}) {
       const noti_obj= {
        
         c_id: order.customer_id,
-        title: "Order Received",
-        body:  "You have received a order.",
+        title: "Order Rejected",
+        body:  "Your order has been rejected",
         compDate: new Date()
       }
 
