@@ -79,6 +79,25 @@ app.get('/getUser',middleware.ValidateToken,async (req,res)=>{
 }
 )
 
+
+app.post('/getAnyUser',middleware.ValidateToken,async (req,res)=>{
+
+  try {
+
+    User.findById({_id:req.body.u_id},async(err,user)=>{
+      if(user){
+        res.json({status:"ok",data:user})
+    }else{
+        return res.json({status:"Error",err})
+    }
+    })
+    
+  } catch (error) {
+    return res.json({status:"Error",err})
+  }
+
+})
+
 app.post("/create-payment-intent", async (req, res) => {
   
     try {

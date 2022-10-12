@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext,useState} from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -6,11 +6,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Button
 } from 'react-native';
 import COLORS from '../../components/colors';
+import {OrderContext} from '../../Contexts'
 import { useNavigation } from '@react-navigation/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import image from '../../assets/hotel1.jpg';
 
  
 
@@ -18,10 +18,253 @@ function CompanyOrderDetails({route}) {
 
 
   const navigation = useNavigation();
+  
+  const [orderC,setOrderC] = useContext(OrderContext)
+  const [user,SetUser] = useState([])
 
   const order = route.params.order
 
   console.log(order)
+
+
+
+  const acceptOrder = (o_id)=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Accept Order',token,o_id)
+
+      const value = {o_id: o_id}
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/approveOrder`,{
+                    method: "patch",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+
+                        setOrderC(!orderC)
+                        alert('Order moved to My Orders')
+                        getUser('accept')
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+   }
+
+
+   const rejectOrder = (o_id)=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Reject Order',token,o_id)
+
+      const value = {o_id: o_id}
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/company/rejectOrder`,{
+                    method: "patch",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                        setOrderC(!orderC)
+                        getUser('reject')
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+   }
+
+   const getUser = (status) =>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('get user noti_token',token)
+
+      const value = {u_id: order.customer_id}
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                        SetUser(result.data)
+                        console.log('user fetch',result.data)
+                        sendRequestNotification(status)
+
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+   }
+
+   const sendRequestNotification = (status) => {
+
+    
+
+    if(status=='accept'){
+      
+     const noti_obj = {
+        to: user.noti_token,
+        sound: 'default',
+        title: "Order Confirmed",
+        body:  "You order has been confirmed",
+      }
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(noti_obj)
+      }).then(res=>res.json()).then(result=>{
+        console.log(result)
+        if(result.data.status=='ok'){
+            SendToDbAccept()
+          }
+      }).catch(err=>console.log('catch',err.message))
+
+    }else if(status=='reject'){
+
+     const noti_obj = {
+        to: user.noti_token,
+        sound: 'default',
+        title: "Order Rejected",
+        body:  "You order has been rejected",
+      }
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(noti_obj)
+      }).then(res=>res.json()).then(result=>{
+        console.log(result)
+        if(result.data.status=='ok'){
+            SendToDbReject()
+          }
+      }).catch(err=>console.log('catch',err.message))
+
+    }
+
+   
+    
+    
+  
+  };
+
+
+  const SendToDbAccept = ()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('noti db store',token)
+
+      const noti_obj= {
+       
+        c_id: order.customer_id,
+        title: "Order Received",
+        body:  "You have received a order.",
+        compDate: new Date()
+      }
+
+      
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/acceptOrderNoti`,{
+                    method: "post",
+                    body: JSON.stringify(noti_obj),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+                if(result.status=='ok'){
+                console.log('stored in db')
+                navigation.goBack()
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+    
+  })  
+  }
+
+
+  const SendToDbReject = ()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('noti db store',token)
+
+      const noti_obj= {
+       
+        c_id: order.customer_id,
+        title: "Order Received",
+        body:  "You have received a order.",
+        compDate: new Date()
+      }
+
+      
+      fetch(`https://bluejay-mobile-app.herokuapp.com/users/rejectOrderNoti`,{
+                    method: "post",
+                    body: JSON.stringify(noti_obj),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+                if(result.status=='ok'){
+                console.log('stored in db')
+                navigation.goBack()
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+    
+  })  
+  }
+
+
+
+
 
   return (
     <ScrollView
@@ -201,6 +444,25 @@ function CompanyOrderDetails({route}) {
                     </View>
 
 
+
+        <View style={{flexDirection:'row'}}>
+
+          <View  style={{paddingLeft:115}}>
+                    <Button
+                    onPress={()=>{acceptOrder(order._id)}}
+                    title="Accept"
+                    color={COLORS.primary}
+                    /> 
+                    </View>
+
+                  <View style={{paddingLeft:15, borderRadius:12}}>
+                    <Button  
+                    onPress={()=>{rejectOrder(order._id)}}
+                    title="Reject"
+                    color={COLORS.primary}/>
+                  </View>
+
+          </View>
 
         </View>
       

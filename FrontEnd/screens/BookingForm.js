@@ -52,7 +52,7 @@ console.log('date',date)
        
         c_id: c_id,
         title: "Order Received",
-        body:  "You have a received a order.",
+        body:  "You have received a order.",
         compDate: new Date()
       }
 
