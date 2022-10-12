@@ -12,6 +12,8 @@ import COLORS from '../../components/colors';
 import {OrderContext} from '../../Contexts'
 import { useNavigation } from '@react-navigation/native';
 
+import * as SecureStore from 'expo-secure-store';
+
  
 
 function CompanyOrderDetails({route}) {
