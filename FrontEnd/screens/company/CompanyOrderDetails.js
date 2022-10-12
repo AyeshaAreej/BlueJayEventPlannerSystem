@@ -196,7 +196,7 @@ function CompanyOrderDetails({route}) {
        
         c_id: order.customer_id,
         title: "Order Accepted",
-        body:  "Your order has been accepted",
+        body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
         compDate: new Date()
       }
 
