@@ -92,7 +92,7 @@ import { useNavigation } from '@react-navigation/native';
             style={{
               fontSize: 20,
               fontWeight: '500',
-              color: COLORS.grey,
+              color: COLORS.primary,
               marginTop: 5,
               fontWeight: 'bold',
             }}>
@@ -132,7 +132,7 @@ import { useNavigation } from '@react-navigation/native';
             style={{ fontSize: 22,  fontWeight: 'bold',   color: COLORS.dark,
               marginTop: 5,  }}>Service We Provide 
           </Text>
-            <Text style={{fontSize: 20,fontWeight: 'bold',lineHeight: 40, color: COLORS.grey}}>
+            <Text style={{fontSize: 20,fontWeight: 'bold',lineHeight: 40, color: COLORS.primary}}>
              {vendor.service}
              </Text>
           </View>

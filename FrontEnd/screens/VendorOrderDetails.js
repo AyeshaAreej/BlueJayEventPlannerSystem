@@ -43,7 +43,7 @@ if( user.service === 'Caterer'){
     
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                       Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -129,7 +129,27 @@ if( user.service === 'Caterer'){
                     </View>
 
 
+                    <View style={{flexDirection:'row'}}>
+               
+                          
 
+                          <View  style={{paddingLeft:50}}>
+                          <Button
+                          onPress={()=>{acceptOrder(order._id)}}
+                          title="Accept"
+                          color={COLORS.primary}
+                          /> 
+                          </View>
+
+                          <View style={{paddingLeft:15, borderRadius:12}}>
+                          <Button  
+                          onPress={()=>{rejectOrder(order._id)}}
+                          title="Reject"
+                          color={COLORS.primary}/>
+                        </View>
+                  
+                          
+                    </View>
 
         </View>
       
@@ -154,7 +174,7 @@ if( user.service === 'Caterer'){
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                       Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -262,7 +282,7 @@ if( user.service === 'Caterer'){
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                       Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -392,7 +412,7 @@ if( user.service === 'Caterer'){
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                       Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>

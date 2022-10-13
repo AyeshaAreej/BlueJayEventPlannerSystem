@@ -49,7 +49,7 @@ function CatererBookingForm({ route, navigation}) {
                 console.log(result)
                 if(result.status=='ok'){
                 console.log('stored in db')
-                setOrderC(!orderC)
+                setCvOrderC(!cvOrderC)
                 }
 
               }).catch(err=>console.log('catch',err.message))

@@ -8,6 +8,7 @@ import {CvOrderContext} from '../../Contexts'
 import * as SecureStore from 'expo-secure-store';
 import { LogBox } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.16;
@@ -21,6 +22,7 @@ function HireVendors({route}) {
 
   const order = route.params.order
 
+  const isFocused = useIsFocused();
   const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
   const [subOrders, setSubOrders] = React.useState([]);
   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -66,7 +68,7 @@ function HireVendors({route}) {
     })    
 
 
-   },[cvOrderC]);
+   },[cvOrderC,isFocused]);
 
 
 
