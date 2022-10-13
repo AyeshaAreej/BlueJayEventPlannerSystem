@@ -32,6 +32,7 @@ function VendorHome({navigation}) {
 
   useEffect(()=>{
 
+    
     SecureStore.getItemAsync('token').then(token=>{
 
       console.log('pending and completed count',token)
@@ -53,38 +54,38 @@ function VendorHome({navigation}) {
               }).catch(err=>console.log('catch',err.message))
 
 
-      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getApprovedCount`,{
-                    method: "get",
-                    headers: {
-                        Accept: "application/json, text/plain, */*",
-                        "Content-Type": "application/json",
-                        token
-                    }
+      // fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getApprovedCount`,{
+      //               method: "get",
+      //               headers: {
+      //                   Accept: "application/json, text/plain, */*",
+      //                   "Content-Type": "application/json",
+      //                   token
+      //               }
                   
-              }).then(res=>res.json()).then(result=>{
+      //         }).then(res=>res.json()).then(result=>{
             
-                if( result.status == 'ok'){
-                       setApproved(result.data)
-                }
+      //           if( result.status == 'ok'){
+      //                  setApproved(result.data)
+      //           }
 
-              }).catch(err=>console.log('catch',err.message))
+      //         }).catch(err=>console.log('catch',err.message))
 
 
-      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getCompletedCount`,{
-                method: "get",
-                headers: {
-                    Accept: "application/json, text/plain, */*",
-                    "Content-Type": "application/json",
-                    token
-                }
+      // fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getCompletedCount`,{
+      //           method: "get",
+      //           headers: {
+      //               Accept: "application/json, text/plain, */*",
+      //               "Content-Type": "application/json",
+      //               token
+      //           }
               
-          }).then(res=>res.json()).then(result=>{
+      //     }).then(res=>res.json()).then(result=>{
             
-            if( result.status == 'ok'){
-                   setCompleted(result.data)
-            }
+      //       if( result.status == 'ok'){
+      //              setCompleted(result.data)
+      //       }
 
-          }).catch(err=>console.log('catch',err.message))
+      //     }).catch(err=>console.log('catch',err.message))
 
 
     })    

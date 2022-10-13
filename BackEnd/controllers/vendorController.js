@@ -597,14 +597,12 @@ const getNotiData = async (req,res)=>{
 const getPendingCount = async (req,res)=>{
 
     try {
-        CvOrder.find({status: 'Pending'},async (err,count)=>{
-        if(count){
-            return res.json({status:"ok", data:count})
-        }
-        return res.json({status:"Error",error})
+       const count = await CvOrder.find({vendor_id:req.user.id,status:'Pending'}).count()
 
-        }).count()
-
+       console.log(count)
+       
+        return res.json({status:"ok",data:count})
+      
         
     } catch (error) {
         return res.json({status:"Error",error})
@@ -615,35 +613,31 @@ const getPendingCount = async (req,res)=>{
 const getApprovedCount = async (req,res)=>{
 
     try {
-        CvOrder.find({status: 'Approved'},async (err,count)=>{
-            if(count){
-                return res.json({status:"ok", data:count})
-            }
-            return res.json({status:"Error",error})
-    
-            }).count()
-
+        const count = await CvOrder.find({vendor_id:req.user.id,status:'Approved'}).count()
+ 
+        console.log(count)
         
-    } catch (error) {
-        return res.json({status:"Error",error})
-    }
+         return res.json({status:"ok",data:count})
+       
+         
+     } catch (error) {
+         return res.json({status:"Error",error})
+     }
 }
 
 const getCompletedCount = async (req,res)=>{
 
     try {
-        CvOrder.find({status: 'Completed'},async (err,count)=>{
-            if(count){
-                return res.json({status:"ok", data:count})
-            }
-            return res.json({status:"Error",error})
-    
-            }).count()
-
+        const count = await CvOrder.find({vendor_id:req.user.id,status:'Completed'}).count()
+ 
+        console.log(count)
         
-    } catch (error) {
-        return res.json({status:"Error",error})
-    }
+         return res.json({status:"ok",data:count})
+       
+         
+     } catch (error) {
+         return res.json({status:"Error",error})
+     }
 }
 
 
