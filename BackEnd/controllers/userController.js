@@ -665,6 +665,7 @@ const myOrders = async (req,res)=>{
                         })
                         
                         Promise.all(my_orders).then((my_orders)=>{
+                            my_orders.reverse(-1)
                             res.json({status:"ok",data : my_orders})
                         })
                         
