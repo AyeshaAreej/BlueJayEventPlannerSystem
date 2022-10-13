@@ -104,6 +104,15 @@ app.post('/getAnyUser',middleware.ValidateToken,async (req,res)=>{
         return res.json({status:"Error",err})
     }
     })
+  }else if(req.user.role == 'customer'){
+
+    Company.findById({_id:req.body.c_id},async(err,user)=>{
+      if(user){
+        res.json({status:"ok",data:user})
+    }else{
+        return res.json({status:"Error",err})
+    }
+    })
   }
 
 

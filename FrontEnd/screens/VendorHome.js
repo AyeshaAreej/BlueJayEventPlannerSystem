@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {UserContext} from '../Contexts'
-import { useState,useContext } from 'react';
+import { useState,useContext,useEffect } from 'react';
 import COLORS from '../components/colors';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -24,6 +24,7 @@ function VendorHome({navigation}) {
   const isFocused = useIsFocused();
   
   const [user,setUser] = useContext(UserContext)
+
   const [pending,setPending] = useState('')
   const [completed,setCompleted] = useState('')
   const [approved,setApproved] = useState('')
@@ -44,7 +45,6 @@ function VendorHome({navigation}) {
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
 
                 if( result.status == 'ok'){
                         setPending(result.data)
@@ -62,8 +62,7 @@ function VendorHome({navigation}) {
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
-
+            
                 if( result.status == 'ok'){
                        setApproved(result.data)
                 }
@@ -80,8 +79,7 @@ function VendorHome({navigation}) {
                 }
               
           }).then(res=>res.json()).then(result=>{
-            console.log(result)
-
+            
             if( result.status == 'ok'){
                    setCompleted(result.data)
             }
@@ -94,7 +92,7 @@ function VendorHome({navigation}) {
 
 
 
-   },[orderC,isFocused]);
+   },[isFocused]);
 
   return (
     <>
@@ -116,52 +114,36 @@ function VendorHome({navigation}) {
       <Text style={{fontSize: 25, fontWeight: 'bold',padding:7,color:COLORS.primary}}>{user.vendor_name}</Text>
       </View>
 
-      {/* <View style={{marginTop: 10, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-        <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,justifyContent:'center',alignItems:'center',borderRadius:20}}>
-            <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>This Week</Text>
-            <View style={style.iconContainer}>
-             <FontAwesome name="cart-arrow-down" color={COLORS.white} size={52} />
-          </View>
-          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
-        </View>
-
-        <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,margin:6,justifyContent:'center',alignItems:'center',borderRadius:20,elevation:15,}}>
-        <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>This Month</Text>
-            <View style={style.iconContainer}>
-             <FontAwesome name="cart-arrow-down" color={COLORS.white} size={52} />
-          </View>
-          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
-        </View>
-     </View> */}
+    
 
     
-     <View style={{marginTop: 50, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+     <View style={{marginTop: 20, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
         <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,justifyContent:'center',alignItems:'center',borderRadius:20}}>
             <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Pending Orders</Text>
             <View style={style.iconContainer}>
              <FontAwesome name="list" color={COLORS.white} size={50} />
           </View>
-          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
+          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>{pending}</Text>
         </View>
 
         <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,margin:6,justifyContent:'center',alignItems:'center',borderRadius:20,elevation:15,}}>
-        <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Completed Orders</Text>
+        <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Approved Orders</Text>
             <View style={style.iconContainer}>
-             <FontAwesome name="check" color={COLORS.white} size={50} />
+             <FontAwesome name="thumbs-up" color={COLORS.white} size={50} />
           </View>
-          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
+          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>{approved}</Text>
         </View>
      </View>
 
 
-     <View style={{marginTop: 50, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+     <View style={{ display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
      
         <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,margin:6,justifyContent:'center',alignItems:'center',borderRadius:20,elevation:15,}}>
         <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Completed Orders</Text>
             <View style={style.iconContainer}>
              <FontAwesome name="check" color={COLORS.white} size={50} />
           </View>
-          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
+          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>{completed}</Text>
         </View>
      </View>
        

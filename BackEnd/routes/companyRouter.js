@@ -25,7 +25,6 @@ route.post('/createDecorationOrder',middleware.ValidateToken ,companyController.
 route.post('/createVenueOrder',middleware.ValidateToken ,companyController.createVenueOrder)//done
 route.post('/createPhotographerOrder',middleware.ValidateToken ,companyController.createPhotographerOrder)//done
 route.post('/rateVendor',middleware.ValidateToken ,companyController.rateVendor)
-route.post('/orderCreateNoti',middleware.ValidateToken ,companyController.orderCreateNoti)//done
 
 
 //-profile
@@ -44,8 +43,11 @@ route.patch('/completeOrder',middleware.ValidateToken ,companyController.complet
 route.patch('/cancelVendorOrder',middleware.ValidateToken ,companyController.cancelVendorOrder)//done
 route.post('/showHiredVendors',middleware.ValidateToken ,companyController.showHiredVendors)//done
 route.get('/completedOrders',middleware.ValidateToken ,companyController.completedOrders)//done
+route.post('/orderCreateNoti',middleware.ValidateToken ,companyController.orderCreateNoti)//dones
 route.post('/acceptOrderNoti',middleware.ValidateToken ,companyController.acceptOrRejectOrderNoti)//done
 route.post('/rejectOrderNoti',middleware.ValidateToken ,companyController.acceptOrRejectOrderNoti)//done
+route.post('/cancelOrderNotiFromCustomer',middleware.ValidateToken ,companyController.orderCreateNoti)//done
+route.post('/cancelOrderNotiFromVendor',middleware.ValidateToken ,companyController.orderCreateNoti)//done
 route.get('/getNotiData',middleware.ValidateToken ,companyController.getNotiData)//done
 
 

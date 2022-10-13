@@ -22,6 +22,9 @@ const MyOrders=()=>{
   const [orderC,setOrderC] = useContext(OrderContext)
   const [myOrders, setMyOrders] = React.useState([]);
   const [completedOrder, setCompletedOrder] = React.useState([]);
+  const [company, setCompany] = React.useState([]);
+  const [event_type, setEvent_type] = React.useState([]);
+  const [customer, setCustomer] = React.useState([]);
 
 
   const categories = ['Current', 'Completed'];
@@ -94,7 +97,8 @@ const MyOrders=()=>{
    }
 
 
-   const showAlert = (o_id)=>{
+
+   const showAlert = (o_id,c_id)=>{
     // console.log(o_id)
  Alert.alert(
   "Are your sure?",
@@ -103,7 +107,10 @@ const MyOrders=()=>{
     
     {
       text: "Yes",
-      onPress: ()=>{cancelOrder(o_id)}
+      onPress: ()=>{
+        getCompany(c_id)
+        cancelOrder(o_id)
+      }
     },
     
     {
@@ -116,6 +123,37 @@ const MyOrders=()=>{
 );
 
 }
+
+
+const getCompany = (c_id)=>{
+
+  SecureStore.getItemAsync('token').then(token=>{
+
+    console.log('Get Company',token)
+
+    const value = {c_id:c_id}
+
+    fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
+                  method: "post",
+                  body: JSON.stringify(value),
+                  headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      token
+                  }
+                
+            }).then(res=>res.json()).then(result=>{
+
+              if( result.status == 'ok'){
+                setCompany(result.data)
+                     
+              }
+            }).catch(err=>console.log('catch',err.message))
+  })    
+ }
+
+
+
 
 
 const cancelOrder = (o_id)=>{
@@ -140,6 +178,8 @@ SecureStore.getItemAsync('token').then(token=>{
 
             if( result.status == 'ok'){
                     setOrderC(!orderC)
+                    alert('order cancelled')
+                    sendRequestNotification()
             }else{
               console.log(result.status)
             }
@@ -148,8 +188,69 @@ SecureStore.getItemAsync('token').then(token=>{
 
 })    
 
+}
 
 
+const sendRequestNotification = () => {
+  fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      to: company.noti_token,
+      sound: 'default',
+      title: "Order Cancelled",
+      body:  `Your order ${event_type} has been cancelled by customer ${customer}`,
+    })
+  }).then(res=>res.json()).then(result=>{
+    console.log(result)
+    if(result.data.status=='ok'){
+        SendToDb()
+      }
+  }).catch(err=>console.log('catch',err.message))
+  
+  
+
+};
+
+
+
+const SendToDb = ()=>{
+
+  SecureStore.getItemAsync('token').then(token=>{
+
+    console.log('noti db store',token)
+
+    const noti_obj= {
+     
+      c_id: company.noti_token,
+      title: "Order Cancelled",
+      body:  `Your order ${event_type} has been cancelled by customer ${customer}`,
+      compDate: new Date()
+    }
+
+    
+    fetch(`https://bluejay-mobile-app.herokuapp.com/company/cancelOrderNotiFromCustomer`,{
+                  method: "post",
+                  body: JSON.stringify(noti_obj),
+                  headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      token
+                  }
+                
+            }).then(res=>res.json()).then(result=>{
+              console.log(result)
+              if(result.status=='ok'){
+              console.log('stored in db')
+              setOrderC(!orderC)
+              }
+
+            }).catch(err=>console.log('catch',err.message))
+  
+})  
 }
 
 
@@ -219,7 +320,13 @@ return(
       
           <View style={style.priceTag}>
                   <View style={{color:COLORS.white, }}>
-                  <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white} onPress={()=>{showAlert(order._id)}}/>
+                  <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white} onPress={()=>{
+                    showAlert(order._id,order.company_id)
+                    setEvent_type(order.event_type)
+                    setCustomer(order.customer_name)
+                  }}
+                    
+                    />
                   </View>
           </View>
 
