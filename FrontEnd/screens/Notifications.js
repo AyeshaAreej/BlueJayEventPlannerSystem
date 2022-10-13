@@ -1,13 +1,12 @@
 import React from 'react'
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
-import {useState,useEffect,useContext} from 'react';
 import colors from '.././components/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {useState, useEffect,useRef, useReducer}  from 'react'
+import {useState, useEffect,useContext}  from 'react'
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import {UserContext} from '../Contexts'
-import {OrderContext} from '../../Contexts'
+import {OrderContext} from '../Contexts'
 
 
 
@@ -15,7 +14,7 @@ const Notifications = () => {
 
 
 
-   const [notiData, setNotiData] = React.useState([]);
+   const [notiData, setNotiData] = useState([]);
   const [orderC,setOrderC] = useContext(OrderContext)
   const [user,setUser] = useContext(UserContext)
 
