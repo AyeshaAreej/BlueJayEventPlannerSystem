@@ -9,6 +9,9 @@ import {UserContext} from '../Contexts'
 import {OrderContext} from '../Contexts'
 
 
+const {width}= Dimensions.get('screen');
+const cardWidth=width/1.1;
+
 
 const Notifications = () => {
 
@@ -36,7 +39,7 @@ const Notifications = () => {
     
       SecureStore.getItemAsync('token').then(token=>{
   
-        console.log('Received Orders',token)
+        console.log('Noti Data',token)
   
         fetch(`https://bluejay-mobile-app.herokuapp.com/${route}/getNotiData`,{
                       method: "get",
@@ -47,16 +50,14 @@ const Notifications = () => {
                       }
                     
                 }).then(res=>res.json()).then(result=>{
-                  // console.log(result)
+                  console.log(result)
   
                   if( result.status == 'ok'){
-                           setNotiData(result.data)
+                           setNotiData(result.data.notifications)
                         //   if(result.data == ''){
-                        //       console.log('No orders found')
-                        //       // alert('No orders yet')
+                        //       console.log('No Notifications yet')
+                              // alert('No Notifications yet')
                         //   }
-                  }else{
-                    console.log(result.status)
                   }
   
                 }).catch(err=>console.log('catch',err.message))
@@ -64,45 +65,60 @@ const Notifications = () => {
   
   
      },[orderC]);
-  
+ 
+     
+
+const Card=({noti})=>{
+
+    return(
+        
+       
+            <View  style={styles.notificationContainer} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}> 
+               <Image source={require('.././assets/order1.png')} style={styles.profileImage} />
+               <View style={{ margin:20, }}>
+               <Text style={{  fontSize: 23,  color: colors.primary,fontStyle:'italic', marginBottom:10   }}>{noti.title}</Text>
+               <Text style={{  fontSize: 20,  color: colors.dark, paddingRight:60 }}>{noti.description}</Text>
+               </View>
+            </View>
+     
+        
+    
+    )
+      
+    };
+    
+    
      
 
   
   return (
-   //  <ScrollView style={{flex:1, backgroundColor:colors.white,}} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
-    
-   //  <View  style={styles.notificationContainer}> 
-   //    <Image source={require('.././assets/profile.jpg')} style={styles.profileImage} />
-   //    <View style={{ margin:20, }}>
-   //     <Text style={{  fontSize: 23,  color: colors.primary,fontStyle:'italic', marginBottom:10   }}>Floral Weddings Banquet</Text>
-   //     <Text style={{  fontSize: 20,  color: colors.dark,   }}>Your Order has been accepted. </Text>
-   //    </View>
-   // </View>
-     
-   //  </ScrollView>
+   
+<>
 
 
-   <SafeAreaView style={{flex:1, backgroundColor:colors.white,}} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
-      
+
+    <SafeAreaView style={{flex:1, backgroundColor:colors.white,}} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
       
     
-   <View>
-   <Animated.FlatList
-    data={notiData}
-    vertical
-    showsVerticalScrollIndicator={false}
-    contentContainerStyle={{
-      justifyContent:'center',
-      alignItems:'center',
-      
-    }}
-    renderItem={({item}) => <Card order={item}  />}
-  />
-  </View>
+            <View>
+            <Animated.FlatList
+            data={notiData}
+            vertical
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+               justifyContent:'center',
+               alignItems:'center',
+               
+            }}
+            renderItem={({item}) => <Card noti={item}  />}
+         />
+         </View>
 
 
-</SafeAreaView>
+ </SafeAreaView>
 
+
+</>
 
 
   )
@@ -112,9 +128,10 @@ const styles = StyleSheet.create({
 notificationContainer: {
    flexDirection: 'row',
    alignItems: 'center',
-   height:120,
+   height:130,
    marginTop:10,
-   width:'98%',
+   marginBottom:10,
+   width:cardWidth,
    borderColor :colors.white,
    elevation:20,
    borderRadius:25,
@@ -123,9 +140,10 @@ notificationContainer: {
  
  
   profileImage:{
-  height: 100,
+  height: '55%',
     width: '20%',
-    borderRadius: 30,
+    borderRadius: 100,
+    marginLeft:8,
 
  },
  });

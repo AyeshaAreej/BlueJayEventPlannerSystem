@@ -1467,6 +1467,19 @@ const orderCreateNoti = async (req,res)=>{
 
 const getNotiData = async (req,res)=>{
 
+    try {
+        Company.findOne({_id: req.user.id},{notifications:1,_id:0},async (err,array)=>{
+        if(array){
+            return res.json({status:"ok", data:array})
+        }
+        return res.json({status:"Error",error})
+
+        })
+
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
 }
 
 
