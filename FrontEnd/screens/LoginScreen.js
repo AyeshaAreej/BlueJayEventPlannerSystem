@@ -212,18 +212,19 @@ async function registerForPushNotification(){
    
   }
   return (
-   <View style={{display:"flex", backgroundColor:'#fff'}} >
+   <View style={{display:"flex", backgroundColor:'#fff',}} >
      {/* <StatusBar barStyle="light-content"  translucent backgroundColor="#fff"/> */}
    <View style={styles.topView}>
+   <View style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
    <ImageBackground
    style={styles.logo}
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
 
-     <Text style={{color:'white',marginLeft:145, fontSize:30,fontWeight:'bold'}}>Sign In</Text>
+     <Text style={{color:'white',fontSize:30,fontWeight:'bold'}}>Sign In</Text>
 
-    
+     </View>
  </View>
 
       {/* Form Inputs View */}
@@ -346,7 +347,7 @@ async function registerForPushNotification(){
           </View>
 
       
-          <Text style={{marginLeft:25,fontSize:15,marginTop:2, flexDirection:'row'}}>Don't Have an Account?   
+          <Text style={{marginLeft:25,fontSize:15,marginTop:2, flexDirection:'row',marginBottom:60}}>Don't Have an Account?   
                  <Text style={{fontWeight: "bold",fontSize:15}} onPress={()=>{navigation.navigate('SignUp')}}> SignUp</Text>
              </Text>
         </>
@@ -378,7 +379,7 @@ const styles = StyleSheet.create({
   display:"flex",
   justifyContent:'center',
   alignContent:'center',
-  marginLeft:92,
+  
 },
    
    input:{
