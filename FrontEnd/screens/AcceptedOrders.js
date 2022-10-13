@@ -169,7 +169,7 @@ const completeOrder= (o_id)=>{
                   }
                 
             }).then(res=>res.json()).then(result=>{
-              console.log(result)
+              // console.log(result)
               
               if( result.status == 'ok'){
                       alert('Order completed sucessfully')
