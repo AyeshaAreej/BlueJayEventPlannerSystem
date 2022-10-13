@@ -54,74 +54,7 @@ const VReceivedOrders=()=>{
 
 
 
-   const acceptOrder = (o_id)=>{
-
-    SecureStore.getItemAsync('token').then(token=>{
-
-      console.log('Accept Order',token,o_id)
-
-      const value = {o_id: o_id}
-
-      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/approveOrder`,{
-                    method: "patch",
-                    body: JSON.stringify(value),
-                    headers: {
-                        Accept: "application/json, text/plain, */*",
-                        "Content-Type": "application/json",
-                        token
-                    }
-                  
-              }).then(res=>res.json()).then(result=>{
-                console.log(result)
-
-                if( result.status == 'ok'){
-
-                        setOrderC(!orderC)
-                        alert('Order moved to My Orders')
-                }else{
-                  console.log(result.status)
-                }
-
-              }).catch(err=>console.log('catch',err.message))
-
-    })    
-
-   }
-
-
-   const rejectOrder = (o_id)=>{
-
-    SecureStore.getItemAsync('token').then(token=>{
-
-      console.log('Reject Order',token,o_id)
-
-      const value = {o_id: o_id}
-
-      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/rejectOrder`,{
-                    method: "patch",
-                    body: JSON.stringify(value),
-                    headers: {
-                        Accept: "application/json, text/plain, */*",
-                        "Content-Type": "application/json",
-                        token
-                    }
-                  
-              }).then(res=>res.json()).then(result=>{
-                console.log(result)
-
-                if( result.status == 'ok'){
-                        setOrderC(!orderC)
-                }else{
-                  console.log(result.status)
-                }
-
-              }).catch(err=>console.log('catch',err.message))
-
-    })    
-
-   }
-
-
+   
 
 
   
@@ -147,8 +80,8 @@ return(
                           <Text style={{color:COLORS.primary,fontSize:24, fontWeight:"bold"}}>Order :</Text>{'\n'}{'\n'}
                           <Text style={{fontSize:20, fontWeight:"bold"}}>Event: </Text> <Text style={{fontSize:20}}>{order.event_type}</Text>{'\n'}
                           <Text style={{fontSize:20,fontWeight:"bold"}}>Date:</Text> <Text style={{fontSize:20}}>{order.date}</Text>{'\n'}
-                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15,paddingTop:2}}>Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:2}}>{order.available_budget}</Text>{'\n'}
-                          <Text style={{fontWeight:"bold",fontSize:22,paddingLeft:100}}>{order.status}</Text>{'\n'}{'\n'}
+                          <Text style={{fontWeight:"bold",fontSize:20,paddingLeft:15,paddingTop:2}}>Total :</Text><Text style={{fontSize:20,paddingLeft:15,paddingTop:2}}>{order.available_budget}</Text>{'\n'}{'\n'}
+                          <Text style={{fontWeight:"bold",fontSize:22,paddingLeft:100}}>{order.status}</Text>{'\n'}
                          
             
                  </Text>
@@ -157,27 +90,6 @@ return(
 
       
    
-           <View style={{flexDirection:'row'}}>
-               
-                          
-
-                <View  style={{paddingLeft:50}}>
-                <Button
-                onPress={()=>{acceptOrder(order._id)}}
-                title="Accept"
-                color={COLORS.primary}
-                /> 
-                </View>
-
-               <View style={{paddingLeft:15, borderRadius:12}}>
-                <Button  
-                onPress={()=>{rejectOrder(order._id)}}
-                title="Reject"
-                color={COLORS.primary}/>
-              </View>
-        
-               
-          </View>
         
 
     </TouchableOpacity>

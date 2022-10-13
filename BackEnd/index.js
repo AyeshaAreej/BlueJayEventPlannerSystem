@@ -84,6 +84,9 @@ app.post('/getAnyUser',middleware.ValidateToken,async (req,res)=>{
 
   try {
 
+    if(req.user.role == 'company'){
+
+
     User.findById({_id:req.body.u_id},async(err,user)=>{
       if(user){
         res.json({status:"ok",data:user})
@@ -91,6 +94,19 @@ app.post('/getAnyUser',middleware.ValidateToken,async (req,res)=>{
         return res.json({status:"Error",err})
     }
     })
+
+  }else if(req.user.role == 'vendor'){
+
+    Company.findById({_id:req.body.c_id},async(err,user)=>{
+      if(user){
+        res.json({status:"ok",data:user})
+    }else{
+        return res.json({status:"Error",err})
+    }
+    })
+  }
+
+
     
   } catch (error) {
     return res.json({status:"Error",err})

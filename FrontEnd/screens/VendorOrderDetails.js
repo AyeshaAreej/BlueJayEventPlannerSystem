@@ -5,19 +5,23 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Button,
   View,
 } from 'react-native';
 import {useState,useEffect,useContext} from 'react';
 import COLORS from '../components/colors';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { UserContext } from '../Contexts';
+import { UserContext,OrderContext } from '../Contexts';
 
+import * as SecureStore from 'expo-secure-store';
  
 
 function VendorOrderDetails({route}) {
 
   
+  
+  const [orderC,setOrderC] = useContext(OrderContext)
   const [user,setUser] = useContext(UserContext)
 
   const navigation = useNavigation();
@@ -25,6 +29,247 @@ function VendorOrderDetails({route}) {
   const order = route.params.order
 
   console.log(order)
+
+
+  useEffect(()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('get user for noti_token',token)
+
+      const value = {c_id: order.company_id}
+      console.log(value)
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
+                    method: "post",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                        SetUser(result.data)
+                        
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+  },[]);
+
+
+
+
+
+  const acceptOrder = (o_id)=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Accept Order',token,o_id)
+
+      const value = {o_id: o_id}
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/approveOrder`,{
+                    method: "patch",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+
+                        setOrderC(!orderC)
+                        alert('Order moved to My Orders')
+                        navigation.goBack()
+                        sendRequestNotificationAccept()
+
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+   }
+
+
+   const rejectOrder = (o_id)=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('Reject Order',token,o_id)
+
+      const value = {o_id: o_id}
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/rejectOrder`,{
+                    method: "patch",
+                    body: JSON.stringify(value),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                  setOrderC(!orderC)
+                  alert('Order Rejected')
+                  navigation.goBack()
+                  sendRequestNotificationReject()
+                }else{
+                  console.log(result.status)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+    })    
+
+   }
+
+
+   const sendRequestNotificationAccept = () => {
+    
+
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: user.noti_token,
+        sound: 'default',
+        title: "Order Accepted",
+        body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
+      })
+    }).then(res=>res.json()).then(result=>{
+      console.log('noti_result',result)
+      if(result.data.status=='ok'){
+        SendToDbAccept()
+        }
+    }).catch(err=>console.log('catch',err.message))
+    
+
+  }
+
+  const sendRequestNotificationReject = () =>{
+
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: user.noti_token,
+        sound: 'default',
+        title: "Order Rejected",
+        body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
+      })
+    }).then(res=>res.json()).then(result=>{
+      console.log('noti_result',result)
+      if(result.data.status=='ok'){
+        SendToDbReject()
+        }
+    }).catch(err=>console.log('catch',err.message))
+    
+
+};
+
+
+
+const SendToDbAccept = ()=>{
+
+  SecureStore.getItemAsync('token').then(token=>{
+
+    console.log('noti db store',token)
+
+    const noti_obj= {
+     
+      c_id: order.customer_id,
+      title: "Order Accepted",
+      body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
+      compDate: new Date()
+    }
+
+    
+    fetch(`https://bluejay-mobile-app.herokuapp.com/users/acceptOrderNoti`,{
+                  method: "post",
+                  body: JSON.stringify(noti_obj),
+                  headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      token
+                  }
+                
+            }).then(res=>res.json()).then(result=>{
+              console.log(result)
+              if(result.status=='ok'){
+                setOrderC(!orderC)
+                console.log(orderC)
+              console.log('stored in db')
+              }
+
+            }).catch(err=>console.log('catch',err.message))
+  
+})  
+}
+
+
+const SendToDbReject = ()=>{
+
+  SecureStore.getItemAsync('token').then(token=>{
+
+    console.log('noti db store',token)
+
+    const noti_obj= {
+     
+      c_id: order.customer_id,
+      title: "Order Rejected",
+      body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
+      compDate: new Date()
+    }
+
+    
+    fetch(`https://bluejay-mobile-app.herokuapp.com/users/rejectOrderNoti`,{
+                  method: "post",
+                  body: JSON.stringify(noti_obj),
+                  headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      token
+                  }
+                
+            }).then(res=>res.json()).then(result=>{
+              console.log(result)
+              if(result.status=='ok'){
+                setOrderC(!orderC)
+                console.log(orderC)
+              console.log('stored in db')
+              }
+
+            }).catch(err=>console.log('catch',err.message))
+  
+})  
+}
+
+
+
+
 
 
 if( user.service === 'Caterer'){
@@ -43,7 +288,7 @@ if( user.service === 'Caterer'){
     
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -128,28 +373,28 @@ if( user.service === 'Caterer'){
                       </View>
                     </View>
 
-
                     <View style={{flexDirection:'row'}}>
-               
-                          
+                      
+                      <View  style={{paddingLeft:115}}>
+                      <Button
+                      onPress={()=>{acceptOrder(order._id)}}
+                      title="Accept"
+                      color={COLORS.primary}
+                      /> 
+                      </View>
 
-                          <View  style={{paddingLeft:50}}>
-                          <Button
-                          onPress={()=>{acceptOrder(order._id)}}
-                          title="Accept"
-                          color={COLORS.primary}
-                          /> 
-                          </View>
-
-                          <View style={{paddingLeft:15, borderRadius:12}}>
-                          <Button  
-                          onPress={()=>{rejectOrder(order._id)}}
-                          title="Reject"
-                          color={COLORS.primary}/>
-                        </View>
-                  
-                          
+                      <View style={{paddingLeft:15, borderRadius:12}}>
+                      <Button  
+                      onPress={()=>{rejectOrder(order._id)}}
+                      title="Reject"
+                      color={COLORS.primary}/>
                     </View>
+              
+                      
+                </View>
+
+
+
 
         </View>
       
@@ -174,7 +419,7 @@ if( user.service === 'Caterer'){
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -256,6 +501,26 @@ if( user.service === 'Caterer'){
                     </View>
 
 
+                    <View style={{flexDirection:'row'}}>
+                      
+                      <View  style={{paddingLeft:115}}>
+                      <Button
+                      onPress={()=>{acceptOrder(order._id)}}
+                      title="Accept"
+                      color={COLORS.primary}
+                      /> 
+                      </View>
+
+                      <View style={{paddingLeft:15, borderRadius:12}}>
+                      <Button  
+                      onPress={()=>{rejectOrder(order._id)}}
+                      title="Reject"
+                      color={COLORS.primary}/>
+                    </View>
+              
+                      
+                </View>
+
 
 
 
@@ -282,7 +547,7 @@ if( user.service === 'Caterer'){
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -387,6 +652,26 @@ if( user.service === 'Caterer'){
                       </View>
                     </View>
 
+                    <View style={{flexDirection:'row'}}>
+                      
+                      <View  style={{paddingLeft:115}}>
+                      <Button
+                      onPress={()=>{acceptOrder(order._id)}}
+                      title="Accept"
+                      color={COLORS.primary}
+                      /> 
+                      </View>
+
+                      <View style={{paddingLeft:15, borderRadius:12}}>
+                      <Button  
+                      onPress={()=>{rejectOrder(order._id)}}
+                      title="Reject"
+                      color={COLORS.primary}/>
+                    </View>
+              
+                      
+                </View>
+
 
 
         </View>
@@ -412,7 +697,7 @@ if( user.service === 'Caterer'){
 
 
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>              Order Status:</Text>
+                      <Text style={{fontSize: 21, fontWeight: 'bold'}}>                Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>
@@ -493,6 +778,25 @@ if( user.service === 'Caterer'){
 
 
 
+                    <View style={{flexDirection:'row'}}>
+
+                          <View  style={{paddingLeft:115}}>
+                          <Button
+                          onPress={()=>{acceptOrder(order._id)}}
+                          title="Accept"
+                          color={COLORS.primary}
+                          /> 
+                          </View>
+
+                          <View style={{paddingLeft:15, borderRadius:12}}>
+                          <Button  
+                          onPress={()=>{rejectOrder(order._id)}}
+                          title="Reject"
+                          color={COLORS.primary}/>
+                        </View>
+                  
+                          
+                    </View>
 
 
 
