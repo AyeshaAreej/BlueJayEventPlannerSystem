@@ -418,7 +418,7 @@ return(
                             }} 
                             >
                                   <View style={{flexDirection:'row'}}>
-                                      <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> {order.rated == 'no'? 'Rate Company': 'Rated'} </Text>
+                                      <Text style={{  fontSize: 25,  fontWeight: 'bold',  color: COLORS.white,   }}> {order.rated == 'no'? 'Rate ': 'Rated'} </Text>
                                       {order.rated == 'yes' &&
                                         <View style={{color:COLORS.white,paddingLeft:10 }}>
                                         <MaterialCommunityIcons name="check" size={35} color={ COLORS.white} />
@@ -514,7 +514,7 @@ const style = StyleSheet.create({
     editButton:{
       justifyContent:'center',
       alignItems:'center',
-      width:190,
+      width:160,
       marginRight:9,
       marginBottom:10,
       borderColor :COLORS.primary,

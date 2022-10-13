@@ -43,14 +43,14 @@ const HelpCentre= ({navigation}) => {
     </TouchableOpacity>
     </View>
 
-    <View  style={styles.options}> 
+    {/* <View  style={styles.options}> 
     <MaterialCommunityIcons name="cash-refund"  size={34} style={styles.icon}/> 
     <TouchableOpacity style={{flexDirection:'row', justifyContent:'center',alignItems:'center'}}
     onPress={()=> navigation.navigate('PaymentsandRefunds') } >
     <Text style={{  fontSize: 23,  color: colors.dark,   }}> Payments and Refunds</Text>
     <MaterialCommunityIcons name="arrow-right"  size={34} style={styles.icon}/> 
     </TouchableOpacity>
-    </View>
+    </View> */}
 
     <View  style={styles.options}> 
     <MaterialCommunityIcons name="onepassword"  size={34} style={styles.icon}/> 

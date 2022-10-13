@@ -121,7 +121,7 @@ options: {
 editButton:{
   justifyContent:'center',
   alignItems:'center',
-  marginTop:30,
+  marginTop:20,
   padding:10,
   width:'80%',
   borderColor :colors.primary,
@@ -138,7 +138,7 @@ editButton:{
 textContainer:{
   justifyContent:'center',
   alignItems:'center',
-  marginTop:40,
+  marginTop:20,
 },
 
 });

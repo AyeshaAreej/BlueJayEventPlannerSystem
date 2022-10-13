@@ -2,7 +2,7 @@ import React from "react";;
 import {useState, useEffect,useRef, useReducer,useContext}  from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import { ImageBackground,Pressable, Platform, Button,TextInput, TouchableOpacity, StyleSheet, View,Text } from "react-native";
+import { ImageBackground,Pressable, Platform, Button,TextInput, TouchableOpacity,ScrollView, StyleSheet, View,Text } from "react-native";
 import { Company_Home, User_Home, Admin_Home,Vendor_Home } from "../constants";
 import { RadioButton } from 'react-native-paper';
 import COLORS, { colors } from "../components/colors";
@@ -213,6 +213,11 @@ async function registerForPushNotification(){
    
   }
   return (
+
+
+    <ScrollView style={{flex:1,backgroundColor:COLORS.white}}>
+      
+
    <View style={{display:"flex", backgroundColor:'#fff',}} >
      {/* <StatusBar barStyle="light-content"  translucent backgroundColor="#fff"/> */}
    <View style={styles.topView}>
@@ -359,6 +364,9 @@ async function registerForPushNotification(){
      </View>
 
  </View>
+
+ 
+ </ScrollView>
   );
 }
 

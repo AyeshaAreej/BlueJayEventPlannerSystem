@@ -1,12 +1,15 @@
 import React,{useState} from 'react'
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { CardField,useConfirmPayment } from '@stripe/stripe-react-native';
-
+import { useNavigation } from '@react-navigation/native';
 
 const API_URL = "https://bluejay-mobile-app.herokuapp.com";
 
 
 const StripeApp= () => {
+
+  const navigation = useNavigation();
+
     
     const [email, setEmail] = useState();
     const [amount, setAmount] = useState();
@@ -58,6 +61,7 @@ const StripeApp= () => {
               } else if (paymentIntent) {
                 alert("Payment Successful");
                 console.log("Payment successful ", paymentIntent);
+                navigation.goBack();
               }
             }
           } catch (e) {
