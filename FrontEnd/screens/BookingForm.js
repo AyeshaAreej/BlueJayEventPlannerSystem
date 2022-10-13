@@ -70,6 +70,7 @@ console.log('date',date)
                 console.log(result)
                 if(result.status=='ok'){
                 console.log('stored in db')
+                setOrderC(!orderC)
                 }
 
               }).catch(err=>console.log('catch',err.message))
