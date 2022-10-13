@@ -52,7 +52,7 @@ console.log('date',date)
        
         c_id: c_id,
         title: "Order Received",
-        body:  "You have received a order.",
+        body:  "You have received a new order.",
         compDate: new Date()
       }
 
@@ -143,7 +143,7 @@ const sendRequestNotification = () => {
       to: company.noti_token,
       sound: 'default',
       title: "Order Received",
-      body:  "You have a received a order.",
+      body:  "You have received a new order.",
     })
   }).then(res=>res.json()).then(result=>{
     console.log(result)

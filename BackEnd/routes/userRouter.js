@@ -27,7 +27,6 @@ route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)/
 route.patch('/cancelOrder',middleware.ValidateToken ,userController.cancelOrder)//done
 route.post('/acceptOrderNoti',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
 route.post('/rejectOrderNoti',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
-route.post('/cancelOrderNotiFromCompany',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
 route.get('/getNotiData',middleware.ValidateToken ,userController.getNotiData)//done
 
 

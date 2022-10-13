@@ -22,7 +22,6 @@ const MyOrders=()=>{
   const [orderC,setOrderC] = useContext(OrderContext)
   const [myOrders, setMyOrders] = React.useState([]);
   const [completedOrder, setCompletedOrder] = React.useState([]);
-  const [company, setCompany] = React.useState([]);
 
 
   const categories = ['Current', 'Completed'];
@@ -96,7 +95,7 @@ const MyOrders=()=>{
 
 
 
-   const showAlert = (o_id,c_id)=>{
+   const showAlert = (o_id,c_id,et,cn)=>{
     // console.log(o_id)
  Alert.alert(
   "Are your sure?",
@@ -106,7 +105,7 @@ const MyOrders=()=>{
     {
       text: "Yes",
       onPress: ()=>{
-        getCompany(c_id,o_id)
+        cancelOrder(o_id,c_id,et,cn)
       }
     },
     
@@ -122,40 +121,10 @@ const MyOrders=()=>{
 }
 
 
-const getCompany = (c_id,o_id)=>{
-
-  SecureStore.getItemAsync('token').then(token=>{
-
-    console.log('Get Company',token)
-
-    const value = {c_id:c_id}
-
-    fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
-                  method: "post",
-                  body: JSON.stringify(value),
-                  headers: {
-                      Accept: "application/json, text/plain, */*",
-                      "Content-Type": "application/json",
-                      token
-                  }
-                
-            }).then(res=>res.json()).then(result=>{
-
-              if( result.status == 'ok'){
-                console.log(result)
-                setCompany(result.data)
-                cancelOrder(o_id)
-                     
-              }
-            }).catch(err=>console.log('catch',err.message))
-  })    
- }
 
 
 
-
-
-const cancelOrder = (o_id)=>{
+const cancelOrder = (o_id,c_id,et,cn)=>{
 
 SecureStore.getItemAsync('token').then(token=>{
 
@@ -178,7 +147,7 @@ SecureStore.getItemAsync('token').then(token=>{
             if( result.status == 'ok'){
                     setOrderC(!orderC)
                     alert('order cancelled')
-                    sendRequestNotification()
+                    getCompany(c_id,et,cn)
             }else{
               console.log(result.status)
             }
@@ -190,8 +159,40 @@ SecureStore.getItemAsync('token').then(token=>{
 }
 
 
-const sendRequestNotification = () => {
-  console.log(company.noti_token)
+
+
+const getCompany = (c_id,et,cn)=>{
+
+  SecureStore.getItemAsync('token').then(token=>{
+
+    console.log('Get Company',token)
+
+    const value = {c_id:c_id}
+
+    fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
+                  method: "post",
+                  body: JSON.stringify(value),
+                  headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      token
+                  }
+                
+            }).then(res=>res.json()).then(result=>{
+
+              if( result.status == 'ok'){
+                
+                sendRequestNotification(result.data.noti_token,result.data._id,et,cn)
+
+                     
+              }
+            }).catch(err=>console.log('catch',err.message))
+  })    
+ }
+
+
+const sendRequestNotification = (noti_token,id,et,cn) => {
+
   fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -199,15 +200,15 @@ const sendRequestNotification = () => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      to: company.noti_token,
+      to: noti_token,
       sound: 'default',
       title: "Order cancelled",
-      body:  "Your order has been cancelled.",
+      body:  `Your order for event ${et} has been cancelled by ${cn}`,
     })
   }).then(res=>res.json()).then(result=>{
-    console.log(result)
+    console.log('noti_result',result)
     if(result.data.status=='ok'){
-        SendToDb()
+        SendToDb(id,et,cn)
       }
   }).catch(err=>console.log('catch',err.message))
   
@@ -218,7 +219,7 @@ const sendRequestNotification = () => {
 
 
 
-const SendToDb = ()=>{
+const SendToDb = (id,et,cn)=>{
 
   SecureStore.getItemAsync('token').then(token=>{
 
@@ -226,9 +227,9 @@ const SendToDb = ()=>{
 
     const noti_obj= {
      
-      c_id: company._id,
+      c_id: id,
       title: "Order Cancelled",
-      body:  `Your order has been cancelled`,
+      body:  `Your order for event ${et} has been cancelled by ${cn}`,
       compDate: new Date()
     }
 
@@ -322,7 +323,7 @@ return(
           <View style={style.priceTag}>
                   <View style={{color:COLORS.white, }}>
                   <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white} onPress={()=>{
-                    showAlert(order._id,order.company_id)
+                    showAlert(order._id,order.company_id,order.event_type,order.customer_name)
                   }}
                     
                     />
