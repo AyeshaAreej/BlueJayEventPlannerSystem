@@ -64,7 +64,7 @@ const Notifications = () => {
       })    
   
   
-     },[orderC]);
+     },[orderC,!orderC]);
  
      
 

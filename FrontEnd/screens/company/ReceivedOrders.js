@@ -49,7 +49,7 @@ const ReceivedOrders=({navigation})=>{
     })    
 
 
-   },[orderC]);
+   },[orderC,!orderC]);
 
    
   

@@ -121,6 +121,7 @@ function CompanyOrderDetails({route}) {
 
                 if( result.status == 'ok'){
                         setOrderC(!orderC)
+                        console.log(orderC)
                         navigation.goBack()
                         sendRequestNotificationReject()
                      
@@ -215,6 +216,8 @@ function CompanyOrderDetails({route}) {
               }).then(res=>res.json()).then(result=>{
                 console.log(result)
                 if(result.status=='ok'){
+                  setOrderC(!orderC)
+                  console.log(orderC)
                 console.log('stored in db')
                 }
 
@@ -251,6 +254,8 @@ function CompanyOrderDetails({route}) {
               }).then(res=>res.json()).then(result=>{
                 console.log(result)
                 if(result.status=='ok'){
+                  setOrderC(!orderC)
+                  console.log(orderC)
                 console.log('stored in db')
                 }
 
