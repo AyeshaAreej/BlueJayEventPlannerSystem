@@ -948,6 +948,24 @@ const acceptOrRejectOrderNoti = async (req,res)=>{
   
 }
 
+const getNotiData = async (req,res)=>{
 
-module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,fav_companies,createOrder,addToFavs,
+    try {
+        User.findOne({_id: req.user.id},{notifications:1,_id:0},async (err,array)=>{
+        if(array){
+            return res.json({status:"ok", data:array})
+        }
+        return res.json({status:"Error",error})
+
+        }
+
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+
+}
+
+
+module.exports = {signUp,logIn,searchCompany,searchByDate,topRated,lowPrice,highPrice,fav_companies,createOrder,addToFavs,getNotiData,
                   updateProfile,changePassword,myOrders,completedOrders,rateCompany,cancelOrder,removeFromFavs,acceptOrRejectOrderNoti}

@@ -24,7 +24,7 @@ route.patch('/cancelOrder',middleware.ValidateToken ,vendorController.cancelOrde
 route.patch('/completeOrder',middleware.ValidateToken ,vendorController.completeOrder)//done
 route.get('/completedOrders',middleware.ValidateToken ,vendorController.completedOrders)//done
 route.post('/orderCreateNoti',middleware.ValidateToken ,vendorController.orderCreateNoti)//done
-
+route.get('/getNotiData',middleware.ValidateToken ,vendorController.getNotiData)//done
 
 
 

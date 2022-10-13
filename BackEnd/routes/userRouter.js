@@ -28,8 +28,7 @@ route.patch('/cancelOrder',middleware.ValidateToken ,userController.cancelOrder)
 // route.post('/orderCreateNoti',middleware.ValidateToken ,userController.orderCreateNoti)//done
 route.post('/acceptOrderNoti',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
 route.post('/rejectOrderNoti',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
-
-
+route.get('/getNotiData',middleware.ValidateToken ,userController.getNotiData)//done
 
 
 

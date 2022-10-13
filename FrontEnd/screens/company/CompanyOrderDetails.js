@@ -85,6 +85,7 @@ function CompanyOrderDetails({route}) {
 
                         setOrderC(!orderC)
                         alert('Order moved to My Orders')
+                        navigation.goBack()
                         sendRequestNotificationAccept()
                        
                 }else{
@@ -120,6 +121,7 @@ function CompanyOrderDetails({route}) {
 
                 if( result.status == 'ok'){
                         setOrderC(!orderC)
+                        navigation.goBack()
                         sendRequestNotificationReject()
                      
                 }else{
@@ -149,7 +151,7 @@ function CompanyOrderDetails({route}) {
           to: user.noti_token,
           sound: 'default',
           title: "Order Accepted",
-          body:  "Your order has been accepted",
+          body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
         })
       }).then(res=>res.json()).then(result=>{
         console.log('noti_result',result)
@@ -173,7 +175,7 @@ function CompanyOrderDetails({route}) {
           to: user.noti_token,
           sound: 'default',
           title: "Order Rejected",
-          body:  "Your order has been rejected",
+          body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
         })
       }).then(res=>res.json()).then(result=>{
         console.log('noti_result',result)
@@ -214,7 +216,6 @@ function CompanyOrderDetails({route}) {
                 console.log(result)
                 if(result.status=='ok'){
                 console.log('stored in db')
-                navigation.goBack()
                 }
 
               }).catch(err=>console.log('catch',err.message))
@@ -233,7 +234,7 @@ function CompanyOrderDetails({route}) {
        
         c_id: order.customer_id,
         title: "Order Rejected",
-        body:  "Your order has been rejected",
+        body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
         compDate: new Date()
       }
 
@@ -251,7 +252,6 @@ function CompanyOrderDetails({route}) {
                 console.log(result)
                 if(result.status=='ok'){
                 console.log('stored in db')
-                navigation.goBack()
                 }
 
               }).catch(err=>console.log('catch',err.message))

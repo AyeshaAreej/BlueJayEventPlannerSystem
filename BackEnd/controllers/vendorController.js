@@ -572,7 +572,10 @@ const orderCreateNoti = async (req,res)=>{
 
 
 
+const getNotiData = async (req,res)=>{
+
+}
 
 
-module.exports = {signUp,logIn,myOrders,approveOrder,updateProfile,changePassword,
+module.exports = {signUp,logIn,myOrders,approveOrder,updateProfile,changePassword,getNotiData,
                   completedOrders,rec_Orders,rejectOrder,cancelOrder,completeOrder,orderCreateNoti}

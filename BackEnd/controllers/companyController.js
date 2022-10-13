@@ -1465,9 +1465,12 @@ const orderCreateNoti = async (req,res)=>{
   
 }
 
+const getNotiData = async (req,res)=>{
+
+}
 
 
-
-
-module.exports = {signUp,logIn,rec_Orders,approveOrder,updateProfile,changePassword,createCatererOrder,createDecorationOrder,createVenueOrder,cancelOrder,cancelVendorOrder,createPhotographerOrder,
-                  rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers,myOrders,rejectOrder,showHiredVendors,completeOrder,checkSubComplete,completedOrders,orderCreateNoti}
+module.exports = {signUp,logIn,rec_Orders,approveOrder,updateProfile,changePassword,createCatererOrder,getNotiData,
+                  createDecorationOrder,createVenueOrder,cancelOrder,cancelVendorOrder,createPhotographerOrder,
+                  rateVendor,searchVendor,searchByDate,caterers,decoration,venue,photographers,myOrders,rejectOrder,
+                  showHiredVendors,completeOrder,checkSubComplete,completedOrders,orderCreateNoti}
