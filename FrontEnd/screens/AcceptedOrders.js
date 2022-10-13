@@ -136,7 +136,7 @@ const checkSubOrders= (o_id)=>{
                 
             }).then(res=>res.json()).then(result=>{
               
-              console.log(result)
+              // console.log(result)
               if( result.status == 'ok'){
                     completeOrder(o_id)
                    
@@ -232,7 +232,7 @@ const cancelOrder = (o_id)=>{
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
+                // console.log(result)
 
                 if( result.status == 'ok'){
                         setOrderC(!orderC)
