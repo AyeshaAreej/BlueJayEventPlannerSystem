@@ -562,7 +562,7 @@ const orderCreateNoti = async (req,res)=>{
                         $each:[{'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}],
                         $sort: {date:-1}
             }}},async(err,company)=>{
-            if(vendor){
+            if(company){
                 res.json({status:"ok"})
             }else{
                 return res.json({status:"Error",err})
@@ -575,7 +575,6 @@ const orderCreateNoti = async (req,res)=>{
 
   
 }
-
 
 
 const getNotiData = async (req,res)=>{

@@ -45,7 +45,7 @@ function DecorationBookingForm({ route, navigation}) {
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
+                // console.log(result)
                 if(result.status=='ok'){
                 console.log('stored in db')
                 setOrderC(!orderC)
@@ -88,7 +88,7 @@ function DecorationBookingForm({ route, navigation}) {
                     }
                   
               }).then(res=>res.json()).then(result=>{
-                console.log(result)
+                // console.log(result)
 
                 if(result.status == 'ok')
                      {
