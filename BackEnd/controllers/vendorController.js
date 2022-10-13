@@ -556,7 +556,7 @@ const orderCreateNoti = async (req,res)=>{
 
     try {
       
-        Vendor.findByIdAndUpdate({_id:req.user.id},{
+        Vendor.findByIdAndUpdate({_id:req.body.v_id},{
             $push: { 
                 notifications : {
                         $each:[{'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}],

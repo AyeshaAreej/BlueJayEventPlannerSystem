@@ -20,6 +20,43 @@ function CatererBookingForm({ route, navigation}) {
 
   const [cvOrderC, setCvOrderC] = useContext(CvOrderContext)
 
+
+  const SendToDb = ()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('noti db store',token)
+
+      const noti_obj= {
+       
+        v_id: v_id,
+        title: "Order Received",
+        body:  "You have received a order.",
+        compDate: new Date()
+      }
+
+      
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/orderCreateNoti`,{
+                    method: "post",
+                    body: JSON.stringify(noti_obj),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+                if(result.status=='ok'){
+                console.log('stored in db')
+                setOrderC(!orderC)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+    
+  })  
+  }
+  
  
   function handleOrder(values){
 
@@ -57,8 +94,8 @@ function CatererBookingForm({ route, navigation}) {
                      {
                       setCvOrderC(!cvOrderC)
                       alert('order confirmed')
-                      // navigation.navigate('Home',{date: myDate, o_id : o_id})
                       navigation.navigate('Home',{date: myDate, o_id : o_id})
+                      sendRequestNotification()
                       }
 
               }).catch(err=>console.log('catch',err.message))
@@ -68,18 +105,36 @@ function CatererBookingForm({ route, navigation}) {
 
 
 
+  const sendRequestNotification = () => {
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: vendor.noti_token,
+        sound: 'default',
+        title: "Order Received",
+        body:  "You have a received a order.",
+      })
+    }).then(res=>res.json()).then(result=>{
+      console.log(result)
+      if(result.data.status=='ok'){
+          SendToDb()
+        }
+    }).catch(err=>console.log('catch',err.message))
+    
+    
+  
+  };
+
 
 
   return (
     <ScrollView style={{flex:1,backgroundColor:colors.white}}>
         <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}/>
-       {/* <View style={styles.topView}>
-        <ImageBackground
-         style={styles.logo}
-         source={require('../../assets/logo2.png')}
-         resizeMode="cover" >
-       </ImageBackground>
-      </View> */}
+    
      <Text style={{color:colors.primary, fontSize:28,fontWeight:'bold',paddingLeft:'18%',paddingTop:'16%'}}>Caterer Booking Form</Text>
     
 
