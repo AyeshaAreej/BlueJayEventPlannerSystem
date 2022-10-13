@@ -957,7 +957,7 @@ const getNotiData = async (req,res)=>{
         }
         return res.json({status:"Error",error})
 
-        }
+        })
 
         
     } catch (error) {
