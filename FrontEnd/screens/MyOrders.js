@@ -23,8 +23,6 @@ const MyOrders=()=>{
   const [myOrders, setMyOrders] = React.useState([]);
   const [completedOrder, setCompletedOrder] = React.useState([]);
   const [company, setCompany] = React.useState([]);
-  const [event_type, setEvent_type] = React.useState([]);
-  const [customer, setCustomer] = React.useState([]);
 
 
   const categories = ['Current', 'Completed'];
@@ -108,8 +106,7 @@ const MyOrders=()=>{
     {
       text: "Yes",
       onPress: ()=>{
-        getCompany(c_id)
-        cancelOrder(o_id)
+        getCompany(c_id,o_id)
       }
     },
     
@@ -125,7 +122,7 @@ const MyOrders=()=>{
 }
 
 
-const getCompany = (c_id)=>{
+const getCompany = (c_id,o_id)=>{
 
   SecureStore.getItemAsync('token').then(token=>{
 
@@ -145,7 +142,9 @@ const getCompany = (c_id)=>{
             }).then(res=>res.json()).then(result=>{
 
               if( result.status == 'ok'){
+                console.log(result)
                 setCompany(result.data)
+                cancelOrder(o_id)
                      
               }
             }).catch(err=>console.log('catch',err.message))
@@ -192,6 +191,7 @@ SecureStore.getItemAsync('token').then(token=>{
 
 
 const sendRequestNotification = () => {
+  console.log(company.noti_token)
   fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -201,8 +201,8 @@ const sendRequestNotification = () => {
     body: JSON.stringify({
       to: company.noti_token,
       sound: 'default',
-      title: "Order Cancelled",
-      body:  `Your order ${event_type} has been cancelled by customer ${customer}`,
+      title: "Order cancelled",
+      body:  "Your order has been cancelled.",
     })
   }).then(res=>res.json()).then(result=>{
     console.log(result)
@@ -217,6 +217,7 @@ const sendRequestNotification = () => {
 
 
 
+
 const SendToDb = ()=>{
 
   SecureStore.getItemAsync('token').then(token=>{
@@ -225,9 +226,9 @@ const SendToDb = ()=>{
 
     const noti_obj= {
      
-      c_id: company.noti_token,
+      c_id: company._id,
       title: "Order Cancelled",
-      body:  `Your order ${event_type} has been cancelled by customer ${customer}`,
+      body:  `Your order has been cancelled`,
       compDate: new Date()
     }
 
@@ -322,8 +323,6 @@ return(
                   <View style={{color:COLORS.white, }}>
                   <MaterialCommunityIcons name="delete-outline" size={30} color={ COLORS.white} onPress={()=>{
                     showAlert(order._id,order.company_id)
-                    setEvent_type(order.event_type)
-                    setCustomer(order.customer_name)
                   }}
                     
                     />
