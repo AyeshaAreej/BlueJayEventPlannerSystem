@@ -25,7 +25,6 @@ route.post('/removeFromFavs',middleware.ValidateToken ,userController.removeFrom
 route.post('/createOrder',middleware.ValidateToken ,userController.createOrder)//done
 route.post('/rateCompany',middleware.ValidateToken ,userController.rateCompany)//done
 route.patch('/cancelOrder',middleware.ValidateToken ,userController.cancelOrder)//done
-// route.post('/orderCreateNoti',middleware.ValidateToken ,userController.orderCreateNoti)//done
 route.post('/acceptOrderNoti',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
 route.post('/rejectOrderNoti',middleware.ValidateToken ,userController.acceptOrRejectOrderNoti)//done
 route.get('/getNotiData',middleware.ValidateToken ,userController.getNotiData)//done

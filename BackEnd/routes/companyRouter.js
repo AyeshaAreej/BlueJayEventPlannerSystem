@@ -44,6 +44,8 @@ route.patch('/completeOrder',middleware.ValidateToken ,companyController.complet
 route.patch('/cancelVendorOrder',middleware.ValidateToken ,companyController.cancelVendorOrder)//done
 route.post('/showHiredVendors',middleware.ValidateToken ,companyController.showHiredVendors)//done
 route.get('/completedOrders',middleware.ValidateToken ,companyController.completedOrders)//done
+route.post('/acceptOrderNoti',middleware.ValidateToken ,companyController.acceptOrRejectOrderNoti)//done
+route.post('/rejectOrderNoti',middleware.ValidateToken ,companyController.acceptOrRejectOrderNoti)//done
 route.get('/getNotiData',middleware.ValidateToken ,companyController.getNotiData)//done
 
 

@@ -23,6 +23,7 @@ function VendorOrderDetails({route}) {
   
   const [orderC,setOrderC] = useContext(OrderContext)
   const [user,setUser] = useContext(UserContext)
+  const [company,setCompany] = useState([])
 
   const navigation = useNavigation();
 
@@ -38,7 +39,6 @@ function VendorOrderDetails({route}) {
       console.log('get user for noti_token',token)
 
       const value = {c_id: order.company_id}
-      console.log(value)
 
       fetch(`https://bluejay-mobile-app.herokuapp.com/getAnyUser`,{
                     method: "post",
@@ -53,7 +53,7 @@ function VendorOrderDetails({route}) {
                 console.log(result)
 
                 if( result.status == 'ok'){
-                        SetUser(result.data)
+                        setCompany(result.data)
                         
                 }
 
@@ -151,10 +151,10 @@ function VendorOrderDetails({route}) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: user.noti_token,
+        to: company.noti_token,
         sound: 'default',
         title: "Order Accepted",
-        body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
+        body:  `Your order for event ${order.event_type} has been accepted by vendor ${order.vendor_name}`,
       })
     }).then(res=>res.json()).then(result=>{
       console.log('noti_result',result)
@@ -175,10 +175,10 @@ function VendorOrderDetails({route}) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: user.noti_token,
+        to: company.noti_token,
         sound: 'default',
         title: "Order Rejected",
-        body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
+        body:  `Your order for event ${order.event_type} has been rejected by vendor ${order.vendor_name}`,
       })
     }).then(res=>res.json()).then(result=>{
       console.log('noti_result',result)
@@ -200,14 +200,14 @@ const SendToDbAccept = ()=>{
 
     const noti_obj= {
      
-      c_id: order.customer_id,
+      c_id: order.company_id,
       title: "Order Accepted",
-      body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
+      body:  `Your order for event ${order.event_type} has been accepted by vendor ${order.vendor_name}`,
       compDate: new Date()
     }
 
     
-    fetch(`https://bluejay-mobile-app.herokuapp.com/users/acceptOrderNoti`,{
+    fetch(`https://bluejay-mobile-app.herokuapp.com/company/acceptOrderNoti`,{
                   method: "post",
                   body: JSON.stringify(noti_obj),
                   headers: {
@@ -238,14 +238,14 @@ const SendToDbReject = ()=>{
 
     const noti_obj= {
      
-      c_id: order.customer_id,
+      c_id: order.company_id,
       title: "Order Rejected",
-      body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
+      body:  `Your order for event ${order.event_type} has been rejected by vendor ${order.vendor_name}`,
       compDate: new Date()
     }
 
     
-    fetch(`https://bluejay-mobile-app.herokuapp.com/users/rejectOrderNoti`,{
+    fetch(`https://bluejay-mobile-app.herokuapp.com/company/rejectOrderNoti`,{
                   method: "post",
                   body: JSON.stringify(noti_obj),
                   headers: {

@@ -910,24 +910,7 @@ const completedOrders = async (req,res)=>{
         
 }
 
-// const orderCreateNoti = async (req,res)=>{
 
-    // try {
-      
-    //     User.findByIdAndUpdate({_id:req.user.id},{$push: { notifications : {'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}}},async(err,user)=>{
-    //         if(user){
-    //             res.json({status:"ok"})
-    //         }else{
-    //             return res.json({status:"Error",err})
-    //         }
-    //     })
-        
-    // } catch (error) {
-    //     return res.json({status:"Error",error})
-    // }
-
-  
-// }
 
 
 const acceptOrRejectOrderNoti = async (req,res)=>{

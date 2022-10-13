@@ -152,7 +152,7 @@ function CompanyOrderDetails({route}) {
           to: user.noti_token,
           sound: 'default',
           title: "Order Accepted",
-          body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
+          body:  `Your order for event ${order.event_type} has been accepted by company ${order.company_name}`,
         })
       }).then(res=>res.json()).then(result=>{
         console.log('noti_result',result)
@@ -176,7 +176,7 @@ function CompanyOrderDetails({route}) {
           to: user.noti_token,
           sound: 'default',
           title: "Order Rejected",
-          body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
+          body:  `Your order for event ${order.event_type} has been rejected by company ${order.company_name}`,
         })
       }).then(res=>res.json()).then(result=>{
         console.log('noti_result',result)
@@ -199,7 +199,7 @@ function CompanyOrderDetails({route}) {
        
         c_id: order.customer_id,
         title: "Order Accepted",
-        body:  `Your order ${order.event_type} has been accepted by company ${order.company_name}`,
+        body:  `Your order for event ${order.event_type} has been accepted by company ${order.company_name}`,
         compDate: new Date()
       }
 
@@ -237,7 +237,7 @@ function CompanyOrderDetails({route}) {
        
         c_id: order.customer_id,
         title: "Order Rejected",
-        body:  `Your order ${order.event_type} has been rejected by company ${order.company_name}`,
+        body:  `Your order for event ${order.event_type} has been rejected by company ${order.company_name}`,
         compDate: new Date()
       }
 
