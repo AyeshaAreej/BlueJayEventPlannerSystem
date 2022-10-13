@@ -106,13 +106,14 @@ const SignUp = ()=> {
     
    <View style={{flex:1,backgroundColor:'#fff'}} >
    <View style={styles.topView}>
+   <View style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
    <ImageBackground
    style={styles.logo}
      source={require('../assets/logo2.1.png')}
      resizeMode="cover" >
     </ImageBackground>
-     <Text style={{color:'white',marginLeft:140, fontSize:30,fontWeight:'bold'}}>SignUp</Text>
-    
+     <Text style={{color:'white',fontSize:30,fontWeight:'bold'}}>SignUp</Text>
+     </View>
  </View>
 
       {/* Form Inputs View */}
@@ -249,7 +250,7 @@ const SignUp = ()=> {
 
      </View>
 
-                  <Text style={{marginLeft:70,fontSize:15,marginTop:2,}}>Already Have an Account?   
+                  <Text style={{marginLeft:70,fontSize:15,marginTop:2,marginBottom:10}}>Already Have an Account?   
                  
               
                       <Text style={{fontWeight: "bold",fontSize:15}}  onPress={()=>{navigation.navigate('LoginScreen')}}>    SignIn</Text>
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
  logo: {
   width: 200,
   height: 110,
-  marginLeft:90,
+  // marginLeft:90,
 
 },
 center:{

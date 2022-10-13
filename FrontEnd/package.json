@@ -11,6 +11,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@ant-design/react-native": "^5.0.2",
     "@expo-google-fonts/inter": "^0.2.2",
     "@expo/webpack-config": "~0.16.2",
     "@react-native-community/checkbox": "^0.5.12",
