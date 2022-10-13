@@ -373,7 +373,7 @@ if( user.service === 'Caterer'){
                       </View>
                     </View>
 
-                    <View style={{flexDirection:'row'}}>
+                   { order.status == 'Pending' && <View style={{flexDirection:'row'}}>
                       
                       <View  style={{paddingLeft:115}}>
                       <Button
@@ -391,7 +391,7 @@ if( user.service === 'Caterer'){
                     </View>
               
                       
-                </View>
+                    </View>}
 
 
 
@@ -501,7 +501,7 @@ if( user.service === 'Caterer'){
                     </View>
 
 
-                    <View style={{flexDirection:'row'}}>
+                   {order.status == 'Pending' && <View style={{flexDirection:'row'}}>
                       
                       <View  style={{paddingLeft:115}}>
                       <Button
@@ -517,10 +517,9 @@ if( user.service === 'Caterer'){
                       title="Reject"
                       color={COLORS.primary}/>
                     </View>
-              
-                      
+                       
                 </View>
-
+                  }
 
 
 
@@ -652,7 +651,7 @@ if( user.service === 'Caterer'){
                       </View>
                     </View>
 
-                    <View style={{flexDirection:'row'}}>
+                    { order.status == 'Pending' && <View style={{flexDirection:'row'}}>
                       
                       <View  style={{paddingLeft:115}}>
                       <Button
@@ -670,7 +669,7 @@ if( user.service === 'Caterer'){
                     </View>
               
                       
-                </View>
+                    </View>}
 
 
 
@@ -778,25 +777,25 @@ if( user.service === 'Caterer'){
 
 
 
-                    <View style={{flexDirection:'row'}}>
+                    { order.status == 'Pending' && <View style={{flexDirection:'row'}}>
+                      
+                      <View  style={{paddingLeft:115}}>
+                      <Button
+                      onPress={()=>{acceptOrder(order._id)}}
+                      title="Accept"
+                      color={COLORS.primary}
+                      /> 
+                      </View>
 
-                          <View  style={{paddingLeft:115}}>
-                          <Button
-                          onPress={()=>{acceptOrder(order._id)}}
-                          title="Accept"
-                          color={COLORS.primary}
-                          /> 
-                          </View>
-
-                          <View style={{paddingLeft:15, borderRadius:12}}>
-                          <Button  
-                          onPress={()=>{rejectOrder(order._id)}}
-                          title="Reject"
-                          color={COLORS.primary}/>
-                        </View>
-                  
-                          
+                      <View style={{paddingLeft:15, borderRadius:12}}>
+                      <Button  
+                      onPress={()=>{rejectOrder(order._id)}}
+                      title="Reject"
+                      color={COLORS.primary}/>
                     </View>
+              
+                      
+                    </View>}
 
 
 
