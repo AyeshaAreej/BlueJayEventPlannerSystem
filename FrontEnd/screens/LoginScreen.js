@@ -44,6 +44,7 @@ function LoginScreen({navigation}) {
   
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
+      console.log('check')
     });
   
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)

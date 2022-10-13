@@ -3,6 +3,7 @@ import {useState,useEffect,useContext} from 'react';
 import {Dimensions,FlatList,SafeAreaView, ScrollView, StyleSheet, Text,View,   Image,Animated,Button,TouchableOpacity,StatusBar} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import COLORS from '../../components/colors';
+import { useIsFocused } from '@react-navigation/native';
 
 import {OrderContext} from '../../Contexts'
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +17,8 @@ const ReceivedOrders=({navigation})=>{
 
   const [myOrders, setMyOrders] = React.useState([]);
   const [orderC,setOrderC] = useContext(OrderContext)
+
+  const isFocused = useIsFocused();
 
   useEffect(()=>{
 
@@ -49,7 +52,7 @@ const ReceivedOrders=({navigation})=>{
     })    
 
 
-   },[orderC,!orderC]);
+   },[orderC,isFocused]);
 
    
   
@@ -129,7 +132,7 @@ else{
 const style = StyleSheet.create({
 
     card: {
-      height: 200,
+      height: 210,
       width: cardWidth,
       elevation: 35,
       borderRadius: 15,

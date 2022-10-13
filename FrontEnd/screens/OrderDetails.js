@@ -46,7 +46,7 @@ function OrderDetails({route}) {
 
          
                     <View style={style.rightTag}>
-                      <Text style={{fontSize: 23, fontWeight: 'bold'}}>                  Order Status:</Text>
+                      <Text style={{fontSize: 23, fontWeight: 'bold'}}>           Order Status:</Text>
                       <View style={style.priceTag}> 
                       <Text style={{fontSize: 20, fontWeight: 'bold'}}>{order.status}</Text>
                       </View>

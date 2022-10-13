@@ -1454,7 +1454,7 @@ const orderCreateNoti = async (req,res)=>{
             $push: { 
                 notifications : {
                         $each:[{'title': req.body.title, 'description': req.body.body, 'date': req.body.compDate}],
-                        $sort: {date:1}
+                        $sort: {date:-1}
             }}},async(err,company)=>{
             if(company){
                 res.json({status:"ok"})

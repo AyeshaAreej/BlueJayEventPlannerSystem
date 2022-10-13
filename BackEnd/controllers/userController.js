@@ -659,7 +659,7 @@ const myOrders = async (req,res)=>{
                 
                 try {
                         const my_orders =  orders.orders.map(async (o_id)=>{
-                            const order = await Order.findById(o_id).sort({compDate:1})
+                            const order = await Order.findById(o_id)
                             
                             return order
                         })

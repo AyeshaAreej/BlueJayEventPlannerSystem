@@ -8,21 +8,24 @@ import * as SecureStore from 'expo-secure-store';
 import {UserContext} from '../Contexts'
 import {OrderContext} from '../Contexts'
 
+import { useIsFocused } from '@react-navigation/native';
+
 
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;
 
 
+
+
 const Notifications = () => {
 
 
-
+   const isFocused = useIsFocused();
    const [notiData, setNotiData] = useState([]);
   const [orderC,setOrderC] = useContext(OrderContext)
   const [user,setUser] = useContext(UserContext)
 
    useEffect(()=>{
-
       let route = ''
   
       if(user.role=='customer'){
@@ -62,9 +65,11 @@ const Notifications = () => {
   
                 }).catch(err=>console.log('catch',err.message))
       })    
+
+ 
   
   
-     },[orderC,!orderC]);
+     },[orderC,isFocused]);
  
      
 

@@ -9,10 +9,15 @@ import * as SecureStore from 'expo-secure-store';
 import {OrderContext} from '../Contexts'
 
 
+import { useIsFocused } from '@react-navigation/native';
+
 const {width}= Dimensions.get('screen');
 const cardWidth=width/1.1;
 
 const MyOrders=()=>{
+
+  
+  const isFocused = useIsFocused();
  
   const [orderC,setOrderC] = useContext(OrderContext)
   const [myOrders, setMyOrders] = React.useState([]);
@@ -55,7 +60,7 @@ const MyOrders=()=>{
 
     completedOrders()
     
-   },[orderC]);
+   },[orderC,isFocused]);
 
 
    const completedOrders = ()=>{
