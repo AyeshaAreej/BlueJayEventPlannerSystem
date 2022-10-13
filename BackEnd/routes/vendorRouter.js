@@ -9,6 +9,11 @@ const route = express.Router()
 route.post('/signUp', vendorController.signUp)
 route.post('/logIn',vendorController.logIn)//done
 
+//'home
+route.get('/getPendingCount',middleware.ValidateToken ,vendorController.getPendingCount)//done
+route.get('/getApprovedCount',middleware.ValidateToken ,vendorController.getApprovedCount)//done
+route.get('/getCompletedCount',middleware.ValidateToken ,vendorController.getCompletedCount)//done
+
 
 //-profile 
 route.patch('/updateProfile',middleware.ValidateToken ,vendorController.updateProfile)//done

@@ -594,6 +594,58 @@ const getNotiData = async (req,res)=>{
     }
 }
 
+const getPendingCount = async (req,res)=>{
 
-module.exports = {signUp,logIn,myOrders,approveOrder,updateProfile,changePassword,getNotiData,
-                  completedOrders,rec_Orders,rejectOrder,cancelOrder,completeOrder,orderCreateNoti}
+    try {
+        CvOrder.find({status: 'Pending'},async (err,count)=>{
+        if(count){
+            return res.json({status:"ok", data:count})
+        }
+        return res.json({status:"Error",error})
+
+        }).count()
+
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+}
+
+
+const getApprovedCount = async (req,res)=>{
+
+    try {
+        CvOrder.find({status: 'Approved'},async (err,count)=>{
+            if(count){
+                return res.json({status:"ok", data:count})
+            }
+            return res.json({status:"Error",error})
+    
+            }).count()
+
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+}
+
+const getCompletedCount = async (req,res)=>{
+
+    try {
+        CvOrder.find({status: 'Completed'},async (err,count)=>{
+            if(count){
+                return res.json({status:"ok", data:count})
+            }
+            return res.json({status:"Error",error})
+    
+            }).count()
+
+        
+    } catch (error) {
+        return res.json({status:"Error",error})
+    }
+}
+
+
+module.exports = {signUp,logIn,myOrders,approveOrder,updateProfile,changePassword,getNotiData,getPendingCount,getApprovedCount,
+                  completedOrders,rec_Orders,rejectOrder,cancelOrder,completeOrder,orderCreateNoti,getCompletedCount}

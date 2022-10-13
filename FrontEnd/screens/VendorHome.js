@@ -8,17 +8,93 @@ import {
   Image,
   View,
 } from 'react-native';
+import {UserContext} from '../Contexts'
+import { useState,useContext } from 'react';
 import COLORS from '../components/colors';
-import image from '../assets/hotel1.jpg';
 import { FontAwesome } from '@expo/vector-icons';
-// import {Card,WhiteSpace, WingBlank } from '@ant-design/react-native';
 
+import * as SecureStore from 'expo-secure-store';
+
+
+import { useIsFocused } from '@react-navigation/native';
 
 
 function VendorHome({navigation}) {
 
-
+  const isFocused = useIsFocused();
   
+  const [user,setUser] = useContext(UserContext)
+  const [pending,setPending] = useState('')
+  const [completed,setCompleted] = useState('')
+  const [approved,setApproved] = useState('')
+
+
+  useEffect(()=>{
+
+    SecureStore.getItemAsync('token').then(token=>{
+
+      console.log('pending and completed count',token)
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getPendingCount`,{
+                    method: "get",
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                        setPending(result.data)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getApprovedCount`,{
+                    method: "get",
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json",
+                        token
+                    }
+                  
+              }).then(res=>res.json()).then(result=>{
+                console.log(result)
+
+                if( result.status == 'ok'){
+                       setApproved(result.data)
+                }
+
+              }).catch(err=>console.log('catch',err.message))
+
+
+      fetch(`https://bluejay-mobile-app.herokuapp.com/vendor/getCompletedCount`,{
+                method: "get",
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "Content-Type": "application/json",
+                    token
+                }
+              
+          }).then(res=>res.json()).then(result=>{
+            console.log(result)
+
+            if( result.status == 'ok'){
+                   setCompleted(result.data)
+            }
+
+          }).catch(err=>console.log('catch',err.message))
+
+
+    })    
+
+
+
+
+   },[orderC,isFocused]);
 
   return (
     <>
@@ -26,21 +102,21 @@ function VendorHome({navigation}) {
     showsVerticalScrollIndicator={false}  
      contentContainerStyle={{
         backgroundColor: COLORS.white,
-        paddingBottom: 100,
+        paddingBottom: 300,
       }} >
       <StatusBar barStyle="light-content"  translucent backgroundColor={COLORS.primary}
       />
-       <ImageBackground style={style.headerImage} source={image}>
+       <ImageBackground style={style.headerImage} source={{ uri: user.image }}>
         <View style={style.header}>
         
         </View>
       </ImageBackground>
    
     <View style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-      <Text style={{fontSize: 25, fontWeight: 'bold',padding:7,color:COLORS.primary}}>Spice Foods</Text>
+      <Text style={{fontSize: 25, fontWeight: 'bold',padding:7,color:COLORS.primary}}>{user.vendor_name}</Text>
       </View>
 
-      <View style={{marginTop: 10, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+      {/* <View style={{marginTop: 10, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
         <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,justifyContent:'center',alignItems:'center',borderRadius:20}}>
             <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>This Week</Text>
             <View style={style.iconContainer}>
@@ -56,10 +132,10 @@ function VendorHome({navigation}) {
           </View>
           <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
         </View>
-     </View>
+     </View> */}
 
     
-     <View style={{marginTop: 10, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+     <View style={{marginTop: 50, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
         <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,justifyContent:'center',alignItems:'center',borderRadius:20}}>
             <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Pending Orders</Text>
             <View style={style.iconContainer}>
@@ -68,6 +144,18 @@ function VendorHome({navigation}) {
           <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
         </View>
 
+        <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,margin:6,justifyContent:'center',alignItems:'center',borderRadius:20,elevation:15,}}>
+        <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Completed Orders</Text>
+            <View style={style.iconContainer}>
+             <FontAwesome name="check" color={COLORS.white} size={50} />
+          </View>
+          <Text style={{color:COLORS.white,padding:7,fontSize:20,fontWeight:'bold'}}>500</Text>
+        </View>
+     </View>
+
+
+     <View style={{marginTop: 50, display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+     
         <View style={{width:'45%',padding:8,backgroundColor:COLORS.primary,margin:6,justifyContent:'center',alignItems:'center',borderRadius:20,elevation:15,}}>
         <Text style={{color:COLORS.white,padding:10,fontSize:16,fontWeight:'bold'}}>Total Completed Orders</Text>
             <View style={style.iconContainer}>
