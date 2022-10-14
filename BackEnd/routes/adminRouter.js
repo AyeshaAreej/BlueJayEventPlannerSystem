@@ -19,6 +19,9 @@ route.post('/logIn',adminController.logIn)//done
 // //-profile
 // route.patch('/updateProfile',middleware.ValidateToken ,adminController.updateProfile)//done
 route.patch('/changePassword',middleware.ValidateToken ,adminController.changePassword)//done
+route.get('/getNewRegs',middleware.ValidateToken ,adminController.getNewRegs)//done
+
+
 
 
 
