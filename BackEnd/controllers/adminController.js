@@ -115,7 +115,7 @@ const signUp = async (req,res)=>{
 
             try {
 
-                Commpany.find({verified:false},async(err,companies)=>{
+                Company.find({verified:false},async(err,companies)=>{
                     if(companies){
                         
                             return res.json({status:'ok',data:companies})
