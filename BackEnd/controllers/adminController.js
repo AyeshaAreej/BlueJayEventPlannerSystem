@@ -137,7 +137,7 @@ const signUp = async (req,res)=>{
 
             try {
 
-                Company.findByIdAndUpdate(req.body.c_id,{$set:{status:"Approved"}},async(err,companies)=>{
+                Company.findByIdAndUpdate({_id:req.body.c_id},{$set:{verified:true}},async(err,companies)=>{
                     if(companies){
                         
                             return res.json({status:'ok'})
@@ -159,7 +159,7 @@ const signUp = async (req,res)=>{
 
             try {
 
-                Company.findByIdAndDelete(req.body.c_id,async(err,companies)=>{
+                Company.findByIdAndDelete({_id:req.body.c_id},async(err,companies)=>{
                     if(companies){
                         
                             return res.json({status:'ok'})
