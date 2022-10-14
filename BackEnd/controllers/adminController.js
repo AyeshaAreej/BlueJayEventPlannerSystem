@@ -110,8 +110,29 @@ const signUp = async (req,res)=>{
         
         }
         
+
+        const getNewRegs = async (req,res)=>{
+
+            try {
+
+                Commpany.find({verified:false},async(err,companies)=>{
+                    if(companies){
+                        
+                            return res.json({status:'ok',data:companies})
+                        }
+                        return res.json({status:'error', error: 'company not found'})
+
+                })
+
+                
+            } catch (error) {
+                
+            }
+
+        }
+    
         
 
 
 
-module.exports = {signUp,logIn,changePassword}
+module.exports = {signUp,logIn,changePassword,getNewRegs}
