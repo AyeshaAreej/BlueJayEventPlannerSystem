@@ -126,6 +126,50 @@ const signUp = async (req,res)=>{
 
                 
             } catch (error) {
+                return res.json({status:'error'})
+                
+            }
+
+        }
+
+
+        const acceptCompany = async (req,res)=>{
+
+            try {
+
+                Company.findByIdAndUpdate(req.body.c_id,{$set:{status:"Approved"}},async(err,companies)=>{
+                    if(companies){
+                        
+                            return res.json({status:'ok'})
+                        }
+                        return res.json({status:'error', error: 'company not found'})
+
+                })
+
+                
+            } catch (error) {
+                return res.json({status:'error'})
+                
+            }
+
+        }
+
+
+        const rejectCompany = async (req,res)=>{
+
+            try {
+
+                Company.findByIdAndDelete(req.body.c_id,async(err,companies)=>{
+                    if(companies){
+                        
+                            return res.json({status:'ok'})
+                        }
+                        return res.json({status:'error', error: 'company not found'})
+
+                })
+
+                
+            } catch (error) {
                 
             }
 
@@ -135,4 +179,4 @@ const signUp = async (req,res)=>{
 
 
 
-module.exports = {signUp,logIn,changePassword,getNewRegs}
+module.exports = {signUp,logIn,changePassword,getNewRegs,acceptCompany,rejectCompany}
