@@ -77,7 +77,41 @@ const signUp = async (req,res)=>{
 
     
 
+    const changePassword = async (req,res)=>{
+
+        const {old_password,new_password: new_orignal_password} = req.body
+                
+                const admin = await admin.findById(req.user.id)
+                if(await bcrypt.compare(old_password,admin.password)){
+        
+                    console.log("old pass correct")
+                        if(new_orignal_password.length<5){
+                            return res.json({status:'error', error: 'Password should be atleast 5 characters' })
+                        }
+        
+                        const new_password = await bcrypt.hash(new_orignal_password,10)
+        
+                        Admin.findByIdAndUpdate(req.user.id,
+                            {password: new_password},
+                            {
+                                new:true
+                            },
+                            (err,admin)=>{
+                            if(admin){
+                            //    console.log(company)
+                                return res.json({status:'ok'})
+                            }
+                            return res.json({status:'error', error: 'company password not updated, Try again',err })
+                        })
+        
+                }else{
+                    return res.json({status:'error', error: 'Old Password is not correct' })
+                }
+        
+        }
+        
+        
 
 
 
-module.exports = {signUp,logIn}
+module.exports = {signUp,logIn,changePassword}
