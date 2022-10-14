@@ -138,6 +138,7 @@ const signUp = async (req,res)=>{
             try {
 
                 Company.findByIdAndUpdate({_id:req.body.c_id},{$set:{verified:true}},async(err,companies)=>{
+                    console.log(companies)
                     if(companies){
                         
                             return res.json({status:'ok'})

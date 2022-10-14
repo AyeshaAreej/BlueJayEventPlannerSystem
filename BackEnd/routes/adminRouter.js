@@ -12,8 +12,8 @@ route.post('/logIn',adminController.logIn)//done
 
 // //-Home Screen
 
-route.patch('/acceptCompany',middleware.ValidateToken ,adminController.acceptCompany)//done
-route.patch('/rejectCompany',middleware.ValidateToken ,adminController.rejectCompany)//done
+route.post('/acceptCompany',middleware.ValidateToken ,adminController.acceptCompany)//done
+route.post('/rejectCompany',middleware.ValidateToken ,adminController.rejectCompany)//done
 route.patch('/changePassword',middleware.ValidateToken ,adminController.changePassword)//done
 route.get('/getNewRegs',middleware.ValidateToken ,adminController.getNewRegs)//done
 
